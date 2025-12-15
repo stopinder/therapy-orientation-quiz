@@ -58,6 +58,7 @@
         Progress: {{ Object.keys(answers).length }} / {{ questions.length }} answered
       </p>
 
+
       <!-- Action -->
       <div class="pt-4">
         <button
@@ -77,11 +78,14 @@
       <!-- Report -->
       <section
           v-if="submitted"
+          ref="reportSection"
           class="max-w-2xl space-y-8 pt-16"
       >
-        <h2 class="text-3xl font-medium tracking-tight text-stone-800">
-          Your Therapy Orientation Report
-        </h2>
+        <div class="rounded-xl bg-stone-200/60 px-6 py-4">
+          <h2 class="text-3xl font-medium tracking-tight text-stone-800">
+            Your Therapy Orientation Report
+          </h2>
+        </div>
 
         <button
             @click="editAnswers"
@@ -98,6 +102,7 @@
           {{ paragraph }}
         </p>
       </section>
+
 
     </div>
   </main>
@@ -145,9 +150,19 @@ const report = computed(() => {
 function generateReport() {
   frozenScores.value = { ...scores.value }
   submitted.value = true
+
+  requestAnimationFrame(() => {
+    reportSection.value?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
+  })
 }
+
 
 function editAnswers() {
   submitted.value = false
 }
+const reportSection = ref(null)
+
 </script>
