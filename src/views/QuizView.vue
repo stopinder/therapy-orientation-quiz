@@ -97,16 +97,26 @@
 
         <!-- AI Expand -->
         <button
-            v-if="!expandedReflection"
-            type="button"
             @click="expandWithAI"
             :disabled="isExpanding"
-            class="mt-8 text-sm text-slate-600 underline disabled:opacity-50"
+            class="mt-6 text-sm text-slate-600 underline disabled:opacity-50"
         >
-          {{ isExpanding
-            ? "Generating expanded reflection…"
-            : "Expand with AI (optional)" }}
+          {{ isExpanding ? "Generating expanded reflection…" : "Expand with AI (optional)" }}
         </button>
+
+        <!-- AI Output -->
+        <section
+            v-if="expandedReflection"
+            class="mt-8 rounded-xl bg-white/80 border border-stone-200 px-6 py-5"
+        >
+          <h3 class="text-lg font-medium text-stone-800 mb-3">
+            Expanded reflection
+          </h3>
+
+          <p class="whitespace-pre-line text-stone-700 leading-relaxed">
+            {{ expandedReflection }}
+          </p>
+        </section>
 
         <!-- AI Output -->
         <section
