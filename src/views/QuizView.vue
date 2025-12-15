@@ -201,7 +201,8 @@ async function expandWithAI() {
   isExpanding.value = true
 
   try {
-    const res = await fetch("/api/expand-report", {
+    fetch("/api/expand-report-v2", {
+
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
