@@ -122,10 +122,12 @@
 
         <!-- Edit -->
         <button
+            type="button"
             @click="editAnswers"
             class="mt-6 text-sm text-slate-600 underline hover:text-slate-800"
         >
-          Edit answers
+
+        Edit answers
         </button>
       </section>
 
