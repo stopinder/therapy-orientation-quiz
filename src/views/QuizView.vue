@@ -103,6 +103,19 @@
         >
           {{ isExpanding ? "Generating expanded reflection…" : "Expand with AI (optional)" }}
         </button>
+        <!-- Expanded AI Output -->
+        <section
+            v-if="expandedReflection"
+            class="mt-8 rounded-xl bg-white/90 border border-stone-200 px-6 py-6"
+        >
+          <h3 class="text-lg font-medium text-stone-800 mb-4">
+            Expanded reflection
+          </h3>
+
+          <p class="whitespace-pre-line text-stone-700 leading-relaxed">
+            {{ expandedReflection }}
+          </p>
+        </section>
 
         <!-- AI Output -->
         <section
