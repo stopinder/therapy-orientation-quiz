@@ -58,9 +58,10 @@
         Progress: {{ Object.keys(answers).length }} / {{ questions.length }} answered
       </p>
 
-      <!-- Action -->
+      <!-- Generate -->
       <div class="pt-4">
         <button
+            type="button"
             @click="generateReport"
             :disabled="submitted || Object.keys(answers).length !== questions.length"
             class="w-full sm:w-auto
@@ -94,9 +95,10 @@
           {{ paragraph }}
         </p>
 
-        <!-- AI Button -->
+        <!-- AI Expand -->
         <button
             v-if="!expandedReflection"
+            type="button"
             @click="expandWithAI"
             :disabled="isExpanding"
             class="mt-8 text-sm text-slate-600 underline disabled:opacity-50"
@@ -126,8 +128,7 @@
             @click="editAnswers"
             class="mt-6 text-sm text-slate-600 underline hover:text-slate-800"
         >
-
-        Edit answers
+          Edit answers
         </button>
       </section>
 
@@ -217,3 +218,4 @@ async function expandWithAI() {
   }
 }
 </script>
+
