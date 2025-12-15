@@ -58,7 +58,6 @@
         Progress: {{ Object.keys(answers).length }} / {{ questions.length }} answered
       </p>
 
-
       <!-- Action -->
       <div class="pt-4">
         <button
@@ -87,13 +86,6 @@
           </h2>
         </div>
 
-        <button
-            @click="editAnswers"
-            class="text-sm text-slate-600 underline hover:text-slate-800"
-        >
-          Edit answers
-        </button>
-
         <p
             v-for="(paragraph, index) in report"
             :key="index"
@@ -101,8 +93,41 @@
         >
           {{ paragraph }}
         </p>
-      </section>
 
+        <!-- AI Expand Button -->
+        <button
+            v-if="!expandedReflection"
+            @click="expandWithAI"
+            :disabled="isExpanding"
+            class="mt-8 text-sm text-slate-600 underline disabled:opacity-50"
+        >
+          {{ isExpanding
+            ? "Generating expanded reflection…"
+            : "Expand with AI (optional)" }}
+        </button>
+
+        <!-- Expanded AI Output -->
+        <section
+            v-if="expandedReflection"
+            class="mt-12 space-y-4"
+        >
+          <h3 class="text-xl font-medium text-stone-800">
+            Expanded reflection (optional)
+          </h3>
+
+          <p class="text-stone-700 leading-relaxed whitespace-pre-line">
+            {{ expandedReflection }}
+          </p>
+        </section>
+
+        <!-- Edit -->
+        <button
+            @click="editAnswers"
+            class="mt-6 text-sm text-slate-600 underline hover:text-slate-800"
+        >
+          Edit answers
+        </button>
+      </section>
 
     </div>
   </main>
@@ -116,6 +141,11 @@ import { buildReport } from "../quiz/buildReport"
 const submitted = ref(false)
 const answers = ref({})
 const frozenScores = ref(null)
+
+const reportSection = ref(null)
+
+const isExpanding = ref(false)
+const expandedReflection = ref(null)
 
 const scale = [
   { label: "Strongly disagree", value: -2 },
@@ -159,10 +189,30 @@ function generateReport() {
   })
 }
 
-
 function editAnswers() {
   submitted.value = false
+  expandedReflection.value = null
 }
-const reportSection = ref(null)
 
+async function expandWithAI() {
+  isExpanding.value = true
+
+  try {
+    const res = await fetch("/api/expand-report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        deterministicReport: report.value.join("\n\n"),
+        dimensionSummaries: frozenScores.value
+      })
+    })
+
+    const data = await res.json()
+    expandedReflection.value = data.text
+  } catch (e) {
+    console.error("AI expansion failed", e)
+  } finally {
+    isExpanding.value = false
+  }
+}
 </script>
