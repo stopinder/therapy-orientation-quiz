@@ -23,16 +23,44 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
-                temperature: 0.4,
+                temperature: 0.25,
                 messages: [
                     {
                         role: "system",
-                        content:
-                            "You are expanding an existing reflective report. Do not add diagnoses, advice, or new interpretations."
+                        content: `
+You are revising reflective language written by a clinician.
+
+Your task is editorial, not interpretive.
+
+Rules:
+- Preserve the original meaning, tone, and uncertainty
+- Do not add advice, reassurance, diagnosis, or instruction
+- Do not introduce new themes, explanations, or interpretations
+- Avoid therapeutic clichés and general statements
+- Use plain, precise language
+- Write as an extension of the original author’s voice
+`
                     },
                     {
                         role: "user",
-                        content: report
+                        content: `
+Rewrite the text below into 2–3 short paragraphs.
+
+Your goal is to:
+- clarify what is already implied
+- make implicit distinctions more explicit
+- improve flow and readability
+
+Constraints:
+- Every sentence must be directly grounded in the source text
+- Do not summarise
+- Do not conclude or resolve
+
+TEXT:
+<<<
+${report}
+>>>
+`
                     }
                 ]
             })
