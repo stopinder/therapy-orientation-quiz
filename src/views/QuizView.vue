@@ -13,7 +13,8 @@
       </header>
 
       <!-- Quiz -->
-      <section class="space-y-16">
+      <section class="space-y-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8">
+
         <div v-for="question in questions" :key="question.id" class="space-y-6">
           <p class="text-xl leading-relaxed text-stone-800">
             {{ question.text }}
@@ -46,14 +47,20 @@
       <button
           @click="generateReport"
           :disabled="submitted || Object.keys(answers).length !== questions.length"
-          class="px-8 py-4 rounded-full bg-slate-700 text-white hover:bg-slate-600 disabled:opacity-40"
+          class="px-8 py-4 rounded-full bg-slate-700 text-white hover:bg-slate-600 shadow-lg hover:shadow-xl disabled:opacity-40 transition"
+
       >
         Generate Report
       </button>
 
       <!-- Report -->
-      <section v-if="submitted" ref="reportSection" class="space-y-8 pt-16">
-        <h2 class="text-3xl font-medium text-stone-800">
+      <section
+          v-if="submitted"
+          ref="reportSection"
+          class="space-y-8 pt-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8"
+      >
+
+      <h2 class="text-3xl font-medium text-stone-800">
           Your Therapy Orientation Report
         </h2>
 
@@ -69,8 +76,12 @@
           {{ isExpanding ? "Generating…" : "Expand with AI (optional)" }}
         </button>
 
-        <section v-if="expandedReflection" class="mt-6 bg-white p-6 rounded-xl">
-          <p class="whitespace-pre-line text-stone-700">
+        <section
+            v-if="expandedReflection"
+            class="mt-8 rounded-xl bg-slate-50 border-l-4 border-slate-300 px-6 py-6"
+        >
+
+        <p class="whitespace-pre-line text-stone-700">
             {{ expandedReflection }}
           </p>
         </section>
