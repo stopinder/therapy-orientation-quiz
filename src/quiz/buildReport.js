@@ -11,5 +11,6 @@ export function buildReport(rawScores) {
         report.push(reportBlocks[dimension][bucket])
     })
 
-    return report
+    return report.join("\n\n")
+
 }
