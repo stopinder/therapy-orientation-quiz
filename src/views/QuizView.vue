@@ -128,7 +128,6 @@
     </div>
   </main>
 </template>
-
 <script setup>
 import { ref, computed } from "vue"
 import { questions } from "../quiz/questions"
@@ -140,6 +139,7 @@ const frozenScores = ref(null)
 
 const reportSection = ref(null)
 
+const finalReport = ref("")        // ← freeze report here
 const isExpanding = ref(false)
 const expandedReflection = ref(null)
 
@@ -168,13 +168,9 @@ const scores = computed(() => {
   return totals
 })
 
-const report = computed(() => {
-  if (!frozenScores.value) return []
-  return buildReport(frozenScores.value)
-})
-
 function generateReport() {
   frozenScores.value = { ...scores.value }
+  finalReport.value = buildReport(frozenScores.value)
   submitted.value = true
 
   requestAnimationFrame(() => {
@@ -191,6 +187,8 @@ function editAnswers() {
 }
 
 async function expandWithAI() {
+  if (!finalReport.value) return
+
   isExpanding.value = true
 
   try {
@@ -198,13 +196,12 @@ async function expandWithAI() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        report: report.value
+        report: finalReport.value
       })
-
     })
 
     const data = await res.json()
-    expandedReflection.value = JSON.stringify(data, null, 2)
+    expandedReflection.value = data.text
 
   } catch (e) {
     console.error("AI expansion failed", e)
