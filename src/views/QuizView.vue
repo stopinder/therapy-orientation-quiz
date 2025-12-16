@@ -2,7 +2,6 @@
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
     <div class="max-w-3xl mx-auto space-y-20">
 
-      <!-- Header -->
       <header class="space-y-6 max-w-2xl">
         <h1 class="text-4xl font-medium tracking-tight text-stone-800">
           Therapy Orientation Quiz
@@ -15,11 +14,7 @@
 
       <!-- Quiz -->
       <section class="space-y-16">
-        <div
-            v-for="question in questions"
-            :key="question.id"
-            class="space-y-6"
-        >
+        <div v-for="question in questions" :key="question.id" class="space-y-6">
           <p class="text-xl leading-relaxed text-stone-800">
             {{ question.text }}
           </p>
@@ -28,100 +23,57 @@
             <label
                 v-for="option in scale"
                 :key="option.value"
-                class="flex items-center justify-between
-                     px-6 py-4 rounded-xl
-                     bg-white/90
-                     border border-stone-200
-                     cursor-pointer
-                     transition
-                     hover:bg-white"
+                class="flex items-center justify-between px-6 py-4 rounded-xl bg-white/90 border border-stone-200 cursor-pointer hover:bg-white"
             >
-              <span class="text-base text-stone-700">
-                {{ option.label }}
-              </span>
-
+              <span class="text-base text-stone-700">{{ option.label }}</span>
               <input
                   type="radio"
                   :name="question.id"
                   :value="option.value"
                   v-model="answers[question.id]"
                   :disabled="submitted"
-                  class="h-5 w-5 accent-slate-700 flex-shrink-0"
+                  class="h-5 w-5 accent-slate-700"
               />
             </label>
           </div>
         </div>
       </section>
 
-      <!-- Progress -->
       <p class="text-sm text-stone-500">
         Progress: {{ Object.keys(answers).length }} / {{ questions.length }} answered
       </p>
 
-      <!-- Generate -->
-      <div class="pt-4">
-        <button
-            type="button"
-            @click="generateReport"
-            :disabled="submitted || Object.keys(answers).length !== questions.length"
-            class="w-full sm:w-auto
-                 px-8 py-4 rounded-full text-lg font-medium
-                 bg-slate-700 text-white
-                 hover:bg-slate-600
-                 disabled:opacity-40 disabled:cursor-not-allowed
-                 transition"
-        >
-          Generate Report
-        </button>
-      </div>
+      <button
+          @click="generateReport"
+          :disabled="submitted || Object.keys(answers).length !== questions.length"
+          class="px-8 py-4 rounded-full bg-slate-700 text-white hover:bg-slate-600 disabled:opacity-40"
+      >
+        Generate Report
+      </button>
 
       <!-- Report -->
-      <section
-          v-if="submitted"
-          ref="reportSection"
-          class="max-w-2xl space-y-8 pt-16"
-      >
-        <div class="rounded-xl bg-stone-200/60 px-6 py-4">
-          <h2 class="text-3xl font-medium tracking-tight text-stone-800">
-            Your Therapy Orientation Report
-          </h2>
-        </div>
+      <section v-if="submitted" ref="reportSection" class="space-y-8 pt-16">
+        <h2 class="text-3xl font-medium text-stone-800">
+          Your Therapy Orientation Report
+        </h2>
 
-        <p class="text-lg leading-relaxed text-stone-700 whitespace-pre-line">
+        <p class="whitespace-pre-line text-stone-700">
           {{ finalReport }}
         </p>
 
-        <!-- Expand with AI -->
         <button
             @click="expandWithAI"
-            :disabled="isExpanding || !finalReport"
-            class="mt-6 text-sm text-slate-600 underline disabled:opacity-50"
+            :disabled="isExpanding"
+            class="text-sm text-slate-600 underline"
         >
-          {{ isExpanding ? "Generating expanded reflection…" : "Expand with AI (optional)" }}
+          {{ isExpanding ? "Generating…" : "Expand with AI (optional)" }}
         </button>
 
-        <!-- Expanded AI Output -->
-        <section
-            v-if="expandedReflection"
-            class="mt-8 rounded-xl bg-white/90 border border-stone-200 px-6 py-6"
-        >
-          <h3 class="text-lg font-medium text-stone-800 mb-4">
-            Expanded reflection
-          </h3>
-
-          <p class="whitespace-pre-line text-stone-700 leading-relaxed">
+        <section v-if="expandedReflection" class="mt-6 bg-white p-6 rounded-xl">
+          <p class="whitespace-pre-line text-stone-700">
             {{ expandedReflection }}
           </p>
         </section>
-
-        <!-- Edit -->
-        <button
-            type="button"
-            @click="editAnswers"
-            class="mt-6 text-sm text-slate-600 underline hover:text-slate-800"
-        >
-          Edit answers
-        </button>
       </section>
 
     </div>
@@ -132,16 +84,15 @@
 import { ref, computed } from "vue"
 import { questions } from "../quiz/questions"
 import { buildReport } from "../quiz/buildReport"
+import { scoreDimension } from "../quiz/scoring"
 
 const submitted = ref(false)
 const answers = ref({})
 const frozenScores = ref(null)
 
-const reportSection = ref(null)
-
 const finalReport = ref("")
+const expandedReflection = ref("")
 const isExpanding = ref(false)
-const expandedReflection = ref(null)
 
 const scale = [
   { label: "Strongly disagree", value: -2 },
@@ -159,10 +110,9 @@ const scores = computed(() => {
     relationalSensitivity: 0
   }
 
-  for (const [questionId, value] of Object.entries(answers.value)) {
-    const question = questions.find(q => q.id === questionId)
-    if (!question) continue
-    totals[question.dimension] += Number(value)
+  for (const [id, value] of Object.entries(answers.value)) {
+    const q = questions.find(q => q.id === id)
+    if (q) totals[q.dimension] += Number(value)
   }
 
   return totals
@@ -172,33 +122,29 @@ function generateReport() {
   frozenScores.value = { ...scores.value }
   finalReport.value = buildReport(frozenScores.value)
   submitted.value = true
-
-  requestAnimationFrame(() => {
-    reportSection.value?.scrollIntoView({ behavior: "smooth", block: "start" })
-  })
 }
 
-function editAnswers() {
-  submitted.value = false
-  expandedReflection.value = null
+function buildProfile() {
+  return {
+    attention: scoreDimension(frozenScores.value.internalExternal),
+    emotion: scoreDimension(frozenScores.value.emotionalIntensity),
+    structure: scoreDimension(frozenScores.value.structurePreference),
+    recommended_approaches: ["CBT", "ACT"]
+  }
 }
 
 async function expandWithAI() {
-  if (!finalReport.value) return
-
   isExpanding.value = true
 
   try {
     const res = await fetch("/api/expand-report-v2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ report: finalReport.value })
+      body: JSON.stringify({ profile: buildProfile() })
     })
 
     const data = await res.json()
-    expandedReflection.value = data.text
-  } catch (e) {
-    console.error("AI expansion failed", e)
+    expandedReflection.value = data.text || ""
   } finally {
     isExpanding.value = false
   }
