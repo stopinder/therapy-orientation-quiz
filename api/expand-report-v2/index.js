@@ -4,14 +4,12 @@ export default async function handler(req, res) {
     }
 
     let body = req.body
-    if (typeof body === "string") {
-        body = JSON.parse(body)
-    }
+    if (typeof body === "string") body = JSON.parse(body)
 
-    const { report } = body || {}
+    const { profile } = body || {}
 
-    if (typeof report !== "string" || !report.trim()) {
-        return res.status(400).json({ error: "Missing report" })
+    if (!profile || typeof profile !== "object") {
+        return res.status(400).json({ error: "Missing profile" })
     }
 
     try {
@@ -23,44 +21,28 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
-                temperature: 0.25,
+                temperature: 0.6,
+                max_tokens: 300,
                 messages: [
                     {
                         role: "system",
                         content: `
-You are revising reflective language written by a clinician.
-
-Your task is editorial, not interpretive.
+You generate reflective summaries for users who have completed a therapy-orientation quiz.
 
 Rules:
-- Preserve the original meaning, tone, and uncertainty
-- Do not add advice, reassurance, diagnosis, or instruction
-- Do not introduce new themes, explanations, or interpretations
-- Avoid therapeutic clichés and general statements
-- Use plain, precise language
-- Write as an extension of the original author’s voice
+- Write 2–3 short paragraphs (120–180 words total)
+- Use grounded, plain English
+- Integrate how attention, emotion, and structure interact
+- Describe the adaptive intention of the pattern
+- Mention therapy approaches that align with the pattern (use only the list provided)
+- Avoid advice, reassurance, diagnosis, or interpretation
+- Maintain a calm, precise, curious tone
+- Do NOT add a closing suggestion, instruction, or question
 `
                     },
                     {
                         role: "user",
-                        content: `
-Rewrite the text below into 2–3 short paragraphs.
-
-Your goal is to:
-- clarify what is already implied
-- make implicit distinctions more explicit
-- improve flow and readability
-
-Constraints:
-- Every sentence must be directly grounded in the source text
-- Do not summarise
-- Do not conclude or resolve
-
-TEXT:
-<<<
-${report}
->>>
-`
+                        content: `Profile:\n${JSON.stringify(profile, null, 2)}`
                     }
                 ]
             })
@@ -74,7 +56,7 @@ ${report}
         const data = await response.json()
 
         return res.status(200).json({
-            text: data.choices?.[0]?.message?.content || ""
+            text: data.choices?.[0]?.message?.content?.trim() || ""
         })
 
     } catch (err) {
