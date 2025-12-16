@@ -24,16 +24,33 @@
             <label
                 v-for="option in scale"
                 :key="option.value"
-                class="flex items-center justify-between px-6 py-4 rounded-xl bg-white/90 border border-stone-200 cursor-pointer hover:bg-white"
+                class="
+    flex items-center justify-between
+    px-6 py-4 rounded-xl
+    bg-white/90 border border-stone-200
+    cursor-pointer
+    transition
+    duration-200
+    ease-out
+    hover:bg-white
+    hover:shadow-sm
+    active:scale-[0.99]
+  "
             >
-              <span class="text-base text-stone-700">{{ option.label }}</span>
+
+            <span class="text-base text-stone-700">{{ option.label }}</span>
               <input
                   type="radio"
                   :name="question.id"
                   :value="option.value"
                   v-model="answers[question.id]"
                   :disabled="submitted"
-                  class="h-5 w-5 accent-slate-700"
+                  class="h-5 w-5 accent-slate-700 transition-transform duration-150"
+
+                  :class="answers[question.id] === option.value
+  ? 'ring-2 ring-slate-400 bg-white shadow-sm'
+  : ''"
+
               />
             </label>
           </div>
@@ -47,7 +64,20 @@
       <button
           @click="generateReport"
           :disabled="submitted || Object.keys(answers).length !== questions.length"
-          class="px-8 py-4 rounded-full bg-slate-700 text-white hover:bg-slate-600 shadow-lg hover:shadow-xl disabled:opacity-40 transition"
+          class="
+  px-8 py-4 rounded-full
+  bg-slate-700 text-white
+  shadow-lg
+  transition
+  duration-200
+  ease-out
+  hover:bg-slate-600
+  hover:scale-[1.01]
+  active:scale-[0.98]
+  hover:shadow-xl
+  disabled:opacity-40
+"
+
 
       >
         Generate Report
@@ -57,8 +87,13 @@
       <section
           v-if="submitted"
           ref="reportSection"
-          class="space-y-8 pt-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8"
+          class="
+    space-y-8 pt-16
+    rounded-2xl bg-white/80 shadow-soft px-6 py-8
+    transition-opacity duration-500 ease-out
+  "
       >
+
 
       <h2 class="text-3xl font-medium text-stone-800">
           Your Therapy Orientation Report
