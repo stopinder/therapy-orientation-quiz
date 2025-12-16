@@ -161,5 +161,10 @@ async function expandWithAI() {
         block: "start"
       })
     })
+  } finally {
+    isExpanding.value = false
+  }
+}
+
 
 </script>
