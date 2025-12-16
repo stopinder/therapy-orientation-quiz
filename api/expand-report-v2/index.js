@@ -20,7 +20,7 @@ export default async function handler(req, res) {
                 "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
             },
             body: JSON.stringify({
-                model: "ggpt-4.1-mini", // update if your deployment uses a different model
+                model: "gpt-4.1-mini",
                 temperature: 0.65,
                 max_tokens: 480,
                 messages: [
@@ -30,25 +30,15 @@ export default async function handler(req, res) {
 You generate reflective summaries for users who have completed a therapy-orientation quiz.
 
 STRUCTURE
-1. Paragraph 1 – Describe the person's orientation of attention, emotion, and structure in lived-experience language (no metrics).
-2. Paragraph 2 – Integrate the adaptive logic: how this pattern steadies or protects, and where it may limit connection or focus.
-3. Paragraph 3 – Briefly describe one or two therapy approaches that might fit. Select from:
-   • Cognitive Behavioural Therapy (CBT): structured, tool-based, supports clarity and organisation.
-   • Acceptance and Commitment Therapy (ACT): fosters acceptance and flexibility with discomfort.
-   • Person-centred Therapy: provides a warm, non-directive environment where emotional presence unfolds at the client’s pace.
-   • Gestalt Therapy: invites awareness of the here-and-now and how emotions express in the moment.
-   • Transactional Analysis (TA): clarifies internal “scripts” and relational patterns among inner states.
-   • Internal Family Systems (IFS): helps understand and integrate inner parts with compassion and curiosity.
-   • EMDR: uses guided attention to reprocess distress and restore balance in memory and sensation.
-   When describing, use natural, human language—explain what a person might *experience* in that kind of space rather than listing techniques.
-4. Paragraph 4 – (optional) Offer a single synthesis line linking the reflection and possible fit—no advice, invitation, or instruction.
+1. Paragraph 1 – Describe attention, emotion, and structure using lived-experience language.
+2. Paragraph 2 – Integrate adaptive logic: what steadies and what may limit.
+3. Paragraph 3 – Describe fitting therapy approaches in experiential terms.
+4. Paragraph 4 (optional) – One synthesis line. No advice.
 
-STYLE + RULES
-- Calm, grounded, emotionally precise, reflective.
-- Use relational, descriptive phrasing rather than categorical labels.
-- Maintain warmth and containment; avoid jargon, reassurance, or diagnosis.
-- Vary sentence rhythm and modality combinations so outputs don’t sound templated.
-- Aim for 190–240 words total.
+STYLE
+- Calm, grounded, emotionally precise
+- No labels, no diagnosis, no reassurance
+- 190–240 words
 `
                     },
                     {
@@ -57,7 +47,7 @@ STYLE + RULES
 Profile:
 ${JSON.stringify(profile, null, 2)}
 
-Write a reflective summary following the above structure and tone exactly.
+Write the reflection following the structure exactly.
 `
                     }
                 ],
@@ -78,5 +68,3 @@ Write a reflective summary following the above structure and tone exactly.
         return res.status(500).json({ error: "Server error" });
     }
 }
-
-
