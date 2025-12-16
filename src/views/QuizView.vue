@@ -2,15 +2,30 @@
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
     <div class="max-w-3xl mx-auto space-y-20">
 
-      <header class="space-y-6 max-w-2xl">
+      <header class="relative max-w-2xl pl-8 space-y-5">
+  <span
+      class="absolute left-0 top-1 h-14 w-1 rounded-sm bg-slate-500">
+  </span>
+
+        <p class="text-xs uppercase tracking-widest text-slate-500">
+          Reflective Exercise
+        </p>
+
         <h1 class="text-4xl font-medium tracking-tight text-stone-800">
           Therapy Orientation Quiz
         </h1>
-        <p class="text-lg leading-relaxed text-stone-700">
+
+        <p class="text-lg leading-relaxed text-stone-600">
           This short reflection is designed to help you notice how you tend to
           approach emotional difficulty and therapeutic conversations.
         </p>
       </header>
+
+
+
+
+
+
 
       <!-- Quiz -->
       <section class="space-y-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8">

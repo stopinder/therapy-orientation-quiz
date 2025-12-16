@@ -7,11 +7,11 @@ export const DIMENSIONS = {
     relationalSensitivity: true
 }
 
-// Scores are summed from Likert values (-2 to +2) across questions
-// Resulting range is deterministic and unipolar
+// Each dimension: 5 questions × (-2 to +2) = range -10 → +10
 export function scoreDimension(score) {
-    if (score <= 9) return "low"
-    if (score <= 14) return "mid"
-    return "high"
+    if (score <= -3) return "low"
+    if (score >= 3) return "high"
+    return "mid"
 }
+
 
