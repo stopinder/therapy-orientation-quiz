@@ -89,6 +89,7 @@ import { scoreDimension } from "../quiz/scoring"
 const submitted = ref(false)
 const answers = ref({})
 const frozenScores = ref(null)
+const reportSection = ref(null)
 
 const finalReport = ref("")
 const expandedReflection = ref("")
@@ -122,7 +123,15 @@ function generateReport() {
   frozenScores.value = { ...scores.value }
   finalReport.value = buildReport(frozenScores.value)
   submitted.value = true
+
+  requestAnimationFrame(() => {
+    reportSection.value?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
+  })
 }
+
 
 function buildProfile() {
   return {
@@ -145,8 +154,12 @@ async function expandWithAI() {
 
     const data = await res.json()
     expandedReflection.value = data.text || ""
-  } finally {
-    isExpanding.value = false
-  }
-}
+
+    requestAnimationFrame(() => {
+      reportSection.value?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      })
+    })
+
 </script>
