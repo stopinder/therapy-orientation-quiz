@@ -15,7 +15,7 @@
 
       <!-- Quiz -->
       <section class="space-y-16">
-        <div
+        <divv
             v-for="question in questions"
             :key="question.id"
             class="space-y-6"
@@ -50,7 +50,7 @@
               />
             </label>
           </div>
-        </div>
+        </divv>
       </section>
 
       <!-- Progress -->
@@ -87,13 +87,10 @@
           </h2>
         </div>
 
-        <p
-            v-for="(paragraph, index) in report"
-            :key="index"
-            class="text-lg leading-relaxed text-stone-700"
-        >
-          {{ paragraph }}
+        <p class="text-lg leading-relaxed text-stone-700 whitespace-pre-line">
+          {{ report }}
         </p>
+
 
         <!-- Expand with AI -->
         <button
@@ -201,7 +198,8 @@ async function expandWithAI() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        deterministicReport: report.value.join("\n\n")
+        deterministicReport: report.value
+
       })
     })
 
