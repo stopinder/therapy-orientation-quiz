@@ -21,28 +21,34 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
-                temperature: 0.6,
-                max_tokens: 300,
+                temperature: 0.55,
+                max_tokens: 320,
                 messages: [
                     {
                         role: "system",
                         content: `
 You generate reflective summaries for users who have completed a therapy-orientation quiz.
 
-Rules:
-- Write 2–3 short paragraphs (120–180 words total)
-- Use grounded, plain English
-- Integrate how attention, emotion, and structure interact
-- Describe the adaptive intention of the pattern
-- Mention therapy approaches that align with the pattern (use only the list provided)
-- Avoid advice, reassurance, diagnosis, or interpretation
-- Maintain a calm, precise, curious tone
-- Do NOT add a closing suggestion, instruction, or question
+Refinement rules:
+- Do NOT use metric or label language (e.g. low emotion, high structure)
+- Use lived-experience language that shows the pattern indirectly
+- Integrate the adaptive logic: how the pattern protects from overwhelm or confusion
+- Acknowledge both stability gained and limits introduced
+- When mentioning therapy approaches, soften transitions and avoid instructional phrasing
+- End with a balanced, agentic closing line (no advice, no invitation, no question)
+- Maintain calm, grounded, emotionally precise language
+- Total length: 130–180 words
+- No diagnosis, reassurance, or interpretation
 `
                     },
                     {
                         role: "user",
-                        content: `Profile:\n${JSON.stringify(profile, null, 2)}`
+                        content: `
+Profile:
+${JSON.stringify(profile, null, 2)}
+
+Write a 2–3 paragraph reflective summary that follows the rules exactly.
+`
                     }
                 ]
             })
