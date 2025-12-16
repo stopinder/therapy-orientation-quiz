@@ -15,7 +15,7 @@
 
       <!-- Quiz -->
       <section class="space-y-16">
-        <divv
+        <div
             v-for="question in questions"
             :key="question.id"
             class="space-y-6"
@@ -50,7 +50,7 @@
               />
             </label>
           </div>
-        </divv>
+        </div>
       </section>
 
       <!-- Progress -->
@@ -88,14 +88,13 @@
         </div>
 
         <p class="text-lg leading-relaxed text-stone-700 whitespace-pre-line">
-          {{ report }}
+          {{ finalReport }}
         </p>
-
 
         <!-- Expand with AI -->
         <button
             @click="expandWithAI"
-            :disabled="isExpanding"
+            :disabled="isExpanding || !finalReport"
             class="mt-6 text-sm text-slate-600 underline disabled:opacity-50"
         >
           {{ isExpanding ? "Generating expanded reflection…" : "Expand with AI (optional)" }}
@@ -128,6 +127,7 @@
     </div>
   </main>
 </template>
+
 <script setup>
 import { ref, computed } from "vue"
 import { questions } from "../quiz/questions"
@@ -139,7 +139,7 @@ const frozenScores = ref(null)
 
 const reportSection = ref(null)
 
-const finalReport = ref("")        // ← freeze report here
+const finalReport = ref("")
 const isExpanding = ref(false)
 const expandedReflection = ref(null)
 
@@ -174,10 +174,7 @@ function generateReport() {
   submitted.value = true
 
   requestAnimationFrame(() => {
-    reportSection.value?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    })
+    reportSection.value?.scrollIntoView({ behavior: "smooth", block: "start" })
   })
 }
 
@@ -195,14 +192,11 @@ async function expandWithAI() {
     const res = await fetch("/api/expand-report-v2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        report: finalReport.value
-      })
+      body: JSON.stringify({ report: finalReport.value })
     })
 
     const data = await res.json()
     expandedReflection.value = data.text
-
   } catch (e) {
     console.error("AI expansion failed", e)
   } finally {

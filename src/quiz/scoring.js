@@ -1,14 +1,17 @@
 // src/quiz/scoring.js
 
 export const DIMENSIONS = {
-    internalExternal: { min: -10, max: 10 },
-    emotionalIntensity: { min: -10, max: 10 },
-    structurePreference: { min: -10, max: 10 },
-    relationalSensitivity: { min: -10, max: 10 }
+    internalExternal: true,
+    emotionalIntensity: true,
+    structurePreference: true,
+    relationalSensitivity: true
 }
 
-export function scoreDimension(scores) {
-    if (scores >= 4) return "leanA"
-    if (scores <= -4) return "leanB"
-    return "mixed"
+// Scores are summed from Likert values (-2 to +2) across questions
+// Resulting range is deterministic and unipolar
+export function scoreDimension(score) {
+    if (score <= 9) return "low"
+    if (score <= 14) return "mid"
+    return "high"
 }
+
