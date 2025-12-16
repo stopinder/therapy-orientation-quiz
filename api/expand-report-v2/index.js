@@ -3,9 +3,14 @@ export default async function handler(req, res) {
         return res.status(405).end();
     }
 
-    const { deterministicReport } = req.body;
+    let body = req.body;
+    if (typeof body === "string") {
+        body = JSON.parse(body);
+    }
 
-    if (!deterministicReport) {
+    const { report } = body;
+
+    if (!report) {
         return res.status(400).json({ error: "Missing report" });
     }
 
@@ -27,17 +32,11 @@ export default async function handler(req, res) {
                     },
                     {
                         role: "user",
-                        content: deterministicReport
+                        content: report
                     }
                 ]
             })
         });
-
-        if (!response.ok) {
-            const errText = await response.text();
-            console.error("OpenAI API error:", errText);
-            return res.status(500).json({ error: "OpenAI API call failed" });
-        }
 
         const data = await response.json();
 
@@ -46,7 +45,7 @@ export default async function handler(req, res) {
         });
 
     } catch (err) {
-        console.error("Server error:", err);
         return res.status(500).json({ error: "Server error" });
     }
 }
+
