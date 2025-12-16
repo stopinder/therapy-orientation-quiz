@@ -204,7 +204,8 @@ async function expandWithAI() {
     })
 
     const data = await res.json()
-    expandedReflection.value = data.text
+    expandedReflection.value = JSON.stringify(data, null, 2)
+
   } catch (e) {
     console.error("AI expansion failed", e)
   } finally {
