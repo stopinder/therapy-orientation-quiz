@@ -4,7 +4,9 @@
       <header class="relative max-w-2xl pl-8 space-y-5">
         <span class="absolute left-0 top-1 h-14 w-1 rounded-sm bg-slate-500"></span>
         <p class="text-xs uppercase tracking-widest text-slate-500">Self-Check</p>
-        <h1 class="text-4xl font-medium tracking-tight text-stone-800">ADHD Reflection Quiz</h1>
+        <h1 class="text-4xl font-medium tracking-tight text-stone-800">
+          ADHD Reflection Quiz
+        </h1>
         <p class="text-lg leading-relaxed text-stone-600">
           This reflection helps you notice everyday patterns in attention, focus, and energy.
           It’s not a diagnosis, but it can show whether a formal ADHD assessment might be helpful.
@@ -13,9 +15,14 @@
 
       <!-- Quiz -->
       <section class="space-y-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8">
-        <div v-for="question in adhdQuestions" :key="question.id" class="space-y-6">
-          <p class="text-xl leading-relaxed text-stone-800">{{ question.text }}</p>
-
+        <div
+            v-for="question in adhdQuestions"
+            :key="question.id"
+            class="space-y-6"
+        >
+          <p class="text-xl leading-relaxed text-stone-800">
+            {{ question.text }}
+          </p>
 
           <div class="space-y-4">
             <label
@@ -23,7 +30,9 @@
                 :key="option.value"
                 class="flex items-center justify-between px-6 py-4 rounded-xl bg-white/90 border border-stone-200 cursor-pointer transition duration-200 ease-out hover:bg-white hover:shadow-sm active:scale-[0.99]"
             >
-              <span class="text-base text-stone-700">{{ option.label }}</span>
+              <span class="text-base text-stone-700">
+                {{ option.label }}
+              </span>
               <input
                   type="radio"
                   :name="question.id"
@@ -34,18 +43,21 @@
             </label>
           </div>
         </div>
-        <button
-            @click="buildReport"
 
+        <button
+            type="button"
+            @click="generateReport"
             class="mt-8 px-6 py-3 rounded-xl bg-slate-700 text-white"
         >
           {{ loading ? "Generating…" : "Generate Report" }}
         </button>
 
-        <div v-if="reportText" class="mt-10 text-stone-800 whitespace-pre-line">
+        <div
+            v-if="reportText"
+            class="mt-10 text-stone-800 whitespace-pre-line"
+        >
           {{ reportText }}
         </div>
-
       </section>
     </div>
   </main>
@@ -115,3 +127,4 @@ const generateReport = async () => {
   }
 }
 </script>
+
