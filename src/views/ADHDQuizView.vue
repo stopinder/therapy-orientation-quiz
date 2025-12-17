@@ -58,6 +58,18 @@
         >
           {{ reportText }}
         </div>
+        <div v-if="reportText" class="mt-10 text-stone-800 whitespace-pre-line">
+          {{ reportText }}
+        </div>
+
+        <button
+            v-if="reportType === 'brief'"
+            @click="loadExpandedReport"
+            class="mt-6 px-6 py-3 rounded-xl bg-slate-700 text-white"
+        >
+          View expanded reflection
+        </button>
+
       </section>
     </div>
   </main>
@@ -68,6 +80,32 @@ import { ref, computed } from "vue"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 
 const answers = ref({})
+const reportType = ref("brief")
+
+const loadExpandedReport = async () => {
+  loading.value = true
+  reportType.value = "expanded"
+
+  try {
+    const response = await fetch("/api/expand-report-v2", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        profile: scores.value,
+        reportType: "expanded"
+      })
+    })
+
+    if (!response.ok) throw new Error("API error")
+
+    const data = await response.json()
+    reportText.value = data.text || ""
+  } catch (err) {
+    console.error(err)
+  } finally {
+    loading.value = false
+  }
+}
 
 const scores = computed(() => {
   const totals = {
