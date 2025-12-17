@@ -103,7 +103,8 @@ const generateReport = async () => {
   loading.value = true
 
   try {
-    const response = await fetch("/api", {
+    const response = await fetch("/api/expand-report-v2", {
+
       method: "POST",
       headers: {
         "Content-Type": "application/json"
