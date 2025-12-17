@@ -101,11 +101,17 @@ const generateReport = async () => {
     })
   })
 
+  if (!res.ok) {
+    loading.value = false
+    throw new Error("API error")
+  }
+
   const data = await res.json()
   reportText.value = data.text || ""
 
   loading.value = false
 }
+
 
 
 </script>
