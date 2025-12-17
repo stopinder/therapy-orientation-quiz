@@ -55,7 +55,8 @@
 
         <div
             v-if="reportText"
-            v-html="reportText"
+            v-html="formattedReportText"
+
             :class="[
     reportType === 'expanded'
       ? 'mb-16 max-w-prose mx-auto text-stone-800 leading-relaxed prose prose-stone prose-p:my-6'
@@ -212,5 +213,15 @@ const generateReport = async () => {
     loading.value = false
   }
 }
+const formattedReportText = computed(() => {
+  if (!reportText.value) return ""
+
+  return `<p>${reportText.value
+      .split("\n\n")
+      .map(p => p.trim())
+      .filter(Boolean)
+      .join("</p><p>")}</p>`
+})
+
 </script>
 
