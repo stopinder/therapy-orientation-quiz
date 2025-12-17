@@ -90,7 +90,7 @@ const loading = ref(false)
 const generateReport = async () => {
   loading.value = true
 
-  const res = await fetch("/api/index", {
+  const res = await fetch("/api", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
