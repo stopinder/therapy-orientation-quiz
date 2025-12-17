@@ -35,7 +35,8 @@
           </div>
         </div>
         <button
-            @click="generateReport"
+            @click="buildReport"
+
             class="mt-8 px-6 py-3 rounded-xl bg-slate-700 text-white"
         >
           {{ loading ? "Generating…" : "Generate Report" }}
@@ -53,10 +54,9 @@
 <script setup>
 import { ref, computed } from "vue"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
-import { scoreADHDDimension } from "../quiz/adhd/scoring.js"
-
 
 const answers = ref({})
+
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -76,7 +76,6 @@ const scores = computed(() => {
   return totals
 })
 
-
 const scale = [
   { label: "Never", value: 0 },
   { label: "Rarely", value: 1 },
@@ -84,35 +83,35 @@ const scale = [
   { label: "Often", value: 3 },
   { label: "Very Often", value: 4 }
 ]
+
 const reportText = ref("")
 const loading = ref(false)
 
 const generateReport = async () => {
   loading.value = true
 
-  fetch("/api/index", {
-
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      profile: scores.value,
-      reportType: "brief"
+  try {
+    const response = await fetch("/api/index", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        profile: scores.value,
+        reportType: "brief"
+      })
     })
-  })
 
-  if (!res.ok) {
+    if (!response.ok) {
+      throw new Error("API error")
+    }
+
+    const data = await response.json()
+    reportText.value = data.text || ""
+  } catch (err) {
+    console.error(err)
+  } finally {
     loading.value = false
-    throw new Error("API error")
   }
-
-  const data = await res.json()
-  reportText.value = data.text || ""
-
-  loading.value = false
 }
-
-
-
 </script>
