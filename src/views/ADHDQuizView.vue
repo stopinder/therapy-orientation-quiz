@@ -52,12 +52,7 @@
           {{ loading ? "Generating…" : "Generate Report" }}
         </button>
 
-        <div
-            v-if="reportText"
-            class="mt-10 text-stone-800 whitespace-pre-line"
-        >
-          {{ reportText }}
-        </div>
+
         <div v-if="reportText" class="mt-10 text-stone-800 whitespace-pre-line">
           {{ reportText }}
         </div>
