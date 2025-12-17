@@ -1,119 +1,129 @@
+export const config = {
+    runtime: "nodejs"
+};
+
 export default async function handler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method not allowed" });
     }
 
     let body = req.body;
-    if (typeof body === "string") body = JSON.parse(body);
+    if (typeof body === "string") {
+        try {
+            body = JSON.parse(body);
+        } catch {
+            return res.status(400).json({ error: "Invalid JSON body" });
+        }
+    }
 
-    const { profile } = body || {};
+    const { profile, reportType } = body || {};
 
     if (!profile || typeof profile !== "object") {
-        return res.status(400).json({ error: "Missing profile" });
+        return res.status(400).json({ error: "Missing or invalid profile" });
     }
+
+    if (!reportType || !["brief", "expanded"].includes(reportType)) {
+        return res.status(400).json({ error: "Missing or invalid reportType" });
+    }
+
+    const SHORT_REPORT_PROMPT = `
+You generate brief, non-conclusive reflection summaries for adults who have completed a self-report quiz about attention, regulation, and daily functioning.
+
+This is NOT a diagnostic tool.
+This summary is intentionally limited and incomplete.
+
+Your role is to describe which areas stood out in the responses, without explaining why, what they mean, or what should be done next.
+
+Rules:
+- Do not explain causes or mechanisms
+- Do not translate scores into lived consequences
+- Do not reference ADHD assessment or diagnosis
+- Do not recommend next steps
+- Do not provide reassurance or validation
+
+Structure:
+1. Briefly note which domains stood out relative to others
+2. Explicitly state that this summary does not explore meaning or explanation
+3. End by naming that further context is intentionally not addressed here
+
+Tone:
+- Neutral
+- Observational
+- Adult
+- No hype, no metaphors
+
+Success means the reader feels oriented but not informed.
+`;
+
+    const EXPANDED_REPORT_PROMPT = `
+You generate extended, experiential reflection reports for adults who have completed a self-report quiz exploring patterns of attention, regulation, and functioning.
+
+This is NOT a diagnostic tool.
+This report does not determine whether ADHD or any other condition is present.
+Its purpose is to support careful thinking, not to reach conclusions.
+
+Use a neutral, observational voice.
+Avoid second-person identity statements.
+Prioritise lived experience over labels.
+Do not aim to reassure, validate, or resolve uncertainty.
+
+Constraints:
+- Treat ADHD as one possible explanatory lens among several
+- Do not privilege or rank explanations
+- Explicitly name uncertainty and limits of inference
+- Do not recommend actions, assessments, or next steps
+
+Structure:
+1. Pattern snapshot (descriptive, non-causal)
+2. How similar patterns are often experienced in daily life
+3. Adaptations and trade-offs
+4. Multiple parallel explanatory lenses (psychological, environmental, cultural, neurobiological)
+5. What this tool cannot determine
+6. Reflective closing with open questions
+
+End with reflection, not direction.
+
+Success means the reader has better questions, not answers.
+`;
+
+    const systemPrompt =
+        reportType === "brief"
+            ? SHORT_REPORT_PROMPT
+            : EXPANDED_REPORT_PROMPT;
 
     try {
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+                Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
             },
             body: JSON.stringify({
-                model: "gpt-4.1-mini", // adjust if different in deployment
+                model: "gpt-4.1-mini",
                 temperature: 0.65,
-                max_tokens: 550,
+                max_tokens: reportType === "brief" ? 180 : 900,
                 messages: [
                     {
                         role: "system",
-                        content: `
-You generate research-informed ADHD pre-assessment reports for adults.
-This is NOT a diagnostic tool. Your role is to help users understand whether their pattern of attention,
-impulse control, executive functioning, and emotional regulation suggests that a formal ADHD assessment
-may be worth pursuing.
-
-You will receive:
-- a structured profile object with dimension scores
-- a field called reportType, either "brief" or "expanded"
-
-GENERAL RULES
-- Calm, grounded, professional tone
-- Plain, lived-in language
-- Adult-focused (no childhood framing)
-- Never diagnose
-- Never imply certainty
-- Always orient toward formal assessment as the appropriate next step
-- Use “you” language
-- Avoid clinical jargon
-- No metaphors, no hype
-
----
-
-IF reportType === "brief":
-
-Write a SHORT orientation report (120–180 words total).
-
-Structure:
-1. One short paragraph summarising the overall pattern in everyday language.
-2. One sentence per dimension (Inattention, Hyperactivity, Impulsivity, Executive Function, Emotional Regulation),
-   reflecting whether that area appears low, moderate, or elevated, and what that usually means in daily life.
-3. A clear closing statement:
-   “This does not confirm ADHD. A formal assessment would be needed to explore this fully.”
-
-Purpose:
-- Orientation
-- Clarity
-- Encourage curiosity about further assessment
-
----
-
-IF reportType === "expanded":
-
-Write a DETAILED pre-assessment report (600–900 words).
-
-Structure:
-1. Brief recap of the overall pattern.
-2. A dedicated paragraph for each dimension that is moderate or elevated:
-   - Describe how this pattern often shows up in adult daily life
-   - Focus on function, not symptoms
-   - Normalise these patterns as common in adults seeking ADHD assessment
-3. A section titled: “What a formal ADHD assessment would explore”
-   - Explain what assessment clarifies that self-report tools cannot
-4. A grounded closing paragraph that encourages professional assessment without pressure.
-
-End with clarity, not reassurance.
-
-The reader should feel:
-- understood
-- oriented
-- clearer about next steps
-
-`
-
+                        content: systemPrompt
                     },
                     {
                         role: "user",
-                        content: `
-Profile:
-${JSON.stringify(profile, null, 2)}
-
-Write a reflective summary following the above structure and tone exactly.
-`
+                        content: `Profile data:\n${JSON.stringify(profile, null, 2)}`
                     }
-                ],
-            }),
+                ]
+            })
         });
 
         if (!response.ok) {
-            const err = await response.text();
-            return res.status(500).json({ error: err });
+            const errText = await response.text();
+            return res.status(500).json({ error: errText });
         }
 
         const data = await response.json();
+        const text = data.choices?.[0]?.message?.content?.trim() || "";
 
-        return res.status(200).json({
-            text: data.choices?.[0]?.message?.content?.trim() || "",
-        });
+        return res.status(200).json({ text });
     } catch (err) {
         return res.status(500).json({ error: "Server error" });
     }
