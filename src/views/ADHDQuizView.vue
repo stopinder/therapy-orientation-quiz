@@ -63,8 +63,10 @@
             v-if="reportType === 'expanded'"
             class="my-12 flex justify-center"
         >
-          <div class="w-24 h-px bg-stone-300/40"></div>
+          <div class="w-32 h-px bg-stone-400/50"></div>
         </div>
+
+
         <details
             v-if="reportType === 'expanded'"
             class="mt-6 text-sm text-stone-600 max-w-prose mx-auto"
