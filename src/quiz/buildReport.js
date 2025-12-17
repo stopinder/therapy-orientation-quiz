@@ -1,4 +1,4 @@
-import { scoreDimension } from "./scoring.js"
+import { scoreDimension } from "./adhd/scoring.js"
 import { reportBlocks } from "./reportBlocks.js"
 
 export function buildReport(rawScores) {
