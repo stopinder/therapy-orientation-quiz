@@ -72,6 +72,9 @@ Constraints:
 - Do not privilege or rank explanations
 - Explicitly name uncertainty and limits of inference
 - Do not recommend actions, assessments, or next steps
+Avoid causal or inferential phrases such as “this suggests,” “this reflects,” or “this indicates”; describe experiences without implying cause.
+Avoid identity-forming language such as “people with this pattern”; prefer observational phrasing like “patterns like this are often described as…”.
+Do not repeat sections or restate content already covered earlier in the report.
 
 Structure:
 1. Pattern snapshot (descriptive, non-causal)
