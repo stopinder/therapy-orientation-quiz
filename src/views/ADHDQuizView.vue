@@ -59,6 +59,46 @@
         >
           {{ reportText }}
         </div>
+        <div
+            v-if="reportType === 'expanded'"
+            class="my-12 flex justify-center"
+        >
+          <div class="w-24 h-px bg-stone-300/40"></div>
+        </div>
+        <details
+            v-if="reportType === 'expanded'"
+            class="mt-6 text-sm text-stone-600 max-w-prose mx-auto"
+        >
+          <summary class="cursor-pointer text-stone-700">
+            Methodology & Sources
+          </summary>
+
+          <div class="mt-4 space-y-4">
+            <p>
+              This reflection is generated through structured language synthesis.
+              It draws on multiple descriptive and contextual frameworks without
+              applying diagnostic thresholds or scoring criteria.
+            </p>
+
+            <p>
+              The aim is to offer reflective orientation rather than classification,
+              and to hold multiple possible explanations in view simultaneously.
+            </p>
+
+            <ul class="list-disc pl-5 space-y-1">
+              <li>DSM-5-TR descriptive domains (non-criterial)</li>
+              <li>NICE NG87 topic framing (UK context)</li>
+              <li>Executive function and attentional research</li>
+              <li>Developmental, environmental, and stress-based models</li>
+              <li>Clinical observation traditions</li>
+            </ul>
+
+            <p>
+              This is not a diagnostic instrument, probability estimate,
+              or recommendation engine.
+            </p>
+          </div>
+        </details>
 
 
         <button
