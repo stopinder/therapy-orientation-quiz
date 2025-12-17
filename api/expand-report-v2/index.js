@@ -85,6 +85,7 @@ Structure:
 6. Reflective closing with open questions
 
 End with reflection, not direction.
+Produce the report once only; do not restart, restate, or repeat any section under any circumstances.
 
 Success means the reader has better questions, not answers.
 `;
