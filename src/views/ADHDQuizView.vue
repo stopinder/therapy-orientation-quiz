@@ -58,10 +58,11 @@
             v-html="reportText"
             :class="[
     reportType === 'expanded'
-      ? 'mb-16 max-w-prose mx-auto text-stone-800 leading-relaxed space-y-6 prose prose-stone'
-      : 'mb-8 max-w-prose mx-auto text-stone-800 leading-relaxed space-y-4 prose prose-stone'
+      ? 'mb-16 max-w-prose mx-auto text-stone-800 leading-relaxed prose prose-stone prose-p:my-6'
+      : 'mb-8 max-w-prose mx-auto text-stone-800 leading-relaxed prose prose-stone prose-p:my-4'
   ]"
         ></div>
+
 
 
         <div
