@@ -53,9 +53,13 @@
         </button>
 
 
-        <div v-if="reportText" class="mt-10 text-stone-800 whitespace-pre-line">
+        <div
+            v-if="reportText"
+            :class="reportType === 'expanded' ? 'mb-16' : 'mb-8'"
+        >
           {{ reportText }}
         </div>
+
 
         <button
             v-if="reportType === 'brief'"
