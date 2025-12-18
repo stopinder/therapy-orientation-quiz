@@ -18,9 +18,11 @@
       <!-- Progress -->
       <div class="sticky top-16 z-40 bg-white border-b border-stone-200">
         <div class="max-w-3xl mx-auto px-2 py-2 text-xs text-stone-600 text-right">
-          {{ answeredCount }} of {{ totalCount }} questions answered
+          {{ Object.keys(answersValue).length }} of {{ adhdQuestions.length }} questions answered
         </div>
       </div>
+
+
 
 
 
@@ -121,6 +123,11 @@ const scale = [
   { label: "Very Often", value: 4 }
 ]
 
+// --- Progress helpers ---
+const totalCount = adhdQuestions.length
+const answeredCount = computed(() => Object.keys(answers.value).length)
+
+// --- Scoring ---
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -129,16 +136,6 @@ const scores = computed(() => {
     executive_function: 0,
     emotional_regulation: 0
   }
-  const totalCount = adhdQuestions.length
-
-  const answeredCount = computed(() =>
-      Object.keys(answers.value).length
-  )
-
-
-  const progressPercent = computed(() =>
-      Math.round((answeredCount.value / totalCount) * 100)
-  )
 
   for (const [id, value] of Object.entries(answers.value)) {
     const q = adhdQuestions.find(q => q.id === id)
@@ -150,16 +147,18 @@ const scores = computed(() => {
   return totals
 })
 
+// --- Generate report ---
 const generateReport = async () => {
-  const meaningful = Object.values(scores.value).filter(v => v >= 8).length >= 2
+  // minimal gate: require at least 2 elevated domains
+  const meaningful =
+      Object.values(scores.value).filter(v => v >= 8).length >= 2
 
   if (!meaningful) {
     reportText.value = `
 Based on your responses, no strongly elevated or consistent pattern emerged across the areas assessed.
 
-This tool is designed to identify sustained, high-impact patterns rather than occasional or situational experiences.
-  `.trim()
-
+This reflection is designed to identify sustained, high-impact patterns rather than occasional or situational experiences.
+`.trim()
     return
   }
 
@@ -179,6 +178,7 @@ This tool is designed to identify sustained, high-impact patterns rather than oc
   }
 }
 
+// --- Formatting for report output ---
 const formattedReportText = computed(() => {
   if (!reportText.value) return ""
 
@@ -188,7 +188,7 @@ const formattedReportText = computed(() => {
   let inList = false
 
   for (const line of lines) {
-    // Section headings (e.g. **Core Pattern Overview**)
+    // Section headings: **Title**
     if (/^\*\*.+\*\*$/.test(line)) {
       if (inList) {
         html += "</ul>"
@@ -199,7 +199,7 @@ const formattedReportText = computed(() => {
       continue
     }
 
-    // Question list items
+    // List items
     if (line.startsWith("- ")) {
       if (!inList) {
         html += `<ul class="mt-4 space-y-3 list-disc pl-6">`
@@ -218,7 +218,7 @@ const formattedReportText = computed(() => {
       continue
     }
 
-    // Normal paragraph
+    // Paragraph
     if (inList) {
       html += "</ul>"
       inList = false
@@ -226,11 +226,8 @@ const formattedReportText = computed(() => {
     html += `<p class="mb-4 text-stone-700 leading-relaxed">${line}</p>`
   }
 
-  if (inList) {
-    html += "</ul>"
-  }
+  if (inList) html += "</ul>"
 
   return html
 })
-
 </script>
