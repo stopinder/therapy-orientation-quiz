@@ -1,15 +1,15 @@
 <template>
-  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
+  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 pt-12 pb-20">
 
-  <div class="max-w-3xl mx-auto px-6 pt-16 pb-24 space-y-16">
+    <div class="max-w-3xl mx-auto px-6 pt-8 pb-24 space-y-16">
 
       <!-- HERO -->
-      <section class="space-y-5">
+      <section class="space-y-6">
         <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">
           A structured psychological reflection — built to be taken seriously
         </h1>
 
-        <p class="text-lg leading-relaxed text-slate-700 max-w-2xl">
+        <p class="text-lg leading-relaxed text-slate-700 max-w-2xl mb-8">
           If you’ve been noticing patterns in your attention, focus, or emotional
           regulation and want a grounded way to think about them, this reflection
           offers a place to pause before drawing conclusions.
@@ -136,7 +136,7 @@
       </section>
 
       <!-- FINAL CTA -->
-      <section class="pt-4">
+      <section class="pt-6">
         <router-link
             to="/gateway"
             class="inline-block rounded-md bg-slate-800 px-6 py-3 text-white font-medium hover:bg-slate-700 transition"
