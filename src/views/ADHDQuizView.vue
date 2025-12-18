@@ -17,10 +17,11 @@
       </header>
       <!-- Progress -->
       <div class="sticky top-16 z-40 bg-white border-b border-stone-200">
-        <div class="max-w-3xl mx-auto px-2 py-2 text-xs text-stone-500 text-right">
+        <div class="max-w-3xl mx-auto px-2 py-2 text-xs text-stone-600 text-right">
           {{ answeredCount }} of {{ totalCount }} questions answered
         </div>
       </div>
+
 
 
 
@@ -131,7 +132,7 @@ const scores = computed(() => {
   const totalCount = adhdQuestions.length
 
   const answeredCount = computed(() =>
-      Object.values(answers.value).filter(v => v !== undefined).length
+      Object.keys(answers.value).length
   )
 
 
