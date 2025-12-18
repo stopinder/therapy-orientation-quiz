@@ -16,11 +16,18 @@
       </header>
 
       <!-- Progress -->
-      <div class="sticky top-16 z-40 bg-white border-b border-stone-200">
-        <div class="max-w-3xl mx-auto px-2 py-2 text-xs text-stone-600 text-right">
-          {{ answeredCount }} of {{ totalCount }} questions answered
+      <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
+        <div class="max-w-3xl mx-auto px-3 py-3 flex justify-between items-center">
+    <span class="text-base font-semibold text-slate-900">
+
+      Progress
+    </span>
+          <span class="text-sm font-semibold text-slate-800">
+      {{ answeredCount }} / {{ totalCount }}
+    </span>
         </div>
       </div>
+
 
       <!-- Quiz -->
       <section class="space-y-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8">
