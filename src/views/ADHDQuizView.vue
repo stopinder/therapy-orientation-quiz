@@ -16,12 +16,17 @@
         </p>
       </header>
       <!-- Progress -->
-      <div class="sticky top-16 z-40 bg-stone-50/95 backdrop-blur border-b border-stone-200">
-        <div class="max-w-3xl mx-auto px-2 py-3 text-xs text-stone-600 flex justify-between">
-          <span>Progress</span>
-          <span>{{ answeredCount }} / {{ totalCount }}</span>
+      <div class="sticky top-16 z-40 bg-white border-b border-stone-200">
+        <div class="max-w-3xl mx-auto px-2 py-2">
+          <div class="w-full h-2 bg-stone-200">
+            <div
+                class="h-2 bg-slate-800"
+                :style="{ width: (answeredCount / totalCount) * 100 + '%' }"
+            ></div>
+          </div>
         </div>
       </div>
+
 
 
 
@@ -132,6 +137,7 @@ const scores = computed(() => {
   const answeredCount = computed(() =>
       Object.values(answers.value).filter(v => v !== undefined).length
   )
+
 
   const progressPercent = computed(() =>
       Math.round((answeredCount.value / totalCount) * 100)
