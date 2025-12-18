@@ -1,6 +1,5 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
-
     <div class="max-w-3xl mx-auto space-y-20">
 
       <!-- Quiz Header -->
@@ -15,20 +14,13 @@
           It is not a diagnosis, but a structured psychological reflection.
         </p>
       </header>
+
       <!-- Progress -->
       <div class="sticky top-16 z-40 bg-white border-b border-stone-200">
         <div class="max-w-3xl mx-auto px-2 py-2 text-xs text-stone-600 text-right">
-          {{ Object.keys(answersValue).length }} of {{ adhdQuestions.length }} questions answered
+          {{ answeredCount }} of {{ totalCount }} questions answered
         </div>
       </div>
-
-
-
-
-
-
-
-
 
       <!-- Quiz -->
       <section class="space-y-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8">
@@ -102,7 +94,6 @@
           </div>
         </details>
       </section>
-
     </div>
   </main>
 </template>
@@ -166,9 +157,7 @@ This reflection is designed to identify sustained, high-impact patterns rather t
     const response = await fetch("/api/expand-report-v2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        profile: scores.value
-      })
+      body: JSON.stringify({ profile: scores.value })
     })
     const data = await response.json()
     reportText.value = data.text || ""
@@ -224,5 +213,4 @@ const formattedReportText = computed(() => {
 
   return html
 })
-
 </script>
