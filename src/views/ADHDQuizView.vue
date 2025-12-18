@@ -128,6 +128,18 @@ const scores = computed(() => {
 })
 
 const generateReport = async () => {
+  const meaningful = Object.values(scores.value).filter(v => v >= 8).length >= 2
+
+  if (!meaningful) {
+    reportText.value = `
+Based on your responses, no strongly elevated or consistent pattern emerged across the areas assessed.
+
+This tool is designed to identify sustained, high-impact patterns rather than occasional or situational experiences.
+  `.trim()
+
+    return
+  }
+
   loading.value = true
   try {
     const response = await fetch("/api/expand-report-v2", {
