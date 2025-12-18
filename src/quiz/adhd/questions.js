@@ -98,7 +98,7 @@ export const adhdQuestions = [
     {
         id: "IM6",
         dimension: "impulsivity",
-        text: "How difficult is it for you to pause before responding when something grabs your attention?",
+        text: "How often do you find it hard to pause before responding when something grabs your attention?",
     },
 
     // =========================
@@ -112,7 +112,7 @@ export const adhdQuestions = [
     {
         id: "EF2",
         dimension: "executive_function",
-        text: "How difficult is it for you to break tasks down into clear, manageable steps?",
+        text: "How often do you struggle to break tasks down into clear, manageable steps?
     },
     {
         id: "EF3",
@@ -132,7 +132,7 @@ export const adhdQuestions = [
     {
         id: "EF6",
         dimension: "executive_function",
-        text: "How overwhelmed do you feel when you have multiple tasks or responsibilities at once?",
+        text: "How often do you feel overwhelmed when you have multiple tasks or responsibilities at once?",
     },
     {
         id: "EF7",
@@ -151,7 +151,7 @@ export const adhdQuestions = [
     {
         id: "ER1",
         dimension: "emotional_regulation",
-        text: "How strongly do you tend to react emotionally to stress, frustration, or disappointment?",
+        text: "How often do you react emotionally to stress, frustration, or disappointment?",
     },
     {
         id: "ER2",
@@ -166,7 +166,7 @@ export const adhdQuestions = [
     {
         id: "ER4",
         dimension: "emotional_regulation",
-        text: "How hard is it for you to calm down once you’re emotionally activated?",
+        text: "How often do you find it hard to calm down once you’re emotionally activated?",
     },
     {
         id: "ER5",
@@ -185,12 +185,12 @@ export const adhdQuestions = [
     {
         id: "FI1",
         dimension: "functional_impact",
-        text: "Which area of your life feels most affected by these difficulties?",
+        text: "How often do these difficulties interfere with your day-to-day life?",
     },
     {
         id: "FI2",
         dimension: "functional_impact",
-        text: "How much effort does it take to stay organised, focused, or on track compared to others?",
+        text: "How often do you struggle to break tasks down into clear, manageable steps?",
     },
     {
         id: "FI3",
@@ -200,11 +200,11 @@ export const adhdQuestions = [
     {
         id: "FI4",
         dimension: "functional_impact",
-        text: "To what extent do you feel you are compensating or pushing through rather than functioning with ease?",
+        text: "THow often do you feel you are compensating or pushing through rather than functioning with ease?",
     },
     {
         id: "FI5",
         dimension: "functional_impact",
-        text: "How much do these patterns interfere with the kind of life you want to be living?",
+        text: "How often do these patterns interfere with the kind of life you want to be living?",
     },
 ];
