@@ -30,16 +30,17 @@
         <div
             v-for="(question, index) in adhdQuestions"
             :key="question.id"
-            :ref="el => questionBlockRefs[index] = el"
             class="space-y-6"
         >
+          <!-- Question text -->
           <p
-              class="text-xl leading-relaxed text-stone-800"
+              class="text-xl leading-relaxed text-stone-800 scroll-mt-28"
               :ref="el => questionTextRefs[index] = el"
           >
             {{ question.text }}
           </p>
 
+          <!-- Options -->
           <div class="space-y-4">
             <label
                 v-for="option in scale"
@@ -117,8 +118,7 @@ const answers = ref({})
 const reportText = ref("")
 const loading = ref(false)
 
-// Question refs
-const questionBlockRefs = ref([])
+// Question text refs
 const questionTextRefs = ref([])
 
 // Scale
@@ -154,7 +154,7 @@ const scores = computed(() => {
   return totals
 })
 
-// Auto-scroll handler (CORRECTED)
+// Auto-scroll handler (FINAL)
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
   await nextTick()
