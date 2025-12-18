@@ -16,86 +16,87 @@ export default async function handler(req, res) {
         }
     }
 
-    const { profile, reportType } = body || {};
+    const { profile } = body || {};
 
     if (!profile || typeof profile !== "object") {
         return res.status(400).json({ error: "Missing or invalid profile" });
     }
 
-    if (!reportType || !["brief", "expanded"].includes(reportType)) {
-        return res.status(400).json({ error: "Missing or invalid reportType" });
-    }
+    const EXPANDED_REPORT_PROMPT = `
+You generate structured psychological formulation-style reports for adults who have completed a self-report questionnaire exploring patterns of attention, activity level, executive functioning, emotional regulation, and functional impact.
 
-    const SHORT_REPORT_PROMPT = `
-You generate brief, non-conclusive reflection summaries for adults who have completed a self-report quiz about attention, regulation, and daily functioning.
+This is NOT a formal diagnosis.
+It is a working psychological formulation grounded in established clinical frameworks, using descriptive domains commonly associated with ADHD.
 
-This is NOT a diagnostic tool.
-This summary is intentionally limited and incomplete.
+You may explicitly state when a pattern strongly resembles what is commonly labelled ADHD, while clearly distinguishing this from a formal medical diagnosis.
 
-Your role is to describe which areas stood out in the responses, without explaining why, what they mean, or what should be done next.
-
-Rules:
-- Do not explain causes or mechanisms
-- Do not translate scores into lived consequences
-- Do not reference ADHD assessment or diagnosis
-- Do not recommend next steps
-- Do not provide reassurance or validation
-
-Structure:
-1. Briefly note which domains stood out relative to others
-2. Explicitly state that this summary does not explore meaning or explanation
-3. End by naming that further context is intentionally not addressed here
+Your task is not to summarise all data evenly.
+Your task is to identify what matters most in this profile, prioritise it, and organise the report around that priority.
 
 Tone:
-- Neutral
-- Observational
-- Adult
-- No hype, no metaphors
+- Clinically authoritative but not absolute
+- Clear, direct, and adult
+- Calm, grounded, and non-alarmist
+- Avoid therapeutic reassurance, cheerleading, or excessive qualification
 
-Success means the reader feels oriented but not informed.
+General rules:
+- You may use inferential clinical language (e.g. “is most consistent with…”, “fits closely with…”, “is less characteristic of…”)
+- Do not use identity-forming language (avoid “you are X”)
+- Do not recommend treatment, assessment, or next steps
+- Do not include medical advice
+- Do not repeat the same idea across sections
+- Write in complete, considered paragraphs (no bullet points)
+
+Structure the report using clear section headings.
+Each section should be concise and purposeful.
+Prefer clarity and impact over exhaustiveness.
+
+Required structure:
+
+1. **Core Pattern Overview**  
+Begin by identifying which dimensions are most elevated overall.  
+Explicitly prioritise functional impact if it is moderate or elevated.  
+Make clear whether the central issue in this profile is symptom intensity, lived interference, or the effort required to compensate.  
+This section should orient the reader immediately and establish what matters most.
+
+2. **Relationship to ADHD**  
+State clearly whether this pattern strongly resembles what is commonly labelled ADHD.  
+Specify which aspects align closely with established ADHD frameworks and which aspects are less characteristic.  
+Frame this as a working psychological formulation rather than a definitive diagnosis.  
+Acknowledge that ADHD is a dominant explanatory model here without treating it as the only lens.
+
+3. **What Is Distinctive in This Profile**  
+Identify features that differentiate this pattern from common stereotypes or assumptions about ADHD.  
+Highlight meaningful asymmetries (for example: high effort with low impulsivity, internal restlessness without marked emotional volatility, or strong compensation masking difficulty).  
+Include at least one statement that the reader is likely to recognise strongly as describing their experience.
+
+4. **Functional Cost and Trade-offs**  
+Use the functional impact data to describe how much these patterns interfere with daily life.  
+If functional impact is elevated, treat this as a central organising feature of the report rather than a secondary detail.  
+Describe both the costs (such as exhaustion, friction, overcompensation, or diminished flexibility) and what this pattern may protect against or enable.  
+Do not minimise lived difficulty or frame struggle as merely situational.
+
+5. **Contextual and Explanatory Considerations**  
+Briefly widen the lens to acknowledge psychological, environmental, cultural, and neurobiological factors that may interact with this pattern.  
+Do not treat all explanations as equal; frame them as complementary rather than competing.  
+Avoid speculative or causal claims and avoid presenting any single explanation as definitive.
+
+6. **Limits of Inference**  
+Clearly state what this report cannot determine.  
+Name the limits of self-report data, the absence of developmental history, and the difference between formulation and diagnosis.  
+Keep this section short, precise, and grounded.
+
+7. **Questions Worth Holding**  
+Pose three to five reflective questions that interrupt passive reading.  
+These questions should invite thought rather than action, certainty, or reassurance.  
+They should help the reader think more precisely about their experience without directing them toward conclusions.
+
+End the report after this section.
+Do not add summaries, conclusions, or calls to action.
+
+Success means the reader feels clearly recognised, intellectually oriented, and able to think with greater precision about their experience without being given false certainty.
+
 `;
-
-    const EXPANDED_REPORT_PROMPT = `
-You generate extended, experiential reflection reports for adults who have completed a self-report quiz exploring patterns of attention, regulation, and functioning.
-
-This is NOT a diagnostic tool.
-This report does not determine whether ADHD or any other condition is present.
-Its purpose is to support careful thinking, not to reach conclusions.
-
-Use a neutral, observational voice.
-Avoid second-person identity statements.
-Prioritise lived experience over labels.
-Do not aim to reassure, validate, or resolve uncertainty.
-
-Constraints:
-- Treat ADHD as one possible explanatory lens among several
-- Do not privilege or rank explanations
-- Explicitly name uncertainty and limits of inference
-- Do not recommend actions, assessments, or next steps
-Avoid causal or inferential phrases such as “this suggests,” “this reflects,” or “this indicates”; describe experiences without implying cause.
-Avoid identity-forming language such as “people with this pattern”; prefer observational phrasing like “patterns like this are often described as…”.
-Do not repeat sections or restate content already covered earlier in the report.
-
-Structure:
-1. Pattern snapshot (descriptive, non-causal)
-2. How similar patterns are often experienced in daily life
-3. Adaptations and trade-offs
-4. Multiple parallel explanatory lenses (psychological, environmental, cultural, neurobiological)
-5. What this tool cannot determine
-6. Reflective closing with open questions
-
-End with reflection, not direction.
-Produce the report in a single continuous pass and then stop.
-End the response immediately after the reflective closing questions.
-
-
-Success means the reader has better questions, not answers.
-`;
-
-    const systemPrompt =
-        reportType === "brief"
-            ? SHORT_REPORT_PROMPT
-            : EXPANDED_REPORT_PROMPT;
 
     try {
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -107,11 +108,11 @@ Success means the reader has better questions, not answers.
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
                 temperature: 0.65,
-                max_tokens: reportType === "brief" ? 180 : 900,
+                max_tokens: 1000,
                 messages: [
                     {
                         role: "system",
-                        content: systemPrompt
+                        content: EXPANDED_REPORT_PROMPT
                     },
                     {
                         role: "user",

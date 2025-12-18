@@ -11,7 +11,7 @@
         </h1>
         <p class="text-lg leading-relaxed text-stone-600">
           This reflection helps you notice everyday patterns in attention, focus, and energy.
-          It’s not a diagnosis, but it can show whether a formal ADHD assessment might be helpful.
+          It is not a diagnosis, but a structured psychological reflection.
         </p>
       </header>
 
@@ -51,22 +51,18 @@
             @click="generateReport"
             class="mt-8 px-6 py-3 rounded-xl bg-slate-700 text-white"
         >
-          {{ loading ? "Generating…" : "Generate Report" }}
+          {{ loading ? "Generating…" : "Generate Reflection" }}
         </button>
 
         <div
             v-if="reportText"
             v-html="formattedReportText"
-            :class="[
-            reportType === 'expanded'
-              ? 'mb-16 max-w-prose mx-auto prose prose-stone'
-              : 'mb-8 max-w-prose mx-auto prose prose-stone'
-          ]"
+            class="mt-12 max-w-prose mx-auto prose prose-stone"
         ></div>
 
         <details
-            v-if="reportType === 'expanded'"
-            class="mt-6 text-sm text-stone-600 max-w-prose mx-auto"
+            v-if="reportText"
+            class="mt-10 text-sm text-stone-600 max-w-prose mx-auto"
         >
           <summary class="cursor-pointer text-stone-700">
             Methodology & Sources
@@ -90,14 +86,6 @@
             </p>
           </div>
         </details>
-
-        <button
-            v-if="reportType === 'brief'"
-            @click="loadExpandedReport"
-            class="mt-6 px-6 py-3 rounded-xl bg-slate-700 text-white"
-        >
-          View expanded reflection
-        </button>
       </section>
 
     </div>
@@ -111,7 +99,6 @@ import { adhdQuestions } from "../quiz/adhd/questions.js"
 const answers = ref({})
 const reportText = ref("")
 const loading = ref(false)
-const reportType = ref("brief")
 
 const scale = [
   { label: "Never", value: 0 },
@@ -147,27 +134,7 @@ const generateReport = async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        profile: scores.value,
-        reportType: "brief"
-      })
-    })
-    const data = await response.json()
-    reportText.value = data.text || ""
-  } finally {
-    loading.value = false
-  }
-}
-
-const loadExpandedReport = async () => {
-  loading.value = true
-  reportType.value = "expanded"
-  try {
-    const response = await fetch("/api/expand-report-v2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        profile: scores.value,
-        reportType: "expanded"
+        profile: scores.value
       })
     })
     const data = await response.json()

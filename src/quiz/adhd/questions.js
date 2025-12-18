@@ -178,4 +178,33 @@ export const adhdQuestions = [
         dimension: "emotional_regulation",
         text: "Do you find yourself shutting down or withdrawing after periods of stress or overload?",
     },
+
+    // =========================
+    // FUNCTIONAL IMPACT (5)
+    // =========================
+    {
+        id: "FI1",
+        dimension: "functional_impact",
+        text: "Which area of your life feels most affected by these difficulties?",
+    },
+    {
+        id: "FI2",
+        dimension: "functional_impact",
+        text: "How much effort does it take to stay organised, focused, or on track compared to others?",
+    },
+    {
+        id: "FI3",
+        dimension: "functional_impact",
+        text: "How often do these difficulties leave you feeling mentally exhausted or depleted?",
+    },
+    {
+        id: "FI4",
+        dimension: "functional_impact",
+        text: "To what extent do you feel you are compensating or pushing through rather than functioning with ease?",
+    },
+    {
+        id: "FI5",
+        dimension: "functional_impact",
+        text: "How much do these patterns interfere with the kind of life you want to be living?",
+    },
 ];
