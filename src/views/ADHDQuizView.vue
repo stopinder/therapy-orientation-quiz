@@ -146,10 +146,56 @@ const generateReport = async () => {
 
 const formattedReportText = computed(() => {
   if (!reportText.value) return ""
-  return `<p>${reportText.value
-      .split("\n\n")
-      .map(p => p.trim())
-      .filter(Boolean)
-      .join("</p><p>")}</p>`
+
+  const lines = reportText.value.split("\n").map(l => l.trim())
+
+  let html = ""
+  let inList = false
+
+  for (const line of lines) {
+    // Section headings (e.g. **Core Pattern Overview**)
+    if (/^\*\*.+\*\*$/.test(line)) {
+      if (inList) {
+        html += "</ul>"
+        inList = false
+      }
+      const title = line.replace(/\*\*/g, "")
+      html += `<h3 class="mt-10 mb-4 text-xl font-semibold text-stone-800">${title}</h3>`
+      continue
+    }
+
+    // Question list items
+    if (line.startsWith("- ")) {
+      if (!inList) {
+        html += `<ul class="mt-4 space-y-3 list-disc pl-6">`
+        inList = true
+      }
+      html += `<li class="text-stone-700">${line.replace("- ", "")}</li>`
+      continue
+    }
+
+    // Empty line
+    if (line === "") {
+      if (inList) {
+        html += "</ul>"
+        inList = false
+      }
+      continue
+    }
+
+    // Normal paragraph
+    if (inList) {
+      html += "</ul>"
+      inList = false
+    }
+    html += `<p class="mb-4 text-stone-700 leading-relaxed">${line}</p>`
+  }
+
+  if (inList) {
+    html += "</ul>"
+  }
+
+  return html
 })
+
 </script>
