@@ -123,11 +123,11 @@ const scale = [
   { label: "Very Often", value: 4 }
 ]
 
-// --- Progress helpers ---
+// Progress
 const totalCount = adhdQuestions.length
 const answeredCount = computed(() => Object.keys(answers.value).length)
 
-// --- Scoring ---
+// Scoring
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -147,9 +147,8 @@ const scores = computed(() => {
   return totals
 })
 
-// --- Generate report ---
+// Generate report
 const generateReport = async () => {
-  // minimal gate: require at least 2 elevated domains
   const meaningful =
       Object.values(scores.value).filter(v => v >= 8).length >= 2
 
@@ -178,17 +177,15 @@ This reflection is designed to identify sustained, high-impact patterns rather t
   }
 }
 
-// --- Formatting for report output ---
+// Format report
 const formattedReportText = computed(() => {
   if (!reportText.value) return ""
 
   const lines = reportText.value.split("\n").map(l => l.trim())
-
   let html = ""
   let inList = false
 
   for (const line of lines) {
-    // Section headings: **Title**
     if (/^\*\*.+\*\*$/.test(line)) {
       if (inList) {
         html += "</ul>"
@@ -199,7 +196,6 @@ const formattedReportText = computed(() => {
       continue
     }
 
-    // List items
     if (line.startsWith("- ")) {
       if (!inList) {
         html += `<ul class="mt-4 space-y-3 list-disc pl-6">`
@@ -209,7 +205,6 @@ const formattedReportText = computed(() => {
       continue
     }
 
-    // Empty line
     if (line === "") {
       if (inList) {
         html += "</ul>"
@@ -218,7 +213,6 @@ const formattedReportText = computed(() => {
       continue
     }
 
-    // Paragraph
     if (inList) {
       html += "</ul>"
       inList = false
@@ -230,4 +224,5 @@ const formattedReportText = computed(() => {
 
   return html
 })
+
 </script>
