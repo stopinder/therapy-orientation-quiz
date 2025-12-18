@@ -6,7 +6,7 @@
         MindWorks
       </div>
 
-      <nav class="flex items-center gap-6 text-sm font-medium text-slate-700">
+      <nav class="sticky top-0 z-50 flex items-center gap-6 text-sm font-medium text-slate-700 bg-white/90 backdrop-blur border-b px-6 py-4">
         <router-link to="/about" class="hover:text-slate-900 transition">
           About
         </router-link>
@@ -15,6 +15,7 @@
           ADHD Quiz
         </router-link>
       </nav>
+
 
     </div>
   </header>
