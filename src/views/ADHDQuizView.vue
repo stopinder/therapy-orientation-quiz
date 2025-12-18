@@ -1,5 +1,6 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
+
     <div class="max-w-3xl mx-auto space-y-20">
 
       <!-- Quiz Header -->

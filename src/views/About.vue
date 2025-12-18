@@ -1,6 +1,7 @@
 <template>
-  <main class="min-h-screen bg-stone-50 text-slate-900">
-    <div class="max-w-3xl mx-auto px-6 pt-16 pb-24 space-y-16">
+  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
+
+  <div class="max-w-3xl mx-auto px-6 pt-16 pb-24 space-y-16">
 
       <!-- HERO -->
       <section class="space-y-5">
