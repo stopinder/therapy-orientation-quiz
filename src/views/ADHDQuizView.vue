@@ -15,6 +15,23 @@
           It is not a diagnosis, but a structured psychological reflection.
         </p>
       </header>
+      <!-- Progress -->
+      <div class="sticky top-16 z-40 bg-stone-50/90 backdrop-blur border-b border-stone-200">
+        <div class="max-w-3xl mx-auto px-2 py-3 space-y-1">
+          <div class="flex justify-between text-xs text-stone-600">
+            <span>Progress</span>
+            <span>{{ answeredCount }} of {{ totalCount }}</span>
+          </div>
+
+          <div class="h-1.5 w-full rounded-full bg-stone-200 overflow-hidden">
+            <div
+                class="h-full bg-slate-700 rounded-full transition-all duration-300"
+                :style="{ width: progressPercent + '%' }"
+            ></div>
+          </div>
+        </div>
+      </div>
+
 
       <!-- Quiz -->
       <section class="space-y-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8">
@@ -117,6 +134,15 @@ const scores = computed(() => {
     executive_function: 0,
     emotional_regulation: 0
   }
+  const totalCount = adhdQuestions.length
+
+  const answeredCount = computed(() =>
+      Object.values(answers.value).filter(v => v !== undefined).length
+  )
+
+  const progressPercent = computed(() =>
+      Math.round((answeredCount.value / totalCount) * 100)
+  )
 
   for (const [id, value] of Object.entries(answers.value)) {
     const q = adhdQuestions.find(q => q.id === id)
