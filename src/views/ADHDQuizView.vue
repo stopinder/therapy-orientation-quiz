@@ -18,22 +18,21 @@
       <!-- Progress -->
       <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
         <div class="max-w-3xl mx-auto px-3 py-3 flex justify-between items-center">
-    <span class="text-base font-semibold text-slate-900">
-
-      Progress
-    </span>
+          <span class="text-base font-semibold text-slate-900">
+            Progress
+          </span>
           <span class="text-sm font-semibold text-slate-800">
-      {{ answeredCount }} / {{ totalCount }}
-    </span>
+            {{ answeredCount }} / {{ totalCount }}
+          </span>
         </div>
       </div>
-
 
       <!-- Quiz -->
       <section class="space-y-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8">
         <div
-            v-for="question in adhdQuestions"
+            v-for="(question, index) in adhdQuestions"
             :key="question.id"
+            :ref="el => questionRefs[index] = el"
             class="space-y-6"
         >
           <p class="text-xl leading-relaxed text-stone-800">
@@ -53,7 +52,8 @@
                   type="radio"
                   :name="question.id"
                   :value="option.value"
-                  v-model="answers[question.id]"
+                  :checked="answers[question.id] === option.value"
+                  @change="handleAnswer(question.id, option.value, index)"
                   class="h-5 w-5 accent-slate-700"
               />
             </label>
@@ -68,12 +68,14 @@
           {{ loading ? "Generating…" : "Generate Reflection" }}
         </button>
 
+        <!-- Report -->
         <div
             v-if="reportText"
             v-html="formattedReportText"
             class="mt-12 max-w-prose mx-auto prose prose-stone"
         ></div>
 
+        <!-- Methodology -->
         <details
             v-if="reportText"
             class="mt-10 text-sm text-stone-600 max-w-prose mx-auto"
@@ -106,13 +108,16 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, nextTick } from "vue"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 
+// State
 const answers = ref({})
 const reportText = ref("")
 const loading = ref(false)
+const questionRefs = ref([])
 
+// Scale
 const scale = [
   { label: "Never", value: 0 },
   { label: "Rarely", value: 1 },
@@ -145,27 +150,31 @@ const scores = computed(() => {
   return totals
 })
 
+// Auto-scroll handler
+const handleAnswer = async (questionId, value, index) => {
+  answers.value[questionId] = value
+  await nextTick()
+
+  const nextEl = questionRefs.value[index + 1]
+  if (nextEl) {
+    nextEl.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
+  }
+}
+
 // Generate report
 const generateReport = async () => {
-  const meaningful =
-      Object.values(scores.value).filter(v => v >= 8).length >= 2
-
-  if (!meaningful) {
-    reportText.value = `
-Based on your responses, no strongly elevated or consistent pattern emerged across the areas assessed.
-
-This reflection is designed to identify sustained, high-impact patterns rather than occasional or situational experiences.
-`.trim()
-    return
-  }
-
   loading.value = true
+
   try {
     const response = await fetch("/api/expand-report-v2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ profile: scores.value })
     })
+
     const data = await response.json()
     reportText.value = data.text || ""
   } finally {
@@ -173,51 +182,14 @@ This reflection is designed to identify sustained, high-impact patterns rather t
   }
 }
 
-// Format report
+// Format report text
 const formattedReportText = computed(() => {
   if (!reportText.value) return ""
 
-  const lines = reportText.value.split("\n").map(l => l.trim())
-  let html = ""
-  let inList = false
-
-  for (const line of lines) {
-    if (/^\*\*.+\*\*$/.test(line)) {
-      if (inList) {
-        html += "</ul>"
-        inList = false
-      }
-      const title = line.replace(/\*\*/g, "")
-      html += `<h3 class="mt-10 mb-4 text-xl font-semibold text-stone-800">${title}</h3>`
-      continue
-    }
-
-    if (line.startsWith("- ")) {
-      if (!inList) {
-        html += `<ul class="mt-4 space-y-3 list-disc pl-6">`
-        inList = true
-      }
-      html += `<li class="text-stone-700">${line.replace("- ", "")}</li>`
-      continue
-    }
-
-    if (line === "") {
-      if (inList) {
-        html += "</ul>"
-        inList = false
-      }
-      continue
-    }
-
-    if (inList) {
-      html += "</ul>"
-      inList = false
-    }
-    html += `<p class="mb-4 text-stone-700 leading-relaxed">${line}</p>`
-  }
-
-  if (inList) html += "</ul>"
-
-  return html
+  return `<p>${reportText.value
+      .split(/\n\s*\n/)
+      .map(p => p.trim())
+      .filter(Boolean)
+      .join("</p><p>")}</p>`
 })
 </script>
