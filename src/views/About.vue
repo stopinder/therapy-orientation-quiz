@@ -13,12 +13,8 @@
         before jumping to conclusions.
       </p>
 
-      <router-link
-          to="/adhd-quiz"
-          class="inline-block mt-4 rounded-md bg-slate-900 px-6 py-3 text-white font-medium hover:bg-slate-800 transition"
-      >
-        Take the quiz
-      </router-link>
+      <router-link to="/gateway">Take the quiz</router-link>
+
     </section>
 
     <!-- Spacer / placeholder image block -->
@@ -80,12 +76,8 @@
 
     <!-- Final CTA -->
     <section>
-      <router-link
-          to="/adhd-quiz"
-          class="inline-block rounded-md bg-slate-900 px-6 py-3 text-white font-medium hover:bg-slate-800 transition"
-      >
-        Take the quiz
-      </router-link>
+      <router-link to="/gateway">Take the quiz</router-link>
+
     </section>
 
   </main>
