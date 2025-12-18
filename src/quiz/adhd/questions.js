@@ -112,7 +112,7 @@ export const adhdQuestions = [
     {
         id: "EF2",
         dimension: "executive_function",
-        text: "How often do you struggle to break tasks down into clear, manageable steps?
+        text: "How often do you struggle to break tasks down into clear, manageable steps?",
     },
     {
         id: "EF3",
@@ -200,7 +200,7 @@ export const adhdQuestions = [
     {
         id: "FI4",
         dimension: "functional_impact",
-        text: "THow often do you feel you are compensating or pushing through rather than functioning with ease?",
+        text: "How often do you feel you are compensating or pushing through rather than functioning with ease?",
     },
     {
         id: "FI5",
