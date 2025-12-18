@@ -18,9 +18,7 @@
       <!-- Progress -->
       <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
         <div class="max-w-3xl mx-auto px-3 py-3 flex justify-between items-center">
-          <span class="text-base font-semibold text-slate-900">
-            Progress
-          </span>
+          <span class="text-base font-semibold text-slate-900">Progress</span>
           <span class="text-sm font-semibold text-slate-800">
             {{ answeredCount }} / {{ totalCount }}
           </span>
@@ -32,10 +30,13 @@
         <div
             v-for="(question, index) in adhdQuestions"
             :key="question.id"
-            :ref="el => questionRefs[index] = el"
+            :ref="el => questionBlockRefs[index] = el"
             class="space-y-6"
         >
-          <p class="text-xl leading-relaxed text-stone-800">
+          <p
+              class="text-xl leading-relaxed text-stone-800"
+              :ref="el => questionTextRefs[index] = el"
+          >
             {{ question.text }}
           </p>
 
@@ -115,7 +116,10 @@ import { adhdQuestions } from "../quiz/adhd/questions.js"
 const answers = ref({})
 const reportText = ref("")
 const loading = ref(false)
-const questionRefs = ref([])
+
+// Question refs
+const questionBlockRefs = ref([])
+const questionTextRefs = ref([])
 
 // Scale
 const scale = [
@@ -150,14 +154,14 @@ const scores = computed(() => {
   return totals
 })
 
-// Auto-scroll handler
+// Auto-scroll handler (CORRECTED)
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
   await nextTick()
 
-  const nextEl = questionRefs.value[index + 1]
-  if (nextEl) {
-    nextEl.scrollIntoView({
+  const nextQuestionText = questionTextRefs.value[index + 1]
+  if (nextQuestionText) {
+    nextQuestionText.scrollIntoView({
       behavior: "smooth",
       block: "start"
     })
@@ -182,7 +186,7 @@ const generateReport = async () => {
   }
 }
 
-// Format report text
+// Format report text into paragraphs
 const formattedReportText = computed(() => {
   if (!reportText.value) return ""
 
