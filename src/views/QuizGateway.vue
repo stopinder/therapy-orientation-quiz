@@ -16,6 +16,20 @@
         <li>Written clinical-style reflection</li>
       </ul>
 
+      <label class="mt-6 flex items-start gap-3 text-sm text-slate-600">
+        <input
+            type="checkbox"
+            v-model="emailOptIn"
+            class="mt-1 h-4 w-4 accent-slate-700"
+        />
+        <span>
+          I’d like to receive occasional emails about new MindWorks reflections and tools.
+          <span class="block text-xs text-slate-500">
+            No mailing lists. You can unsubscribe at any time.
+          </span>
+        </span>
+      </label>
+
       <div class="pt-6">
         <router-link
             to="/adhd-quiz"
@@ -28,3 +42,8 @@
   </main>
 </template>
 
+<script setup>
+import { ref } from "vue"
+
+const emailOptIn = ref(false)
+</script>
