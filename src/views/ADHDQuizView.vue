@@ -203,18 +203,36 @@ const formattedReportText = computed(() => {
   let html = ""
 
   for (const line of lines) {
+
+    // **Heading**
+    if (/^\*\*.+\*\*$/.test(line)) {
+      const title = line.replace(/\*\*/g, "")
+      html += `<h3 class="mt-10 mb-4 text-lg font-semibold tracking-tight text-stone-800">
+        ${title}
+      </h3>`
+      continue
+    }
+
+    // ## Heading (fallback support)
     if (line.startsWith("## ")) {
       html += `<h3 class="mt-10 mb-4 text-lg font-semibold tracking-tight text-stone-800">
-  ${line.replace("## ", "")}
-</h3>`
-
-    } else if (line.trim() === "") {
-      html += ""
-    } else {
-      html += `<p>${line}</p>`
+        ${line.replace("## ", "")}
+      </h3>`
+      continue
     }
+
+    // Blank line
+    if (line.trim() === "") {
+      continue
+    }
+
+    // Paragraph
+    html += `<p class="mb-4 leading-relaxed text-stone-700">
+      ${line}
+    </p>`
   }
 
   return html
 })
+
 </script>
