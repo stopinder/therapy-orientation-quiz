@@ -13,9 +13,13 @@
           About
         </router-link>
 
-        <router-link to="/adhd-quiz" class="hover:text-slate-900 transition">
+        <a
+            href="https://gpttherapyassist.lemonsqueezy.com/buy/519426ee-40c5-4fd2-930a-fba4fdd6bf0d?redirect_url=https://therapy-orientation-quiz.vercel.app/gateway?order_id={order_id}"
+            class="hover:text-slate-900 transition"
+        >
           ADHD Quiz
-        </router-link>
+        </a>
+
       </nav>
 
     </div>

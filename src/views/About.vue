@@ -15,12 +15,13 @@
           offers a place to pause before drawing conclusions.
         </p>
 
-        <router-link
-            to="/gateway"
+        <a
+            href="https://gpttherapyassist.lemonsqueezy.com/buy/519426ee-40c5-4fd2-930a-fba4fdd6bf0d?redirect_url=https://therapy-orientation-quiz.vercel.app/gateway?order_id={order_id}"
             class="inline-block rounded-md bg-slate-800 px-6 py-3 text-white font-medium hover:bg-slate-700 transition"
         >
           Take the quiz
-        </router-link>
+        </a>
+
       </section>
 
       <!-- WHY THIS EXISTS -->
@@ -137,12 +138,13 @@
 
       <!-- FINAL CTA -->
       <section class="pt-6">
-        <router-link
-            to="/gateway"
+        <a
+            href="https://gpttherapyassist.lemonsqueezy.com/buy/519426ee-40c5-4fd2-930a-fba4fdd6bf0d?redirect_url=https://therapy-orientation-quiz.vercel.app/gateway?order_id={order_id}"
             class="inline-block rounded-md bg-slate-800 px-6 py-3 text-white font-medium hover:bg-slate-700 transition"
         >
           Take the quiz
-        </router-link>
+        </a>
+
       </section>
 
     </div>
