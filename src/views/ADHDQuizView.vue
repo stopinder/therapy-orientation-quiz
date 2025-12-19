@@ -114,6 +114,7 @@
 <script setup>
 import { ref, computed, nextTick } from "vue"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
+import { supabase } from "../lib/supabase"
 
 // State
 const answers = ref({})
@@ -237,5 +238,6 @@ const formattedReportText = computed(() => {
 
   return html
 })
+
 
 </script>
