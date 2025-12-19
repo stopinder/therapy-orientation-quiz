@@ -101,15 +101,7 @@
         </p>
       </section>
 
-      <!-- CTA -->
-      <section class="pt-4 flex justify-center">
-        <a
-            href="https://gpttherapyassist.lemonsqueezy.com/buy/519426ee-40c5-4fd2-930a-fba4fdd6bf0d?redirect_url=https://therapy-orientation-quiz.vercel.app/gateway?order_id={order_id}"
-            class="inline-block rounded-md bg-slate-800 px-8 py-3 text-white font-medium hover:bg-slate-700 transition"
-        >
-          Take the quiz
-        </a>
-      </section>
+
 
       <!-- FAQ -->
       <section class="space-y-3 max-w-2xl pt-2">
@@ -176,6 +168,16 @@
           </div>
         </div>
       </section>
+      <!-- CTA -->
+      <section class="pt-4 flex justify-center">
+        <a
+            href="https://gpttherapyassist.lemonsqueezy.com/buy/519426ee-40c5-4fd2-930a-fba4fdd6bf0d?redirect_url=https://therapy-orientation-quiz.vercel.app/gateway?order_id={order_id}"
+            class="inline-block rounded-md bg-slate-800 px-8 py-3 text-white font-medium hover:bg-slate-700 transition"
+        >
+          Take the quiz
+        </a>
+      </section>
+      <div class="mt-8 pt-6 border-t border-slate-300/70"></div>
 
       <!-- FOOTER -->
       <footer class="mt-10 bg-stone-50 px-6 py-6 text-sm text-slate-600 max-w-2xl">
