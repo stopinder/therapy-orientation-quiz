@@ -5,14 +5,30 @@ import ADHDQuizView from "../views/ADHDQuizView.vue"
 
 const routes = [
     { path: "/", redirect: "/about" },
+
     { path: "/about", name: "About", component: About },
+
     { path: "/gateway", name: "Gateway", component: QuizGateway },
-    { path: "/adhd-quiz", name: "ADHDQuiz", component: ADHDQuizView },
+
+    {
+        path: "/adhd-quiz",
+        name: "ADHDQuiz",
+        component: ADHDQuizView,
+        meta: { requiresGateway: true }
+    },
 ]
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresGateway && !sessionStorage.getItem("passedGateway")) {
+        next("/gateway")
+    } else {
+        next()
+    }
 })
 
 export default router

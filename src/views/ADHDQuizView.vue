@@ -114,7 +114,6 @@
 <script setup>
 import { ref, computed, nextTick } from "vue"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
-import { supabase } from "../lib/supabase"
 
 // State
 const answers = ref({})
@@ -196,20 +195,16 @@ const generateReport = async () => {
   }
 }
 
-// Report formatter (restores paragraphs + headings)
+// Report formatter
 const formattedReportText = computed(() => {
   if (!reportText.value) return ""
 
   const lines = reportText.value.replace(/\r/g, "").split("\n")
-
   let html = ""
 
   for (const line of lines) {
-    console.log("LINE:", JSON.stringify(line))
-
     // **Heading**
     if (/^\s*\*\*\s*.+?\s*\*\*\s*$/.test(line)) {
-
       const title = line.replace(/\*\*/g, "")
       html += `<h3 class="mt-10 mb-4 text-lg font-semibold tracking-tight text-stone-800">
         ${title}
@@ -217,7 +212,7 @@ const formattedReportText = computed(() => {
       continue
     }
 
-    // ## Heading (fallback support)
+    // ## Heading fallback
     if (line.startsWith("## ")) {
       html += `<h3 class="mt-10 mb-4 text-lg font-semibold tracking-tight text-stone-800">
         ${line.replace("## ", "")}
@@ -225,12 +220,8 @@ const formattedReportText = computed(() => {
       continue
     }
 
-    // Blank line
-    if (line.trim() === "") {
-      continue
-    }
+    if (line.trim() === "") continue
 
-    // Paragraph
     html += `<p class="mb-4 leading-relaxed text-stone-700">
       ${line}
     </p>`
@@ -238,6 +229,4 @@ const formattedReportText = computed(() => {
 
   return html
 })
-
-
 </script>

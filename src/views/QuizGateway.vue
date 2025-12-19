@@ -62,6 +62,9 @@ const handleContinue = async () => {
         .eq("order_id", orderId)
   }
 
+  // mark gateway as completed for this session
+  sessionStorage.setItem("passedGateway", "true")
+
   router.push("/adhd-quiz")
 }
 </script>
