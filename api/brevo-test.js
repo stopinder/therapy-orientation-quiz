@@ -3,17 +3,22 @@ export const config = {
 }
 
 export default async function handler(req, res) {
+    console.log("Brevo test invoked")
+
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method not allowed" })
     }
 
-    const { email } = req.body
+    const { email } = req.body || {}
 
     if (!email) {
         return res.status(400).json({ error: "Email required" })
     }
 
     try {
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 8000)
+
         const response = await fetch("https://api.brevo.com/v3/contacts", {
             method: "POST",
             headers: {
@@ -27,8 +32,11 @@ export default async function handler(req, res) {
                     SOURCE: "mindworks_quiz",
                     OPT_IN: true
                 }
-            })
+            }),
+            signal: controller.signal
         })
+
+        clearTimeout(timeout)
 
         const text = await response.text()
 
@@ -38,6 +46,10 @@ export default async function handler(req, res) {
 
         return res.status(200).json({ success: true })
     } catch (err) {
-        return res.status(500).json({ error: err.message })
+        return res.status(500).json({
+            error: err.name === "AbortError"
+                ? "Brevo request timed out"
+                : err.message
+        })
     }
 }
