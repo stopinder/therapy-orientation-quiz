@@ -44,19 +44,22 @@
 
 <script setup>
 import { ref } from "vue"
-import { useRouter } from "vue-router"
+import { useRouter, useRoute } from "vue-router"
 import { supabase } from "../lib/supabase.js"
 
 const router = useRouter()
+const route = useRoute()
+
 const emailOptIn = ref(false)
 
 const handleContinue = async () => {
-  if (emailOptIn.value && supabase) {
-    await supabase.from("email_optins").insert({
-      email: "placeholder@example.com",
-      opt_in: true,
-      source: "mindworks_quiz"
-    })
+  const orderId = route.query.order_id
+
+  if (emailOptIn.value && supabase && orderId) {
+    await supabase
+        .from("email_optins")
+        .update({ opt_in: true })
+        .eq("order_id", orderId)
   }
 
   router.push("/adhd-quiz")
