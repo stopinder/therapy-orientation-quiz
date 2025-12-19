@@ -1,7 +1,6 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 pt-12 pb-20">
-
-    <div class="max-w-3xl mx-auto px-6 pt-8 pb-24 space-y-16">
+    <div class="max-w-3xl mx-auto px-6 pt-8 pb-24 space-y-20">
 
       <!-- HERO -->
       <section class="space-y-6">
@@ -9,10 +8,15 @@
           A structured psychological reflection — built to be taken seriously
         </h1>
 
-        <p class="text-lg leading-relaxed text-slate-700 max-w-2xl mb-8">
-          If you’ve been noticing patterns in your attention, focus, or emotional
-          regulation and want a grounded way to think about them, this reflection
-          offers a place to pause before drawing conclusions.
+        <p class="text-lg leading-relaxed text-slate-700 max-w-2xl">
+          If you’ve been noticing recurring patterns in attention, focus, or emotional regulation,
+          and want a grounded way to think about them, this reflection offers a place to pause
+          before drawing conclusions.
+        </p>
+
+        <p class="text-slate-700 max-w-2xl">
+          It’s designed for people who sense that something meaningful may be going on —
+          and want clarity rather than quick answers.
         </p>
 
         <a
@@ -21,7 +25,6 @@
         >
           Take the quiz
         </a>
-
       </section>
 
       <!-- WHY THIS EXISTS -->
@@ -31,17 +34,43 @@
         <p>There’s a lot of noise around ADHD.</p>
 
         <p>
-          Some people arrive already convinced. Others feel unsure, dismissed, or
-          overwhelmed by conflicting information. Many simply sense that
+          Some people arrive already convinced. Others feel unsure, dismissed, or overwhelmed
+          by conflicting information. Many simply sense that
           <em>something isn’t quite working</em>.
         </p>
 
         <p>
-          MindWorks is designed to sit in that in-between space — after curiosity
-          begins, but before labels are applied.
+          MindWorks is designed to sit in that in-between space —
+          after curiosity begins, but before labels are applied.
         </p>
 
-        <p class="font-medium">The aim is clarity, not certainty.</p>
+        <p class="font-medium">
+          The aim is clarity, not certainty.
+        </p>
+      </section>
+
+      <!-- WHY CLARITY MATTERS -->
+      <section class="space-y-4 max-w-2xl">
+        <h2 class="text-xl font-semibold">Why clarity matters</h2>
+
+        <p class="text-slate-700">
+          Patterns often described as “ADHD” can have real consequences —
+          shaping decision-making, access to clarity, emotional range,
+          and overall quality of life.
+        </p>
+
+        <p class="text-slate-700">
+          When patterns remain unnamed or poorly understood, people often feel
+          at the mercy of them. When patterns are recognised clearly,
+          they can be seen for what they are — and related to differently.
+        </p>
+
+        <p class="text-slate-700">
+          This reflection is built on the premise that understanding
+          <em>why you tend to operate as you do</em>
+          can, in itself, create a degree of freedom —
+          without diagnosis, medication, or adopting an identity.
+        </p>
       </section>
 
       <!-- WHO THIS IS FOR -->
@@ -52,7 +81,7 @@
           <li>You’re wondering whether ongoing difficulties are worth taking seriously</li>
           <li>You notice patterns over time, not just isolated bad days</li>
           <li>You want psychological grounding without being pushed toward an identity</li>
-          <li>You’re looking for something closer to clinical thinking than social media</li>
+          <li>You’re looking for something steadier than social media narratives</li>
         </ul>
 
         <p class="text-slate-700">
@@ -92,47 +121,30 @@
             Structured like a psychologically informed summary.
           </li>
           <li>
-            <strong>Decide what to do next.</strong>
-            Keep it, reflect, or take it into a professional conversation.
+            <strong>Use it as you see fit.</strong>
+            Keep it, reflect on it, or revisit it later.
           </li>
         </ol>
 
-        <p class="text-slate-700">There is no obligation to go further.</p>
-      </section>
-
-      <!-- NOT A POP QUIZ -->
-      <section class="rounded-lg bg-slate-100/70 px-8 py-8 space-y-5">
-        <h2 class="text-xl font-semibold">Not a pop quiz</h2>
-
-        <p class="max-w-2xl text-slate-700">
-          MindWorks reflections are deliberately constructed.
-        </p>
-
-        <ul class="space-y-2 list-disc pl-5 max-w-2xl text-slate-700">
-          <li>DSM descriptive domains (used reflectively, not diagnostically)</li>
-          <li>NICE guideline framing (UK context)</li>
-          <li>Research on attention and executive function</li>
-          <li>Clinical experience of real-world presentation</li>
-        </ul>
-
-        <p class="max-w-2xl text-slate-700">
-          These sources are translated, not copied. The emphasis is on patterns,
-          context, and coherence.
-        </p>
-
-        <p class="font-medium max-w-2xl">
-          The aim is usefulness, not classification.
+        <p class="text-slate-700">
+          There is no obligation to go further.
         </p>
       </section>
 
-      <!-- BOUNDARIES -->
-      <section class="space-y-3 max-w-2xl">
-        <h2 class="text-xl font-semibold">A note on boundaries</h2>
+      <!-- CREDIBILITY ANCHOR -->
+      <section class="rounded-lg bg-slate-100/70 px-8 py-8 space-y-4 max-w-2xl">
+        <h2 class="text-xl font-semibold">Who built this</h2>
 
-        <p class="text-slate-700 text-sm leading-relaxed">
-          This reflection is not diagnostic and does not replace professional
-          assessment or medical care. It was developed with care to balance
-          rigour, restraint, and accessibility.
+        <p class="text-slate-700">
+          MindWorks reflections were developed by
+          <strong>Robert Ormiston</strong>,
+          a UK-trained psychotherapist and registered mental health nurse,
+          with decades of experience across NHS and private clinical settings.
+        </p>
+
+        <p class="text-slate-700">
+          The work draws on formal clinical frameworks and long-term professional practice,
+          translated into accessible psychological language.
         </p>
       </section>
 
@@ -144,9 +156,9 @@
         >
           Take the quiz
         </a>
-
       </section>
 
     </div>
   </main>
 </template>
+
