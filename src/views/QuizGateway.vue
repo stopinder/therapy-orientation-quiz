@@ -44,27 +44,31 @@
 
 <script setup>
 import { ref } from "vue"
-import { useRouter, useRoute } from "vue-router"
+import { useRouter } from "vue-router"
 import { supabase } from "../lib/supabase.js"
 
 const router = useRouter()
-const route = useRoute()
-
 const emailOptIn = ref(false)
 
 const handleContinue = async () => {
-  const orderId = route.query.order_id
-
-  if (emailOptIn.value && supabase && orderId) {
-    await supabase
+  if (emailOptIn.value && supabase) {
+    const { data } = await supabase
         .from("email_optins")
-        .update({ opt_in: true })
-        .eq("order_id", orderId)
+        .select("id")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single()
+
+    if (data?.id) {
+      await supabase
+          .from("email_optins")
+          .update({ opt_in: true })
+          .eq("id", data.id)
+    }
   }
 
-  // mark gateway as completed for this session
   sessionStorage.setItem("passedGateway", "true")
-
   router.push("/adhd-quiz")
 }
 </script>
+
