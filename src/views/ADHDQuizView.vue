@@ -204,7 +204,10 @@ const formattedReportText = computed(() => {
 
   for (const line of lines) {
     if (line.startsWith("## ")) {
-      html += `<h3>${line.replace("## ", "")}</h3>`
+      html += `<h3 class="mt-10 mb-4 text-lg font-semibold tracking-tight text-stone-800">
+  ${line.replace("## ", "")}
+</h3>`
+
     } else if (line.trim() === "") {
       html += ""
     } else {
