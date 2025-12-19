@@ -27,12 +27,12 @@
 
       <!-- Quiz -->
       <section class="space-y-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8">
+
         <div
             v-for="(question, index) in adhdQuestions"
             :key="question.id"
             class="space-y-6"
         >
-          <!-- Question text -->
           <p
               class="text-xl leading-relaxed text-stone-800 scroll-mt-28"
               :ref="el => questionTextRefs[index] = el"
@@ -40,7 +40,6 @@
             {{ question.text }}
           </p>
 
-          <!-- Options -->
           <div class="space-y-4">
             <label
                 v-for="option in scale"
@@ -62,10 +61,12 @@
           </div>
         </div>
 
+        <!-- Generate Button -->
         <button
+            ref="generateButtonRef"
             type="button"
             @click="generateReport"
-            class="mt-8 px-6 py-3 rounded-xl bg-slate-700 text-white"
+            class="mt-8 px-6 py-3 rounded-xl bg-slate-700 text-white scroll-mt-28"
         >
           {{ loading ? "Generating…" : "Generate Reflection" }}
         </button>
@@ -104,6 +105,7 @@
             </p>
           </div>
         </details>
+
       </section>
     </div>
   </main>
@@ -118,8 +120,9 @@ const answers = ref({})
 const reportText = ref("")
 const loading = ref(false)
 
-// Question text refs
+// Refs
 const questionTextRefs = ref([])
+const generateButtonRef = ref(null)
 
 // Scale
 const scale = [
@@ -154,14 +157,20 @@ const scores = computed(() => {
   return totals
 })
 
-// Auto-scroll handler (FINAL)
+// Auto-scroll handler
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
   await nextTick()
 
-  const nextQuestionText = questionTextRefs.value[index + 1]
-  if (nextQuestionText) {
-    nextQuestionText.scrollIntoView({
+  const nextQuestion = questionTextRefs.value[index + 1]
+
+  if (nextQuestion) {
+    nextQuestion.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
+  } else if (generateButtonRef.value) {
+    generateButtonRef.value.scrollIntoView({
       behavior: "smooth",
       block: "start"
     })
@@ -186,14 +195,23 @@ const generateReport = async () => {
   }
 }
 
-// Format report text into paragraphs
+// Report formatter (restores paragraphs + headings)
 const formattedReportText = computed(() => {
   if (!reportText.value) return ""
 
-  return `<p>${reportText.value
-      .split(/\n\s*\n/)
-      .map(p => p.trim())
-      .filter(Boolean)
-      .join("</p><p>")}</p>`
+  const lines = reportText.value.split("\n")
+  let html = ""
+
+  for (const line of lines) {
+    if (line.startsWith("## ")) {
+      html += `<h3>${line.replace("## ", "")}</h3>`
+    } else if (line.trim() === "") {
+      html += ""
+    } else {
+      html += `<p>${line}</p>`
+    }
+  }
+
+  return html
 })
 </script>
