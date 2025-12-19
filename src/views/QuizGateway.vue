@@ -31,12 +31,12 @@
       </label>
 
       <div class="pt-6">
-        <router-link
-            to="/adhd-quiz"
+        <button
+            @click="handleContinue"
             class="inline-block rounded-md bg-slate-900 px-6 py-3 text-white font-medium hover:bg-slate-800 transition"
         >
           Continue to the quiz
-        </router-link>
+        </button>
       </div>
     </div>
   </main>
@@ -44,6 +44,21 @@
 
 <script setup>
 import { ref } from "vue"
+import { useRouter } from "vue-router"
+import { supabase } from "../lib/supabase.js"
 
+const router = useRouter()
 const emailOptIn = ref(false)
+
+const handleContinue = async () => {
+  if (emailOptIn.value && supabase) {
+    await supabase.from("email_optins").insert({
+      email: "placeholder@example.com",
+      opt_in: true,
+      source: "mindworks_quiz"
+    })
+  }
+
+  router.push("/adhd-quiz")
+}
 </script>
