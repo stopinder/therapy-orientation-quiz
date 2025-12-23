@@ -142,6 +142,10 @@ const reportTexts = ref({
 
 const activeView = ref("overview")
 
+// Typing state
+const typedOverviewText = ref("")
+const overviewHasTyped = ref(false)
+
 // ---------- Refs ----------
 const questionTextRefs = ref([])
 const generateButtonRef = ref(null)
@@ -200,6 +204,15 @@ const handleAnswer = async (questionId, value, index) => {
   }
 }
 
+// ---------- Typing Helper ----------
+const typeText = async (fullText, targetRef, speed = 12) => {
+  targetRef.value = ""
+  for (let i = 0; i < fullText.length; i++) {
+    targetRef.value += fullText[i]
+    await new Promise(resolve => setTimeout(resolve, speed))
+  }
+}
+
 // ---------- API ----------
 const generateOverview = async () => {
   loading.value = true
@@ -214,8 +227,15 @@ const generateOverview = async () => {
     })
 
     const data = await response.json()
-    reportTexts.value.overview = data.text || ""
+    const text = data.text || ""
+
+    reportTexts.value.overview = text
     activeView.value = "overview"
+
+    if (!overviewHasTyped.value) {
+      overviewHasTyped.value = true
+      await typeText(text, typedOverviewText)
+    }
   } finally {
     loading.value = false
   }
@@ -244,9 +264,15 @@ const selectView = async (viewKey) => {
   }
 }
 
-// ---------- Formatting ----------
-const activeText = computed(() => reportTexts.value[activeView.value])
+// ---------- Computed ----------
+const activeText = computed(() => {
+  if (activeView.value === "overview" && overviewHasTyped.value) {
+    return typedOverviewText.value
+  }
+  return reportTexts.value[activeView.value]
+})
 
+// ---------- Formatting ----------
 const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
 
@@ -254,7 +280,6 @@ const formattedActiveText = computed(() => {
   let html = ""
 
   for (const line of lines) {
-    // **Heading**
     if (/^\s*\*\*(.+?)\*\*\s*$/.test(line)) {
       const title = line.replace(/\*\*/g, "")
       html += `
@@ -277,3 +302,4 @@ const formattedActiveText = computed(() => {
   return html
 })
 </script>
+
