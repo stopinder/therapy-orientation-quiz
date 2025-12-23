@@ -65,22 +65,40 @@
         <button
             ref="generateButtonRef"
             type="button"
-            @click="generateReport"
+            @click="generateOverview"
             class="mt-8 px-6 py-3 rounded-xl bg-slate-700 text-white scroll-mt-28"
         >
           {{ loading ? "Generating…" : "Generate Reflection" }}
         </button>
 
         <!-- Report -->
-        <div
-            v-if="reportText"
-            v-html="formattedReportText"
-            class="mt-12 max-w-prose mx-auto prose prose-stone"
-        ></div>
+        <div v-if="activeText" class="mt-12 max-w-prose mx-auto">
+
+          <!-- View Switcher -->
+          <div class="flex gap-2 mb-6">
+            <button
+                v-for="view in views"
+                :key="view.key"
+                @click="selectView(view.key)"
+                class="px-4 py-1.5 rounded-full text-sm border"
+                :class="activeView === view.key
+                ? 'bg-slate-700 text-white border-slate-700'
+                : 'bg-white text-slate-700 border-stone-300'"
+            >
+              {{ view.label }}
+            </button>
+          </div>
+
+          <!-- Text -->
+          <div
+              v-html="formattedActiveText"
+              class="prose prose-stone"
+          ></div>
+        </div>
 
         <!-- Methodology -->
         <details
-            v-if="reportText"
+            v-if="activeText"
             class="mt-10 text-sm text-stone-600 max-w-prose mx-auto"
         >
           <summary class="cursor-pointer text-stone-700">
@@ -115,16 +133,30 @@
 import { ref, computed, nextTick } from "vue"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 
-// State
+// ---------- State ----------
 const answers = ref({})
-const reportText = ref("")
 const loading = ref(false)
 
-// Refs
+const reportTexts = ref({
+  overview: "",
+  functioning: "",
+  patterns: ""
+})
+
+const activeView = ref("overview")
+
+// ---------- Refs ----------
 const questionTextRefs = ref([])
 const generateButtonRef = ref(null)
 
-// Scale
+// ---------- View Config ----------
+const views = [
+  { key: "overview", label: "Overview" },
+  { key: "functioning", label: "Daily functioning" },
+  { key: "patterns", label: "Patterns & trade-offs" }
+]
+
+// ---------- Scale ----------
 const scale = [
   { label: "Never", value: 0 },
   { label: "Rarely", value: 1 },
@@ -133,11 +165,11 @@ const scale = [
   { label: "Very Often", value: 4 }
 ]
 
-// Progress
+// ---------- Progress ----------
 const totalCount = adhdQuestions.length
 const answeredCount = computed(() => Object.keys(answers.value).length)
 
-// Scoring
+// ---------- Scoring ----------
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -157,7 +189,7 @@ const scores = computed(() => {
   return totals
 })
 
-// Auto-scroll handler
+// ---------- Auto-scroll ----------
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
   await nextTick()
@@ -165,68 +197,67 @@ const handleAnswer = async (questionId, value, index) => {
   const nextQuestion = questionTextRefs.value[index + 1]
 
   if (nextQuestion) {
-    nextQuestion.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    })
+    nextQuestion.scrollIntoView({ behavior: "smooth", block: "start" })
   } else if (generateButtonRef.value) {
-    generateButtonRef.value.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    })
+    generateButtonRef.value.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 }
 
-// Generate report
-const generateReport = async () => {
+// ---------- API ----------
+const generateOverview = async () => {
   loading.value = true
-
   try {
     const response = await fetch("/api/expand-report-v2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ profile: scores.value })
+      body: JSON.stringify({
+        mode: "overview",
+        profile: scores.value
+      })
     })
 
     const data = await response.json()
-    reportText.value = data.text || ""
+    reportTexts.value.overview = data.text || ""
+    activeView.value = "overview"
   } finally {
     loading.value = false
   }
 }
 
-// Report formatter
-const formattedReportText = computed(() => {
-  if (!reportText.value) return ""
+const selectView = async (viewKey) => {
+  activeView.value = viewKey
 
-  const lines = reportText.value.replace(/\r/g, "").split("\n")
-  let html = ""
+  if (reportTexts.value[viewKey]) return
 
-  for (const line of lines) {
-    // **Heading**
-    if (/^\s*\*\*\s*.+?\s*\*\*\s*$/.test(line)) {
-      const title = line.replace(/\*\*/g, "")
-      html += `<h3 class="mt-10 mb-4 text-lg font-semibold tracking-tight text-stone-800">
-        ${title}
-      </h3>`
-      continue
-    }
+  loading.value = true
+  try {
+    const response = await fetch("/api/expand-report-v2", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mode: viewKey,
+        profile: scores.value
+      })
+    })
 
-    // ## Heading fallback
-    if (line.startsWith("## ")) {
-      html += `<h3 class="mt-10 mb-4 text-lg font-semibold tracking-tight text-stone-800">
-        ${line.replace("## ", "")}
-      </h3>`
-      continue
-    }
-
-    if (line.trim() === "") continue
-
-    html += `<p class="mb-4 leading-relaxed text-stone-700">
-      ${line}
-    </p>`
+    const data = await response.json()
+    reportTexts.value[viewKey] = data.text || ""
+  } finally {
+    loading.value = false
   }
+}
 
-  return html
+// ---------- Computed ----------
+const activeText = computed(() => reportTexts.value[activeView.value])
+
+const formattedActiveText = computed(() => {
+  if (!activeText.value) return ""
+
+  return activeText.value
+      .replace(/\r/g, "")
+      .split(/\n+/)
+      .filter(Boolean)
+      .map(p => `<p class="mb-4 leading-relaxed text-stone-700">${p}</p>`)
+      .join("")
 })
 </script>
