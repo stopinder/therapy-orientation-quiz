@@ -180,25 +180,101 @@
       <div class="mt-8 pt-6 border-t border-slate-300/70"></div>
 
       <!-- FOOTER -->
-      <footer class="mt-10 bg-stone-50 px-6 py-6 text-sm text-slate-600 max-w-2xl">
-        <div class="space-y-2">
+      <footer class="mt-16 border-t border-slate-200 bg-stone-50 px-6 py-10 text-sm text-slate-600">
+        <div class="max-w-3xl mx-auto space-y-8">
 
-          <p class="font-medium text-slate-700">
-            Professional context
-          </p>
+          <!-- Service identity -->
+          <div class="space-y-1">
+            <p class="font-medium text-slate-800">
+              MindWorks
+            </p>
+            <p>
+              A paid psychological reflection tool.
+            </p>
+            <p>
+              Affiliated with Chrysalis Therapy Services.
+            </p>
+          </div>
 
-          <p>
-            Robert Ormiston is a UK-trained psychotherapist and registered mental health nurse,
-            affiliated with the British Association for Counselling and Psychotherapy (BACP)
-            and registered with the UK Nursing and Midwifery Council (NMC).
-          </p>
+          <!-- Professional standing -->
+          <div class="space-y-1">
+            <p class="font-medium text-slate-700">
+              Professional standing
+            </p>
+            <ul class="space-y-0.5">
+              <li>
+                <a
+                    href="https://www.bacp.co.uk/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:text-slate-800 underline"
+                >
+                  British Association for Counselling and Psychotherapy (BACP)
+                </a>
+              </li>
+              <li>
+                <a
+                    href="https://www.nmc.org.uk/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:text-slate-800 underline"
+                >
+                  Nursing and Midwifery Council (NMC)
+                </a>
+              </li>
+            </ul>
+          </div>
 
-          <p class="text-xs text-slate-500 leading-relaxed">
-            MindWorks reflections are non-diagnostic and support thoughtful self-reflection only.
-          </p>
+          <!-- Scope and limits -->
+          <div class="space-y-1">
+            <p class="font-medium text-slate-700">
+              Scope &amp; limits
+            </p>
+            <p class="leading-relaxed">
+              MindWorks provides non-diagnostic psychological reflections for self-understanding only.
+            </p>
+            <nav class="flex flex-wrap gap-x-4 gap-y-1 pt-1">
+              <router-link
+                  to="/terms"
+                  class="underline hover:text-slate-800"
+              >
+                Terms of Use
+              </router-link>
+              <router-link
+                  to="/privacy"
+                  class="underline hover:text-slate-800"
+              >
+                Privacy Policy
+              </router-link>
+            </nav>
+          </div>
+
+          <!-- Contact and transparency -->
+          <div class="space-y-1">
+            <p class="font-medium text-slate-700">
+              Contact &amp; transparency
+            </p>
+            <nav class="flex flex-wrap gap-x-4 gap-y-1">
+              <router-link
+                  to="/contact"
+                  class="underline hover:text-slate-800"
+              >
+                Contact / Feedback
+              </router-link>
+              <a
+                  href="https://robormiston.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline hover:text-slate-800"
+              >
+                robormiston.com
+              </a>
+            </nav>
+          </div>
 
         </div>
       </footer>
+
 
     </div>
   </main>
