@@ -75,25 +75,22 @@
         <div v-if="activeText" class="mt-12 max-w-prose mx-auto">
 
           <!-- View Switcher -->
-          <div class="flex gap-2 mb-6">
+          <div class="flex gap-2 mb-8">
             <button
                 v-for="view in views"
                 :key="view.key"
                 @click="selectView(view.key)"
-                class="px-4 py-1.5 rounded-full text-sm border"
+                class="px-4 py-1.5 rounded-full text-sm border transition"
                 :class="activeView === view.key
                 ? 'bg-slate-700 text-white border-slate-700'
-                : 'bg-white text-slate-700 border-stone-300'"
+                : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
             >
               {{ view.label }}
             </button>
           </div>
 
-          <!-- Text -->
-          <div
-              v-html="formattedActiveText"
-              class="prose prose-stone"
-          ></div>
+          <!-- Formatted Report -->
+          <div v-html="formattedActiveText"></div>
         </div>
 
         <!-- Methodology -->
@@ -247,17 +244,36 @@ const selectView = async (viewKey) => {
   }
 }
 
-// ---------- Computed ----------
+// ---------- Formatting ----------
 const activeText = computed(() => reportTexts.value[activeView.value])
 
 const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
 
-  return activeText.value
-      .replace(/\r/g, "")
-      .split(/\n+/)
-      .filter(Boolean)
-      .map(p => `<p class="mb-4 leading-relaxed text-stone-700">${p}</p>`)
-      .join("")
+  const lines = activeText.value.replace(/\r/g, "").split("\n")
+  let html = ""
+
+  for (const line of lines) {
+    // **Heading**
+    if (/^\s*\*\*(.+?)\*\*\s*$/.test(line)) {
+      const title = line.replace(/\*\*/g, "")
+      html += `
+        <h3 class="mt-10 mb-4 text-lg font-semibold tracking-tight text-stone-800">
+          ${title}
+        </h3>
+      `
+      continue
+    }
+
+    if (!line.trim()) continue
+
+    html += `
+      <p class="mb-4 leading-relaxed text-stone-700">
+        ${line}
+      </p>
+    `
+  }
+
+  return html
 })
 </script>
