@@ -299,7 +299,18 @@ const generateOverview = async () => {
 const selectView = async (viewKey) => {
   activeView.value = viewKey
 
-  if (reportTexts.value[viewKey]) return
+  if (reportTexts.value[viewKey]) {
+    await nextTick()
+
+    if (reportContainerRef?.value) {
+      reportContainerRef.value.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      })
+    }
+
+    return
+  }
 
   loading.value = true
   try {
@@ -314,10 +325,21 @@ const selectView = async (viewKey) => {
 
     const data = await response.json()
     reportTexts.value[viewKey] = data.text || ""
+
+    await nextTick()
+
+    if (reportContainerRef?.value) {
+      reportContainerRef.value.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      })
+    }
+
   } finally {
     loading.value = false
   }
 }
+
 
 // ---------- Computed ----------
 const activeText = computed(() => {
