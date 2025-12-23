@@ -70,6 +70,23 @@
         >
           {{ loading ? "Generating…" : "Generate Reflection" }}
         </button>
+        <!-- Consent notice -->
+        <p class="mt-3 text-xs text-slate-500 max-w-prose">
+          By generating a reflection, you agree to the
+          <router-link
+              to="/terms"
+              class="underline hover:text-slate-700"
+          >
+            Terms of Use
+          </router-link>
+          and
+          <router-link
+              to="/privacy"
+              class="underline hover:text-slate-700"
+          >
+            Privacy Policy
+          </router-link>.
+        </p>
 
         <!-- Report -->
         <div v-if="activeText" class="mt-12 max-w-prose mx-auto">
