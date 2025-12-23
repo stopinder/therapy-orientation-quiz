@@ -100,11 +100,14 @@
             </p>
 
             <a
-                href="mailto:feedback@robormiston.com?subject=MindWorks%20reflection%20feedback&body=What%20felt%20accurate%20or%20recognisable%3F%0D%0A%0D%0AWhat%20felt%20unclear%2C%20off-mark%2C%20or%20missing%3F%0D%0A%0D%0AAny%20other%20thoughts%20you%E2%80%99d%20be%20willing%20to%20share%3F"
+                href="mailto:emdrifs@robormiston.com?subject=MindWorks%20reflection%20feedback&body=What%20felt%20accurate%20or%20recognisable%3F%0D%0A%0D%0AWhat%20felt%20unclear%2C%20off-mark%2C%20or%20missing%3F%0D%0A%0D%0AAny%20other%20thoughts%20you%E2%80%99d%20be%20willing%20to%20share%3F"
+                target="_blank"
+                rel="noopener"
                 class="underline hover:text-slate-800"
             >
               Share feedback
             </a>
+
           </div>
 
           <!-- Methodology -->
