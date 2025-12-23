@@ -89,9 +89,14 @@
         </p>
 
         <!-- Report -->
-        <div v-if="activeText" class="mt-12 max-w-prose mx-auto">
+        <div
+            v-if="activeText"
+            ref="reportContainerRef"
+            class="mt-12 max-w-prose mx-auto"
+        >
 
-          <!-- View Switcher -->
+
+        <!-- View Switcher -->
           <div class="flex gap-2 mb-8">
             <button
                 v-for="view in views"
@@ -205,6 +210,7 @@ const scale = [
 // ---------- Progress ----------
 const totalCount = adhdQuestions.length
 const answeredCount = computed(() => Object.keys(answers.value).length)
+const reportContainerRef = ref(null)
 
 // ---------- Scoring ----------
 const scores = computed(() => {
@@ -268,10 +274,23 @@ const generateOverview = async () => {
     reportTexts.value.overview = text
     activeView.value = "overview"
 
+    // ✅ ensure DOM is rendered before scrolling
+    await nextTick()
+
+    // ✅ scroll report container into view (safe guard)
+    if (reportContainerRef?.value) {
+      reportContainerRef.value.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      })
+    }
+
+    // ✅ type only once
     if (!overviewHasTyped.value) {
       overviewHasTyped.value = true
       await typeText(text, typedOverviewText)
     }
+
   } finally {
     loading.value = false
   }
@@ -337,5 +356,6 @@ const formattedActiveText = computed(() => {
 
   return html
 })
+
 </script>
 
