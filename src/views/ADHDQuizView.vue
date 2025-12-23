@@ -82,8 +82,8 @@
                 @click="selectView(view.key)"
                 class="px-4 py-1.5 rounded-full text-sm border transition"
                 :class="activeView === view.key
-                ? 'bg-slate-700 text-white border-slate-700'
-                : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
+        ? 'bg-slate-700 text-white border-slate-700'
+        : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
             >
               {{ view.label }}
             </button>
@@ -91,35 +91,51 @@
 
           <!-- Formatted Report -->
           <div v-html="formattedActiveText"></div>
-        </div>
 
-        <!-- Methodology -->
-        <details
-            v-if="activeText"
-            class="mt-10 text-sm text-stone-600 max-w-prose mx-auto"
-        >
-          <summary class="cursor-pointer text-stone-700">
-            Methodology & Sources
-          </summary>
-
-          <div class="mt-4 space-y-4">
-            <p>
-              This reflection is generated through structured language synthesis
-              informed by established psychological frameworks.
+          <!-- Feedback -->
+          <div class="mt-8 text-sm text-slate-600">
+            <p class="mb-2 italic">
+              If you noticed anything that felt particularly accurate, unclear, or off-mark,
+              I’d genuinely welcome hearing about it.
             </p>
 
-            <ul class="list-disc pl-5 space-y-1">
-              <li>DSM-5-TR descriptive domains (non-diagnostic)</li>
-              <li>NICE NG87 topic framing</li>
-              <li>Executive function research</li>
-              <li>Developmental and stress-based models</li>
-            </ul>
-
-            <p>
-              This is not a diagnostic instrument or probability estimate.
-            </p>
+            <a
+                href="mailto:feedback@robormiston.com?subject=MindWorks%20reflection%20feedback&body=What%20felt%20accurate%20or%20recognisable%3F%0D%0A%0D%0AWhat%20felt%20unclear%2C%20off-mark%2C%20or%20missing%3F%0D%0A%0D%0AAny%20other%20thoughts%20you%E2%80%99d%20be%20willing%20to%20share%3F"
+                class="underline hover:text-slate-800"
+            >
+              Share feedback
+            </a>
           </div>
-        </details>
+
+          <!-- Methodology -->
+          <details
+              class="mt-10 text-sm text-stone-600"
+          >
+            <summary class="cursor-pointer text-stone-700">
+              Methodology & Sources
+            </summary>
+
+            <div class="mt-4 space-y-4">
+              <p>
+                This reflection is generated through structured language synthesis
+                informed by established psychological frameworks.
+              </p>
+
+              <ul class="list-disc pl-5 space-y-1">
+                <li>DSM-5-TR descriptive domains (non-diagnostic)</li>
+                <li>NICE NG87 topic framing</li>
+                <li>Executive function research</li>
+                <li>Developmental and stress-based models</li>
+              </ul>
+
+              <p>
+                This is not a diagnostic instrument or probability estimate.
+              </p>
+            </div>
+          </details>
+
+        </div> <!-- ← THIS was missing -->
+
 
       </section>
     </div>
