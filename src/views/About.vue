@@ -225,7 +225,7 @@
                     rel="noopener noreferrer"
                     class="hover:text-slate-800 underline"
                 >
-                  British Association for Counselling and Psychotherapy (BACP)
+                  British Association for Counselling and Psychotherapy (MBACP)
                 </a>
               </li>
               <li>
@@ -235,7 +235,7 @@
                     rel="noopener noreferrer"
                     class="hover:text-slate-800 underline"
                 >
-                  Nursing and Midwifery Council (NMC)
+                  UK Nursing and Midwifery Council (NMC)
                 </a>
               </li>
             </ul>
