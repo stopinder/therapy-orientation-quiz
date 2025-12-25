@@ -22,11 +22,12 @@
           </router-link>
 
           <a
-              href="https://gpttherapyassist.lemonsqueezy.com/buy/519426ee-40c5-4fd2-930a-fba4fdd6bf0d?redirect_url=https://therapy-orientation-quiz.vercel.app/gateway?order_id={order_id}"
+              href="https://buy.stripe.com/6oU3cu9hMf8Z6ry1T6c3m04"
               class="hover:text-slate-900 transition text-slate-800"
           >
             ADHD Quiz
           </a>
+
 
         </nav>
 
