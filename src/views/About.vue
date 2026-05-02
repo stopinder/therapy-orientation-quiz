@@ -193,16 +193,9 @@
         </div>
       </section>
 
-      <!-- CTA -->
-      <section class="pt-4 flex justify-center">
-        <a
-            href="https://buy.stripe.com/6oU3cu9hMf8Z6ry1T6c3m04"
-            class="inline-block rounded-md bg-slate-800 px-8 py-3 text-white font-medium hover:bg-slate-700 transition"
-        >
-          Take the quiz
-        </a>
 
-      </section>
+
+
 
       <div class="mt-8 pt-6 border-t border-slate-300/70"></div>
 
