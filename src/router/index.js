@@ -4,6 +4,9 @@ import About from "../views/About.vue"
 import QuizGateway from "../views/QuizGateway.vue"
 import ADHDQuizView from "../views/ADHDQuizView.vue"
 
+import DeepDiveView from "../views/DeepDiveView.vue"
+import ProgrammeView from "../views/ProgrammeView.vue"
+
 import TermsView from "../views/TermsView.vue"
 import PrivacyView from "../views/PrivacyView.vue"
 import ContactView from "../views/ContactView.vue"
@@ -24,6 +27,19 @@ const routes = [
         name: "ADHDQuiz",
         component: ADHDQuizView,
         meta: { requiresGateway: true }
+    },
+
+    {
+        path: "/deep-dive",
+        name: "DeepDive",
+        component: DeepDiveView,
+        meta: { requiresGateway: true }
+    },
+
+    {
+        path: "/programme",
+        name: "Programme",
+        component: ProgrammeView
     }
 ]
 

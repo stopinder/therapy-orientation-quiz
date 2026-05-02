@@ -1,74 +1,51 @@
 <template>
   <main class="min-h-screen bg-stone-50 px-6 py-20">
     <div class="max-w-2xl mx-auto space-y-8">
+
       <h1 class="text-3xl font-semibold tracking-tight text-slate-900">
-        Before you continue
+        You’re not stuck because you lack discipline
       </h1>
 
       <p class="text-lg text-slate-700">
-        This reflection is structured, clinically informed, and designed to be taken seriously.
-        It is not diagnostic.
+        Most people already know what they “should” be doing.
+        The problem is something in them resists it.
       </p>
 
-      <ul class="list-disc pl-5 text-slate-700 space-y-2">
-        <li>5–10 minutes</li>
-        <li>No labels or diagnoses</li>
-        <li>Written clinical-style reflection</li>
-      </ul>
+      <p class="text-lg text-slate-700">
+        This reflection maps the internal system behind that resistance —
+        the parts of you that push, avoid, distract, or shut things down.
+      </p>
 
-      <label class="mt-6 flex items-start gap-3 text-sm text-slate-600">
-        <input
-            type="checkbox"
-            v-model="emailOptIn"
-            class="mt-1 h-4 w-4 accent-slate-700"
-        />
-        <span>
-          I’d like to receive occasional emails about new MindWorks reflections and tools.
-          <span class="block text-xs text-slate-500">
-            No mailing lists. You can unsubscribe at any time.
-          </span>
-        </span>
-      </label>
+      <div class="bg-white border border-slate-200 rounded-md p-5 space-y-2 text-slate-700">
+        <p>• Takes around 5–10 minutes</p>
+        <p>• No labels or diagnoses</p>
+        <p>• Produces a structured, in-depth personal report</p>
+      </div>
+
+      <p class="text-sm text-slate-500">
+        This is not therapy or a diagnosis. It’s a structured reflection tool designed to help you understand how your internal system operates.
+      </p>
 
       <div class="pt-6">
         <button
             @click="handleContinue"
             class="inline-block rounded-md bg-slate-900 px-6 py-3 text-white font-medium hover:bg-slate-800 transition"
         >
-          Continue to the quiz
+          Begin reflection
         </button>
       </div>
+
     </div>
   </main>
 </template>
 
 <script setup>
-import { ref } from "vue"
 import { useRouter } from "vue-router"
-import { supabase } from "../lib/supabase.js"
 
 const router = useRouter()
-const emailOptIn = ref(false)
 
-const handleContinue = async () => {
-  if (emailOptIn.value && supabase) {
-    const { data } = await supabase
-        .from("email_optins")
-        .select("id")
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .single()
-
-    if (data?.id) {
-      await supabase
-          .from("email_optins")
-          .update({ opt_in: true })
-          .eq("id", data.id)
-    }
-  }
-
+const handleContinue = () => {
   sessionStorage.setItem("passedGateway", "true")
   router.push("/adhd-quiz")
 }
 </script>
-

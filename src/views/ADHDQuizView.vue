@@ -2,16 +2,18 @@
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
     <div class="max-w-3xl mx-auto space-y-20">
 
-      <!-- Quiz Header -->
+      <!-- Header -->
       <header class="relative max-w-2xl pl-8 space-y-5">
         <span class="absolute left-0 top-1 h-14 w-1 rounded-sm bg-slate-500"></span>
-        <p class="text-xs uppercase tracking-widest text-slate-500">Self-Check</p>
+        <p class="text-xs uppercase tracking-widest text-slate-500">System Mapping</p>
+
         <h1 class="text-4xl font-medium tracking-tight text-stone-800">
-          ADHD Reflection Quiz
+          A closer look at how your mind actually operates
         </h1>
+
         <p class="text-lg leading-relaxed text-stone-600">
-          This reflection helps you notice everyday patterns in attention, focus, and energy.
-          It is not a diagnosis, but a structured psychological reflection.
+          This reflection explores patterns in attention, motivation, and internal conflict.
+          Not to label them, but to understand what’s driving them.
         </p>
       </header>
 
@@ -61,6 +63,12 @@
           </div>
         </div>
 
+        <!-- Pre-result tension -->
+        <p class="text-sm text-slate-600">
+          This will generate a structured reflection based on your responses.
+          Most people recognise patterns here they hadn’t been able to name before.
+        </p>
+
         <!-- Generate Button -->
         <button
             ref="generateButtonRef"
@@ -68,22 +76,17 @@
             @click="generateOverview"
             class="mt-8 px-6 py-3 rounded-xl bg-slate-700 text-white scroll-mt-28"
         >
-          {{ loading ? "Generating…" : "Generate Reflection" }}
+          {{ loading ? "Generating…" : "See your results" }}
         </button>
-        <!-- Consent notice -->
+
+        <!-- Consent -->
         <p class="mt-3 text-xs text-slate-500 max-w-prose">
           By generating a reflection, you agree to the
-          <router-link
-              to="/terms"
-              class="underline hover:text-slate-700"
-          >
+          <router-link to="/terms" class="underline hover:text-slate-700">
             Terms of Use
           </router-link>
           and
-          <router-link
-              to="/privacy"
-              class="underline hover:text-slate-700"
-          >
+          <router-link to="/privacy" class="underline hover:text-slate-700">
             Privacy Policy
           </router-link>.
         </p>
@@ -95,8 +98,7 @@
             class="mt-12 max-w-prose mx-auto"
         >
 
-
-        <!-- View Switcher -->
+          <!-- View Switcher -->
           <div class="flex gap-2 mb-8">
             <button
                 v-for="view in views"
@@ -104,15 +106,34 @@
                 @click="selectView(view.key)"
                 class="px-4 py-1.5 rounded-full text-sm border transition"
                 :class="activeView === view.key
-        ? 'bg-slate-700 text-white border-slate-700'
-        : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
+                ? 'bg-slate-700 text-white border-slate-700'
+                : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
             >
               {{ view.label }}
             </button>
           </div>
 
-          <!-- Formatted Report -->
+          <!-- Report Content -->
           <div v-html="formattedActiveText"></div>
+
+          <!-- Conversion Bridge -->
+          <div class="mt-10 p-6 bg-stone-50 border border-stone-200 rounded-xl">
+            <p class="text-stone-800 font-medium mb-2">
+              This is only part of the picture
+            </p>
+
+            <p class="text-sm text-stone-700 mb-4">
+              What you’re seeing here is a surface-level map of your system.
+              These patterns don’t shift through insight alone — they shift through working with them directly.
+            </p>
+
+            <button
+                @click="goToDeepDive"
+                class="px-5 py-2.5 bg-slate-800 text-white rounded-md hover:bg-slate-700 transition"
+            >
+              Get your full breakdown
+            </button>
+          </div>
 
           <!-- Feedback -->
           <div class="mt-8 text-sm text-slate-600">
@@ -122,45 +143,16 @@
             </p>
 
             <a
-                href="mailto:emdrifs@robormiston.com?subject=MindWorks%20reflection%20feedback&body=What%20felt%20accurate%20or%20recognisable%3F%0D%0A%0D%0AWhat%20felt%20unclear%2C%20off-mark%2C%20or%20missing%3F%0D%0A%0D%0AAny%20other%20thoughts%20you%E2%80%99d%20be%20willing%20to%20share%3F"
+                href="mailto:emdrifs@robormiston.com?subject=MindWorks%20reflection%20feedback"
                 target="_blank"
                 rel="noopener"
                 class="underline hover:text-slate-800"
             >
               Share feedback
             </a>
-
           </div>
 
-          <!-- Methodology -->
-          <details
-              class="mt-10 text-sm text-stone-600"
-          >
-            <summary class="cursor-pointer text-stone-700">
-              Methodology & Sources
-            </summary>
-
-            <div class="mt-4 space-y-4">
-              <p>
-                This reflection is generated through structured language synthesis
-                informed by established psychological frameworks.
-              </p>
-
-              <ul class="list-disc pl-5 space-y-1">
-                <li>DSM-5-TR descriptive domains (non-diagnostic)</li>
-                <li>NICE NG87 topic framing</li>
-                <li>Executive function research</li>
-                <li>Developmental and stress-based models</li>
-              </ul>
-
-              <p>
-                This is not a diagnostic instrument or probability estimate.
-              </p>
-            </div>
-          </details>
-
-        </div> <!-- ← THIS was missing -->
-
+        </div>
 
       </section>
     </div>
@@ -169,9 +161,11 @@
 
 <script setup>
 import { ref, computed, nextTick } from "vue"
+import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 
-// ---------- State ----------
+const router = useRouter()
+
 const answers = ref({})
 const loading = ref(false)
 
@@ -182,23 +176,19 @@ const reportTexts = ref({
 })
 
 const activeView = ref("overview")
-
-// Typing state
 const typedOverviewText = ref("")
 const overviewHasTyped = ref(false)
 
-// ---------- Refs ----------
 const questionTextRefs = ref([])
 const generateButtonRef = ref(null)
+const reportContainerRef = ref(null)
 
-// ---------- View Config ----------
 const views = [
   { key: "overview", label: "Overview" },
   { key: "functioning", label: "Daily functioning" },
   { key: "patterns", label: "Patterns & trade-offs" }
 ]
 
-// ---------- Scale ----------
 const scale = [
   { label: "Never", value: 0 },
   { label: "Rarely", value: 1 },
@@ -207,12 +197,9 @@ const scale = [
   { label: "Very Often", value: 4 }
 ]
 
-// ---------- Progress ----------
 const totalCount = adhdQuestions.length
 const answeredCount = computed(() => Object.keys(answers.value).length)
-const reportContainerRef = ref(null)
 
-// ---------- Scoring ----------
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -232,7 +219,6 @@ const scores = computed(() => {
   return totals
 })
 
-// ---------- Auto-scroll ----------
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
   await nextTick()
@@ -246,7 +232,6 @@ const handleAnswer = async (questionId, value, index) => {
   }
 }
 
-// ---------- Typing Helper ----------
 const typeText = async (fullText, targetRef, speed = 12) => {
   targetRef.value = ""
   for (let i = 0; i < fullText.length; i++) {
@@ -255,9 +240,9 @@ const typeText = async (fullText, targetRef, speed = 12) => {
   }
 }
 
-// ---------- API ----------
 const generateOverview = async () => {
   loading.value = true
+  sessionStorage.setItem("quizProfile", JSON.stringify(scores.value))
   try {
     const response = await fetch("/api/expand-report-v2", {
       method: "POST",
@@ -274,10 +259,8 @@ const generateOverview = async () => {
     reportTexts.value.overview = text
     activeView.value = "overview"
 
-    // ✅ ensure DOM is rendered before scrolling
     await nextTick()
 
-    // ✅ scroll report container into view (safe guard)
     if (reportContainerRef?.value) {
       reportContainerRef.value.scrollIntoView({
         behavior: "smooth",
@@ -285,7 +268,6 @@ const generateOverview = async () => {
       })
     }
 
-    // ✅ type only once
     if (!overviewHasTyped.value) {
       overviewHasTyped.value = true
       await typeText(text, typedOverviewText)
@@ -299,18 +281,7 @@ const generateOverview = async () => {
 const selectView = async (viewKey) => {
   activeView.value = viewKey
 
-  if (reportTexts.value[viewKey]) {
-    await nextTick()
-
-    if (reportContainerRef?.value) {
-      reportContainerRef.value.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      })
-    }
-
-    return
-  }
+  if (reportTexts.value[viewKey]) return
 
   loading.value = true
   try {
@@ -326,22 +297,11 @@ const selectView = async (viewKey) => {
     const data = await response.json()
     reportTexts.value[viewKey] = data.text || ""
 
-    await nextTick()
-
-    if (reportContainerRef?.value) {
-      reportContainerRef.value.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      })
-    }
-
   } finally {
     loading.value = false
   }
 }
 
-
-// ---------- Computed ----------
 const activeText = computed(() => {
   if (activeView.value === "overview" && overviewHasTyped.value) {
     return typedOverviewText.value
@@ -349,35 +309,17 @@ const activeText = computed(() => {
   return reportTexts.value[activeView.value]
 })
 
-// ---------- Formatting ----------
 const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
 
-  const lines = activeText.value.replace(/\r/g, "").split("\n")
-  let html = ""
-
-  for (const line of lines) {
-    if (/^\s*\*\*(.+?)\*\*\s*$/.test(line)) {
-      const title = line.replace(/\*\*/g, "")
-      html += `
-        <h3 class="mt-10 mb-4 text-lg font-semibold tracking-tight text-stone-800">
-          ${title}
-        </h3>
-      `
-      continue
-    }
-
-    if (!line.trim()) continue
-
-    html += `
-      <p class="mb-4 leading-relaxed text-stone-700">
-        ${line}
-      </p>
-    `
-  }
-
-  return html
+  return activeText.value
+      .split("\n")
+      .filter(line => line.trim())
+      .map(line => `<p class="mb-4 text-stone-700">${line}</p>`)
+      .join("")
 })
 
+const goToDeepDive = () => {
+  router.push("/deep-dive")
+}
 </script>
-
