@@ -63,55 +63,32 @@ Purpose:
 
 Rules:
 - Do NOT restate the overview.
-- Do NOT describe traits again.
+- Do NOT use diagnostic terms (e.g. inattention, impulsivity, hyperactivity).
+- Do NOT use dramatic or exaggerated language (e.g. “relentless”, “overwhelming”, “hijacks”).
+- Do NOT shame, blame, or exaggerate.
 - Do NOT give advice.
-- Do NOT reassure or soften.
+
+Instead:
+- Use measured, precise, grounded language
+- Describe experience in terms of internal processes (e.g. “a part of you pushes”, “another part pulls away”)
 
 Focus on:
-- starting and finishing tasks
-- decision fatigue
-- overcompensation and hidden effort
-- inconsistency and drop-off
+- difficulty starting tasks
+- difficulty sustaining effort
+- internal push–pull dynamics
+- repeated restarting and loss of momentum
+- hidden effort and compensation
 
 Tone:
-- Direct
-- Grounded
-- Precise
+- Clinical
+- Measured
+- Observational
+- Slightly exposing, but not harsh
 
 Write 4–6 short paragraphs.
 
 The reader should feel:
-"This is what it actually costs me"
-`,
-
-        patterns: `
-You are generating a PATTERNS & TRADE-OFFS reflection.
-
-Assume the reader understands both patterns and functioning impact.
-
-Purpose:
-- Show how these patterns both help and hinder.
-- Highlight internal tensions and longer-term trade-offs.
-
-Rules:
-- Do NOT repeat earlier descriptions.
-- Do NOT resolve the tension.
-- Do NOT give advice.
-- Do NOT conclude neatly.
-
-Focus on:
-- how pressure increases output but reduces sustainability
-- how avoidance protects but creates backlog
-- how intensity helps in short bursts but destabilises consistency
-
-Tone:
-- Balanced but not neutral
-- Reflective, slightly confronting
-
-Write 4–6 short paragraphs.
-
-The reader should feel:
-"This explains why I swing between states"
+"This describes what it’s actually like, without exaggerating it."
 `,
 
         deep: `
