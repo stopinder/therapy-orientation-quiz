@@ -5,14 +5,11 @@
 
         <!-- Brand -->
         <div class="text-xl font-semibold tracking-tight text-slate-900">
-
-        MindWorks
+          MindWorks
         </div>
-
 
         <!-- Navigation -->
         <nav class="ml-auto flex items-center gap-6 text-base font-medium text-slate-700">
-
 
           <router-link
               to="/about"
@@ -21,13 +18,12 @@
             About
           </router-link>
 
-          <a
-              href="https://buy.stripe.com/6oU3cu9hMf8Z6ry1T6c3m04"
+          <router-link
+              to="/gateway"
               class="hover:text-slate-900 transition text-slate-800"
           >
-            ADHD Quiz
-          </a>
-
+            Begin
+          </router-link>
 
         </nav>
 
