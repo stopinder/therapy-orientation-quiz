@@ -5,7 +5,7 @@
       <!-- HERO -->
       <section class="space-y-3">
         <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">
-          A structured psychological reflection on attention, focus, and emotional load
+          A structured psychological reflection on attention, focus, and emotional load.
         </h1>
 
         <p class="text-lg leading-normal text-slate-700 max-w-2xl">
