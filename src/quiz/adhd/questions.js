@@ -1,36 +1,37 @@
 export const adhdQuestions = [
+
     // =========================
     // INATTENTION (6)
     // =========================
     {
         id: "IA1",
         dimension: "inattention",
-        text: "How often do you find it hard to stay focused on tasks or conversations, even when you’re genuinely trying to pay attention?",
+        text: "You start listening or focusing with good intentions, but your attention drifts without you meaning it to.",
     },
     {
         id: "IA2",
         dimension: "inattention",
-        text: "How often do you miss details or make small mistakes on routine tasks?",
+        text: "You miss small details or make avoidable mistakes, even on things you know how to do.",
     },
     {
         id: "IA3",
         dimension: "inattention",
-        text: "How often does your mind drift off when reading, listening, or watching something that doesn’t fully engage you?",
+        text: "Your mind wanders when something doesn’t immediately hold your interest.",
     },
     {
         id: "IA4",
         dimension: "inattention",
-        text: "Do you find that you need high interest, pressure, or urgency to stay mentally engaged?",
+        text: "You rely on urgency, pressure, or interest to stay mentally engaged.",
     },
     {
         id: "IA5",
         dimension: "inattention",
-        text: "How often do you lose track of what someone is saying, even though you appear to be listening?",
+        text: "You lose track of conversations, even when you’re trying to follow them.",
     },
     {
         id: "IA6",
         dimension: "inattention",
-        text: "How often do you start paying attention with good intentions, only to realise your focus has slipped away?",
+        text: "You realise your focus has slipped only after you’ve already lost track.",
     },
 
     // =========================
@@ -39,32 +40,32 @@ export const adhdQuestions = [
     {
         id: "HY1",
         dimension: "hyperactivity",
-        text: "How often do you feel internally restless, even when you’re physically still?",
+        text: "There’s a sense of internal restlessness, even when you appear still.",
     },
     {
         id: "HY2",
         dimension: "hyperactivity",
-        text: "Do you find it uncomfortable to relax or do nothing, even when you want to?",
+        text: "Doing nothing or slowing down feels uncomfortable or unnatural.",
     },
     {
         id: "HY3",
         dimension: "hyperactivity",
-        text: "How often do you feel mentally ‘on the go’, as if your thoughts rarely slow down?",
+        text: "Your thoughts feel continuously active, as if they rarely settle.",
     },
     {
         id: "HY4",
         dimension: "hyperactivity",
-        text: "How often do you need movement, stimulation, or activity to feel settled?",
+        text: "You need movement, stimulation, or activity to feel balanced.",
     },
     {
         id: "HY5",
         dimension: "hyperactivity",
-        text: "Do you find it hard to sit through meetings, films, or long conversations without feeling agitated or restless?",
+        text: "Sitting through longer tasks or conversations brings agitation or restlessness.",
     },
     {
         id: "HY6",
         dimension: "hyperactivity",
-        text: "How often do you feel driven to keep doing things, even when you’re tired?",
+        text: "You keep going even when tired, as if stopping is difficult.",
     },
 
     // =========================
@@ -73,32 +74,32 @@ export const adhdQuestions = [
     {
         id: "IM1",
         dimension: "impulsivity",
-        text: "How often do you speak or act quickly and realise later that you wish you had paused first?",
+        text: "You act or speak quickly, and only reflect on it afterwards.",
     },
     {
         id: "IM2",
         dimension: "impulsivity",
-        text: "Do you find yourself interrupting others or finishing their sentences without meaning to?",
+        text: "You interrupt or jump in before others have finished, even if you don’t intend to.",
     },
     {
         id: "IM3",
         dimension: "impulsivity",
-        text: "How often do you make decisions in the moment and only reflect on them afterwards?",
+        text: "Decisions are often made in the moment rather than considered beforehand.",
     },
     {
         id: "IM4",
         dimension: "impulsivity",
-        text: "Do you struggle to hold back reactions when you’re emotionally activated?",
+        text: "When emotionally activated, it’s difficult to pause before reacting.",
     },
     {
         id: "IM5",
         dimension: "impulsivity",
-        text: "How often do you commit to things impulsively and later feel overwhelmed or regretful?",
+        text: "You commit to things quickly and later feel overwhelmed or regretful.",
     },
     {
         id: "IM6",
         dimension: "impulsivity",
-        text: "How often do you find it hard to pause before responding when something grabs your attention?",
+        text: "Something captures your attention and pulls you in before you’ve had a chance to step back.",
     },
 
     // =========================
@@ -107,42 +108,42 @@ export const adhdQuestions = [
     {
         id: "EF1",
         dimension: "executive_function",
-        text: "How often do you know what you need to do, but struggle to actually get started—especially on tasks that feel boring, unclear, or overwhelming?",
+        text: "You know what needs to be done, but getting started feels disproportionately difficult.",
     },
     {
         id: "EF2",
         dimension: "executive_function",
-        text: "How often do you struggle to break tasks down into clear, manageable steps?",
+        text: "Tasks feel unclear or too large, making it hard to begin or organise them.",
     },
     {
         id: "EF3",
         dimension: "executive_function",
-        text: "How often do you underestimate how long things will take?",
+        text: "You underestimate how long things will take or how much effort they require.",
     },
     {
         id: "EF4",
         dimension: "executive_function",
-        text: "Do you find yourself losing track of what you were doing when interrupted or distracted?",
+        text: "You lose track of what you were doing when interrupted or distracted.",
     },
     {
         id: "EF5",
         dimension: "executive_function",
-        text: "How often do you start tasks with good intentions but struggle to finish them?",
+        text: "You begin tasks with intention but struggle to follow them through.",
     },
     {
         id: "EF6",
         dimension: "executive_function",
-        text: "How often do you feel overwhelmed when you have multiple tasks or responsibilities at once?",
+        text: "Multiple responsibilities quickly become overwhelming.",
     },
     {
         id: "EF7",
         dimension: "executive_function",
-        text: "Do deadlines, pressure, or external accountability help you function better?",
+        text: "External pressure or deadlines help you function more effectively.",
     },
     {
         id: "EF8",
         dimension: "executive_function",
-        text: "How often do you rely on reminders, lists, or other systems just to stay on track?",
+        text: "You rely on systems (lists, reminders, structure) just to stay on track.",
     },
 
     // =========================
@@ -151,32 +152,32 @@ export const adhdQuestions = [
     {
         id: "ER1",
         dimension: "emotional_regulation",
-        text: "How often do you react emotionally to stress, frustration, or disappointment?",
+        text: "Your emotional responses to stress or frustration feel strong or immediate.",
     },
     {
         id: "ER2",
         dimension: "emotional_regulation",
-        text: "How often do small setbacks feel disproportionately upsetting or overwhelming?",
+        text: "Small setbacks can feel more intense than expected.",
     },
     {
         id: "ER3",
         dimension: "emotional_regulation",
-        text: "Do your emotions tend to shift quickly in response to what’s happening around you?",
+        text: "Your emotional state shifts quickly depending on what’s happening around you.",
     },
     {
         id: "ER4",
         dimension: "emotional_regulation",
-        text: "How often do you find it hard to calm down once you’re emotionally activated?",
+        text: "Once activated, it takes time to settle back down.",
     },
     {
         id: "ER5",
         dimension: "emotional_regulation",
-        text: "How often do you avoid tasks or situations because they feel emotionally overwhelming?",
+        text: "You avoid things because they feel emotionally heavy or overwhelming.",
     },
     {
         id: "ER6",
         dimension: "emotional_regulation",
-        text: "Do you find yourself shutting down or withdrawing after periods of stress or overload?",
+        text: "After stress, you tend to withdraw or shut down.",
     },
 
     // =========================
@@ -185,26 +186,26 @@ export const adhdQuestions = [
     {
         id: "FI1",
         dimension: "functional_impact",
-        text: "How often do these difficulties interfere with your day-to-day life?",
+        text: "These patterns interfere with your day-to-day functioning.",
     },
     {
         id: "FI2",
         dimension: "functional_impact",
-        text: "How often do you struggle to break tasks down into clear, manageable steps?",
+        text: "You feel mentally drained from trying to stay on top of things.",
     },
     {
         id: "FI3",
         dimension: "functional_impact",
-        text: "How often do these difficulties leave you feeling mentally exhausted or depleted?",
+        text: "You feel like you’re pushing through rather than functioning with ease.",
     },
     {
         id: "FI4",
         dimension: "functional_impact",
-        text: "How often do you feel you are compensating or pushing through rather than functioning with ease?",
+        text: "These patterns create friction in how you live your life.",
     },
     {
         id: "FI5",
         dimension: "functional_impact",
-        text: "How often do these patterns interfere with the kind of life you want to be living?",
+        text: "You’re not living as consistently as you’d like to be.",
     },
 ];

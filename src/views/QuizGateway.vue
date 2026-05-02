@@ -1,35 +1,41 @@
 <template>
-  <main class="min-h-screen bg-stone-50 px-6 py-20">
-    <div class="max-w-2xl mx-auto space-y-8">
+  <main class="min-h-screen bg-stone-50 px-6 py-24">
+    <div class="max-w-2xl mx-auto space-y-10">
 
-      <h1 class="text-3xl font-semibold tracking-tight text-slate-900">
-        You’re not stuck because you lack discipline
-      </h1>
+      <!-- Hook -->
+      <header class="space-y-6">
+        <h1 class="text-4xl font-semibold tracking-tight text-slate-900 leading-tight">
+          You’re not stuck because you lack discipline
+        </h1>
 
-      <p class="text-lg text-slate-700">
-        Most people already know what they “should” be doing.
-        The problem is something in them resists it.
-      </p>
+        <p class="text-lg text-slate-700 leading-relaxed">
+          Most people already know what they “should” be doing.
+          The problem is that something in them resists it.
+        </p>
 
-      <p class="text-lg text-slate-700">
-        This reflection maps the internal system behind that resistance —
-        the parts of you that push, avoid, distract, or shut things down.
-      </p>
+        <p class="text-lg text-slate-700 leading-relaxed">
+          This reflection maps the internal system behind that resistance —
+          the parts of you that push, avoid, distract, or shut things down.
+        </p>
+      </header>
 
-      <div class="bg-white border border-slate-200 rounded-md p-5 space-y-2 text-slate-700">
+      <!-- Credibility + framing -->
+      <section class="bg-white border border-stone-200 rounded-xl p-6 space-y-3 text-slate-700">
         <p>• Takes around 5–10 minutes</p>
         <p>• No labels or diagnoses</p>
-        <p>• Produces a structured, in-depth personal report</p>
-      </div>
+        <p>• Produces a structured, in-depth reflection</p>
+      </section>
 
+      <!-- Soft disclaimer -->
       <p class="text-sm text-slate-500">
-        This is not therapy or a diagnosis. It’s a structured reflection tool designed to help you understand how your internal system operates.
+        This is not a diagnostic tool or therapy. It’s a structured reflection designed to help you understand how your internal system operates.
       </p>
 
+      <!-- CTA -->
       <div class="pt-6">
         <button
             @click="handleContinue"
-            class="inline-block rounded-md bg-slate-900 px-6 py-3 text-white font-medium hover:bg-slate-800 transition"
+            class="w-full px-6 py-4 bg-slate-900 text-white text-lg font-medium rounded-md hover:bg-slate-800 transition"
         >
           Begin reflection
         </button>

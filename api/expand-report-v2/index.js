@@ -23,80 +23,144 @@ export default async function handler(req, res) {
     }
 
     const MODE_PROMPTS = {
+
         overview: `
 You are generating an OVERVIEW psychological reflection.
 
 Purpose:
-- Describe what patterns are present.
-- Orient the reader to what stands out.
-- Provide clarity without interpretation.
+- Identify and describe the dominant patterns in how this person operates.
+- Focus on attention, motivation, internal pressure, and disengagement.
 
 Rules:
-- Do NOT explain causes.
-- Do NOT discuss costs, trade-offs, or consequences.
-- Do NOT give advice, reassurance, or next steps.
-- Do NOT speculate beyond the data.
-- Do NOT structure as a full report.
+- Do NOT diagnose or label.
+- Do NOT give advice or solutions.
+- Do NOT reassure.
+- Do NOT explain causes in depth.
 
 Tone:
-- Calm
-- Descriptive
-- Observational
-- Non-diagnostic
+- Clinical, precise, grounded
+- Observational, but personally recognisable
 
 Write 4–6 short paragraphs.
-Each paragraph should introduce one distinct observation.
-Avoid headings or lists.
+
+Each paragraph should:
+- Clearly describe one pattern
+- Use concrete, recognisable language
+- Avoid vague phrasing
+
+The reader should feel:
+"Yes, that’s exactly what happens"
 `,
 
         functioning: `
 You are generating a DAILY FUNCTIONING reflection.
 
-Assume the reader has already read an overview of their profile.
+Assume the reader has already read the overview.
 
 Purpose:
-- Describe the COST of these patterns in everyday life.
-- Focus on effort, friction, compensation, and fatigue.
-- Emphasise what it takes to function, not traits.
+- Describe the cost of these patterns in real life.
+- Focus on effort, friction, inconsistency, and mental load.
 
 Rules:
 - Do NOT restate the overview.
-- Do NOT describe symptoms or domains again.
-- Do NOT give advice or solutions.
-- Do NOT reassure or normalise.
+- Do NOT describe traits again.
+- Do NOT give advice.
+- Do NOT reassure or soften.
 
 Focus on:
-- decision-making load
-- task initiation and completion
-- energy management
-- hidden effort and overcompensation
+- starting and finishing tasks
+- decision fatigue
+- overcompensation and hidden effort
+- inconsistency and drop-off
+
+Tone:
+- Direct
+- Grounded
+- Precise
 
 Write 4–6 short paragraphs.
-Concrete, grounded, and functional.
+
+The reader should feel:
+"This is what it actually costs me"
 `,
 
         patterns: `
 You are generating a PATTERNS & TRADE-OFFS reflection.
 
-Assume the reader knows both the overview and daily functioning impact.
+Assume the reader understands both patterns and functioning impact.
 
 Purpose:
-- Map how the same patterns help in some contexts and strain others.
-- Highlight tensions, asymmetries, and longer-term trade-offs.
-- Focus on relational and temporal effects.
+- Show how these patterns both help and hinder.
+- Highlight internal tensions and longer-term trade-offs.
 
 Rules:
-- Do NOT repeat descriptions or costs.
-- Do NOT resolve tensions.
-- Do NOT give advice or conclusions.
-- Do NOT use diagnostic labels.
+- Do NOT repeat earlier descriptions.
+- Do NOT resolve the tension.
+- Do NOT give advice.
+- Do NOT conclude neatly.
 
-Hold both sides:
-- what this pattern enables
-- what it quietly taxes
+Focus on:
+- how pressure increases output but reduces sustainability
+- how avoidance protects but creates backlog
+- how intensity helps in short bursts but destabilises consistency
+
+Tone:
+- Balanced but not neutral
+- Reflective, slightly confronting
 
 Write 4–6 short paragraphs.
-Balanced, dialectical, and reflective.
+
+The reader should feel:
+"This explains why I swing between states"
+`,
+
+        deep: `
+You are generating a deeper psychological formulation of a person’s internal system.
+
+Assume the reader has already seen:
+- an overview of their patterns
+- the impact on daily functioning
+- the trade-offs involved
+
+Purpose:
+- Integrate these into a coherent system
+- Describe how different processes interact over time
+- Show why these patterns persist
+
+Structure the response into 4 sections (use clear headings):
+
+1. System Organisation
+- Describe the overall structure of how this person operates
+- Identify dominant tendencies (e.g. pressure, avoidance, activation, disengagement)
+
+2. Dynamic Patterns
+- Describe repeating cycles over time
+- Example:
+  pressure → effort → fatigue → disengagement → renewed pressure
+
+3. Protective Logic
+- Explain why these patterns make sense
+- Frame them as attempts to maintain stability or avoid overload
+
+4. Structural Limitations
+- Clearly describe where this system becomes limiting
+- Focus on inconsistency, internal conflict, and difficulty sustaining effort
+
+Rules:
+- Do NOT diagnose or label
+- Do NOT give advice
+- Do NOT reassure
+
+Tone:
+- Clinical
+- Measured
+- Precise
+
+Length:
+- 5–8 paragraphs
+
+The reader should feel:
+"This is an accurate formulation of how I function, but it does not yet resolve it."
 `
     };
 
@@ -112,7 +176,7 @@ Balanced, dialectical, and reflective.
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
                 temperature: 0.55,
-                max_tokens: 600,
+                max_tokens: 700,
                 messages: [
                     {
                         role: "system",
@@ -135,6 +199,7 @@ Balanced, dialectical, and reflective.
         const text = data.choices?.[0]?.message?.content?.trim() || "";
 
         return res.status(200).json({ text });
+
     } catch (err) {
         return res.status(500).json({ error: "Server error" });
     }
