@@ -36,7 +36,8 @@ Rules:
 - Do NOT use soft qualifiers (no "may", "might", "tends to", "can feel like").
 - Do NOT use metaphors or abstract/system-heavy language.
 - Do NOT give advice or reassurance.
-
+- Describe sequences of behaviour (what happens first, then what follows)
+- Avoid explaining the pattern; show it unfolding instead
 Write 4–6 short paragraphs.
 
 Focus on:
@@ -57,7 +58,8 @@ Style:
 - Specific
 - Behaviour-based
 - Slightly confronting, not harsh
-
+- Describe sequences of behaviour (what happens first, then what follows)
+- Avoid explaining the pattern; show it unfolding instead
 The reader should recognise their own behaviour immediately.
 `,
 
