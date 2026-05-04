@@ -154,7 +154,7 @@
             </p>
 
             <button
-                @click="goToProgramme"
+                @click="ccrogramme"
                 class="px-6 py-3 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition"
             >
               Start the guided process
@@ -206,13 +206,29 @@ import { adhdQuestions } from "../quiz/adhd/questions.js"
 const copyReflection = async () => {
   const text = activeText.value || ""
 
+  if (!text) {
+    alert("Nothing to copy yet")
+    return
+  }
+
   try {
+    // Modern method
     await navigator.clipboard.writeText(text)
+    alert("Copied")
+  } catch (err) {
+    // Fallback method (important)
+    try {
+      const textarea = document.createElement("textarea")
+      textarea.value = text
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand("copy")
+      document.body.removeChild(textarea)
 
-    showNextStep.value = true
-
-  } catch {
-    alert("Failed to copy")
+      alert("Copied")
+    } catch {
+      alert("Copy failed — try selecting manually")
+    }
   }
 }
 
