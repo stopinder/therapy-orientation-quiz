@@ -28,13 +28,13 @@ export default async function handler(req, res) {
 You are generating an OVERVIEW psychological reflection.
 
 Goal:
-Describe how the reader actually behaves in real time.
+Describe what actually happens in behaviour, step by step.
 
 Rules:
 - Use "you" directly.
 - Do NOT diagnose or label.
 - Do NOT use clinical category terms.
-- Do NOT use soft qualifiers (no "may", "might", "tends to", "can feel like").
+- Do NOT use soft qualifiers ("may", "might", "tends to").
 - Do NOT use metaphors or abstract/system language.
 - Do NOT explain the pattern.
 - Do NOT give advice or reassurance.
@@ -44,19 +44,19 @@ Write 4–6 short paragraphs.
 Each paragraph must:
 - show a sequence (what happens → what follows)
 - include where momentum breaks
-- avoid explanation
+- avoid interpretation
 
 Focus on:
 - starting with intention but not sustaining
 - momentum dropping without a clear break
 - reliance on pressure to engage
-- effort that does not accumulate
-- repeated restarting instead of continuation
+- effort not carrying forward
+- restarting instead of continuing
 - disengagement reducing strain but breaking continuity
 
 Include contradictions:
 - you intend to continue, but do not sustain
-- pressure gets you moving, but disrupts consistency
+- pressure gets you moving, but breaks consistency
 - effort is present, but progress is unstable
 
 Tone:
@@ -65,28 +65,28 @@ Tone:
 - Clinical
 - Slightly confronting
 
-The reader should recognise their own behaviour immediately.
+The reader should recognise their behaviour immediately.
 `,
 
         functioning: `
 You are generating a DAILY FUNCTIONING reflection.
 
 Goal:
-Show what this costs in everyday life.
+Show what this costs in real situations.
 
 Rules:
 - Use "you" directly.
 - Do NOT diagnose or label.
-- Do NOT use dramatic or exaggerated language.
+- Do NOT use dramatic language.
 - Do NOT explain or soften.
 - Do NOT give advice.
 
 Write 4–6 short paragraphs.
 
 Each paragraph must:
-- show what happens during real tasks
-- show where effort breaks down
-- avoid explanation
+- show what happens during tasks
+- show where effort breaks
+- avoid interpretation
 
 Focus on:
 - repeated restarting
@@ -123,7 +123,7 @@ Write 4–6 short paragraphs.
 
 Each paragraph must:
 - show a contradiction in action
-- avoid explanation
+- avoid interpretation
 
 Focus on:
 - pressure enabling action but breaking stability
@@ -141,21 +141,21 @@ Tone:
 You are generating a deeper psychological formulation.
 
 Goal:
-Show how the pattern holds together and why it repeats.
+Show how the pattern repeats and why it does not stabilise.
 
-Use headings.
+Use clear headings.
 
 Structure:
 
 1. How You Operate
-Describe the pattern directly in behavioural terms.
+Describe the pattern directly in behaviour.
 
 2. The Cycle
 Show the loop clearly:
 intention → effort → pressure → drop-off → restart.
 
 3. Why It Continues
-Show how the pattern reduces strain or pressure in the moment.
+Show how the pattern reduces strain in the moment.
 
 4. Where It Breaks
 State clearly:
@@ -181,7 +181,7 @@ Length:
 5–8 paragraphs.
 
 End by making clear:
-the pattern makes sense, but it repeats.
+the pattern repeats because it reduces strain, but does not stabilise.
 `
     };
 
