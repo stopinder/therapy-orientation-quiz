@@ -137,16 +137,24 @@ Structure the response into 4 sections (use clear headings):
 
 Rules:
 - Do NOT diagnose or label
-- Do NOT give advice or solutions
-- Do NOT reassure or soften the message
-- Do NOT use vague or generic phrasing
+- Do NOT use phrases like "this person"
+- Do NOT use formal clinical labels (e.g. inattention, emotional regulation)
+- Do NOT sound like an external report
 
+Instead:
+- Write as if describing the reader’s internal experience directly
+- Use "you" where appropriate
+- Focus on how it feels from inside the system
 Tone:
 - Clinical
 - Measured
 - Precise
 - Slightly confronting but not harsh
-
+Tone:
+- Clinical
+- Measured
+- Grounded
+- Personally recognisable (not distant or report-like)
 Length:
 - 5–8 paragraphs total
 
