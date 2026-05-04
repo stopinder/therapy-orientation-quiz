@@ -124,7 +124,20 @@
             >
               Copy
             </button>
+            <div v-if="showNextStep" class="mt-8 text-center space-y-4">
 
+              <p class="text-base text-slate-700 max-w-md mx-auto">
+                If this feels accurate, the next step is not more insight — it’s working with the pattern directly.
+              </p>
+
+              <button
+                  @click="goToProgramme"
+                  class="px-6 py-3 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition"
+              >
+                Start the guided process
+              </button>
+
+            </div>
             <!-- Download -->
             <button
                 @click="downloadPDF"
@@ -195,7 +208,9 @@ const copyReflection = async () => {
 
   try {
     await navigator.clipboard.writeText(text)
-    alert("Reflection copied")
+
+    showNextStep.value = true
+
   } catch {
     alert("Failed to copy")
   }
@@ -203,7 +218,7 @@ const copyReflection = async () => {
 
 const downloadPDF = () => {
   const element = document.createElement("a")
-
+  const showNextStep = ref(false)
   const file = new Blob([activeText.value], { type: "text/plain" })
   element.href = URL.createObjectURL(file)
   element.download = "mindworks-reflection.txt"
