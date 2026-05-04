@@ -23,187 +23,149 @@ export default async function handler(req, res) {
     }
 
     const MODE_PROMPTS = {
-
         overview: `
 You are generating an OVERVIEW psychological reflection.
 
-Write in a clinical, precise, and grounded tone.
-
-This is not a report about a person.
-It is a description of how the reader experiences their own internal system.
-
-Purpose:
-- Identify how the system actually operates in real terms
-- Focus on attention, motivation, internal pressure, and disengagement
-- Make the experience immediately recognisable
+Goal:
+Write something clinically grounded, personally recognisable, and slightly uncomfortable.
+It should sound like a careful clinician describing the reader's lived experience, not like an academic paper.
 
 Rules:
-- Do NOT diagnose or label
-- Do NOT use phrases like "this person"
-- Do NOT use clinical category terms (e.g. inattention, impulsivity, emotional regulation)
-- Do NOT use soft qualifiers such as "you may", "there can be", "it may feel like"
-- Do NOT sound like an external report
-- Do NOT give advice or solutions
-- Do NOT reassure
+- Use "you" directly.
+- Do NOT use phrases like "the system", "internal regulatory framework", "this person", or "the individual".
+- Do NOT diagnose or label.
+- Do NOT use clinical category terms.
+- Do NOT give advice or solutions.
+- Do NOT reassure.
+- Do NOT use poetic or abstract language.
+- Do NOT overuse "may", "might", or "can".
 
-Instead:
-- Use direct, precise statements
-- Describe behaviour as it happens
-- Use system language (e.g. one part pushes, another pulls away)
-
-Include:
-- loss of momentum despite intention
-- reliance on pressure to engage
-- repeated restarting rather than sustained progress
-- internal push–pull dynamics
-
-Critical:
-- Highlight contradictions (e.g. intention without follow-through, effort without stability, pressure helping but also destabilising)
-- Show how one part of the system undermines another
-- Include at least one non-obvious but recognisable insight
-- Do NOT resolve contradictions
-
-Structure:
 Write 4–6 short paragraphs.
 
-Each paragraph:
-- states one pattern clearly
-- shows how it unfolds in real time
-- avoids repetition
+Focus on:
+- what the reader starts doing
+- where momentum drops
+- how pressure helps and also disrupts
+- how effort is real but does not always accumulate
+- how disengagement can function as relief
+- how intention and follow-through do not fully line up
 
-Tone:
-- Clinical
+Include clear contradictions:
+- You intend to continue, but momentum drops.
+- Pressure gets you moving, but makes consistency unstable.
+- Effort is present, but progress does not reliably build.
+- Disengagement protects you, but interrupts continuity.
+
+Style:
+- Direct
+- Specific
+- Behaviour-based
 - Measured
-- Precise
-- Slightly confronting
-- Not dramatic
+- Slightly confronting, not harsh
 
 The reader should feel:
-"This is accurate, and it describes something I recognise but don’t usually articulate."
+"This is describing something I actually do."
 `,
 
         functioning: `
 You are generating a DAILY FUNCTIONING reflection.
 
-Assume the reader has already read the overview.
-
-Purpose:
-- Show what these patterns cost in real terms
-- Focus on effort, inconsistency, and mental load
+Goal:
+Describe what this costs in everyday life.
 
 Rules:
-- Do NOT restate the overview
-- Do NOT use diagnostic terms
-- Do NOT use exaggerated or dramatic language
-- Do NOT soften or reassure
-- Do NOT give advice
-
-Instead:
-- Use direct, behaviour-based language
-- Describe what breaks down in real situations
-
-Focus on:
-- starting but not sustaining
-- effort that does not accumulate
-- repeated restarting
-- decision fatigue
-- hidden compensation
-
-Include contradictions:
-- effort is present, but progress is unstable
-- work gets done, but not in a continuous way
-
-Tone:
-- Clinical
-- Grounded
-- Precise
-- Slightly exposing
+- Use "you" directly.
+- Do NOT sound academic.
+- Do NOT diagnose or label.
+- Do NOT use dramatic language.
+- Do NOT give advice.
+- Do NOT reassure.
 
 Write 4–6 short paragraphs.
 
-The reader should feel:
-"This is what it actually costs me to function this way."
+Focus on:
+- repeated restarting
+- work getting done in fragments
+- hidden effort
+- decision fatigue
+- unreliable consistency
+- the gap between intention and actual follow-through
+
+Include contradictions:
+- You work hard, but still feel behind.
+- You compensate, but the compensation costs energy.
+- You can perform under pressure, but cannot depend on pressure as a stable method.
+
+Tone:
+Clinical, grounded, direct, personally recognisable.
 `,
 
         patterns: `
 You are generating a PATTERNS & TRADE-OFFS reflection.
 
-Purpose:
-- Show how the same patterns both help and interfere
-- Highlight tension without resolving it
+Goal:
+Show the internal contradictions clearly without resolving them.
 
 Rules:
-- Do NOT repeat descriptions
-- Do NOT give advice
-- Do NOT conclude neatly
-
-Focus on contradictions:
-- pressure enables action but prevents stability
-- avoidance reduces strain but creates backlog
-- intensity produces output but disrupts consistency
-
-Tone:
-- Balanced but not neutral
-- Clear and slightly confronting
+- Use "you" directly.
+- Do NOT sound academic.
+- Do NOT diagnose or label.
+- Do NOT give advice.
+- Do NOT conclude neatly.
 
 Write 4–6 short paragraphs.
 
-The reader should feel:
-"This explains why I move between states instead of maintaining consistency."
+Focus on:
+- pressure creating action but reducing stability
+- avoidance reducing strain but creating backlog
+- intensity producing output but disrupting consistency
+- relief in the short term creating cost later
+
+Tone:
+Balanced, direct, slightly confronting.
 `,
 
         deep: `
 You are generating a deeper psychological formulation.
 
-Purpose:
-- Integrate patterns into a coherent system
-- Explain how and why they persist
+Goal:
+Make the reader feel accurately seen, not clinically analysed from a distance.
 
-Structure with headings:
+Use clear headings.
 
-1. System Organisation
-- Describe how the system operates overall
+Sections:
 
-2. Dynamic Patterns
-- Show repeating cycles
-- e.g. pressure → effort → drop-off → restart
+1. How This Pattern Organises Itself
+Describe the main operating pattern in direct language.
 
-3. Protective Logic
-- Explain why this system makes sense
+2. The Repeating Cycle
+Show the cycle clearly:
+intention → effort → pressure → drop-off → restart.
 
-4. Structural Limitations
-- Show where it breaks down:
-  - inconsistency
-  - unstable effort
-  - internal conflict
+3. Why It Makes Sense
+Explain how the pattern protects the reader from strain, pressure, or overload.
+
+4. Where It Keeps You Stuck
+Name the cost directly:
+inconsistency, restarting, unfinished loops, pressure-dependence, and reduced trust in follow-through.
 
 Rules:
-- Do NOT diagnose or label
-- Do NOT use clinical category terms
-- Do NOT give advice
-- Do NOT reassure
-- Do NOT sound external
-
-Instead:
-- Describe internal experience directly
-- Use "you"
-- Show contradictions clearly
+- Use "you" directly.
+- Do NOT say "the system" repeatedly.
+- Do NOT sound academic.
+- Do NOT diagnose or label.
+- Do NOT give advice.
+- Do NOT reassure.
+- Do NOT over-explain.
 
 Tone:
-- Clinical
-- Precise
-- Measured
-- Slightly confronting
+Clinical, measured, direct, personal, slightly uncomfortable.
 
 Length:
-- 5–8 paragraphs
+5–8 paragraphs.
 
-End by implying:
-- the system is understandable
-- but insight alone will not change it
-
-The reader should feel:
-"This explains how I work, but it also shows why it doesn’t change easily."
+End by making clear:
+this pattern makes sense, but insight alone is unlikely to change it.
 `
     };
 
@@ -242,7 +204,6 @@ The reader should feel:
         const text = data.choices?.[0]?.message?.content?.trim() || "";
 
         return res.status(200).json({ text });
-
     } catch (err) {
         return res.status(500).json({ error: "Server error" });
     }
