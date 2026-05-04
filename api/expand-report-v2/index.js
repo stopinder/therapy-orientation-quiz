@@ -33,7 +33,7 @@ This is not a report about a person.
 It is a description of how the reader experiences their own internal system.
 
 Purpose:
-- Identify and describe the dominant patterns in how the system operates
+- Identify how the system actually operates in real terms
 - Focus on attention, motivation, internal pressure, and disengagement
 - Make the experience immediately recognisable
 
@@ -41,39 +41,45 @@ Rules:
 - Do NOT diagnose or label
 - Do NOT use phrases like "this person"
 - Do NOT use clinical category terms (e.g. inattention, impulsivity, emotional regulation)
+- Do NOT use soft qualifiers such as "you may", "there can be", "it may feel like"
 - Do NOT sound like an external report
 - Do NOT give advice or solutions
-- Do NOT reassure or soften unnecessarily
+- Do NOT reassure
 
 Instead:
-- Write directly in terms of experience ("you may notice...", "there can be a sense that...")
-- Describe internal dynamics (e.g. one part pushes, another pulls away)
-- Use concrete, lived language rather than abstract phrasing
+- Use direct, precise statements
+- Describe behaviour as it happens
+- Use system language (e.g. one part pushes, another pulls away)
+
+Include:
+- loss of momentum despite intention
+- reliance on pressure to engage
+- repeated restarting rather than sustained progress
+- internal push–pull dynamics
+
+Critical:
+- Highlight contradictions (e.g. intention without follow-through, effort without stability, pressure helping but also destabilising)
+- Show how one part of the system undermines another
+- Include at least one non-obvious but recognisable insight
+- Do NOT resolve contradictions
 
 Structure:
 Write 4–6 short paragraphs.
 
-Each paragraph should:
-- Describe one clear pattern
-- Include how it unfolds in real time
-- Avoid repetition
-
-Include elements such as:
-- starting with intention but losing momentum
-- needing pressure or urgency to engage
-- attention drifting despite effort
-- internal tension between pushing and avoiding
-- cycles of effort followed by drop-off
+Each paragraph:
+- states one pattern clearly
+- shows how it unfolds in real time
+- avoids repetition
 
 Tone:
 - Clinical
 - Measured
-- Observational
-- Personally recognisable
-- Slightly exposing, but not dramatic
+- Precise
+- Slightly confronting
+- Not dramatic
 
 The reader should feel:
-"This is describing how I actually operate, not just summarising traits."
+"This is accurate, and it describes something I recognise but don’t usually articulate."
 `,
 
         functioning: `
@@ -82,132 +88,122 @@ You are generating a DAILY FUNCTIONING reflection.
 Assume the reader has already read the overview.
 
 Purpose:
-- Describe the cost of these patterns in real life.
-- Focus on effort, friction, inconsistency, and mental load.
+- Show what these patterns cost in real terms
+- Focus on effort, inconsistency, and mental load
 
 Rules:
-- Do NOT restate the overview.
-- Do NOT use diagnostic terms (e.g. inattention, impulsivity, hyperactivity).
-- Do NOT use dramatic or exaggerated language (e.g. "relentless", "overwhelming", "hijacks").
-- Do NOT shame, blame, or exaggerate.
-- Do NOT give advice.
+- Do NOT restate the overview
+- Do NOT use diagnostic terms
+- Do NOT use exaggerated or dramatic language
+- Do NOT soften or reassure
+- Do NOT give advice
 
 Instead:
-- Use measured, precise, grounded language
-- Describe experience in terms of internal processes (e.g. "a part of you pushes", "another part pulls away")
+- Use direct, behaviour-based language
+- Describe what breaks down in real situations
 
 Focus on:
-- difficulty starting tasks
-- difficulty sustaining effort
-- internal push–pull dynamics
-- repeated restarting and loss of momentum
-- hidden effort and compensation
+- starting but not sustaining
+- effort that does not accumulate
+- repeated restarting
+- decision fatigue
+- hidden compensation
+
+Include contradictions:
+- effort is present, but progress is unstable
+- work gets done, but not in a continuous way
 
 Tone:
 - Clinical
-- Measured
-- Observational
-- Slightly exposing, but not harsh
+- Grounded
+- Precise
+- Slightly exposing
 
 Write 4–6 short paragraphs.
 
 The reader should feel:
-"This describes what it’s actually like, without exaggerating it."
+"This is what it actually costs me to function this way."
 `,
 
         patterns: `
 You are generating a PATTERNS & TRADE-OFFS reflection.
 
-Assume the reader understands both patterns and functioning impact.
-
 Purpose:
-- Show how these patterns both help and hinder.
-- Highlight internal tensions and longer-term trade-offs.
+- Show how the same patterns both help and interfere
+- Highlight tension without resolving it
 
 Rules:
-- Do NOT repeat earlier descriptions.
-- Do NOT resolve the tension.
-- Do NOT give advice.
-- Do NOT conclude neatly.
+- Do NOT repeat descriptions
+- Do NOT give advice
+- Do NOT conclude neatly
 
-Focus on:
-- how pressure increases output but reduces sustainability
-- how avoidance protects but creates backlog
-- how intensity helps in short bursts but destabilises consistency
+Focus on contradictions:
+- pressure enables action but prevents stability
+- avoidance reduces strain but creates backlog
+- intensity produces output but disrupts consistency
 
 Tone:
 - Balanced but not neutral
-- Reflective, slightly confronting
+- Clear and slightly confronting
 
 Write 4–6 short paragraphs.
 
 The reader should feel:
-"This explains why you move between different states rather than staying consistent."
+"This explains why I move between states instead of maintaining consistency."
 `,
 
         deep: `
-You are generating a deeper psychological formulation of a person’s internal system.
-
-Assume the reader has already seen:
-- an overview of their patterns
-- the impact on daily functioning
-- the trade-offs involved
+You are generating a deeper psychological formulation.
 
 Purpose:
-- Integrate these into a coherent system
-- Describe how different processes interact over time
-- Show why these patterns persist
+- Integrate patterns into a coherent system
+- Explain how and why they persist
 
-Structure the response into 4 sections (use clear headings):
+Structure with headings:
 
 1. System Organisation
-- Describe how the system tends to operate overall
-- Identify dominant tendencies such as internal pressure, avoidance, reactivity, or disengagement
+- Describe how the system operates overall
 
 2. Dynamic Patterns
-- Describe repeating cycles over time
-- Example:
-  pressure → effort → fatigue or loss of focus → disengagement → backlog → renewed pressure
+- Show repeating cycles
+- e.g. pressure → effort → drop-off → restart
 
 3. Protective Logic
-- Explain why these patterns make sense
-- Frame them as attempts to maintain stability, avoid overwhelm, or manage internal tension
+- Explain why this system makes sense
 
 4. Structural Limitations
-- Be clear and direct about where this system becomes limiting
-- Focus on:
-  inconsistency
-  difficulty sustaining effort
-  patterns of starting and dropping off
-  internal conflict between intention and follow-through
+- Show where it breaks down:
+  - inconsistency
+  - unstable effort
+  - internal conflict
 
 Rules:
 - Do NOT diagnose or label
 - Do NOT use clinical category terms
-- Do NOT give advice or solutions
+- Do NOT give advice
 - Do NOT reassure
-- Do NOT sound like an external report
+- Do NOT sound external
 
 Instead:
-- Write as if describing the reader’s internal experience directly
-- Use "you" where appropriate
-- Focus on how it feels from inside the system
+- Describe internal experience directly
+- Use "you"
+- Show contradictions clearly
 
 Tone:
 - Clinical
-- Measured
 - Precise
-- Slightly confronting but not harsh
+- Measured
+- Slightly confronting
 
 Length:
-- 5–8 paragraphs total
+- 5–8 paragraphs
 
-End with a short closing paragraph that implies:
-- this system is understandable
-- but unlikely to change through insight alone
+End by implying:
+- the system is understandable
+- but insight alone will not change it
 
 The reader should feel:
-"This is accurate, and it explains something I recognise but haven’t been able to articulate."
+"This explains how I work, but it also shows why it doesn’t change easily."
 `
     };
 
@@ -222,7 +218,7 @@ The reader should feel:
             },
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
-                temperature: 0.55,
+                temperature: 0.5,
                 max_tokens: 700,
                 messages: [
                     {
