@@ -39,6 +39,7 @@ Hard rules:
 - Do not use metaphors.
 - Do not explain the pattern.
 - Do not reassure.
+- Do not restate the same mechanism in different wording
 - Avoid repeating the same pattern in different words.
 - Compress the reflection to essential behaviour only.
 
