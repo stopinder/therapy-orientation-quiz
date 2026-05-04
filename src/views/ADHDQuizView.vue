@@ -140,12 +140,7 @@
               These patterns don’t shift through insight alone — they shift through working with them directly.
             </p>
 
-            <button
-                @click="goToDeepDive"
-                class="px-5 py-2.5 bg-slate-800 text-white rounded-md hover:bg-slate-700 transition"
-            >
-              Get your full breakdown
-            </button>
+            <
           </div>
 
           <!-- Feedback -->
