@@ -27,88 +27,80 @@ export default async function handler(req, res) {
 You are generating an OVERVIEW psychological reflection.
 
 Goal:
-Write something clinically grounded, personally recognisable, and slightly uncomfortable.
-It should sound like a careful clinician describing the reader's lived experience, not like an academic paper.
+Write a clinical, grounded, behaviour-based description of how the reader actually operates.
 
 Rules:
 - Use "you" directly.
-- Do NOT use phrases like "the system", "internal regulatory framework", "this person", or "the individual".
 - Do NOT diagnose or label.
 - Do NOT use clinical category terms.
-- Do NOT give advice or solutions.
-- Do NOT reassure.
-- Do NOT use poetic or abstract language.
-- Do NOT overuse "may", "might", or "can".
+- Do NOT use soft qualifiers (no "may", "might", "tends to", "can feel like").
+- Do NOT use metaphors or abstract/system-heavy language.
+- Do NOT give advice or reassurance.
 
 Write 4–6 short paragraphs.
 
 Focus on:
-- what the reader starts doing
-- where momentum drops
-- how pressure helps and also disrupts
-- how effort is real but does not always accumulate
-- how disengagement can function as relief
-- how intention and follow-through do not fully line up
+- starting with intention but not sustaining
+- momentum dropping without a clear break
+- reliance on pressure to engage
+- effort that does not accumulate
+- repeated restarting instead of continuation
+- disengagement reducing strain but breaking continuity
 
-Include clear contradictions:
-- You intend to continue, but momentum drops.
-- Pressure gets you moving, but makes consistency unstable.
-- Effort is present, but progress does not reliably build.
-- Disengagement protects you, but interrupts continuity.
+Include contradictions:
+- you intend to continue, but do not sustain
+- pressure gets you moving, but disrupts consistency
+- effort is present, but progress is unstable
 
 Style:
 - Direct
 - Specific
 - Behaviour-based
-- Measured
 - Slightly confronting, not harsh
 
-The reader should feel:
-"This is describing something I actually do."
+The reader should recognise their own behaviour immediately.
 `,
 
         functioning: `
 You are generating a DAILY FUNCTIONING reflection.
 
 Goal:
-Describe what this costs in everyday life.
+Describe what this costs in real terms.
 
 Rules:
 - Use "you" directly.
-- Do NOT sound academic.
 - Do NOT diagnose or label.
 - Do NOT use dramatic language.
+- Do NOT soften or reassure.
 - Do NOT give advice.
-- Do NOT reassure.
 
 Write 4–6 short paragraphs.
 
 Focus on:
 - repeated restarting
-- work getting done in fragments
-- hidden effort
+- work happening in fragments
+- effort that does not carry over
 - decision fatigue
-- unreliable consistency
-- the gap between intention and actual follow-through
+- hidden compensation
+- inconsistency across days
 
 Include contradictions:
-- You work hard, but still feel behind.
-- You compensate, but the compensation costs energy.
-- You can perform under pressure, but cannot depend on pressure as a stable method.
+- you work, but feel behind
+- you compensate, but it costs energy
+- you can perform under pressure, but cannot rely on it
 
 Tone:
-Clinical, grounded, direct, personally recognisable.
+Clinical, grounded, direct, slightly exposing.
 `,
 
         patterns: `
 You are generating a PATTERNS & TRADE-OFFS reflection.
 
 Goal:
-Show the internal contradictions clearly without resolving them.
+Show the contradictions clearly without resolving them.
 
 Rules:
 - Use "you" directly.
-- Do NOT sound academic.
 - Do NOT diagnose or label.
 - Do NOT give advice.
 - Do NOT conclude neatly.
@@ -116,56 +108,57 @@ Rules:
 Write 4–6 short paragraphs.
 
 Focus on:
-- pressure creating action but reducing stability
+- pressure enabling action but reducing stability
 - avoidance reducing strain but creating backlog
 - intensity producing output but disrupting consistency
-- relief in the short term creating cost later
+- short-term relief creating longer-term cost
 
 Tone:
-Balanced, direct, slightly confronting.
+Direct, balanced, slightly confronting.
 `,
 
         deep: `
 You are generating a deeper psychological formulation.
 
 Goal:
-Make the reader feel accurately seen, not clinically analysed from a distance.
+Show how the pattern holds together and why it persists.
 
 Use clear headings.
 
-Sections:
+Structure:
 
-1. How This Pattern Organises Itself
-Describe the main operating pattern in direct language.
+1. How You Operate
+Describe the overall pattern directly.
 
 2. The Repeating Cycle
 Show the cycle clearly:
 intention → effort → pressure → drop-off → restart.
 
-3. Why It Makes Sense
-Explain how the pattern protects the reader from strain, pressure, or overload.
+3. Why This Pattern Exists
+Explain how it protects against strain or overload.
 
-4. Where It Keeps You Stuck
-Name the cost directly:
-inconsistency, restarting, unfinished loops, pressure-dependence, and reduced trust in follow-through.
+4. Where It Breaks Down
+Be direct:
+- inconsistency
+- restarting
+- unfinished loops
+- pressure dependence
 
 Rules:
 - Use "you" directly.
-- Do NOT say "the system" repeatedly.
-- Do NOT sound academic.
 - Do NOT diagnose or label.
+- Do NOT use abstract/system-heavy language.
 - Do NOT give advice.
 - Do NOT reassure.
-- Do NOT over-explain.
 
 Tone:
-Clinical, measured, direct, personal, slightly uncomfortable.
+Clinical, precise, grounded, slightly confronting.
 
 Length:
 5–8 paragraphs.
 
 End by making clear:
-this pattern makes sense, but insight alone is unlikely to change it.
+the pattern makes sense, but does not change through insight alone.
 `
     };
 
@@ -180,7 +173,7 @@ this pattern makes sense, but insight alone is unlikely to change it.
             },
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
-                temperature: 0.5,
+                temperature: 0.45,
                 max_tokens: 700,
                 messages: [
                     {
