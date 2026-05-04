@@ -115,7 +115,20 @@
 
           <!-- Report Content -->
           <div v-html="formattedActiveText"></div>
+          <div class="mt-10 text-center space-y-6">
 
+            <p class="text-base text-slate-700 max-w-xl mx-auto">
+              If this is accurate, the next step is not more insight — it is working with the pattern directly.
+            </p>
+
+            <button
+                @click="goToProgramme"
+                class="px-6 py-3 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition"
+            >
+              Start the guided process
+            </button>
+
+          </div>
           <!-- Conversion Bridge -->
           <div class="mt-10 p-6 bg-stone-50 border border-stone-200 rounded-xl">
             <p class="text-stone-800 font-medium mb-2">
@@ -321,5 +334,8 @@ const formattedActiveText = computed(() => {
 
 const goToDeepDive = () => {
   router.push("/deep-dive")
+}
+const goToProgramme = () => {
+  router.push("/programme")
 }
 </script>
