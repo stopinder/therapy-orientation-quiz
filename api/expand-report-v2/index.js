@@ -28,108 +28,92 @@ export default async function handler(req, res) {
 You are generating an OVERVIEW psychological reflection.
 
 Goal:
-Describe what actually happens in behaviour, step by step.
+Describe behaviour exactly as it happens.
 
-Rules:
-- Use "you" directly.
-- Do NOT diagnose or label.
-- Do NOT use clinical category terms.
-- Do NOT use soft qualifiers ("may", "might", "tends to").
-- Do NOT use metaphors or abstract/system language.
-- Do NOT explain the pattern.
-- Do NOT give advice or reassurance.
+Hard rules:
+- Use "you" only.
+- No explanation.
+- No interpretation.
+- No soft qualifiers ("may", "tends to", "often").
+- No abstract language.
+- No metaphors.
+- No clinical labels.
+- No reassurance.
 
 Write 4–6 short paragraphs.
 
 Each paragraph must:
 - show a sequence (what happens → what follows)
-- include where momentum breaks
-- avoid interpretation
+- show where it breaks
+- stay concrete
 
-Focus on:
+Required elements:
 - starting with intention but not sustaining
 - momentum dropping without a clear break
-- reliance on pressure to engage
+- pressure restarting behaviour
 - effort not carrying forward
 - restarting instead of continuing
-- disengagement reducing strain but breaking continuity
+- disengagement reducing strain but breaking flow
 
-Include contradictions:
+Required contradictions:
 - you intend to continue, but do not sustain
-- pressure gets you moving, but breaks consistency
+- pressure starts action, but breaks consistency
 - effort is present, but progress is unstable
 
 Tone:
 - Direct
-- Behaviour-based
-- Clinical
+- Behavioural
 - Slightly confronting
-
-The reader should recognise their behaviour immediately.
 `,
 
         functioning: `
 You are generating a DAILY FUNCTIONING reflection.
 
 Goal:
-Show what this costs in real situations.
+Show what breaks in real situations.
 
-Rules:
-- Use "you" directly.
-- Do NOT diagnose or label.
-- Do NOT use dramatic language.
-- Do NOT explain or soften.
-- Do NOT give advice.
+Hard rules:
+- Use "you".
+- No explanation.
+- No softening.
+- No diagnosis.
+- No advice.
 
 Write 4–6 short paragraphs.
 
 Each paragraph must:
-- show what happens during tasks
-- show where effort breaks
-- avoid interpretation
+- show behaviour during tasks
+- show where effort fails to hold
 
 Focus on:
-- repeated restarting
-- work happening in fragments
-- effort not carrying forward
-- decision fatigue
-- hidden compensation
-- inconsistency across days
+- restarting
+- fragmented work
+- effort not accumulating
+- inconsistency
 
 Include contradictions:
 - you work, but feel behind
 - you compensate, but it costs energy
-- you can perform under pressure, but cannot rely on it
-
-Tone:
-- Direct
-- Grounded
-- Slightly exposing
 `,
 
         patterns: `
-You are generating a PATTERNS & TRADE-OFFS reflection.
+You are generating a PATTERNS reflection.
 
 Goal:
-Show the contradictions clearly.
+Show contradictions only.
 
 Rules:
-- Use "you" directly.
-- Do NOT diagnose or label.
-- Do NOT explain or resolve.
-- Do NOT give advice.
+- Use "you".
+- No explanation.
+- No resolution.
+- No advice.
 
 Write 4–6 short paragraphs.
 
-Each paragraph must:
-- show a contradiction in action
-- avoid interpretation
-
 Focus on:
-- pressure enabling action but breaking stability
-- avoidance reducing strain but creating backlog
-- intensity producing output but disrupting consistency
-- relief in the moment creating cost later
+- pressure helps but destabilises
+- avoidance reduces strain but creates backlog
+- intensity produces output but breaks consistency
 
 Tone:
 - Direct
@@ -138,50 +122,32 @@ Tone:
 `,
 
         deep: `
-You are generating a deeper psychological formulation.
+You are generating a DEEP formulation.
 
 Goal:
-Show how the pattern repeats and why it does not stabilise.
-
-Use clear headings.
+Show the repeating loop clearly.
 
 Structure:
 
 1. How You Operate
-Describe the pattern directly in behaviour.
-
-2. The Cycle
-Show the loop clearly:
-intention → effort → pressure → drop-off → restart.
-
-3. Why It Continues
-Show how the pattern reduces strain in the moment.
-
-4. Where It Breaks
-State clearly:
-- inconsistency
-- restarting
-- unfinished tasks
-- reliance on pressure
+2. The Cycle (intention → effort → drop-off → restart)
+3. Why It Continues (reduces strain)
+4. Where It Breaks (inconsistency, restarting)
 
 Rules:
-- Use "you" directly.
-- Do NOT diagnose or label.
-- Do NOT use abstract/system language.
-- Do NOT explain excessively.
-- Do NOT give advice or reassurance.
+- Use "you"
+- No abstraction
+- No diagnosis
+- No advice
+- No reassurance
 
 Tone:
-- Clinical
 - Direct
 - Behaviour-based
 - Slightly confronting
 
-Length:
-5–8 paragraphs.
-
-End by making clear:
-the pattern repeats because it reduces strain, but does not stabilise.
+End:
+The pattern repeats because it reduces strain, but does not stabilise.
 `
     };
 
@@ -196,8 +162,8 @@ the pattern repeats because it reduces strain, but does not stabilise.
             },
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
-                temperature: 0.4,
-                max_tokens: 700,
+                temperature: 0.35,
+                max_tokens: 650,
                 messages: [
                     {
                         role: "system",
@@ -221,7 +187,7 @@ the pattern repeats because it reduces strain, but does not stabilise.
 
         return res.status(200).json({ text });
 
-    } catch (err) {
+    } catch {
         return res.status(500).json({ error: "Server error" });
     }
 }
