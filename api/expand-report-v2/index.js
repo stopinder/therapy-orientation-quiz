@@ -27,29 +27,53 @@ export default async function handler(req, res) {
         overview: `
 You are generating an OVERVIEW psychological reflection.
 
+Write in a clinical, precise, and grounded tone.
+
+This is not a report about a person.
+It is a description of how the reader experiences their own internal system.
+
 Purpose:
-- Identify and describe the dominant patterns in how this person operates.
-- Focus on attention, motivation, internal pressure, and disengagement.
+- Identify and describe the dominant patterns in how the system operates
+- Focus on attention, motivation, internal pressure, and disengagement
+- Make the experience immediately recognisable
 
 Rules:
-- Do NOT diagnose or label.
-- Do NOT give advice or solutions.
-- Do NOT reassure.
-- Do NOT explain causes in depth.
+- Do NOT diagnose or label
+- Do NOT use phrases like "this person"
+- Do NOT use clinical category terms (e.g. inattention, impulsivity, emotional regulation)
+- Do NOT sound like an external report
+- Do NOT give advice or solutions
+- Do NOT reassure or soften unnecessarily
 
-Tone:
-- Clinical, precise, grounded
-- Observational, but personally recognisable
+Instead:
+- Write directly in terms of experience ("you may notice...", "there can be a sense that...")
+- Describe internal dynamics (e.g. one part pushes, another pulls away)
+- Use concrete, lived language rather than abstract phrasing
 
+Structure:
 Write 4–6 short paragraphs.
 
 Each paragraph should:
-- Clearly describe one pattern
-- Use concrete, recognisable language
-- Avoid vague phrasing
+- Describe one clear pattern
+- Include how it unfolds in real time
+- Avoid repetition
+
+Include elements such as:
+- starting with intention but losing momentum
+- needing pressure or urgency to engage
+- attention drifting despite effort
+- internal tension between pushing and avoiding
+- cycles of effort followed by drop-off
+
+Tone:
+- Clinical
+- Measured
+- Observational
+- Personally recognisable
+- Slightly exposing, but not dramatic
 
 The reader should feel:
-"Yes, that’s exactly what happens"
+"This is describing how I actually operate, not just summarising traits."
 `,
 
         functioning: `
@@ -64,13 +88,13 @@ Purpose:
 Rules:
 - Do NOT restate the overview.
 - Do NOT use diagnostic terms (e.g. inattention, impulsivity, hyperactivity).
-- Do NOT use dramatic or exaggerated language (e.g. “relentless”, “overwhelming”, “hijacks”).
+- Do NOT use dramatic or exaggerated language (e.g. "relentless", "overwhelming", "hijacks").
 - Do NOT shame, blame, or exaggerate.
 - Do NOT give advice.
 
 Instead:
 - Use measured, precise, grounded language
-- Describe experience in terms of internal processes (e.g. “a part of you pushes”, “another part pulls away”)
+- Describe experience in terms of internal processes (e.g. "a part of you pushes", "another part pulls away")
 
 Focus on:
 - difficulty starting tasks
@@ -91,6 +115,36 @@ The reader should feel:
 "This describes what it’s actually like, without exaggerating it."
 `,
 
+        patterns: `
+You are generating a PATTERNS & TRADE-OFFS reflection.
+
+Assume the reader understands both patterns and functioning impact.
+
+Purpose:
+- Show how these patterns both help and hinder.
+- Highlight internal tensions and longer-term trade-offs.
+
+Rules:
+- Do NOT repeat earlier descriptions.
+- Do NOT resolve the tension.
+- Do NOT give advice.
+- Do NOT conclude neatly.
+
+Focus on:
+- how pressure increases output but reduces sustainability
+- how avoidance protects but creates backlog
+- how intensity helps in short bursts but destabilises consistency
+
+Tone:
+- Balanced but not neutral
+- Reflective, slightly confronting
+
+Write 4–6 short paragraphs.
+
+The reader should feel:
+"This explains why you move between different states rather than staying consistent."
+`,
+
         deep: `
 You are generating a deeper psychological formulation of a person’s internal system.
 
@@ -107,20 +161,17 @@ Purpose:
 Structure the response into 4 sections (use clear headings):
 
 1. System Organisation
-- Describe how this person tends to operate overall
+- Describe how the system tends to operate overall
 - Identify dominant tendencies such as internal pressure, avoidance, reactivity, or disengagement
-- Use grounded, recognisable language
 
 2. Dynamic Patterns
 - Describe repeating cycles over time
-- Make them concrete and specific
 - Example:
-  pressure → initial effort → fatigue or loss of focus → disengagement → backlog → renewed pressure
+  pressure → effort → fatigue or loss of focus → disengagement → backlog → renewed pressure
 
 3. Protective Logic
 - Explain why these patterns make sense
 - Frame them as attempts to maintain stability, avoid overwhelm, or manage internal tension
-- Do NOT pathologise
 
 4. Structural Limitations
 - Be clear and direct about where this system becomes limiting
@@ -130,31 +181,24 @@ Structure the response into 4 sections (use clear headings):
   patterns of starting and dropping off
   internal conflict between intention and follow-through
 
-- Use specific, recognisable examples such as:
-  “You begin with clarity, but something in the system loses momentum”
-  “You rely on pressure to function, which makes consistency difficult”
-  “Effort is possible, but rarely stable”
-
 Rules:
 - Do NOT diagnose or label
-- Do NOT use phrases like "this person"
-- Do NOT use formal clinical labels (e.g. inattention, emotional regulation)
+- Do NOT use clinical category terms
+- Do NOT give advice or solutions
+- Do NOT reassure
 - Do NOT sound like an external report
 
 Instead:
 - Write as if describing the reader’s internal experience directly
 - Use "you" where appropriate
 - Focus on how it feels from inside the system
+
 Tone:
 - Clinical
 - Measured
 - Precise
 - Slightly confronting but not harsh
-Tone:
-- Clinical
-- Measured
-- Grounded
-- Personally recognisable (not distant or report-like)
+
 Length:
 - 5–8 paragraphs total
 
