@@ -8,6 +8,7 @@ export default async function handler(req, res) {
     }
 
     let body = req.body;
+
     if (typeof body === "string") {
         try {
             body = JSON.parse(body);
@@ -23,7 +24,6 @@ export default async function handler(req, res) {
     }
 
     const MODE_PROMPTS = {
-
         overview: `
 You are generating an OVERVIEW psychological reflection.
 
@@ -31,21 +31,23 @@ Goal:
 Describe behaviour exactly as it happens.
 
 Hard rules:
-- Use "you" only.
-- No explanation.
-- No interpretation.
-- No soft qualifiers ("may", "tends to", "often").
-- No abstract language.
-- No metaphors.
-- No clinical labels.
-- No reassurance.
-- Avoid repeating the same idea with different wording
-- Compress the description to only essential behaviour
+- Use "you" directly.
+- Do not diagnose or label.
+- Do not use clinical labels.
+- Do not use soft qualifiers such as "may", "tends to", or "often".
+- Do not use abstract language.
+- Do not use metaphors.
+- Do not explain the pattern.
+- Do not reassure.
+- Avoid repeating the same pattern in different words.
+- Compress the reflection to essential behaviour only.
+
 Write 4–6 short paragraphs.
 
 Each paragraph must:
-- show a sequence (what happens → what follows)
-- show where it breaks
+- show a sequence: what happens, then what follows
+- show where the behaviour breaks
+- introduce a new layer or tighten the loop
 - stay concrete
 
 Required elements:
@@ -74,47 +76,65 @@ Goal:
 Show what breaks in real situations.
 
 Hard rules:
-- Use "you".
-- No explanation.
-- No softening.
-- No diagnosis.
-- No advice.
+- Use "you" directly.
+- Do not diagnose or label.
+- Do not explain.
+- Do not soften.
+- Do not give advice.
+- Avoid repeating the same pattern in different words.
 
 Write 4–6 short paragraphs.
 
 Each paragraph must:
-- show behaviour during tasks
+- show behaviour during real tasks
 - show where effort fails to hold
+- introduce a new layer or tighten the loop
 
 Focus on:
 - restarting
 - fragmented work
 - effort not accumulating
 - inconsistency
+- hidden compensation
+- decision fatigue
 
 Include contradictions:
 - you work, but feel behind
 - you compensate, but it costs energy
+- you can perform under pressure, but cannot rely on pressure
+
+Tone:
+- Direct
+- Grounded
+- Slightly exposing
 `,
 
         patterns: `
 You are generating a PATTERNS reflection.
 
 Goal:
-Show contradictions only.
+Show contradictions clearly.
 
 Rules:
-- Use "you".
-- No explanation.
-- No resolution.
-- No advice.
+- Use "you" directly.
+- Do not diagnose or label.
+- Do not explain.
+- Do not resolve.
+- Do not give advice.
+- Avoid repeating the same pattern in different words.
 
 Write 4–6 short paragraphs.
+
+Each paragraph must:
+- show one contradiction in action
+- introduce a new layer or tighten the loop
+- stay concrete
 
 Focus on:
 - pressure helps but destabilises
 - avoidance reduces strain but creates backlog
 - intensity produces output but breaks consistency
+- relief in the moment creates cost later
 
 Tone:
 - Direct
@@ -126,34 +146,43 @@ Tone:
 You are generating a DEEP formulation.
 
 Goal:
-Show the repeating loop clearly.
+Show the repeating loop clearly and personally.
 
-Structure:
+Use these headings:
 
 1. How You Operate
-2. The Cycle (intention → effort → drop-off → restart)
-3. Why It Continues (reduces strain)
-4. Where It Breaks (inconsistency, restarting)
+2. The Cycle
+3. Why It Continues
+4. Where It Breaks
 
 Rules:
-- Use "you"
-- No abstraction
-- No diagnosis
-- No advice
-- No reassurance
+- Use "you" directly.
+- Do not diagnose or label.
+- Do not use abstraction.
+- Do not give advice.
+- Do not reassure.
+- Do not over-explain.
+- Avoid repeating the same pattern in different words.
+- Each section must introduce a new layer or tighten the loop.
+
+Required cycle:
+intention → effort → pressure → drop-off → restart
+
+Required tensions:
+- you intend to continue, but the behaviour resets
+- pressure gets you moving, but prevents consistency
+- disengagement reduces strain, but breaks continuity
 
 Tone:
 - Direct
 - Behaviour-based
 - Slightly confronting
 
-End:
 End by stating clearly:
-the pattern repeats.
-Do not explain it.
-Do not resolve it.git add .
-git commit -m "Final: remove explanatory ending and preserve behavioural tension"
-git push
+This pattern repeats.
+
+Do not explain the ending.
+Do not resolve the ending.
 `
     };
 
@@ -192,7 +221,6 @@ git push
         const text = data.choices?.[0]?.message?.content?.trim() || "";
 
         return res.status(200).json({ text });
-
     } catch {
         return res.status(500).json({ error: "Server error" });
     }
