@@ -115,6 +115,25 @@
 
           <!-- Report Content -->
           <div v-html="formattedActiveText"></div>
+          <div class="mt-6 flex gap-4 justify-center">
+
+            <!-- Copy -->
+            <button
+                @click="copyReflection"
+                class="px-4 py-2 bg-stone-200 text-slate-800 rounded-md hover:bg-stone-300 transition"
+            >
+              Copy
+            </button>
+
+            <!-- Download -->
+            <button
+                @click="downloadPDF"
+                class="px-4 py-2 bg-stone-200 text-slate-800 rounded-md hover:bg-stone-300 transition"
+            >
+              Download PDF
+            </button>
+
+          </div>
           <div class="mt-10 text-center space-y-6">
 
             <p class="text-base text-slate-700 max-w-xl mx-auto">
@@ -171,7 +190,27 @@
 import { ref, computed, nextTick } from "vue"
 import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
+const copyReflection = async () => {
+  const text = activeText.value || ""
 
+  try {
+    await navigator.clipboard.writeText(text)
+    alert("Reflection copied")
+  } catch {
+    alert("Failed to copy")
+  }
+}
+
+const downloadPDF = () => {
+  const element = document.createElement("a")
+
+  const file = new Blob([activeText.value], { type: "text/plain" })
+  element.href = URL.createObjectURL(file)
+  element.download = "mindworks-reflection.txt"
+
+  document.body.appendChild(element)
+  element.click()
+}
 const router = useRouter()
 
 const answers = ref({})

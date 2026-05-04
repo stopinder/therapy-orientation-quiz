@@ -31,7 +31,9 @@
         <input
             v-model="email"
             type="email"
-            placeholder="Enter your email to begin"
+            placeholder="Enter your email to begin.
+
+We’ll use this to send occasional MindWorks updates. You can unsubscribe at any time."
             class="w-full px-4 py-3 border border-stone-300 rounded-md text-slate-900"
         />
 
