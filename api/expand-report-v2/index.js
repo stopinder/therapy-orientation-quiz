@@ -23,22 +23,28 @@ export default async function handler(req, res) {
     }
 
     const MODE_PROMPTS = {
+
         overview: `
 You are generating an OVERVIEW psychological reflection.
 
 Goal:
-Write a clinical, grounded, behaviour-based description of how the reader actually operates.
+Describe how the reader actually behaves in real time.
 
 Rules:
 - Use "you" directly.
 - Do NOT diagnose or label.
 - Do NOT use clinical category terms.
 - Do NOT use soft qualifiers (no "may", "might", "tends to", "can feel like").
-- Do NOT use metaphors or abstract/system-heavy language.
+- Do NOT use metaphors or abstract/system language.
+- Do NOT explain the pattern.
 - Do NOT give advice or reassurance.
-- Describe sequences of behaviour (what happens first, then what follows)
-- Avoid explaining the pattern; show it unfolding instead
+
 Write 4–6 short paragraphs.
+
+Each paragraph must:
+- show a sequence (what happens → what follows)
+- include where momentum breaks
+- avoid explanation
 
 Focus on:
 - starting with intention but not sustaining
@@ -53,13 +59,12 @@ Include contradictions:
 - pressure gets you moving, but disrupts consistency
 - effort is present, but progress is unstable
 
-Style:
+Tone:
 - Direct
-- Specific
 - Behaviour-based
-- Slightly confronting, not harsh
-- Describe sequences of behaviour (what happens first, then what follows)
-- Avoid explaining the pattern; show it unfolding instead
+- Clinical
+- Slightly confronting
+
 The reader should recognise their own behaviour immediately.
 `,
 
@@ -67,21 +72,26 @@ The reader should recognise their own behaviour immediately.
 You are generating a DAILY FUNCTIONING reflection.
 
 Goal:
-Describe what this costs in real terms.
+Show what this costs in everyday life.
 
 Rules:
 - Use "you" directly.
 - Do NOT diagnose or label.
-- Do NOT use dramatic language.
-- Do NOT soften or reassure.
+- Do NOT use dramatic or exaggerated language.
+- Do NOT explain or soften.
 - Do NOT give advice.
 
 Write 4–6 short paragraphs.
 
+Each paragraph must:
+- show what happens during real tasks
+- show where effort breaks down
+- avoid explanation
+
 Focus on:
 - repeated restarting
 - work happening in fragments
-- effort that does not carry over
+- effort not carrying forward
 - decision fatigue
 - hidden compensation
 - inconsistency across days
@@ -92,75 +102,86 @@ Include contradictions:
 - you can perform under pressure, but cannot rely on it
 
 Tone:
-Clinical, grounded, direct, slightly exposing.
+- Direct
+- Grounded
+- Slightly exposing
 `,
 
         patterns: `
 You are generating a PATTERNS & TRADE-OFFS reflection.
 
 Goal:
-Show the contradictions clearly without resolving them.
+Show the contradictions clearly.
 
 Rules:
 - Use "you" directly.
 - Do NOT diagnose or label.
+- Do NOT explain or resolve.
 - Do NOT give advice.
-- Do NOT conclude neatly.
 
 Write 4–6 short paragraphs.
 
+Each paragraph must:
+- show a contradiction in action
+- avoid explanation
+
 Focus on:
-- pressure enabling action but reducing stability
+- pressure enabling action but breaking stability
 - avoidance reducing strain but creating backlog
 - intensity producing output but disrupting consistency
-- short-term relief creating longer-term cost
+- relief in the moment creating cost later
 
 Tone:
-Direct, balanced, slightly confronting.
+- Direct
+- Clear
+- Slightly confronting
 `,
 
         deep: `
 You are generating a deeper psychological formulation.
 
 Goal:
-Show how the pattern holds together and why it persists.
+Show how the pattern holds together and why it repeats.
 
-Use clear headings.
+Use headings.
 
 Structure:
 
 1. How You Operate
-Describe the overall pattern directly.
+Describe the pattern directly in behavioural terms.
 
-2. The Repeating Cycle
-Show the cycle clearly:
+2. The Cycle
+Show the loop clearly:
 intention → effort → pressure → drop-off → restart.
 
-3. Why This Pattern Exists
-Explain how it protects against strain or overload.
+3. Why It Continues
+Show how the pattern reduces strain or pressure in the moment.
 
-4. Where It Breaks Down
-Be direct:
+4. Where It Breaks
+State clearly:
 - inconsistency
 - restarting
-- unfinished loops
-- pressure dependence
+- unfinished tasks
+- reliance on pressure
 
 Rules:
 - Use "you" directly.
 - Do NOT diagnose or label.
-- Do NOT use abstract/system-heavy language.
-- Do NOT give advice.
-- Do NOT reassure.
+- Do NOT use abstract/system language.
+- Do NOT explain excessively.
+- Do NOT give advice or reassurance.
 
 Tone:
-Clinical, precise, grounded, slightly confronting.
+- Clinical
+- Direct
+- Behaviour-based
+- Slightly confronting
 
 Length:
 5–8 paragraphs.
 
 End by making clear:
-the pattern makes sense, but does not change through insight alone.
+the pattern makes sense, but it repeats.
 `
     };
 
@@ -175,7 +196,7 @@ the pattern makes sense, but does not change through insight alone.
             },
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
-                temperature: 0.45,
+                temperature: 0.4,
                 max_tokens: 700,
                 messages: [
                     {
@@ -199,6 +220,7 @@ the pattern makes sense, but does not change through insight alone.
         const text = data.choices?.[0]?.message?.content?.trim() || "";
 
         return res.status(200).json({ text });
+
     } catch (err) {
         return res.status(500).json({ error: "Server error" });
     }
