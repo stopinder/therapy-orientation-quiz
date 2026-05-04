@@ -147,7 +147,12 @@ Tone:
 - Slightly confronting
 
 End:
-The pattern repeats because it reduces strain, but does not stabilise.
+End by stating clearly:
+the pattern repeats.
+Do not explain it.
+Do not resolve it.git add .
+git commit -m "Final: remove explanatory ending and preserve behavioural tension"
+git push
 `
     };
 
