@@ -31,83 +31,39 @@ Goal:
 Describe behaviour exactly as it happens.
 
 Hard rules:
-- Use "you" directly.
-- Do not diagnose or label.
-- Do not use clinical labels.
-- Do not use soft qualifiers such as "may", "tends to", or "often".
-- Do not use abstract language.
-- Do not use metaphors.
-- Do not explain the pattern.
-- Do not reassure.
-- Do not restate the same mechanism in different wording
-- Avoid repeating the same pattern in different words.
-- Compress the reflection to essential behaviour only.
+- Use "you" only.
+- No explanation.
+- No interpretation.
+- No soft qualifiers ("may", "tends to", "often").
+- No abstract language.
+- No metaphors.
+- No clinical labels.
+- No reassurance.
+
+Critical rules:
+- Do NOT repeat the same mechanism in different wording
+- Each paragraph must introduce a new step in the sequence
+- Remove any sentence that explains the pattern instead of showing it
 
 Write 4–6 short paragraphs.
 
-Each paragraph must:
-- show a sequence: what happens, then what follows
-- show where the behaviour breaks
-- introduce a new layer or tighten the loop
-- stay concrete
-
-Required elements:
-- starting with intention but not sustaining
-- momentum dropping without a clear break
-- pressure restarting behaviour
-- effort not carrying forward
-- restarting instead of continuing
-- disengagement reducing strain but breaking flow
-
-Required contradictions:
-- you intend to continue, but do not sustain
-- pressure starts action, but breaks consistency
-- effort is present, but progress is unstable
+Structure must follow this order:
+1. Start → momentum drops
+2. Pressure → restart
+3. Effort → does not carry forward
+4. Disengagement → relief → cost
+5. Intention vs behaviour
+6. Loop closes
 
 Tone:
 - Direct
 - Behavioural
 - Slightly confronting
-`,
 
-        functioning: `
-You are generating a DAILY FUNCTIONING reflection.
+Final line must be:
+"This pattern repeats."
 
-Goal:
-Show what breaks in real situations.
-
-Hard rules:
-- Use "you" directly.
-- Do not diagnose or label.
-- Do not explain.
-- Do not soften.
-- Do not give advice.
-- Avoid repeating the same pattern in different words.
-
-Write 4–6 short paragraphs.
-
-Each paragraph must:
-- show behaviour during real tasks
-- show where effort fails to hold
-- introduce a new layer or tighten the loop
-
-Focus on:
-- restarting
-- fragmented work
-- effort not accumulating
-- inconsistency
-- hidden compensation
-- decision fatigue
-
-Include contradictions:
-- you work, but feel behind
-- you compensate, but it costs energy
-- you can perform under pressure, but cannot rely on pressure
-
-Tone:
-- Direct
-- Grounded
-- Slightly exposing
+Do not add anything after that line.
 `,
 
         patterns: `
