@@ -39,7 +39,8 @@ Hard rules:
 - No metaphors.
 - No clinical labels.
 - No reassurance.
-
+- Avoid repeating the same idea with different wording
+- Compress the description to only essential behaviour
 Write 4–6 short paragraphs.
 
 Each paragraph must:
