@@ -131,7 +131,6 @@ const loading = ref(false)
 const showNextStep = ref(false)
 
 const reportTexts = ref({ overview: "" })
-const activeView = ref("overview")
 
 const questionTextRefs = ref([])
 const generateButtonRef = ref(null)
@@ -146,18 +145,49 @@ const scale = [
 ]
 
 const totalCount = adhdQuestions.length
-const answeredCount = computed(() => Object.keys(answers.value).length)
+
+const answeredCount = computed(() =>
+    Object.keys(answers.value).length
+)
 
 const progressPercent = computed(() =>
     Math.round((answeredCount.value / totalCount) * 100)
 )
 
+//
+// 🔥 SCORING LAYER (NEW)
+//
+const scores = computed(() => {
+  const totals = {
+    inattention: 0,
+    hyperactivity: 0,
+    impulsivity: 0,
+    executive_function: 0,
+    emotional_regulation: 0,
+    functional_impact: 0
+  }
+
+  for (const [id, value] of Object.entries(answers.value)) {
+    const q = adhdQuestions.find(q => q.id === id)
+    if (q && totals[q.dimension] !== undefined) {
+      totals[q.dimension] += Number(value)
+    }
+  }
+
+  return totals
+})
+
+//
+// ANSWER FLOW
+//
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
+
   await nextTick()
   await new Promise(r => setTimeout(r, 120))
 
   const next = questionTextRefs.value[index + 1]
+
   if (next) {
     next.scrollIntoView({ behavior: "smooth", block: "start" })
   } else {
@@ -165,13 +195,19 @@ const handleAnswer = async (questionId, value, index) => {
   }
 }
 
+//
+// GENERATE REPORT (FIXED)
+//
 const generateOverview = async () => {
   loading.value = true
 
   const response = await fetch("/api/expand-report-v2", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ profile: answers.value, mode: "overview" })
+    body: JSON.stringify({
+      profile: scores.value,   // ✅ FIXED HERE
+      mode: "overview"
+    })
   })
 
   const data = await response.json()
@@ -183,6 +219,9 @@ const generateOverview = async () => {
   loading.value = false
 }
 
+//
+// OUTPUT
+//
 const activeText = computed(() => reportTexts.value.overview)
 
 const formattedActiveText = computed(() => {
@@ -193,6 +232,9 @@ const formattedActiveText = computed(() => {
       .join("")
 })
 
+//
+// ACTIONS
+//
 const copyReflection = async () => {
   try {
     await navigator.clipboard.writeText(activeText.value)
