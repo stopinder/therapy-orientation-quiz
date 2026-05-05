@@ -1,5 +1,8 @@
-const MODE_PROMPTS = {
+export const config = {
+    runtime: "nodejs"
+}
 
+const MODE_PROMPTS = {
     overview: `
 You are generating a behavioural reflection.
 
@@ -10,7 +13,7 @@ Rules:
 - Use "you"
 - No explanation
 - No causes
-- No labels (no ADHD, no diagnosis)
+- No labels
 - No advice
 - No reassurance
 - No abstract language
@@ -18,9 +21,9 @@ Rules:
 Write 4–5 short paragraphs.
 
 Each paragraph must:
-- show a sequence (what you do → what happens next)
-- introduce a NEW pattern (no repetition)
-- stay concrete and recognisable
+- show a sequence
+- introduce a NEW pattern
+- stay concrete
 
 Include:
 - starting with intention but not sustaining
@@ -45,13 +48,8 @@ Rules:
 - No explanation
 - No diagnosis
 - No advice
-- No repetition of overview
 
 Write 4–5 short paragraphs.
-
-Each paragraph must:
-- show behaviour in real situations
-- show where effort fails to hold
 
 Focus on:
 - restarting tasks
@@ -61,9 +59,6 @@ Focus on:
 
 Include contradiction:
 you are working, but still feel behind
-
-Tone:
-precise, grounded, slightly uncomfortable
 `,
 
     patterns: `
@@ -77,12 +72,8 @@ Rules:
 - No explanation
 - No advice
 - No resolution
-- No repeating earlier descriptions
 
 Write 4–5 short paragraphs.
-
-Each paragraph must:
-- show a tension or trade-off
 
 Include:
 - pressure helps you start, but breaks consistency
@@ -91,8 +82,98 @@ Include:
 
 End by making it clear:
 the pattern continues
-
-Tone:
-clear, direct, slightly confronting
 `
+}
+
+export default async function handler(req, res) {
+    try {
+        if (req.method !== "POST") {
+            return res.status(405).json({ error: "Method not allowed" })
+        }
+
+        let body = req.body
+
+        if (typeof body === "string") {
+            try {
+                body = JSON.parse(body)
+            } catch {
+                return res.status(400).json({ error: "Invalid JSON body" })
+            }
+        }
+
+        const { profile, mode } = body || {}
+
+        if (!profile) {
+            return res.status(400).json({ error: "Missing profile" })
+        }
+
+        const systemPrompt =
+            MODE_PROMPTS[mode] || MODE_PROMPTS.overview
+
+        // 🔴 CRITICAL CHECK
+        if (!process.env.OPENAI_API_KEY) {
+            return res.status(500).json({
+                error: "Missing OPENAI_API_KEY"
+            })
+        }
+
+        const response = await fetch(
+            "https://api.openai.com/v1/chat/completions",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: "gpt-4.1-mini",
+                    temperature: 0.4,
+                    max_tokens: 700,
+                    messages: [
+                        {
+                            role: "system",
+                            content: systemPrompt
+                        },
+                        {
+                            role: "user",
+                            content: `Profile:\n${JSON.stringify(profile)}`
+                        }
+                    ]
+                })
+            }
+        )
+
+        const raw = await response.text()
+
+        if (!response.ok) {
+            console.error("OpenAI error:", raw)
+            return res.status(500).json({
+                error: "OpenAI request failed",
+                details: raw
+            })
+        }
+
+        let data
+        try {
+            data = JSON.parse(raw)
+        } catch {
+            return res.status(500).json({
+                error: "Invalid JSON from OpenAI",
+                raw
+            })
+        }
+
+        const text =
+            data?.choices?.[0]?.message?.content?.trim() || ""
+
+        return res.status(200).json({ text })
+
+    } catch (err) {
+        console.error("SERVER CRASH:", err)
+
+        return res.status(500).json({
+            error: "Server crashed",
+            message: err.message
+        })
+    }
 }
