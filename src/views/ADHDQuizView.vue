@@ -1,37 +1,25 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
-    <div class="max-w-3xl mx-auto space-y-20">
+    <div class="max-w-3xl mx-auto space-y-16">
 
       <!-- Header -->
-      <header class="relative max-w-2xl pl-8 space-y-5">
-        <span class="absolute left-0 top-1 h-14 w-1 rounded-sm bg-slate-500"></span>
+      <header class="space-y-4">
         <p class="text-xs uppercase tracking-widest text-slate-500">System Mapping</p>
 
         <h1 class="text-4xl font-medium tracking-tight text-stone-800">
           A closer look at how your mind actually operates
         </h1>
-
-        <p class="text-lg leading-relaxed text-stone-600">
-          This reflection explores patterns in attention, motivation, and internal conflict.
-          Not to label them, but to understand what’s driving them.
-        </p>
       </header>
 
       <!-- Progress -->
       <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
-
         <div class="max-w-3xl mx-auto px-4 py-3 space-y-2">
 
-          <!-- Label -->
           <div class="flex justify-between text-sm text-slate-600">
             <span>Progress</span>
             <span>{{ progressPercent }}%</span>
           </div>
 
-          <!-- Bar -->
-          <p class="text-xs text-slate-500">
-            Keep going — this gets clearer quickly.
-          </p>
           <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
             <div
                 class="h-full bg-slate-800 transition-all duration-300"
@@ -39,173 +27,89 @@
             ></div>
           </div>
 
+          <p class="text-xs text-slate-500">
+            Keep going — this gets clearer quickly.
+          </p>
         </div>
-
       </div>
 
       <!-- Quiz -->
-      <section class="space-y-16 rounded-2xl bg-white/80 shadow-soft px-6 py-8">
+      <section class="space-y-12 rounded-2xl bg-white/80 px-6 py-8">
 
         <div
             v-for="(question, index) in adhdQuestions"
             :key="question.id"
-            class="space-y-6"
+            class="space-y-6 transition-all duration-300"
         >
           <p
-              class="text-xl leading-relaxed text-stone-800 scroll-mt-28"
+              class="text-xl text-stone-800 scroll-mt-36"
               :ref="el => questionTextRefs[index] = el"
           >
             {{ question.text }}
           </p>
 
-          <div class="space-y-4">
+          <div class="space-y-3">
             <label
                 v-for="option in scale"
                 :key="option.value"
-                class="flex items-center justify-between px-6 py-4 rounded-xl bg-white/90 border border-stone-200 cursor-pointer"
+                class="flex justify-between px-6 py-4 rounded-xl border cursor-pointer transition"
+                :class="answers[question.id] === option.value
+                ? 'bg-slate-900 text-white border-slate-900'
+                : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'"
             >
-              <span class="text-base text-stone-700">
-                {{ option.label }}
-              </span>
+              <span>{{ option.label }}</span>
+
               <input
                   type="radio"
                   :name="question.id"
                   :value="option.value"
                   :checked="answers[question.id] === option.value"
                   @change="handleAnswer(question.id, option.value, index)"
-                  class="h-5 w-5 accent-slate-700"
+                  class="h-5 w-5 accent-white"
               />
             </label>
           </div>
         </div>
 
-        <!-- Pre-result tension -->
-        <p class="text-sm text-slate-600">
-          This will generate a structured reflection based on your responses.
-          Most people recognise patterns here they hadn’t been able to name before.
-        </p>
-
-        <!-- Generate Button -->
-        <button
-            ref="generateButtonRef"
-            type="button"
-            @click="generateOverview"
-            class="mt-8 px-6 py-3 rounded-xl bg-slate-700 text-white scroll-mt-28"
-        >
-          {{ loading ? "Generating…" : "See your results" }}
-        </button>
-
-        <!-- Consent -->
-        <p class="mt-3 text-xs text-slate-500 max-w-prose">
-          By generating a reflection, you agree to the
-          <router-link to="/terms" class="underline hover:text-slate-700">
-            Terms of Use
-          </router-link>
-          and
-          <router-link to="/privacy" class="underline hover:text-slate-700">
-            Privacy Policy
-          </router-link>.
-        </p>
+        <!-- Generate -->
+        <div class="text-center pt-6">
+          <button
+              ref="generateButtonRef"
+              @click="generateOverview"
+              class="px-6 py-3 bg-slate-900 text-white rounded-md"
+          >
+            {{ loading ? "Generating…" : "See your results" }}
+          </button>
+        </div>
 
         <!-- Report -->
-        <div
-            v-if="activeText"
-            ref="reportContainerRef"
-            class="mt-12 max-w-prose mx-auto"
-        >
+        <div v-if="activeText" ref="reportContainerRef" class="mt-12 max-w-prose mx-auto">
 
-          <!-- View Switcher -->
-          <div class="flex gap-2 mb-8">
-            <button
-                v-for="view in views"
-                :key="view.key"
-                @click="selectView(view.key)"
-                class="px-4 py-1.5 rounded-full text-sm border transition"
-                :class="activeView === view.key
-                ? 'bg-slate-700 text-white border-slate-700'
-                : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
-            >
-              {{ view.label }}
-            </button>
-          </div>
-
-          <!-- Report Content -->
           <div v-html="formattedActiveText"></div>
-          <div class="mt-6 flex gap-4 justify-center">
 
-            <!-- Copy -->
-            <button
-                @click="copyReflection"
-                class="px-4 py-2 bg-stone-200 text-slate-800 rounded-md hover:bg-stone-300 transition"
-            >
+          <!-- Actions -->
+          <div class="mt-6 flex gap-4 justify-center">
+            <button @click="copyReflection" class="px-4 py-2 bg-stone-200 rounded-md">
               Copy
             </button>
-            <div v-if="showNextStep" class="mt-8 text-center space-y-4">
 
-              <p class="text-base text-slate-700 max-w-md mx-auto">
-                If this feels accurate, the next step is not more insight — it’s working with the pattern directly.
-              </p>
-
-              <button
-                  @click="goToProgramme"
-                  class="px-6 py-3 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition"
-              >
-                Start the guided process
-              </button>
-
-            </div>
-            <!-- Download -->
-            <button
-                @click="downloadPDF"
-                class="px-4 py-2 bg-stone-200 text-slate-800 rounded-md hover:bg-stone-300 transition"
-            >
-              Download PDF
+            <button @click="downloadPDF" class="px-4 py-2 bg-stone-200 rounded-md">
+              Download
             </button>
-
           </div>
-          <div class="mt-10 text-center space-y-6">
 
-            <p class="text-base text-slate-700 max-w-xl mx-auto">
-              If this is accurate, the next step is not more insight — it is working with the pattern directly.
+          <!-- Conversion -->
+          <div v-if="showNextStep" class="mt-8 text-center space-y-4">
+            <p class="text-slate-700 max-w-md mx-auto">
+              If this feels accurate, the next step is not more insight — it’s working with the pattern directly.
             </p>
 
             <button
-                @click="ccrogramme"
-                class="px-6 py-3 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition"
+                @click="goToProgramme"
+                class="px-6 py-3 bg-slate-900 text-white rounded-md"
             >
               Start the guided process
             </button>
-
-          </div>
-          <!-- Conversion Bridge -->
-          <div class="mt-10 p-6 bg-stone-50 border border-stone-200 rounded-xl">
-            <p class="text-stone-800 font-medium mb-2">
-              This is only part of the picture
-            </p>
-
-            <p class="text-sm text-stone-700 mb-4">
-              What you’re seeing here is a surface-level map of your system.
-              These patterns don’t shift through insight alone — they shift through working with them directly.
-            </p>
-
-            <
-          </div>
-
-          <!-- Feedback -->
-          <div class="mt-8 text-sm text-slate-600">
-            <p class="mb-2 italic">
-              If you noticed anything that felt particularly accurate, unclear, or off-mark,
-              I’d genuinely welcome hearing about it.
-            </p>
-
-            <a
-                href="mailto:emdrifs@robormiston.com?subject=MindWorks%20reflection%20feedback"
-                target="_blank"
-                rel="noopener"
-                class="underline hover:text-slate-800"
-            >
-              Share feedback
-            </a>
           </div>
 
         </div>
@@ -219,69 +123,19 @@
 import { ref, computed, nextTick } from "vue"
 import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
-const copyReflection = async () => {
-  const text = activeText.value || ""
 
-  if (!text) {
-    alert("Nothing to copy yet")
-    return
-  }
-
-  try {
-    // Modern method
-    await navigator.clipboard.writeText(text)
-    alert("Copied")
-  } catch (err) {
-    // Fallback method (important)
-    try {
-      const textarea = document.createElement("textarea")
-      textarea.value = text
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand("copy")
-      document.body.removeChild(textarea)
-
-      alert("Copied")
-    } catch {
-      alert("Copy failed — try selecting manually")
-    }
-  }
-}
-
-const downloadPDF = () => {
-  const element = document.createElement("a")
-  const showNextStep = ref(false)
-  const file = new Blob([activeText.value], { type: "text/plain" })
-  element.href = URL.createObjectURL(file)
-  element.download = "mindworks-reflection.txt"
-
-  document.body.appendChild(element)
-  element.click()
-}
 const router = useRouter()
 
 const answers = ref({})
 const loading = ref(false)
+const showNextStep = ref(false)
 
-const reportTexts = ref({
-  overview: "",
-  functioning: "",
-  patterns: ""
-})
-
+const reportTexts = ref({ overview: "" })
 const activeView = ref("overview")
-const typedOverviewText = ref("")
-const overviewHasTyped = ref(false)
 
 const questionTextRefs = ref([])
 const generateButtonRef = ref(null)
 const reportContainerRef = ref(null)
-
-const views = [
-  { key: "overview", label: "Overview" },
-  { key: "functioning", label: "Daily functioning" },
-  { key: "patterns", label: "Patterns & trade-offs" }
-]
 
 const scale = [
   { label: "Never", value: 0 },
@@ -293,131 +147,69 @@ const scale = [
 
 const totalCount = adhdQuestions.length
 const answeredCount = computed(() => Object.keys(answers.value).length)
-const progressPercent = computed(() => {
-  return Math.round((answeredCount.value / totalCount) * 100)
-})
-const scores = computed(() => {
-  const totals = {
-    inattention: 0,
-    hyperactivity: 0,
-    impulsivity: 0,
-    executive_function: 0,
-    emotional_regulation: 0
-  }
 
-  for (const [id, value] of Object.entries(answers.value)) {
-    const q = adhdQuestions.find(q => q.id === id)
-    if (q && totals[q.dimension] !== undefined) {
-      totals[q.dimension] += Number(value)
-    }
-  }
-
-  return totals
-})
+const progressPercent = computed(() =>
+    Math.round((answeredCount.value / totalCount) * 100)
+)
 
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
   await nextTick()
+  await new Promise(r => setTimeout(r, 120))
 
-  const nextQuestion = questionTextRefs.value[index + 1]
-
-  if (nextQuestion) {
-    nextQuestion.scrollIntoView({ behavior: "smooth", block: "start" })
-  } else if (generateButtonRef.value) {
-    generateButtonRef.value.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
-}
-
-const typeText = async (fullText, targetRef, speed = 12) => {
-  targetRef.value = ""
-  for (let i = 0; i < fullText.length; i++) {
-    targetRef.value += fullText[i]
-    await new Promise(resolve => setTimeout(resolve, speed))
+  const next = questionTextRefs.value[index + 1]
+  if (next) {
+    next.scrollIntoView({ behavior: "smooth", block: "start" })
+  } else {
+    generateButtonRef.value?.scrollIntoView({ behavior: "smooth" })
   }
 }
 
 const generateOverview = async () => {
   loading.value = true
-  sessionStorage.setItem("quizProfile", JSON.stringify(scores.value))
-  try {
-    const response = await fetch("/api/expand-report-v2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        mode: "overview",
-        profile: scores.value
-      })
-    })
 
-    const data = await response.json()
-    const text = data.text || ""
+  const response = await fetch("/api/expand-report-v2", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ profile: answers.value, mode: "overview" })
+  })
 
-    reportTexts.value.overview = text
-    activeView.value = "overview"
+  const data = await response.json()
+  reportTexts.value.overview = data.text || ""
 
-    await nextTick()
+  await nextTick()
+  reportContainerRef.value?.scrollIntoView({ behavior: "smooth" })
 
-    if (reportContainerRef?.value) {
-      reportContainerRef.value.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      })
-    }
-
-    if (!overviewHasTyped.value) {
-      overviewHasTyped.value = true
-      await typeText(text, typedOverviewText)
-    }
-
-  } finally {
-    loading.value = false
-  }
+  loading.value = false
 }
 
-const selectView = async (viewKey) => {
-  activeView.value = viewKey
-
-  if (reportTexts.value[viewKey]) return
-
-  loading.value = true
-  try {
-    const response = await fetch("/api/expand-report-v2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        mode: viewKey,
-        profile: scores.value
-      })
-    })
-
-    const data = await response.json()
-    reportTexts.value[viewKey] = data.text || ""
-
-  } finally {
-    loading.value = false
-  }
-}
-
-const activeText = computed(() => {
-  if (activeView.value === "overview" && overviewHasTyped.value) {
-    return typedOverviewText.value
-  }
-  return reportTexts.value[activeView.value]
-})
+const activeText = computed(() => reportTexts.value.overview)
 
 const formattedActiveText = computed(() => {
-  if (!activeText.value) return ""
-
   return activeText.value
-      .split("\n")
-      .filter(line => line.trim())
-      .map(line => `<p class="mb-4 text-stone-700">${line}</p>`)
+      ?.split("\n")
+      .filter(l => l.trim())
+      .map(l => `<p class="mb-4">${l}</p>`)
       .join("")
 })
 
-const goToDeepDive = () => {
-  router.push("/deep-dive")
+const copyReflection = async () => {
+  try {
+    await navigator.clipboard.writeText(activeText.value)
+    showNextStep.value = true
+  } catch {
+    alert("Copy failed")
+  }
 }
+
+const downloadPDF = () => {
+  const blob = new Blob([activeText.value], { type: "text/plain" })
+  const link = document.createElement("a")
+  link.href = URL.createObjectURL(blob)
+  link.download = "reflection.txt"
+  link.click()
+}
+
 const goToProgramme = () => {
   router.push("/programme")
 }
