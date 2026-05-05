@@ -19,12 +19,28 @@
 
       <!-- Progress -->
       <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
-        <div class="max-w-3xl mx-auto px-3 py-3 flex justify-between items-center">
-          <span class="text-base font-semibold text-slate-900">Progress</span>
-          <span class="text-sm font-semibold text-slate-800">
-            {{ answeredCount }} / {{ totalCount }}
-          </span>
+
+        <div class="max-w-3xl mx-auto px-4 py-3 space-y-2">
+
+          <!-- Label -->
+          <div class="flex justify-between text-sm text-slate-600">
+            <span>Progress</span>
+            <span>{{ progressPercent }}%</span>
+          </div>
+
+          <!-- Bar -->
+          <p class="text-xs text-slate-500">
+            Keep going — this gets clearer quickly.
+          </p>
+          <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
+            <div
+                class="h-full bg-slate-800 transition-all duration-300"
+                :style="{ width: progressPercent + '%' }"
+            ></div>
+          </div>
+
         </div>
+
       </div>
 
       <!-- Quiz -->
@@ -277,7 +293,9 @@ const scale = [
 
 const totalCount = adhdQuestions.length
 const answeredCount = computed(() => Object.keys(answers.value).length)
-
+const progressPercent = computed(() => {
+  return Math.round((answeredCount.value / totalCount) * 100)
+})
 const scores = computed(() => {
   const totals = {
     inattention: 0,
