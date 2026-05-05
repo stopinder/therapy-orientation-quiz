@@ -186,15 +186,15 @@ const scale = [
 ]
 
 const totalCount = adhdQuestions.length
-const answeredCount = computed(() => Object.keys(answers.value).length)
+
+const answeredCount = computed(() =>
+    Object.keys(answers.value).length
+)
 
 const progressPercent = computed(() =>
     Math.round((answeredCount.value / totalCount) * 100)
 )
 
-//
-// SCORING
-//
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -206,62 +206,86 @@ const scores = computed(() => {
   }
 
   for (const [id, value] of Object.entries(answers.value)) {
-    const q = adhdQuestions.find(q => q.id === id)
-    if (q && totals[q.dimension] !== undefined) {
-      totals[q.dimension] += Number(value)
+    const question = adhdQuestions.find(q => q.id === id)
+
+    if (question && totals[question.dimension] !== undefined) {
+      totals[question.dimension] += Number(value)
     }
   }
 
   return totals
 })
 
-//
-// ANSWERS
-//
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
 
   await nextTick()
-  await new Promise(r => setTimeout(r, 120))
+  await new Promise(resolve => setTimeout(resolve, 120))
 
-  const next = questionTextRefs.value[index + 1]
-  if (next) next.scrollIntoView({ behavior: "smooth", block: "start" })
+  const nextQuestion = questionTextRefs.value[index + 1]
+
+  if (nextQuestion) {
+    nextQuestion.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
+  } else if (generateButtonRef.value) {
+    generateButtonRef.value.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
+  }
 }
 
-//
-// GENERATE (FIXED)
-//
-const generateOverview = async () => {
-  if (answeredCount.value < totalCount) return
+const fetchReport = async (mode) => {
+  const response = await fetch("/api/expand-report-v2", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      profile: scores.value,
+      mode
+    })
+  })
 
-  loading.value = true
+  const raw = await response.text()
+
+  if (!response.ok) {
+    console.error(`API error (${mode}):`, raw)
+    throw new Error(`API failed with status ${response.status}`)
+  }
 
   try {
-    const response = await fetch("/api/expand-report-v2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        profile: scores.value,
-        mode: "overview"
-      })
-    })
+    return JSON.parse(raw)
+  } catch (err) {
+    console.error(`Invalid JSON from API (${mode}):`, raw)
+    throw err
+  }
+}
 
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error("API error:", errorText)
-      throw new Error("API failed")
-    }
+const generateOverview = async () => {
+  if (answeredCount.value < totalCount || loading.value) return
 
-    const data = await response.json()
+  loading.value = true
+  showNextStep.value = false
 
-    console.log("API RESPONSE:", data)
+  try {
+    console.log("Sending profile:", scores.value)
+
+    const data = await fetchReport("overview")
+
+    console.log("API response:", data)
 
     reportTexts.value.overview = data.text || ""
     activeView.value = "overview"
 
     await nextTick()
-    reportContainerRef.value?.scrollIntoView({ behavior: "smooth" })
 
+    reportContainerRef.value?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
   } catch (err) {
     console.error("Generate error:", err)
     alert("Something went wrong. Check console.")
@@ -270,58 +294,45 @@ const generateOverview = async () => {
   }
 }
 
-//
-// VIEW SWITCH (SAFE)
-//
 const selectView = async (viewKey) => {
   activeView.value = viewKey
 
-  if (reportTexts.value[viewKey]) return
+  if (reportTexts.value[viewKey] || loading.value) return
 
   loading.value = true
 
   try {
-    const response = await fetch("/api/expand-report-v2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        profile: scores.value,
-        mode: viewKey
-      })
-    })
-
-    if (!response.ok) {
-      throw new Error("API failed")
-    }
-
-    const data = await response.json()
+    const data = await fetchReport(viewKey)
     reportTexts.value[viewKey] = data.text || ""
 
+    await nextTick()
+
+    reportContainerRef.value?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
   } catch (err) {
     console.error("View load error:", err)
+    alert("Could not load this section. Check console.")
   } finally {
     loading.value = false
   }
 }
 
-//
-// OUTPUT
-//
 const activeText = computed(() =>
-    reportTexts.value[activeView.value]
+    reportTexts.value[activeView.value] || ""
 )
 
-const formattedActiveText = computed(() =>
-    activeText.value
-        ?.split("\n")
-        .filter(l => l.trim())
-        .map(l => `<p class="mb-4">${l}</p>`)
-        .join("")
-)
+const formattedActiveText = computed(() => {
+  if (!activeText.value) return ""
 
-//
-// COPY (SAFE)
-//
+  return activeText.value
+      .split("\n")
+      .filter(line => line.trim())
+      .map(line => `<p class="mb-4">${line}</p>`)
+      .join("")
+})
+
 const copyReflection = async () => {
   if (!activeText.value) return
 
@@ -331,29 +342,34 @@ const copyReflection = async () => {
     setTimeout(() => {
       showNextStep.value = true
     }, 400)
+  } catch (err) {
+    console.error("Copy failed:", err)
 
-  } catch {
-    alert("Copy failed")
+    try {
+      const textarea = document.createElement("textarea")
+      textarea.value = activeText.value
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand("copy")
+      document.body.removeChild(textarea)
+
+      setTimeout(() => {
+        showNextStep.value = true
+      }, 400)
+    } catch (fallbackErr) {
+      console.error("Fallback copy failed:", fallbackErr)
+      alert("Copy failed — try selecting the text manually.")
+    }
   }
 }
 
-//
-// DOMINANT PATTERN (FIXED NON-MUTATING)
-//
 const dominantPattern = computed(() => {
-  const entries = Object.entries(scores.value)
-
-  const sorted = [...entries].sort((a, b) => b[1] - a[1])
-
+  const sorted = Object.entries(scores.value).sort((a, b) => b[1] - a[1])
   return sorted[0]?.[0] || "general"
 })
 
-//
-// ADAPTIVE MESSAGE
-//
 const adaptiveMessage = computed(() => {
   switch (dominantPattern.value) {
-
     case "inattention":
       return {
         line1: "Your attention drops before your intention completes.",
@@ -398,22 +414,19 @@ const adaptiveMessage = computed(() => {
   }
 })
 
-//
-// DOWNLOAD
-//
 const downloadPDF = () => {
   if (!activeText.value) return
 
   const blob = new Blob([activeText.value], { type: "text/plain" })
   const link = document.createElement("a")
+
   link.href = URL.createObjectURL(blob)
-  link.download = "reflection.txt"
+  link.download = "mindworks-reflection.txt"
   link.click()
+
+  URL.revokeObjectURL(link.href)
 }
 
-//
-// NAV
-//
 const goToProgramme = () => {
   router.push("/programme")
 }
