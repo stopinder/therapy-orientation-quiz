@@ -2,7 +2,6 @@
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
     <div class="max-w-3xl mx-auto space-y-16">
 
-      <!-- Header -->
       <header class="space-y-4">
         <p class="text-xs uppercase tracking-widest text-slate-500">System Mapping</p>
         <h1 class="text-4xl font-medium tracking-tight text-stone-800">
@@ -10,10 +9,8 @@
         </h1>
       </header>
 
-      <!-- Progress -->
       <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
         <div class="px-4 py-3 space-y-2">
-
           <div class="flex justify-between text-sm text-slate-600">
             <span>Progress</span>
             <span>{{ progressPercent }}%</span>
@@ -32,7 +29,6 @@
         </div>
       </div>
 
-      <!-- Quiz -->
       <section class="space-y-12 rounded-2xl bg-white/80 px-6 py-8">
 
         <div
@@ -70,22 +66,44 @@
           </div>
         </div>
 
-        <!-- Generate -->
-        <div class="text-center pt-6">
+        <!-- Email Gate -->
+        <div
+            v-if="quizComplete && !activeText"
+            ref="emailGateRef"
+            class="mt-10 max-w-md mx-auto text-center space-y-4"
+        >
+          <p class="text-lg font-medium text-slate-900">
+            Your reflection is ready.
+          </p>
+
+          <p class="text-sm text-slate-600">
+            Enter your email to generate your personalised reflection.
+            We’ll use this for occasional MindWorks updates. You can unsubscribe at any time.
+          </p>
+
+          <input
+              v-model="email"
+              type="email"
+              placeholder="you@example.com"
+              class="w-full px-4 py-3 border border-stone-300 rounded-md text-slate-900"
+          />
+
+          <p v-if="emailError" class="text-sm text-red-600">
+            Please enter a valid email.
+          </p>
+
           <button
-              ref="generateButtonRef"
-              @click="generateOverview"
-              :disabled="answeredCount < totalCount || loading"
-              class="px-6 py-3 bg-slate-900 text-white rounded-md disabled:opacity-40"
+              @click="submitEmailAndGenerate"
+              :disabled="loading"
+              class="w-full px-6 py-3 bg-slate-900 text-white rounded-md disabled:opacity-40"
           >
-            {{ loading ? "Generating…" : "See your results" }}
+            {{ loading ? "Generating…" : "Generate my reflection" }}
           </button>
         </div>
 
         <!-- Report -->
         <div v-if="activeText" ref="reportContainerRef" class="mt-12 max-w-prose mx-auto">
 
-          <!-- View Switch -->
           <div class="flex gap-2 mb-6 justify-center">
             <button
                 v-for="view in views"
@@ -102,7 +120,6 @@
 
           <div v-html="formattedActiveText"></div>
 
-          <!-- Actions -->
           <div class="mt-6 flex gap-4 justify-center">
             <button @click="copyReflection" class="px-4 py-2 bg-stone-200 rounded-md">
               Copy
@@ -113,24 +130,10 @@
             </button>
           </div>
 
-          <!-- Conversion (optimized) -->
           <div v-if="showNextStep" class="mt-10 text-center space-y-6 max-w-xl mx-auto">
-
-            <p class="text-slate-700">
-              {{ adaptiveMessage.line1 }}
-            </p>
-
-            <p class="text-slate-700">
-              {{ adaptiveMessage.line2 }}
-            </p>
-
-            <p class="text-slate-700">
-              {{ adaptiveMessage.line3 }}
-            </p>
-
-            <p class="text-slate-700">
-              That moment repeats unless you work with it directly.
-            </p>
+            <p class="text-slate-700">{{ adaptiveMessage.line1 }}</p>
+            <p class="text-slate-700">{{ adaptiveMessage.line2 }}</p>
+            <p class="text-slate-700">{{ adaptiveMessage.line3 }}</p>
 
             <button
                 @click="goToProgramme"
@@ -138,7 +141,6 @@
             >
               Start the guided process
             </button>
-
           </div>
 
         </div>
@@ -152,12 +154,16 @@
 import { ref, computed, nextTick } from "vue"
 import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
+import { supabase } from "../lib/supabase.js"
 
 const router = useRouter()
 
 const answers = ref({})
 const loading = ref(false)
 const showNextStep = ref(false)
+
+const email = ref("")
+const emailError = ref(false)
 
 const reportTexts = ref({
   overview: "",
@@ -174,7 +180,7 @@ const views = [
 const activeView = ref("overview")
 
 const questionTextRefs = ref([])
-const generateButtonRef = ref(null)
+const emailGateRef = ref(null)
 const reportContainerRef = ref(null)
 
 const scale = [
@@ -189,6 +195,10 @@ const totalCount = adhdQuestions.length
 
 const answeredCount = computed(() =>
     Object.keys(answers.value).length
+)
+
+const quizComplete = computed(() =>
+    answeredCount.value === totalCount
 )
 
 const progressPercent = computed(() =>
@@ -216,6 +226,10 @@ const scores = computed(() => {
   return totals
 })
 
+const isValidEmail = computed(() =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
+)
+
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
 
@@ -229,11 +243,26 @@ const handleAnswer = async (questionId, value, index) => {
       behavior: "smooth",
       block: "start"
     })
-  } else if (generateButtonRef.value) {
-    generateButtonRef.value.scrollIntoView({
+  } else {
+    emailGateRef.value?.scrollIntoView({
       behavior: "smooth",
       block: "start"
     })
+  }
+}
+
+const saveEmail = async () => {
+  sessionStorage.setItem("userEmail", email.value)
+
+  try {
+    await supabase.from("emails").insert([
+      {
+        email: email.value,
+        source: "quiz_completion"
+      }
+    ])
+  } catch (err) {
+    console.error("Email save failed:", err)
   }
 }
 
@@ -264,18 +293,20 @@ const fetchReport = async (mode) => {
   }
 }
 
-const generateOverview = async () => {
-  if (answeredCount.value < totalCount || loading.value) return
+const submitEmailAndGenerate = async () => {
+  if (!isValidEmail.value || loading.value) {
+    emailError.value = true
+    return
+  }
 
+  emailError.value = false
   loading.value = true
   showNextStep.value = false
 
   try {
-    console.log("Sending profile:", scores.value)
+    await saveEmail()
 
     const data = await fetchReport("overview")
-
-    console.log("API response:", data)
 
     reportTexts.value.overview = data.text || ""
     activeView.value = "overview"
@@ -342,29 +373,13 @@ const copyReflection = async () => {
     setTimeout(() => {
       showNextStep.value = true
     }, 400)
-  } catch (err) {
-    console.error("Copy failed:", err)
-
-    try {
-      const textarea = document.createElement("textarea")
-      textarea.value = activeText.value
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand("copy")
-      document.body.removeChild(textarea)
-
-      setTimeout(() => {
-        showNextStep.value = true
-      }, 400)
-    } catch (fallbackErr) {
-      console.error("Fallback copy failed:", fallbackErr)
-      alert("Copy failed — try selecting the text manually.")
-    }
+  } catch {
+    alert("Copy failed — try selecting the text manually.")
   }
 }
 
 const dominantPattern = computed(() => {
-  const sorted = Object.entries(scores.value).sort((a, b) => b[1] - a[1])
+  const sorted = [...Object.entries(scores.value)].sort((a, b) => b[1] - a[1])
   return sorted[0]?.[0] || "general"
 })
 
