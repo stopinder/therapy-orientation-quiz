@@ -77,8 +77,8 @@
           </p>
 
           <p class="text-sm text-slate-600">
-            Enter your email to generate your personalised reflection.
-            We’ll use this for occasional MindWorks updates. You can unsubscribe at any time.
+            Enter your email to unlock it.
+            We’ll send you a copy so you can come back to it.
           </p>
 
           <input
@@ -89,7 +89,7 @@
           />
 
           <p v-if="emailError" class="text-sm text-red-600">
-            Please enter a valid email.
+            Enter a valid email to continue
           </p>
 
           <button
@@ -358,9 +358,8 @@ const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
 
   return activeText.value
-      .split("\n")
-      .filter(line => line.trim())
-      .map(line => `<p class="mb-4">${line}</p>`)
+      .split("\n\n")
+      .map(p => `<p class="mb-5 leading-relaxed text-stone-800">${p}</p>`)
       .join("")
 })
 
