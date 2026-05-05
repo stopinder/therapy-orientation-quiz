@@ -192,6 +192,9 @@ const progressPercent = computed(() =>
     Math.round((answeredCount.value / totalCount) * 100)
 )
 
+//
+// SCORING
+//
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -212,8 +215,12 @@ const scores = computed(() => {
   return totals
 })
 
+//
+// ANSWERS
+//
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
+
   await nextTick()
   await new Promise(r => setTimeout(r, 120))
 
@@ -221,30 +228,51 @@ const handleAnswer = async (questionId, value, index) => {
   if (next) next.scrollIntoView({ behavior: "smooth", block: "start" })
 }
 
+//
+// GENERATE (FIXED)
+//
 const generateOverview = async () => {
   if (answeredCount.value < totalCount) return
 
   loading.value = true
 
-  const response = await fetch("/api/expand-report-v2", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      profile: scores.value,
-      mode: "overview"
+  try {
+    const response = await fetch("/api/expand-report-v2", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        profile: scores.value,
+        mode: "overview"
+      })
     })
-  })
 
-  const data = await response.json()
-  reportTexts.value.overview = data.text || ""
-  activeView.value = "overview"
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error("API error:", errorText)
+      throw new Error("API failed")
+    }
 
-  await nextTick()
-  reportContainerRef.value?.scrollIntoView({ behavior: "smooth" })
+    const data = await response.json()
 
-  loading.value = false
+    console.log("API RESPONSE:", data)
+
+    reportTexts.value.overview = data.text || ""
+    activeView.value = "overview"
+
+    await nextTick()
+    reportContainerRef.value?.scrollIntoView({ behavior: "smooth" })
+
+  } catch (err) {
+    console.error("Generate error:", err)
+    alert("Something went wrong. Check console.")
+  } finally {
+    loading.value = false
+  }
 }
 
+//
+// VIEW SWITCH (SAFE)
+//
 const selectView = async (viewKey) => {
   activeView.value = viewKey
 
@@ -252,21 +280,33 @@ const selectView = async (viewKey) => {
 
   loading.value = true
 
-  const response = await fetch("/api/expand-report-v2", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      profile: scores.value,
-      mode: viewKey
+  try {
+    const response = await fetch("/api/expand-report-v2", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        profile: scores.value,
+        mode: viewKey
+      })
     })
-  })
 
-  const data = await response.json()
-  reportTexts.value[viewKey] = data.text || ""
+    if (!response.ok) {
+      throw new Error("API failed")
+    }
 
-  loading.value = false
+    const data = await response.json()
+    reportTexts.value[viewKey] = data.text || ""
+
+  } catch (err) {
+    console.error("View load error:", err)
+  } finally {
+    loading.value = false
+  }
 }
 
+//
+// OUTPUT
+//
 const activeText = computed(() =>
     reportTexts.value[activeView.value]
 )
@@ -279,27 +319,38 @@ const formattedActiveText = computed(() =>
         .join("")
 )
 
+//
+// COPY (SAFE)
+//
 const copyReflection = async () => {
-  await navigator.clipboard.writeText(activeText.value)
+  if (!activeText.value) return
 
-  setTimeout(() => {
-    showNextStep.value = true
-  }, 400)
+  try {
+    await navigator.clipboard.writeText(activeText.value)
+
+    setTimeout(() => {
+      showNextStep.value = true
+    }, 400)
+
+  } catch {
+    alert("Copy failed")
+  }
 }
+
+//
+// DOMINANT PATTERN (FIXED NON-MUTATING)
+//
 const dominantPattern = computed(() => {
   const entries = Object.entries(scores.value)
 
-  const sorted = entries.sort((a, b) => b[1] - a[1])
+  const sorted = [...entries].sort((a, b) => b[1] - a[1])
 
   return sorted[0]?.[0] || "general"
 })
-const downloadPDF = () => {
-  const blob = new Blob([activeText.value], { type: "text/plain" })
-  const link = document.createElement("a")
-  link.href = URL.createObjectURL(blob)
-  link.download = "reflection.txt"
-  link.click()
-}
+
+//
+// ADAPTIVE MESSAGE
+//
 const adaptiveMessage = computed(() => {
   switch (dominantPattern.value) {
 
@@ -346,6 +397,23 @@ const adaptiveMessage = computed(() => {
       }
   }
 })
+
+//
+// DOWNLOAD
+//
+const downloadPDF = () => {
+  if (!activeText.value) return
+
+  const blob = new Blob([activeText.value], { type: "text/plain" })
+  const link = document.createElement("a")
+  link.href = URL.createObjectURL(blob)
+  link.download = "reflection.txt"
+  link.click()
+}
+
+//
+// NAV
+//
 const goToProgramme = () => {
   router.push("/programme")
 }
