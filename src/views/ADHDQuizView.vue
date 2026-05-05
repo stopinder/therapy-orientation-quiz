@@ -117,11 +117,15 @@
           <div v-if="showNextStep" class="mt-10 text-center space-y-6 max-w-xl mx-auto">
 
             <p class="text-slate-700">
-              You can recognise this pattern clearly.
+              {{ adaptiveMessage.line1 }}
             </p>
 
             <p class="text-slate-700">
-              The difficulty is not seeing it — it’s what happens when it breaks.
+              {{ adaptiveMessage.line2 }}
+            </p>
+
+            <p class="text-slate-700">
+              {{ adaptiveMessage.line3 }}
             </p>
 
             <p class="text-slate-700">
@@ -282,7 +286,13 @@ const copyReflection = async () => {
     showNextStep.value = true
   }, 400)
 }
+const dominantPattern = computed(() => {
+  const entries = Object.entries(scores.value)
 
+  const sorted = entries.sort((a, b) => b[1] - a[1])
+
+  return sorted[0]?.[0] || "general"
+})
 const downloadPDF = () => {
   const blob = new Blob([activeText.value], { type: "text/plain" })
   const link = document.createElement("a")
@@ -290,7 +300,52 @@ const downloadPDF = () => {
   link.download = "reflection.txt"
   link.click()
 }
+const adaptiveMessage = computed(() => {
+  switch (dominantPattern.value) {
 
+    case "inattention":
+      return {
+        line1: "Your attention drops before your intention completes.",
+        line2: "You don’t lose direction — you lose continuity.",
+        line3: "That break repeats unless you work directly with it."
+      }
+
+    case "executive_function":
+      return {
+        line1: "You know what needs to be done.",
+        line2: "The problem is getting into and staying in it.",
+        line3: "That gap doesn’t close through effort alone."
+      }
+
+    case "impulsivity":
+      return {
+        line1: "Your system moves before it stabilises.",
+        line2: "Action happens faster than reflection.",
+        line3: "That speed creates patterns you don’t hold."
+      }
+
+    case "emotional_regulation":
+      return {
+        line1: "Your state shifts quickly under pressure.",
+        line2: "Once activated, it pulls you off track.",
+        line3: "That loop repeats unless you intervene directly."
+      }
+
+    case "hyperactivity":
+      return {
+        line1: "Your system struggles to settle.",
+        line2: "Stillness feels unnatural.",
+        line3: "That constant activation disrupts continuity."
+      }
+
+    default:
+      return {
+        line1: "You can recognise the pattern clearly.",
+        line2: "The difficulty is what happens when it breaks.",
+        line3: "That moment repeats unless you work with it."
+      }
+  }
+})
 const goToProgramme = () => {
   router.push("/programme")
 }
