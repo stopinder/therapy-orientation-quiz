@@ -5,7 +5,6 @@
       <!-- Header -->
       <header class="space-y-4">
         <p class="text-xs uppercase tracking-widest text-slate-500">System Mapping</p>
-
         <h1 class="text-4xl font-medium tracking-tight text-stone-800">
           A closer look at how your mind actually operates
         </h1>
@@ -13,7 +12,7 @@
 
       <!-- Progress -->
       <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
-        <div class="max-w-3xl mx-auto px-4 py-3 space-y-2">
+        <div class="px-4 py-3 space-y-2">
 
           <div class="flex justify-between text-sm text-slate-600">
             <span>Progress</span>
@@ -39,7 +38,7 @@
         <div
             v-for="(question, index) in adhdQuestions"
             :key="question.id"
-            class="space-y-6 transition-all duration-300"
+            class="space-y-6"
         >
           <p
               class="text-xl text-stone-800 scroll-mt-36"
@@ -85,6 +84,22 @@
         <!-- Report -->
         <div v-if="activeText" ref="reportContainerRef" class="mt-12 max-w-prose mx-auto">
 
+          <!-- View Switch -->
+          <div class="flex gap-2 mb-6 justify-center">
+            <button
+                v-for="view in views"
+                :key="view.key"
+                @click="selectView(view.key)"
+                class="px-4 py-1.5 rounded-full text-sm border transition"
+                :class="activeView === view.key
+                ? 'bg-slate-900 text-white border-slate-900'
+                : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
+            >
+              {{ view.label }}
+            </button>
+          </div>
+
+          <!-- Text -->
           <div v-html="formattedActiveText"></div>
 
           <!-- Actions -->
@@ -130,7 +145,19 @@ const answers = ref({})
 const loading = ref(false)
 const showNextStep = ref(false)
 
-const reportTexts = ref({ overview: "" })
+const reportTexts = ref({
+  overview: "",
+  functioning: "",
+  patterns: ""
+})
+
+const views = [
+  { key: "overview", label: "Overview" },
+  { key: "functioning", label: "Daily functioning" },
+  { key: "patterns", label: "Patterns & trade-offs" }
+]
+
+const activeView = ref("overview")
 
 const questionTextRefs = ref([])
 const generateButtonRef = ref(null)
@@ -154,9 +181,6 @@ const progressPercent = computed(() =>
     Math.round((answeredCount.value / totalCount) * 100)
 )
 
-//
-// 🔥 SCORING LAYER (NEW)
-//
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -177,17 +201,12 @@ const scores = computed(() => {
   return totals
 })
 
-//
-// ANSWER FLOW
-//
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
-
   await nextTick()
   await new Promise(r => setTimeout(r, 120))
 
   const next = questionTextRefs.value[index + 1]
-
   if (next) {
     next.scrollIntoView({ behavior: "smooth", block: "start" })
   } else {
@@ -195,9 +214,6 @@ const handleAnswer = async (questionId, value, index) => {
   }
 }
 
-//
-// GENERATE REPORT (FIXED)
-//
 const generateOverview = async () => {
   loading.value = true
 
@@ -205,13 +221,14 @@ const generateOverview = async () => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      profile: scores.value,   // ✅ FIXED HERE
+      profile: scores.value,
       mode: "overview"
     })
   })
 
   const data = await response.json()
   reportTexts.value.overview = data.text || ""
+  activeView.value = "overview"
 
   await nextTick()
   reportContainerRef.value?.scrollIntoView({ behavior: "smooth" })
@@ -219,10 +236,31 @@ const generateOverview = async () => {
   loading.value = false
 }
 
-//
-// OUTPUT
-//
-const activeText = computed(() => reportTexts.value.overview)
+const selectView = async (viewKey) => {
+  activeView.value = viewKey
+
+  if (reportTexts.value[viewKey]) return
+
+  loading.value = true
+
+  const response = await fetch("/api/expand-report-v2", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      profile: scores.value,
+      mode: viewKey
+    })
+  })
+
+  const data = await response.json()
+  reportTexts.value[viewKey] = data.text || ""
+
+  loading.value = false
+}
+
+const activeText = computed(() =>
+    reportTexts.value[activeView.value]
+)
 
 const formattedActiveText = computed(() => {
   return activeText.value
@@ -232,9 +270,6 @@ const formattedActiveText = computed(() => {
       .join("")
 })
 
-//
-// ACTIONS
-//
 const copyReflection = async () => {
   try {
     await navigator.clipboard.writeText(activeText.value)
