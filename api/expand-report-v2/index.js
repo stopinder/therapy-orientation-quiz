@@ -1,184 +1,98 @@
-export const config = {
-    runtime: "nodejs"
-};
+const MODE_PROMPTS = {
 
-export default async function handler(req, res) {
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method not allowed" });
-    }
-
-    let body = req.body;
-
-    if (typeof body === "string") {
-        try {
-            body = JSON.parse(body);
-        } catch {
-            return res.status(400).json({ error: "Invalid JSON body" });
-        }
-    }
-
-    const { profile, mode } = body || {};
-
-    if (!profile || typeof profile !== "object") {
-        return res.status(400).json({ error: "Missing or invalid profile" });
-    }
-
-    const MODE_PROMPTS = {
-        overview: `
-You are generating an OVERVIEW psychological reflection.
+    overview: `
+You are generating a behavioural reflection.
 
 Goal:
-Describe behaviour exactly as it happens.
-
-Hard rules:
-- Use "you" only.
-- No explanation.
-- No interpretation.
-- No soft qualifiers ("may", "tends to", "often").
-- No abstract language.
-- No metaphors.
-- No clinical labels.
-- No reassurance.
-
-Critical rules:
-- Do NOT repeat the same mechanism in different wording
-- Each paragraph must introduce a new step in the sequence
-- Remove any sentence that explains the pattern instead of showing it
-
-Write 4–6 short paragraphs.
-
-Structure must follow this order:
-1. Start → momentum drops
-2. Pressure → restart
-3. Effort → does not carry forward
-4. Disengagement → relief → cost
-5. Intention vs behaviour
-6. Loop closes
-
-Tone:
-- Direct
-- Behavioural
-- Slightly confronting
-
-Final line must be:
-"This pattern repeats."
-
-Do not add anything after that line.
-`,
-
-        patterns: `
-You are generating a PATTERNS reflection.
-
-Goal:
-Show contradictions clearly.
+Describe exactly what happens when this system operates.
 
 Rules:
-- Use "you" directly.
-- Do not diagnose or label.
-- Do not explain.
-- Do not resolve.
-- Do not give advice.
-- Avoid repeating the same pattern in different words.
+- Use "you"
+- No explanation
+- No causes
+- No labels (no ADHD, no diagnosis)
+- No advice
+- No reassurance
+- No abstract language
 
-Write 4–6 short paragraphs.
+Write 4–5 short paragraphs.
 
 Each paragraph must:
-- show one contradiction in action
-- introduce a new layer or tighten the loop
-- stay concrete
+- show a sequence (what you do → what happens next)
+- introduce a NEW pattern (no repetition)
+- stay concrete and recognisable
 
-Focus on:
-- pressure helps but destabilises
-- avoidance reduces strain but creates backlog
-- intensity produces output but breaks consistency
-- relief in the moment creates cost later
+Include:
+- starting with intention but not sustaining
+- attention dropping without a clear stop
+- effort present but not carrying forward
+
+Include contradiction:
+you intend to continue, but you do not sustain it
 
 Tone:
-- Direct
-- Clear
-- Slightly confronting
+direct, behavioural, slightly exposing
 `,
 
-        deep: `
-You are generating a DEEP formulation.
+    functioning: `
+You are generating a daily functioning reflection.
 
 Goal:
-Show the repeating loop clearly and personally.
-
-Use these headings:
-
-1. How You Operate
-2. The Cycle
-3. Why It Continues
-4. Where It Breaks
+Show what this costs in real life.
 
 Rules:
-- Use "you" directly.
-- Do not diagnose or label.
-- Do not use abstraction.
-- Do not give advice.
-- Do not reassure.
-- Do not over-explain.
-- Avoid repeating the same pattern in different words.
-- Each section must introduce a new layer or tighten the loop.
+- Use "you"
+- No explanation
+- No diagnosis
+- No advice
+- No repetition of overview
 
-Required cycle:
-intention → effort → pressure → drop-off → restart
+Write 4–5 short paragraphs.
 
-Required tensions:
-- you intend to continue, but the behaviour resets
-- pressure gets you moving, but prevents consistency
-- disengagement reduces strain, but breaks continuity
+Each paragraph must:
+- show behaviour in real situations
+- show where effort fails to hold
+
+Focus on:
+- restarting tasks
+- effort not accumulating
+- mental fatigue
+- inconsistency
+
+Include contradiction:
+you are working, but still feel behind
 
 Tone:
-- Direct
-- Behaviour-based
-- Slightly confronting
+precise, grounded, slightly uncomfortable
+`,
 
-End by stating clearly:
-This pattern repeats.
+    patterns: `
+You are generating a patterns & trade-offs reflection.
 
-Do not explain the ending.
-Do not resolve the ending.
+Goal:
+Show internal contradictions clearly.
+
+Rules:
+- Use "you"
+- No explanation
+- No advice
+- No resolution
+- No repeating earlier descriptions
+
+Write 4–5 short paragraphs.
+
+Each paragraph must:
+- show a tension or trade-off
+
+Include:
+- pressure helps you start, but breaks consistency
+- disengagement reduces strain, but creates backlog
+- bursts of effort produce output, but not stability
+
+End by making it clear:
+the pattern continues
+
+Tone:
+clear, direct, slightly confronting
 `
-    };
-
-    const systemPrompt = MODE_PROMPTS[mode] || MODE_PROMPTS.overview;
-
-    try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
-            },
-            body: JSON.stringify({
-                model: "gpt-4.1-mini",
-                temperature: 0.35,
-                max_tokens: 650,
-                messages: [
-                    {
-                        role: "system",
-                        content: systemPrompt.trim()
-                    },
-                    {
-                        role: "user",
-                        content: `Profile data:\n${JSON.stringify(profile, null, 2)}`
-                    }
-                ]
-            })
-        });
-
-        if (!response.ok) {
-            const errText = await response.text();
-            return res.status(500).json({ error: errText });
-        }
-
-        const data = await response.json();
-        const text = data.choices?.[0]?.message?.content?.trim() || "";
-
-        return res.status(200).json({ text });
-    } catch {
-        return res.status(500).json({ error: "Server error" });
-    }
 }
