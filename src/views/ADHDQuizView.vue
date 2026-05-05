@@ -75,7 +75,8 @@
           <button
               ref="generateButtonRef"
               @click="generateOverview"
-              class="px-6 py-3 bg-slate-900 text-white rounded-md"
+              :disabled="answeredCount < totalCount || loading"
+              class="px-6 py-3 bg-slate-900 text-white rounded-md disabled:opacity-40"
           >
             {{ loading ? "Generating…" : "See your results" }}
           </button>
@@ -99,7 +100,6 @@
             </button>
           </div>
 
-          <!-- Text -->
           <div v-html="formattedActiveText"></div>
 
           <!-- Actions -->
@@ -113,18 +113,28 @@
             </button>
           </div>
 
-          <!-- Conversion -->
-          <div v-if="showNextStep" class="mt-8 text-center space-y-4">
-            <p class="text-slate-700 max-w-md mx-auto">
-              If this feels accurate, the next step is not more insight — it’s working with the pattern directly.
+          <!-- Conversion (optimized) -->
+          <div v-if="showNextStep" class="mt-10 text-center space-y-6 max-w-xl mx-auto">
+
+            <p class="text-slate-700">
+              You can recognise this pattern clearly.
+            </p>
+
+            <p class="text-slate-700">
+              The difficulty is not seeing it — it’s what happens when it breaks.
+            </p>
+
+            <p class="text-slate-700">
+              That moment repeats unless you work with it directly.
             </p>
 
             <button
                 @click="goToProgramme"
-                class="px-6 py-3 bg-slate-900 text-white rounded-md"
+                class="mt-4 px-6 py-3 bg-slate-900 text-white rounded-md"
             >
               Start the guided process
             </button>
+
           </div>
 
         </div>
@@ -172,10 +182,7 @@ const scale = [
 ]
 
 const totalCount = adhdQuestions.length
-
-const answeredCount = computed(() =>
-    Object.keys(answers.value).length
-)
+const answeredCount = computed(() => Object.keys(answers.value).length)
 
 const progressPercent = computed(() =>
     Math.round((answeredCount.value / totalCount) * 100)
@@ -207,14 +214,12 @@ const handleAnswer = async (questionId, value, index) => {
   await new Promise(r => setTimeout(r, 120))
 
   const next = questionTextRefs.value[index + 1]
-  if (next) {
-    next.scrollIntoView({ behavior: "smooth", block: "start" })
-  } else {
-    generateButtonRef.value?.scrollIntoView({ behavior: "smooth" })
-  }
+  if (next) next.scrollIntoView({ behavior: "smooth", block: "start" })
 }
 
 const generateOverview = async () => {
+  if (answeredCount.value < totalCount) return
+
   loading.value = true
 
   const response = await fetch("/api/expand-report-v2", {
@@ -262,21 +267,20 @@ const activeText = computed(() =>
     reportTexts.value[activeView.value]
 )
 
-const formattedActiveText = computed(() => {
-  return activeText.value
-      ?.split("\n")
-      .filter(l => l.trim())
-      .map(l => `<p class="mb-4">${l}</p>`)
-      .join("")
-})
+const formattedActiveText = computed(() =>
+    activeText.value
+        ?.split("\n")
+        .filter(l => l.trim())
+        .map(l => `<p class="mb-4">${l}</p>`)
+        .join("")
+)
 
 const copyReflection = async () => {
-  try {
-    await navigator.clipboard.writeText(activeText.value)
+  await navigator.clipboard.writeText(activeText.value)
+
+  setTimeout(() => {
     showNextStep.value = true
-  } catch {
-    alert("Copy failed")
-  }
+  }, 400)
 }
 
 const downloadPDF = () => {
