@@ -1,73 +1,152 @@
 <template>
   <main class="min-h-screen bg-stone-50 px-6 py-20">
-    <div class="max-w-2xl mx-auto space-y-10">
+    <div class="max-w-3xl mx-auto">
 
-      <!-- Header -->
-      <header class="space-y-4">
-        <h1 class="text-3xl font-semibold tracking-tight text-slate-900">
-          A more detailed view of your internal system
+      <header class="mb-14">
+        <h1 class="text-4xl font-semibold tracking-tight text-slate-900 mb-4">
+          Your Reflection Report
         </h1>
 
-        <p class="text-lg text-slate-700">
-          The initial reflection highlights surface-level patterns.
-          This step expands on how those patterns operate, interact, and maintain themselves over time.
+        <p class="text-lg text-slate-600 leading-relaxed">
+          Behavioural Patterns & Attention Profile
         </p>
       </header>
 
-      <!-- Email Capture -->
-      <section class="space-y-4 border border-stone-200 rounded-xl p-6 bg-white">
-        <p class="text-sm text-slate-700">
-          Enter your email to generate your full breakdown.
+      <section
+          v-if="!report.overview"
+          class="bg-white border border-stone-200 rounded-2xl p-8 space-y-5"
+      >
+        <p class="text-slate-700">
+          Enter your email to generate your full report.
         </p>
 
         <input
             v-model="email"
             type="email"
             placeholder="you@example.com"
-            class="w-full px-4 py-3 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-400"
+            class="w-full px-4 py-3 border border-stone-300 rounded-lg"
         />
 
         <button
             @click="handleSubmit"
-            class="w-full px-4 py-3 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition"
+            class="w-full px-4 py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition"
         >
-          {{ loading ? "Generating…" : "Generate full breakdown" }}
+          {{ loading ? "Generating..." : "Generate Full Report" }}
         </button>
+      </section>
 
-        <p class="text-xs text-slate-500">
-          Your email is used to send your reflection and occasional updates about MindWorks.
-          You can unsubscribe at any time.
+      <section
+          v-if="report.tldr"
+          class="mb-10 bg-slate-100 border border-slate-200 rounded-2xl p-8"
+      >
+        <h2 class="text-xl font-semibold text-slate-900 mb-4">
+          TL;DR
+        </h2>
+
+        <p class="text-slate-700 leading-relaxed whitespace-pre-line">
+          {{ report.tldr }}
         </p>
       </section>
 
-      <!-- Expanded Report -->
-      <section v-if="expandedText" class="space-y-6">
+      <section
+          v-if="report.overview"
+          class="mb-12"
+      >
+        <div class="flex justify-between items-center mb-5">
+          <h2 class="text-2xl font-semibold text-slate-900">
+            1. Behavioural Patterns
+          </h2>
 
-        <div class="border-t pt-6"></div>
-
-        <div v-html="formattedText"></div>
-
-        <!-- Closing Bridge -->
-        <div class="mt-10 p-6 bg-stone-100 border border-stone-200 rounded-xl">
-          <p class="text-slate-800 font-medium mb-2">
-            Understanding is only the first step
-            <div class="pt-6">
-              <button
-                  @click="goToProgramme"
-                  class="px-6 py-3 bg-slate-900 text-white rounded-md hover:bg-slate-800 transition"
-              >
-                Work with this in a structured way
-              </button>
-            </div>
-          </p>
-
-          <p class="text-sm text-slate-700">
-            These patterns tend to persist because they are protective.
-            Shifting them usually requires a more structured process of working with them directly,
-            rather than simply observing them.
-          </p>
+          <button
+              @click="downloadReport"
+              class="text-sm px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 transition"
+          >
+            Download Full Report
+          </button>
         </div>
 
+        <div class="bg-white rounded-2xl border border-stone-200 p-8">
+          <p class="whitespace-pre-line leading-relaxed text-slate-700">
+            {{ report.overview }}
+          </p>
+        </div>
+      </section>
+
+      <section
+          v-if="report.functioning"
+          class="mb-12"
+      >
+        <div class="flex justify-between items-center mb-5">
+          <h2 class="text-2xl font-semibold text-slate-900">
+            2. Daily Functioning
+          </h2>
+
+          <button
+              @click="downloadReport"
+              class="text-sm px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 transition"
+          >
+            Download Full Report
+          </button>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-stone-200 p-8">
+          <p class="whitespace-pre-line leading-relaxed text-slate-700">
+            {{ report.functioning }}
+          </p>
+        </div>
+      </section>
+
+      <section
+          v-if="report.patterns"
+          class="mb-12"
+      >
+        <div class="flex justify-between items-center mb-5">
+          <h2 class="text-2xl font-semibold text-slate-900">
+            3. Patterns & Trade-Offs
+          </h2>
+
+          <button
+              @click="downloadReport"
+              class="text-sm px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 transition"
+          >
+            Download Full Report
+          </button>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-stone-200 p-8">
+          <p class="whitespace-pre-line leading-relaxed text-slate-700">
+            {{ report.patterns }}
+          </p>
+        </div>
+      </section>
+
+      <section
+          v-if="report.closing"
+          class="bg-slate-900 text-white rounded-2xl p-10 mt-16"
+      >
+        <h2 class="text-2xl font-semibold mb-5">
+          Next Step
+        </h2>
+
+        <p class="leading-relaxed text-slate-200 whitespace-pre-line mb-8">
+          {{ report.closing }}
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button
+              @click="downloadReport"
+              class="px-6 py-3 bg-white text-slate-900 rounded-lg hover:bg-slate-200 transition"
+          >
+            Download Full Report
+          </button>
+
+          <button
+              @click="goToProgramme"
+              class="px-6 py-3 border border-white/30 rounded-lg hover:bg-white/10 transition"
+          >
+            Explore the 6-Week Programme
+          </button>
+        </div>
       </section>
 
     </div>
@@ -75,18 +154,26 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { supabase } from "../lib/supabase.js"
 
 const router = useRouter()
 
+const email = ref("")
+const loading = ref(false)
+
+const report = ref({
+  tldr: "",
+  overview: "",
+  functioning: "",
+  patterns: "",
+  closing: ""
+})
+
 const goToProgramme = () => {
   router.push("/programme")
 }
-const email = ref("")
-const loading = ref(false)
-const expandedText = ref("")
 
 const handleSubmit = async () => {
   if (!email.value) return
@@ -94,55 +181,161 @@ const handleSubmit = async () => {
   loading.value = true
 
   try {
-    // Save email
     if (supabase) {
       await supabase.from("email_optins").insert([
-        { email: email.value, opt_in: true }
+        {
+          email: email.value,
+          opt_in: true
+        }
       ])
     }
 
-    // Get previous scores from session
-    const storedProfile = sessionStorage.getItem("quizProfile")
-    const profile = storedProfile ? JSON.parse(storedProfile) : {}
+    const storedProfile =
+        sessionStorage.getItem("quizProfile")
 
-    // Call API
-    const response = await fetch("/api/expand-report-v2", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        mode: "deep",
-        profile
-      })
-    })
+    const profile =
+        storedProfile
+            ? JSON.parse(storedProfile)
+            : {}
+
+    const response = await fetch(
+        "/api/expand-report-v2",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ profile })
+        }
+    )
 
     const data = await response.json()
-    expandedText.value = data.text || ""
+
+    report.value = data
 
   } finally {
     loading.value = false
   }
 }
 
-const formattedText = computed(() => {
-  if (!expandedText.value) return ""
+const downloadReport = () => {
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Reflection Report</title>
 
-  const lines = expandedText.value.replace(/\r/g, "").split("\n")
-  let html = ""
+<style>
+body {
+  font-family: Arial, sans-serif;
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 32px;
+  line-height: 1.7;
+  color: #1e293b;
+}
 
-  for (const line of lines) {
-    if (/^\s*\*\*(.+?)\*\*\s*$/.test(line)) {
-      const title = line.replace(/\*\*/g, "")
-      html += `<h3 class="mt-8 mb-3 text-lg font-semibold text-slate-800">${title}</h3>`
-      continue
-    }
+h1 {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
 
-    if (!line.trim()) continue
+h2 {
+  margin-top: 40px;
+  margin-bottom: 14px;
+  font-size: 24px;
+}
 
-    html += `<p class="mb-4 text-slate-700 leading-relaxed">${line}</p>`
-  }
+.section {
+  margin-bottom: 40px;
+}
 
-  return html
-})
+.tldr {
+  background: #f1f5f9;
+  padding: 24px;
+  border-radius: 14px;
+}
+
+.cta {
+  margin-top: 50px;
+  background: #0f172a;
+  color: white;
+  padding: 32px;
+  border-radius: 18px;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 18px;
+  background: white;
+  color: #0f172a;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Your Reflection Report</h1>
+
+<p>
+Behavioural Patterns & Attention Profile
+</p>
+
+<div class="tldr">
+<h2>TL;DR</h2>
+<p>${report.value.tldr}</p>
+</div>
+
+<div class="section">
+<h2>1. Behavioural Patterns</h2>
+<p>${report.value.overview}</p>
+</div>
+
+<div class="section">
+<h2>2. Daily Functioning</h2>
+<p>${report.value.functioning}</p>
+</div>
+
+<div class="section">
+<h2>3. Patterns & Trade-Offs</h2>
+<p>${report.value.patterns}</p>
+</div>
+
+<div class="cta">
+<h2>Next Step</h2>
+
+<p>${report.value.closing}</p>
+
+<a
+  class="button"
+  href="https://yourdomain.com/programme"
+>
+Explore the 6-Week Programme
+</a>
+</div>
+
+</body>
+</html>
+`
+
+  const blob = new Blob(
+      [html],
+      { type: "text/html;charset=utf-8" }
+  )
+
+  const url = URL.createObjectURL(blob)
+
+  const link = document.createElement("a")
+
+  link.href = url
+  link.download = "reflection-report.html"
+
+  link.click()
+
+  URL.revokeObjectURL(url)
+}
 </script>
