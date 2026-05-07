@@ -16,27 +16,12 @@ Do NOT:
 - reassure
 - motivate
 - moralise
-- summarise patterns abstractly
-
-Avoid words and phrases like:
-- executive dysfunction
-- dopamine
-- coping mechanism
-- nervous system
-- trauma response
-- dysregulation
-- attention span
-- productivity
-- overwhelmed
-- emotional regulation
 
 Focus only on:
 - observable behaviour
-- physical actions
 - interrupted momentum
+- unfinished actions
 - drifting attention
-- unfinished sequences
-- partial engagement
 - restarting
 - hesitation
 - friction between intention and action
@@ -44,86 +29,73 @@ Focus only on:
 The writing must:
 - stay concrete
 - unfold moment by moment
-- show behavioural sequences
 - feel psychologically recognisable
-- feel slightly uncomfortable in its accuracy
+- feel behaviourally precise
 
 Do not write like a therapist.
 Do not write like an article.
 Write like direct observation.
-
-Avoid repetitive paragraph openings.
-Avoid symmetrical structure.
 `
 
 const MODE_PROMPTS = {
+    tldr: `
+${CORE_RULES}
+
+Goal:
+Write a short behavioural summary.
+
+Write 1 paragraph only.
+
+Focus on:
+- effort without continuity
+- repeated restarting
+- drifting attention
+- unfinished momentum
+
+Tone:
+clinical
+direct
+recognisable
+`,
+
     overview: `
 ${CORE_RULES}
 
-You are generating a behavioural reflection.
-
 Goal:
-Describe exactly what happens when this pattern operates in real life.
+Describe how these patterns appear in real life.
 
 Write 5 short paragraphs.
 
-Each paragraph must:
-- show a NEW behavioural sequence
-- contain movement or transition
-- stay behaviourally specific
-
 Include:
-- starting with intention but not sustaining
-- attention drifting before full awareness
-- repeated attempts to re-engage
-- effort that does not accumulate
-- physical signs of restlessness
+- intention without sustained follow-through
+- drifting attention
 - unfinished actions
-- staying near the task without fully entering it
-
-Important:
-The person intends to continue,
-but their behaviour repeatedly separates from that intention.
+- physical restlessness
+- partial engagement
 
 Tone:
 direct
 observational
-unsentimental
 quietly exposing
 `,
 
     functioning: `
 ${CORE_RULES}
 
-You are generating a daily functioning reflection.
-
 Goal:
-Show how this pattern affects ordinary daily life over time.
+Show the effect on ordinary daily functioning.
 
 Write 5 short paragraphs.
 
 Focus on:
-- repeatedly restarting tasks
-- losing continuity during simple activities
 - unfinished responsibilities
-- time passing without meaningful completion
-- effort producing little visible progress
-- constant re-entry into the same task
-- inconsistency that creates backlog
-
-Include:
-- checking things repeatedly
-- moving between tasks without finishing
-- mental drifting during ordinary responsibilities
-- exhaustion from trying to regain focus
-
-Important:
-The person is active much of the day,
-yet still ends the day feeling behind.
+- losing continuity
+- mental fatigue
+- restarting tasks
+- effort not accumulating
 
 Tone:
 plain
-behavioural
 clinical
 fatiguing
 `,
@@ -131,35 +103,23 @@ fatiguing
     patterns: `
 ${CORE_RULES}
 
-You are generating a patterns and trade-offs reflection.
-
 Goal:
-Show the internal contradictions created by this behavioural pattern.
+Show the contradictions created by these patterns.
 
 Write 5 short paragraphs.
 
-Each paragraph must show:
-- a behaviour
-- the short-term benefit
-- the long-term cost
+Include:
+- pressure creates movement but destroys consistency
+- avoidance reduces strain but increases backlog
+- bursts of effort without stability
+- repeated behavioural cycles
 
-Include contradictions like:
-- pressure creates movement, but destroys consistency
-- avoidance reduces strain, but increases unfinished tasks
-- bursts of energy create output, but not stability
-- disengagement creates relief, but also backlog
-- urgency creates action, but not continuity
-
-Important:
-Do not resolve the contradiction.
-Do not end positively.
-Make it clear the pattern keeps repeating.
+Do not resolve the contradictions.
 
 Tone:
 measured
-direct
 behavioural
-exposing without exaggeration
+unsentimental
 `
 }
 
@@ -167,7 +127,6 @@ function sanitizeProfile(profile) {
     try {
         const json = JSON.stringify(profile)
 
-        // Prevent extremely large payloads
         if (json.length > 12000) {
             return json.slice(0, 12000)
         }
@@ -178,9 +137,39 @@ function sanitizeProfile(profile) {
     }
 }
 
-export default async function handler(req, res) {
-    const startTime = Date.now()
+async function generateSection(prompt, profile, apiKey) {
+    const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: "gpt-4.1-mini",
+                temperature: 0.55,
+                max_tokens: 700,
+                messages: [
+                    {
+                        role: "system",
+                        content: prompt
+                    },
+                    {
+                        role: "user",
+                        content: `Profile:\n${profile}`
+                    }
+                ]
+            })
+        }
+    )
 
+    const data = await response.json()
+
+    return data?.choices?.[0]?.message?.content?.trim() || ""
+}
+
+export default async function handler(req, res) {
     try {
         if (req.method !== "POST") {
             return res.status(405).json({
@@ -188,29 +177,7 @@ export default async function handler(req, res) {
             })
         }
 
-        if (!process.env.OPENAI_API_KEY) {
-            console.error("Missing OPENAI_API_KEY")
-
-            return res.status(500).json({
-                error: "Server configuration error"
-            })
-        }
-
-        let body = req.body
-
-        if (typeof body === "string") {
-            try {
-                body = JSON.parse(body)
-            } catch (err) {
-                console.error("Invalid JSON body:", err)
-
-                return res.status(400).json({
-                    error: "Invalid JSON body"
-                })
-            }
-        }
-
-        const { profile, mode } = body || {}
+        const { profile } = req.body || {}
 
         if (!profile) {
             return res.status(400).json({
@@ -218,119 +185,45 @@ export default async function handler(req, res) {
             })
         }
 
-        const systemPrompt =
-            MODE_PROMPTS[mode] || MODE_PROMPTS.overview
-
         const serializedProfile = sanitizeProfile(profile)
 
-        if (!serializedProfile) {
-            return res.status(400).json({
-                error: "Invalid profile data"
-            })
-        }
+        const apiKey = process.env.OPENAI_API_KEY
 
-        const controller = new AbortController()
-
-        const timeout = setTimeout(() => {
-            controller.abort()
-        }, 25000)
-
-        let response
-
-        try {
-            response = await fetch(
-                "https://api.openai.com/v1/chat/completions",
-                {
-                    method: "POST",
-                    signal: controller.signal,
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model: "gpt-4.1-mini",
-                        temperature: 0.55,
-                        top_p: 0.9,
-                        frequency_penalty: 0.3,
-                        presence_penalty: 0.2,
-                        max_tokens: 850,
-                        messages: [
-                            {
-                                role: "system",
-                                content: systemPrompt
-                            },
-                            {
-                                role: "user",
-                                content: `Profile:\n${serializedProfile}`
-                            }
-                        ]
-                    })
-                }
+        const [
+            tldr,
+            overview,
+            functioning,
+            patterns
+        ] = await Promise.all([
+            generateSection(
+                MODE_PROMPTS.tldr,
+                serializedProfile,
+                apiKey
+            ),
+            generateSection(
+                MODE_PROMPTS.overview,
+                serializedProfile,
+                apiKey
+            ),
+            generateSection(
+                MODE_PROMPTS.functioning,
+                serializedProfile,
+                apiKey
+            ),
+            generateSection(
+                MODE_PROMPTS.patterns,
+                serializedProfile,
+                apiKey
             )
-        } catch (fetchError) {
-            clearTimeout(timeout)
-
-            console.error("OpenAI fetch failed:", fetchError)
-
-            if (fetchError.name === "AbortError") {
-                return res.status(504).json({
-                    error: "OpenAI request timeout"
-                })
-            }
-
-            return res.status(500).json({
-                error: "OpenAI connection failed"
-            })
-        }
-
-        clearTimeout(timeout)
-
-        const raw = await response.text()
-
-        if (!response.ok) {
-            console.error("OpenAI API error:", {
-                status: response.status,
-                body: raw
-            })
-
-            return res.status(500).json({
-                error: "Reflection generation failed"
-            })
-        }
-
-        let data
-
-        try {
-            data = JSON.parse(raw)
-        } catch (parseError) {
-            console.error("Failed to parse OpenAI response:", parseError)
-            console.error("Raw response:", raw)
-
-            return res.status(500).json({
-                error: "Invalid AI response"
-            })
-        }
-
-        const text =
-            data?.choices?.[0]?.message?.content?.trim() || ""
-
-        if (!text) {
-            console.error("Empty reflection returned:", data)
-
-            return res.status(500).json({
-                error: "Empty reflection generated"
-            })
-        }
-
-        const duration = Date.now() - startTime
-
-        console.log("Reflection generated successfully:", {
-            mode,
-            durationMs: duration
-        })
+        ])
 
         return res.status(200).json({
-            text
+            tldr,
+            overview,
+            functioning,
+            patterns,
+            closing:
+                "These patterns often persist because they temporarily reduce pressure, even while creating longer-term instability and repeated friction with ordinary responsibilities.\n\nRecognition alone rarely changes the cycle.\n\nThe MindWorks 6-Week Programme is designed to help you work with these patterns more directly through structured behavioural observation, sustained attention practice, and guided exercises focused on continuity rather than motivation."
         })
 
     } catch (err) {
