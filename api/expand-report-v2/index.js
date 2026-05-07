@@ -2,86 +2,164 @@ export const config = {
     runtime: "nodejs"
 }
 
+const CORE_RULES = `
+Write in second person using "you".
+
+Do NOT:
+- explain behaviour
+- analyse behaviour
+- interpret motives
+- diagnose
+- mention disorders
+- use therapeutic language
+- use self-help language
+- reassure
+- motivate
+- moralise
+- summarise patterns abstractly
+
+Avoid words and phrases like:
+- executive dysfunction
+- dopamine
+- coping mechanism
+- nervous system
+- trauma response
+- dysregulation
+- attention span
+- productivity
+- overwhelmed
+- emotional regulation
+
+Focus only on:
+- observable behaviour
+- physical actions
+- interrupted momentum
+- drifting attention
+- unfinished sequences
+- partial engagement
+- restarting
+- hesitation
+- friction between intention and action
+
+The writing must:
+- stay concrete
+- unfold moment by moment
+- show behavioural sequences
+- feel psychologically recognisable
+- feel slightly uncomfortable in its accuracy
+
+Do not write like a therapist.
+Do not write like an article.
+Write like direct observation.
+
+Avoid repetitive paragraph openings.
+Avoid symmetrical structure.
+`
+
 const MODE_PROMPTS = {
     overview: `
+${CORE_RULES}
+
 You are generating a behavioural reflection.
 
 Goal:
-Describe exactly what happens when this system operates.
+Describe exactly what happens when this pattern operates in real life.
 
-Rules:
-- Use "you"
-- No explanation
-- No causes
-- No labels
-- No advice
-- No reassurance
-- No abstract language
-
-Write 4–5 short paragraphs.
+Write 5 short paragraphs.
 
 Each paragraph must:
-- show a sequence
-- introduce a NEW pattern
-- stay concrete
+- show a NEW behavioural sequence
+- contain movement or transition
+- stay behaviourally specific
 
 Include:
 - starting with intention but not sustaining
-- attention dropping without a clear stop
-- effort present but not carrying forward
+- attention drifting before full awareness
+- repeated attempts to re-engage
+- effort that does not accumulate
+- physical signs of restlessness
+- unfinished actions
+- staying near the task without fully entering it
 
-Include contradiction:
-you intend to continue, but you do not sustain it
+Important:
+The person intends to continue,
+but their behaviour repeatedly separates from that intention.
 
 Tone:
-direct, behavioural, slightly exposing
+direct
+observational
+unsentimental
+quietly exposing
 `,
 
     functioning: `
+${CORE_RULES}
+
 You are generating a daily functioning reflection.
 
 Goal:
-Show what this costs in real life.
+Show how this pattern affects ordinary daily life over time.
 
-Rules:
-- Use "you"
-- No explanation
-- No diagnosis
-- No advice
-
-Write 4–5 short paragraphs.
+Write 5 short paragraphs.
 
 Focus on:
-- restarting tasks
-- effort not accumulating
-- mental fatigue
-- inconsistency
+- repeatedly restarting tasks
+- losing continuity during simple activities
+- unfinished responsibilities
+- time passing without meaningful completion
+- effort producing little visible progress
+- constant re-entry into the same task
+- inconsistency that creates backlog
 
-Include contradiction:
-you are working, but still feel behind
+Include:
+- checking things repeatedly
+- moving between tasks without finishing
+- mental drifting during ordinary responsibilities
+- exhaustion from trying to regain focus
+
+Important:
+The person is active much of the day,
+yet still ends the day feeling behind.
+
+Tone:
+plain
+behavioural
+clinical
+fatiguing
 `,
 
     patterns: `
-You are generating a patterns & trade-offs reflection.
+${CORE_RULES}
+
+You are generating a patterns and trade-offs reflection.
 
 Goal:
-Show internal contradictions clearly.
+Show the internal contradictions created by this behavioural pattern.
 
-Rules:
-- Use "you"
-- No explanation
-- No advice
-- No resolution
+Write 5 short paragraphs.
 
-Write 4–5 short paragraphs.
+Each paragraph must show:
+- a behaviour
+- the short-term benefit
+- the long-term cost
 
-Include:
-- pressure helps you start, but breaks consistency
-- disengagement reduces strain, but creates backlog
-- bursts of effort produce output, but not stability
+Include contradictions like:
+- pressure creates movement, but destroys consistency
+- avoidance reduces strain, but increases unfinished tasks
+- bursts of energy create output, but not stability
+- disengagement creates relief, but also backlog
+- urgency creates action, but not continuity
 
-End by making it clear:
-the pattern continues
+Important:
+Do not resolve the contradiction.
+Do not end positively.
+Make it clear the pattern keeps repeating.
+
+Tone:
+measured
+direct
+behavioural
+exposing without exaggeration
 `
 }
 
@@ -151,7 +229,6 @@ export default async function handler(req, res) {
             })
         }
 
-        // Abort hanging requests
         const controller = new AbortController()
 
         const timeout = setTimeout(() => {
@@ -172,8 +249,11 @@ export default async function handler(req, res) {
                     },
                     body: JSON.stringify({
                         model: "gpt-4.1-mini",
-                        temperature: 0.4,
-                        max_tokens: 700,
+                        temperature: 0.55,
+                        top_p: 0.9,
+                        frequency_penalty: 0.3,
+                        presence_penalty: 0.2,
+                        max_tokens: 850,
                         messages: [
                             {
                                 role: "system",
