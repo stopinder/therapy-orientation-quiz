@@ -125,7 +125,10 @@
               Copy
             </button>
 
-            <button @click="downloadPDF" class="px-4 py-2 bg-stone-200 rounded-md">
+            <button
+                @click="downloadReflection"
+                class="px-4 py-2 bg-stone-200 rounded-md hover:bg-stone-300 transition"
+            >
               Download
             </button>
           </div>
@@ -205,6 +208,9 @@ const progressPercent = computed(() =>
     Math.round((answeredCount.value / totalCount) * 100)
 )
 
+//
+// SCORING
+//
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -226,10 +232,16 @@ const scores = computed(() => {
   return totals
 })
 
+//
+// EMAIL VALIDATION
+//
 const isValidEmail = computed(() =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
 )
 
+//
+// ANSWER FLOW
+//
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
 
@@ -251,6 +263,9 @@ const handleAnswer = async (questionId, value, index) => {
   }
 }
 
+//
+// SAVE EMAIL
+//
 const saveEmail = async () => {
   sessionStorage.setItem("userEmail", email.value)
 
@@ -266,6 +281,9 @@ const saveEmail = async () => {
   }
 }
 
+//
+// FETCH REPORT
+//
 const fetchReport = async (mode) => {
   const response = await fetch("/api/expand-report-v2", {
     method: "POST",
@@ -293,6 +311,39 @@ const fetchReport = async (mode) => {
   }
 }
 
+//
+// LOAD ALL REPORTS
+//
+const ensureAllReportsLoaded = async () => {
+  for (const view of views) {
+    if (!reportTexts.value[view.key]) {
+      const data = await fetchReport(view.key)
+      reportTexts.value[view.key] = data.text || ""
+    }
+  }
+
+  saveReflectionLocally()
+}
+
+//
+// SAVE LOCALLY
+//
+const saveReflectionLocally = () => {
+  const reflectionData = {
+    createdAt: new Date().toISOString(),
+    scores: scores.value,
+    reports: reportTexts.value
+  }
+
+  localStorage.setItem(
+      "mindworks_latest_reflection",
+      JSON.stringify(reflectionData)
+  )
+}
+
+//
+// GENERATE REPORT
+//
 const submitEmailAndGenerate = async () => {
   if (!isValidEmail.value || loading.value) {
     emailError.value = true
@@ -311,12 +362,15 @@ const submitEmailAndGenerate = async () => {
     reportTexts.value.overview = data.text || ""
     activeView.value = "overview"
 
+    saveReflectionLocally()
+
     await nextTick()
 
     reportContainerRef.value?.scrollIntoView({
       behavior: "smooth",
       block: "start"
     })
+
   } catch (err) {
     console.error("Generate error:", err)
     alert("Something went wrong. Check console.")
@@ -325,6 +379,9 @@ const submitEmailAndGenerate = async () => {
   }
 }
 
+//
+// VIEW SWITCH
+//
 const selectView = async (viewKey) => {
   activeView.value = viewKey
 
@@ -334,7 +391,10 @@ const selectView = async (viewKey) => {
 
   try {
     const data = await fetchReport(viewKey)
+
     reportTexts.value[viewKey] = data.text || ""
+
+    saveReflectionLocally()
 
     await nextTick()
 
@@ -342,6 +402,7 @@ const selectView = async (viewKey) => {
       behavior: "smooth",
       block: "start"
     })
+
   } catch (err) {
     console.error("View load error:", err)
     alert("Could not load this section. Check console.")
@@ -350,10 +411,16 @@ const selectView = async (viewKey) => {
   }
 }
 
+//
+// ACTIVE TEXT
+//
 const activeText = computed(() =>
     reportTexts.value[activeView.value] || ""
 )
 
+//
+// FORMATTED OUTPUT
+//
 const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
 
@@ -363,27 +430,59 @@ const formattedActiveText = computed(() => {
       .join("")
 })
 
-const copyReflection = async () => {
-  if (!activeText.value) return
+//
+// COMBINED REPORT
+//
+const combinedReflectionText = computed(() => {
+  return views
+      .map(view => {
+        const text = reportTexts.value[view.key]
 
+        if (!text) return ""
+
+        return `${view.label.toUpperCase()}\n\n${text}`
+      })
+      .filter(Boolean)
+      .join("\n\n---\n\n")
+})
+
+//
+// COPY
+//
+const copyReflection = async () => {
   try {
-    await navigator.clipboard.writeText(activeText.value)
+    await ensureAllReportsLoaded()
+
+    await navigator.clipboard.writeText(
+        combinedReflectionText.value
+    )
 
     setTimeout(() => {
       showNextStep.value = true
     }, 400)
-  } catch {
-    alert("Copy failed — try selecting the text manually.")
+
+  } catch (err) {
+    console.error("Copy failed:", err)
+    alert("Copy failed — try downloading instead.")
   }
 }
 
+//
+// DOMINANT PATTERN
+//
 const dominantPattern = computed(() => {
-  const sorted = [...Object.entries(scores.value)].sort((a, b) => b[1] - a[1])
+  const sorted = [...Object.entries(scores.value)]
+      .sort((a, b) => b[1] - a[1])
+
   return sorted[0]?.[0] || "general"
 })
 
+//
+// ADAPTIVE MESSAGE
+//
 const adaptiveMessage = computed(() => {
   switch (dominantPattern.value) {
+
     case "inattention":
       return {
         line1: "Your attention drops before your intention completes.",
@@ -428,19 +527,117 @@ const adaptiveMessage = computed(() => {
   }
 })
 
-const downloadPDF = () => {
-  if (!activeText.value) return
+//
+// DOWNLOAD
+//
+const downloadReflection = async () => {
+  try {
+    await ensureAllReportsLoaded()
 
-  const blob = new Blob([activeText.value], { type: "text/plain" })
-  const link = document.createElement("a")
+    const sectionsHtml = views
+        .map(view => {
+          const text = reportTexts.value[view.key]
 
-  link.href = URL.createObjectURL(blob)
-  link.download = "mindworks-reflection.txt"
-  link.click()
+          if (!text) return ""
 
-  URL.revokeObjectURL(link.href)
+          const paragraphs = text
+              .split("\n\n")
+              .filter(p => p.trim())
+              .map(p => `<p>${p.trim()}</p>`)
+              .join("")
+
+          return `
+          <section>
+            <h2>${view.label}</h2>
+            ${paragraphs}
+          </section>
+        `
+        })
+        .join("")
+
+    const html = `
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>MindWorks Reflection</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  max-width: 760px;
+  margin: 48px auto;
+  padding: 0 24px;
+  line-height: 1.7;
+  color: #1f2937;
+  background: #fafaf9;
 }
 
+h1 {
+  font-size: 30px;
+  margin-bottom: 8px;
+  color: #0f172a;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-bottom: 36px;
+}
+
+section {
+  background: white;
+  border: 1px solid #e7e5e4;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 28px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 18px;
+  color: #0f172a;
+}
+
+p {
+  margin-bottom: 16px;
+}
+</style>
+</head>
+
+<body>
+  <h1>MindWorks Reflection</h1>
+
+  <p class="subtitle">
+    A structured reflection based on your responses.
+  </p>
+
+  ${sectionsHtml}
+</body>
+</html>
+`
+
+    const blob = new Blob([html], {
+      type: "text/html"
+    })
+
+    const link = document.createElement("a")
+
+    link.href = URL.createObjectURL(blob)
+    link.download = "mindworks-reflection.html"
+    link.click()
+
+    URL.revokeObjectURL(link.href)
+
+  } catch (err) {
+    console.error("Download failed:", err)
+    alert("Download failed. Check console.")
+  }
+}
+
+//
+// NAVIGATION
+//
 const goToProgramme = () => {
   router.push("/programme")
 }
