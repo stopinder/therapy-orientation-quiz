@@ -358,8 +358,7 @@ Behavioural Patterns & Attention Profile
 
 <a
   class="button"
-  href="https://YOUR-STORE.lemonsqueezy.com/buy/XXXXXXX"
->
+  href="https://https://gpttherapyassist.lemonsqueezy.com/checkout/buy/230d911f-446a-490f-94ab-509fae996c4f
 Begin the 6-Week Programme — $29.99
 </a>
 </div>
