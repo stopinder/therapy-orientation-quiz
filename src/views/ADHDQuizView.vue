@@ -270,12 +270,20 @@ const saveEmail = async () => {
   sessionStorage.setItem("userEmail", email.value)
 
   try {
-    await supabase.from("emails").insert([
-      {
-        email: email.value,
-        source: "quiz_completion"
-      }
-    ])
+    const { error } = await supabase
+        .from("emails")
+        .insert([
+          {
+            email: email.value,
+            source: "quiz_completion"
+          }
+        ])
+
+    if (error) {
+      console.error("Supabase insert error:", error)
+      throw error
+    }
+
   } catch (err) {
     console.error("Email save failed:", err)
   }
@@ -526,114 +534,6 @@ const adaptiveMessage = computed(() => {
       }
   }
 })
-
-//
-// DOWNLOAD
-//
-const downloadReflection = async () => {
-  try {
-    await ensureAllReportsLoaded()
-
-    const sectionsHtml = views
-        .map(view => {
-          const text = reportTexts.value[view.key]
-
-          if (!text) return ""
-
-          const paragraphs = text
-              .split("\n\n")
-              .filter(p => p.trim())
-              .map(p => `<p>${p.trim()}</p>`)
-              .join("")
-
-          return `
-          <section>
-            <h2>${view.label}</h2>
-            ${paragraphs}
-          </section>
-        `
-        })
-        .join("")
-
-    const html = `
-<!doctype html>
-<html>
-<head>
-<meta charset="utf-8" />
-<title>MindWorks Reflection</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  max-width: 760px;
-  margin: 48px auto;
-  padding: 0 24px;
-  line-height: 1.7;
-  color: #1f2937;
-  background: #fafaf9;
-}
-
-h1 {
-  font-size: 30px;
-  margin-bottom: 8px;
-  color: #0f172a;
-}
-
-.subtitle {
-  color: #64748b;
-  margin-bottom: 36px;
-}
-
-section {
-  background: white;
-  border: 1px solid #e7e5e4;
-  border-radius: 16px;
-  padding: 28px;
-  margin-bottom: 28px;
-}
-
-h2 {
-  font-size: 20px;
-  margin-top: 0;
-  margin-bottom: 18px;
-  color: #0f172a;
-}
-
-p {
-  margin-bottom: 16px;
-}
-</style>
-</head>
-
-<body>
-  <h1>MindWorks Reflection</h1>
-
-  <p class="subtitle">
-    A structured reflection based on your responses.
-  </p>
-
-  ${sectionsHtml}
-</body>
-</html>
-`
-
-    const blob = new Blob([html], {
-      type: "text/html"
-    })
-
-    const link = document.createElement("a")
-
-    link.href = URL.createObjectURL(blob)
-    link.download = "mindworks-reflection.html"
-    link.click()
-
-    URL.revokeObjectURL(link.href)
-
-  } catch (err) {
-    console.error("Download failed:", err)
-    alert("Download failed. Check console.")
-  }
-}
 
 //
 // NAVIGATION
