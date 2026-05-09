@@ -158,7 +158,7 @@ import { ref, computed, nextTick } from "vue"
 import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 import { supabase } from "../lib/supabase.js"
-
+console.log("NEW BUILD ACTIVE")
 const router = useRouter()
 
 const answers = ref({})
