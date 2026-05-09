@@ -157,7 +157,14 @@
 import { ref, computed, nextTick } from "vue"
 import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
-import { supabase } from "@/lib/supabase"
+import { createClient } from "@supabase/supabase-js"
+
+const supabase = createClient(
+    import.meta.env.VITE_SUPABASE_URL,
+    import.meta.env.VITE_SUPABASE_ANON_KEY
+)
+
+console.log("DIRECT CLIENT:", supabase)
 console.log("NEW BUILD ACTIVE")
 const router = useRouter()
 
