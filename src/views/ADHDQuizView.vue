@@ -157,15 +157,7 @@
 import { ref, computed, nextTick } from "vue"
 import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
-import { createClient } from "@supabase/supabase-js"
 
-const supabase = createClient(
-    import.meta.env.VITE_SUPABASE_URL,
-    import.meta.env.VITE_SUPABASE_ANON_KEY
-)
-
-console.log("DIRECT CLIENT:", supabase)
-console.log("NEW BUILD ACTIVE")
 const router = useRouter()
 
 const answers = ref({})
@@ -271,32 +263,6 @@ const handleAnswer = async (questionId, value, index) => {
 }
 
 //
-// SAVE EMAIL
-//
-const saveEmail = async () => {
-  sessionStorage.setItem("userEmail", email.value)
-
-  try {
-    const { error } = await supabase
-        .from("emails")
-        .insert([
-          {
-            email: email.value,
-            source: "quiz_completion"
-          }
-        ])
-
-    if (error) {
-      console.error("Supabase insert error:", error)
-      throw error
-    }
-
-  } catch (err) {
-    console.error("Email save failed:", err)
-  }
-}
-
-//
 // FETCH REPORT
 //
 const fetchReport = async (mode) => {
@@ -347,7 +313,8 @@ const saveReflectionLocally = () => {
   const reflectionData = {
     createdAt: new Date().toISOString(),
     scores: scores.value,
-    reports: reportTexts.value
+    reports: reportTexts.value,
+    email: email.value
   }
 
   localStorage.setItem(
@@ -370,7 +337,7 @@ const submitEmailAndGenerate = async () => {
   showNextStep.value = false
 
   try {
-    await saveEmail()
+    sessionStorage.setItem("userEmail", email.value)
 
     const data = await fetchReport("overview")
 
