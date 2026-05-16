@@ -66,42 +66,19 @@
           </div>
         </div>
 
-        <!-- Email Gate -->
         <div
-            v-if="quizComplete && !activeText"
-            ref="emailGateRef"
+            v-if="quizComplete && loading && !activeText"
             class="mt-10 max-w-md mx-auto text-center space-y-4"
         >
           <p class="text-lg font-medium text-slate-900">
-            Your reflection is ready.
+            Generating your reflection…
           </p>
 
           <p class="text-sm text-slate-600">
-            Enter your email to unlock it.
-            We’ll send you a copy so you can come back to it.
+            This usually takes a few seconds.
           </p>
-
-          <input
-              v-model="email"
-              type="email"
-              placeholder="you@example.com"
-              class="w-full px-4 py-3 border border-stone-300 rounded-md text-slate-900"
-          />
-
-          <p v-if="emailError" class="text-sm text-red-600">
-            Enter a valid email to continue
-          </p>
-
-          <button
-              @click="submitEmailAndGenerate"
-              :disabled="loading"
-              class="w-full px-6 py-3 bg-slate-900 text-white rounded-md disabled:opacity-40"
-          >
-            {{ loading ? "Generating…" : "Generate my reflection" }}
-          </button>
         </div>
 
-        <!-- Report -->
         <div v-if="activeText" ref="reportContainerRef" class="mt-12 max-w-prose mx-auto">
 
           <div class="flex gap-2 mb-6 justify-center">
@@ -164,9 +141,6 @@ const answers = ref({})
 const loading = ref(false)
 const showNextStep = ref(false)
 
-const email = ref("")
-const emailError = ref(false)
-
 const reportTexts = ref({
   overview: "",
   functioning: "",
@@ -182,7 +156,6 @@ const views = [
 const activeView = ref("overview")
 
 const questionTextRefs = ref([])
-const emailGateRef = ref(null)
 const reportContainerRef = ref(null)
 
 const scale = [
@@ -207,9 +180,6 @@ const progressPercent = computed(() =>
     Math.round((answeredCount.value / totalCount) * 100)
 )
 
-//
-// SCORING
-//
 const scores = computed(() => {
   const totals = {
     inattention: 0,
@@ -231,16 +201,6 @@ const scores = computed(() => {
   return totals
 })
 
-//
-// EMAIL VALIDATION
-//
-const isValidEmail = computed(() =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
-)
-
-//
-// ANSWER FLOW
-//
 const handleAnswer = async (questionId, value, index) => {
   answers.value[questionId] = value
 
@@ -254,17 +214,15 @@ const handleAnswer = async (questionId, value, index) => {
       behavior: "smooth",
       block: "start"
     })
-  } else {
-    emailGateRef.value?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    })
+
+    return
+  }
+
+  if (quizComplete.value && !reportTexts.value.overview && !loading.value) {
+    await generateInitialReport()
   }
 }
 
-//
-// FETCH REPORT
-//
 const fetchReport = async (mode) => {
   const response = await fetch("/api/expand-report-v2", {
     method: "POST",
@@ -292,53 +250,11 @@ const fetchReport = async (mode) => {
   }
 }
 
-//
-// LOAD ALL REPORTS
-//
-const ensureAllReportsLoaded = async () => {
-  for (const view of views) {
-    if (!reportTexts.value[view.key]) {
-      const data = await fetchReport(view.key)
-      reportTexts.value[view.key] = data.text || ""
-    }
-  }
-
-  saveReflectionLocally()
-}
-
-//
-// SAVE LOCALLY
-//
-const saveReflectionLocally = () => {
-  const reflectionData = {
-    createdAt: new Date().toISOString(),
-    scores: scores.value,
-    reports: reportTexts.value,
-    email: email.value
-  }
-
-  localStorage.setItem(
-      "mindworks_latest_reflection",
-      JSON.stringify(reflectionData)
-  )
-}
-
-//
-// GENERATE REPORT
-//
-const submitEmailAndGenerate = async () => {
-  if (!isValidEmail.value || loading.value) {
-    emailError.value = true
-    return
-  }
-
-  emailError.value = false
+const generateInitialReport = async () => {
   loading.value = true
   showNextStep.value = false
 
   try {
-    sessionStorage.setItem("userEmail", email.value)
-
     const data = await fetchReport("overview")
 
     reportTexts.value.overview = data.text || ""
@@ -361,9 +277,30 @@ const submitEmailAndGenerate = async () => {
   }
 }
 
-//
-// VIEW SWITCH
-//
+const ensureAllReportsLoaded = async () => {
+  for (const view of views) {
+    if (!reportTexts.value[view.key]) {
+      const data = await fetchReport(view.key)
+      reportTexts.value[view.key] = data.text || ""
+    }
+  }
+
+  saveReflectionLocally()
+}
+
+const saveReflectionLocally = () => {
+  const reflectionData = {
+    createdAt: new Date().toISOString(),
+    scores: scores.value,
+    reports: reportTexts.value
+  }
+
+  localStorage.setItem(
+      "mindworks_latest_reflection",
+      JSON.stringify(reflectionData)
+  )
+}
+
 const selectView = async (viewKey) => {
   activeView.value = viewKey
 
@@ -393,16 +330,10 @@ const selectView = async (viewKey) => {
   }
 }
 
-//
-// ACTIVE TEXT
-//
 const activeText = computed(() =>
     reportTexts.value[activeView.value] || ""
 )
 
-//
-// FORMATTED OUTPUT
-//
 const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
 
@@ -412,9 +343,6 @@ const formattedActiveText = computed(() => {
       .join("")
 })
 
-//
-// COMBINED REPORT
-//
 const combinedReflectionText = computed(() => {
   return views
       .map(view => {
@@ -428,9 +356,6 @@ const combinedReflectionText = computed(() => {
       .join("\n\n---\n\n")
 })
 
-//
-// COPY
-//
 const copyReflection = async () => {
   try {
     await ensureAllReportsLoaded()
@@ -449,9 +374,34 @@ const copyReflection = async () => {
   }
 }
 
-//
-// DOMINANT PATTERN
-//
+const downloadReflection = async () => {
+  try {
+    await ensureAllReportsLoaded()
+
+    const blob = new Blob(
+        [combinedReflectionText.value],
+        { type: "text/plain;charset=utf-8" }
+    )
+
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement("a")
+
+    link.href = url
+    link.download = "mindworks-reflection.txt"
+    link.click()
+
+    URL.revokeObjectURL(url)
+
+    setTimeout(() => {
+      showNextStep.value = true
+    }, 400)
+
+  } catch (err) {
+    console.error("Download failed:", err)
+    alert("Download failed — try copying instead.")
+  }
+}
+
 const dominantPattern = computed(() => {
   const sorted = [...Object.entries(scores.value)]
       .sort((a, b) => b[1] - a[1])
@@ -459,9 +409,6 @@ const dominantPattern = computed(() => {
   return sorted[0]?.[0] || "general"
 })
 
-//
-// ADAPTIVE MESSAGE
-//
 const adaptiveMessage = computed(() => {
   switch (dominantPattern.value) {
 
@@ -509,9 +456,6 @@ const adaptiveMessage = computed(() => {
   }
 })
 
-//
-// NAVIGATION
-//
 const goToProgramme = () => {
   router.push("/programme")
 }
