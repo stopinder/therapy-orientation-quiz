@@ -220,14 +220,7 @@ const handleSubmit = async () => {
   loading.value = true
 
   try {
-    // if (supabase) {
-//   await supabase.from("email_optins").insert([
-//     {
-//       email: email.value,
-//       opt_in: true
-//     }
-//   ])
-// }
+
 
     const storedProfile =
         sessionStorage.getItem("quizProfile")
