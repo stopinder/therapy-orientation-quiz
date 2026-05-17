@@ -1,3 +1,186 @@
+<template>
+  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
+    <div class="max-w-3xl mx-auto space-y-16">
+
+      <header class="space-y-4">
+        <p class="text-xs uppercase tracking-widest text-slate-500">
+          System Mapping
+        </p>
+
+        <h1 class="text-4xl font-medium tracking-tight text-stone-800">
+          A closer look at how your mind actually operates
+        </h1>
+      </header>
+
+      <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
+        <div class="px-4 py-3 space-y-2">
+          <div class="flex justify-between text-sm text-slate-600">
+            <span>Progress</span>
+            <span>{{ progressPercent }}%</span>
+          </div>
+
+          <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
+            <div
+                class="h-full bg-slate-800 transition-all duration-300"
+                :style="{ width: progressPercent + '%' }"
+            />
+          </div>
+
+          <p class="text-xs text-slate-500">
+            Keep going — this gets clearer quickly.
+          </p>
+        </div>
+      </div>
+
+      <section class="space-y-12 rounded-2xl bg-white/80 px-6 py-8">
+
+        <div
+            v-for="(question, index) in adhdQuestions"
+            :key="question.id"
+            class="space-y-6"
+        >
+          <p
+              class="text-xl text-stone-800 scroll-mt-36"
+              :ref="el => questionTextRefs[index] = el"
+          >
+            {{ question.text }}
+          </p>
+
+          <div class="space-y-3">
+            <label
+                v-for="option in scale"
+                :key="option.value"
+                class="flex justify-between px-6 py-4 rounded-xl border cursor-pointer transition"
+                :class="answers[question.id] === option.value
+                ? 'bg-slate-900 text-white border-slate-900'
+                : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'"
+            >
+              <span>{{ option.label }}</span>
+
+              <input
+                  type="radio"
+                  :name="question.id"
+                  :value="option.value"
+                  :checked="answers[question.id] === option.value"
+                  @change="handleAnswer(question.id, option.value, index)"
+                  class="h-5 w-5 accent-white"
+              />
+            </label>
+          </div>
+        </div>
+
+        <div
+            v-if="quizComplete && loading && !activeText"
+            ref="loadingContainerRef"
+            class="mt-16 text-center space-y-5 scroll-mt-36"
+        >
+          <div class="animate-pulse space-y-4">
+            <p class="text-lg font-medium text-slate-900">
+              {{ loadingStage }}
+            </p>
+
+            <p class="text-sm text-slate-500">
+              This usually takes a few seconds.
+            </p>
+          </div>
+        </div>
+
+        <div
+            v-if="activeText"
+            ref="reportContainerRef"
+            class="mt-12 max-w-prose mx-auto scroll-mt-36"
+        >
+          <div
+              v-if="reportTexts.tldr"
+              class="mb-10 bg-slate-100 border border-slate-200 rounded-2xl p-8"
+          >
+            <h2 class="text-xl font-semibold text-slate-900 mb-4">
+              TL;DR
+            </h2>
+
+            <p class="text-slate-700 leading-relaxed whitespace-pre-line text-[17px]">
+              {{ reportTexts.tldr }}
+            </p>
+          </div>
+
+          <div class="sticky top-36 z-30 bg-stone-50/95 backdrop-blur border-y border-stone-200 py-4 mb-8">
+            <div class="flex gap-2 justify-center flex-wrap">
+              <button
+                  v-for="view in views"
+                  :key="view.key"
+                  @click="selectView(view.key)"
+                  class="px-4 py-1.5 rounded-full text-sm border transition"
+                  :class="activeView === view.key
+                  ? 'bg-slate-900 text-white border-slate-900'
+                  : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
+              >
+                {{ view.label }}
+              </button>
+            </div>
+          </div>
+
+          <transition name="fade" mode="out-in">
+            <div :key="activeView">
+              <div class="mb-8">
+                <h2 class="text-3xl font-medium text-stone-900 mb-3">
+                  {{ activeViewLabel }}
+                </h2>
+
+                <p class="text-slate-600 text-lg leading-relaxed">
+                  {{ activeViewIntro }}
+                </p>
+              </div>
+
+              <div v-html="formattedActiveText"></div>
+            </div>
+          </transition>
+
+          <div class="mt-10 flex justify-center">
+            <button
+                @click="downloadReflection"
+                class="px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
+            >
+              Download reflection
+            </button>
+          </div>
+
+          <div
+              v-if="downloadComplete"
+              class="mt-4 text-center text-sm text-slate-500"
+          >
+            Reflection downloaded.
+          </div>
+
+          <div
+              v-if="showNextStep"
+              class="mt-16 text-center space-y-6 max-w-xl mx-auto"
+          >
+            <p class="text-slate-700">
+              {{ adaptiveMessage.line1 }}
+            </p>
+
+            <p class="text-slate-700">
+              {{ adaptiveMessage.line2 }}
+            </p>
+
+            <p class="text-slate-700">
+              {{ adaptiveMessage.line3 }}
+            </p>
+
+            <button
+                @click="goToProgramme"
+                class="mt-4 px-6 py-3 bg-slate-900 text-white rounded-xl"
+            >
+              Start the guided process
+            </button>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+</template>
+
 <script setup>
 import { ref, computed, nextTick } from "vue"
 import { useRouter } from "vue-router"
@@ -41,6 +224,7 @@ const views = [
 const activeView = ref("overview")
 
 const questionTextRefs = ref([])
+const loadingContainerRef = ref(null)
 const reportContainerRef = ref(null)
 
 const scale = [
@@ -66,7 +250,6 @@ const progressPercent = computed(() =>
 )
 
 const scores = computed(() => {
-
   const totals = {
     inattention: 0,
     hyperactivity: 0,
@@ -77,7 +260,6 @@ const scores = computed(() => {
   }
 
   for (const [id, value] of Object.entries(answers.value)) {
-
     const question = adhdQuestions.find(q => q.id === id)
 
     if (question && totals[question.dimension] !== undefined) {
@@ -89,7 +271,6 @@ const scores = computed(() => {
 })
 
 const handleAnswer = async (questionId, value, index) => {
-
   answers.value[questionId] = value
 
   await nextTick()
@@ -98,7 +279,6 @@ const handleAnswer = async (questionId, value, index) => {
   const nextQuestion = questionTextRefs.value[index + 1]
 
   if (nextQuestion) {
-
     nextQuestion.scrollIntoView({
       behavior: "smooth",
       block: "start"
@@ -117,7 +297,6 @@ const handleAnswer = async (questionId, value, index) => {
 }
 
 const fetchReport = async () => {
-
   const response = await fetch("/api/expand-report-v2", {
     method: "POST",
     headers: {
@@ -144,14 +323,18 @@ const fetchReport = async () => {
 }
 
 const generateInitialReport = async () => {
-
   loading.value = true
   showNextStep.value = false
+  loadingStage.value = "Analysing behavioural patterns..."
+
+  await nextTick()
+
+  loadingContainerRef.value?.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  })
 
   try {
-
-    loadingStage.value = "Analysing behavioural patterns..."
-
     await new Promise(resolve => setTimeout(resolve, 700))
 
     loadingStage.value = "Mapping interruption loops..."
@@ -180,19 +363,14 @@ const generateInitialReport = async () => {
     })
 
   } catch (err) {
-
     console.error("Generate error:", err)
-
     alert("Something went wrong. Check console.")
-
   } finally {
-
     loading.value = false
   }
 }
 
 const saveReflectionLocally = () => {
-
   const reflectionData = {
     createdAt: new Date().toISOString(),
     scores: scores.value,
@@ -206,31 +384,22 @@ const saveReflectionLocally = () => {
 }
 
 const selectView = (viewKey) => {
-
   activeView.value = viewKey
-
-  nextTick(() => {
-
-    reportContainerRef.value?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    })
-  })
 }
 
 const activeText = computed(() =>
     reportTexts.value[activeView.value] || ""
 )
 
-const activeViewIntro = computed(() => {
+const activeViewLabel = computed(() =>
+    views.find(v => v.key === activeView.value)?.label || ""
+)
 
-  return views.find(
-      v => v.key === activeView.value
-  )?.intro || ""
-})
+const activeViewIntro = computed(() =>
+    views.find(v => v.key === activeView.value)?.intro || ""
+)
 
 const formattedActiveText = computed(() => {
-
   if (!activeText.value) return ""
 
   return activeText.value
@@ -242,20 +411,25 @@ const formattedActiveText = computed(() => {
       .join("")
 })
 
+const formatParagraphsForDownload = (text) => {
+  if (!text) return ""
+
+  return text
+      .split("\n\n")
+      .map(p => `<p>${p}</p>`)
+      .join("")
+}
+
 const downloadReflection = async () => {
-
   try {
-
     const html = `
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
-
 <title>MindWorks Reflection</title>
 
 <style>
-
 body {
   font-family: Arial, sans-serif;
   background: #fafaf9;
@@ -303,12 +477,10 @@ p {
   border-top: 1px solid #d6d3d1;
   color: #57534e;
 }
-
 </style>
 </head>
 
 <body>
-
 <h1>MindWorks Reflection</h1>
 
 <p>
@@ -316,64 +488,30 @@ Behavioural continuity, interruption patterns, and attention structure.
 </p>
 
 <div class="tldr">
-
 <h2>TL;DR</h2>
-
 <p>${reportTexts.value.tldr}</p>
-
 </div>
 
 <div class="section">
-
 <h2>Overview</h2>
-
-<p class="intro">
-How the pattern tends to operate moment to moment.
-</p>
-
-${reportTexts.value.overview
-        .split("\n\n")
-        .map(p => `<p>${p}</p>`)
-        .join("")}
-
+<p class="intro">How the pattern tends to operate moment to moment.</p>
+${formatParagraphsForDownload(reportTexts.value.overview)}
 </div>
 
 <div class="section">
-
 <h2>Daily functioning</h2>
-
-<p class="intro">
-How the pattern accumulates across ordinary responsibilities.
-</p>
-
-${reportTexts.value.functioning
-        .split("\n\n")
-        .map(p => `<p>${p}</p>`)
-        .join("")}
-
+<p class="intro">How the pattern accumulates across ordinary responsibilities.</p>
+${formatParagraphsForDownload(reportTexts.value.functioning)}
 </div>
 
 <div class="section">
-
 <h2>Patterns & trade-offs</h2>
-
-<p class="intro">
-The contradictions that quietly keep the cycle going.
-</p>
-
-${reportTexts.value.patterns
-        .split("\n\n")
-        .map(p => `<p>${p}</p>`)
-        .join("")}
-
+<p class="intro">The contradictions that quietly keep the cycle going.</p>
+${formatParagraphsForDownload(reportTexts.value.patterns)}
 </div>
 
 <div class="footer">
-
-<p>
-${reportTexts.value.closing}
-</p>
-
+<p>${reportTexts.value.closing}</p>
 </div>
 
 </body>
@@ -386,12 +524,10 @@ ${reportTexts.value.closing}
     )
 
     const url = URL.createObjectURL(blob)
-
     const link = document.createElement("a")
 
     link.href = url
     link.download = "mindworks-reflection.html"
-
     link.click()
 
     URL.revokeObjectURL(url)
@@ -404,15 +540,12 @@ ${reportTexts.value.closing}
     }, 1800)
 
   } catch (err) {
-
     console.error("Download failed:", err)
-
     alert("Download failed.")
   }
 }
 
 const dominantPattern = computed(() => {
-
   const sorted = [...Object.entries(scores.value)]
       .sort((a, b) => b[1] - a[1])
 
@@ -420,9 +553,7 @@ const dominantPattern = computed(() => {
 })
 
 const adaptiveMessage = computed(() => {
-
   switch (dominantPattern.value) {
-
     case "inattention":
       return {
         line1: "Your attention drops before your intention completes.",
@@ -472,234 +603,14 @@ const goToProgramme = () => {
 }
 </script>
 
-<template>
-
-  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
-
-    <div class="max-w-3xl mx-auto space-y-16">
-
-      <header class="space-y-4">
-
-        <p class="text-xs uppercase tracking-widest text-slate-500">
-          System Mapping
-        </p>
-
-        <h1 class="text-4xl font-medium tracking-tight text-stone-800">
-          A closer look at how your mind actually operates
-        </h1>
-
-      </header>
-
-      <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
-
-        <div class="px-4 py-3 space-y-2">
-
-          <div class="flex justify-between text-sm text-slate-600">
-
-            <span>Progress</span>
-
-            <span>{{ progressPercent }}%</span>
-
-          </div>
-
-          <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
-
-            <div
-                class="h-full bg-slate-800 transition-all duration-300"
-                :style="{ width: progressPercent + '%' }"
-            />
-
-          </div>
-
-          <p class="text-xs text-slate-500">
-            Keep going — this gets clearer quickly.
-          </p>
-
-        </div>
-
-      </div>
-
-      <section class="space-y-12 rounded-2xl bg-white/80 px-6 py-8">
-
-        <div
-            v-for="(question, index) in adhdQuestions"
-            :key="question.id"
-            class="space-y-6"
-        >
-
-          <p
-              class="text-xl text-stone-800 scroll-mt-36"
-              :ref="el => questionTextRefs[index] = el"
-          >
-            {{ question.text }}
-          </p>
-
-          <div class="space-y-3">
-
-            <label
-                v-for="option in scale"
-                :key="option.value"
-                class="flex justify-between px-6 py-4 rounded-xl border cursor-pointer transition"
-                :class="answers[question.id] === option.value
-                ? 'bg-slate-900 text-white border-slate-900'
-                : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'"
-            >
-
-              <span>{{ option.label }}</span>
-
-              <input
-                  type="radio"
-                  :name="question.id"
-                  :value="option.value"
-                  :checked="answers[question.id] === option.value"
-                  @change="handleAnswer(question.id, option.value, index)"
-                  class="h-5 w-5 accent-white"
-              />
-
-            </label>
-
-          </div>
-
-        </div>
-
-        <!-- Loading -->
-
-        <div
-            v-if="quizComplete && loading && !activeText"
-            class="mt-16 text-center space-y-5"
-        >
-
-          <div class="animate-pulse space-y-4">
-
-            <p class="text-lg font-medium text-slate-900">
-              {{ loadingStage }}
-            </p>
-
-            <p class="text-sm text-slate-500">
-              This usually takes a few seconds.
-            </p>
-
-          </div>
-
-        </div>
-
-        <!-- Report -->
-
-        <div
-            v-if="activeText"
-            ref="reportContainerRef"
-            class="mt-12 max-w-prose mx-auto"
-        >
-
-          <!-- TLDR -->
-
-          <div
-              v-if="reportTexts.tldr"
-              class="mb-10 bg-slate-100 border border-slate-200 rounded-2xl p-8"
-          >
-
-            <h2 class="text-xl font-semibold text-slate-900 mb-4">
-              TL;DR
-            </h2>
-
-            <p class="text-slate-700 leading-relaxed whitespace-pre-line text-[17px]">
-              {{ reportTexts.tldr }}
-            </p>
-
-          </div>
-
-          <!-- Tabs -->
-
-          <div class="flex gap-2 mb-8 justify-center flex-wrap">
-
-            <button
-                v-for="view in views"
-                :key="view.key"
-                @click="selectView(view.key)"
-                class="px-4 py-1.5 rounded-full text-sm border transition"
-                :class="activeView === view.key
-                ? 'bg-slate-900 text-white border-slate-900'
-                : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
-            >
-              {{ view.label }}
-            </button>
-
-          </div>
-
-          <!-- Intro -->
-
-          <div class="mb-8">
-
-            <h2 class="text-3xl font-medium text-stone-900 mb-3">
-              {{
-                views.find(v => v.key === activeView)?.label
-              }}
-            </h2>
-
-            <p class="text-slate-600 text-lg leading-relaxed">
-              {{ activeViewIntro }}
-            </p>
-
-          </div>
-
-          <!-- Report Content -->
-
-          <div v-html="formattedActiveText"></div>
-
-          <!-- Download -->
-
-          <div class="mt-10 flex justify-center">
-
-            <button
-                @click="downloadReflection"
-                class="px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
-            >
-              Download reflection
-            </button>
-
-          </div>
-
-          <div
-              v-if="downloadComplete"
-              class="mt-4 text-center text-sm text-slate-500"
-          >
-            Reflection downloaded.
-          </div>
-
-          <!-- CTA -->
-
-          <div
-              v-if="showNextStep"
-              class="mt-16 text-center space-y-6 max-w-xl mx-auto"
-          >
-
-            <p class="text-slate-700">
-              {{ adaptiveMessage.line1 }}
-            </p>
-
-            <p class="text-slate-700">
-              {{ adaptiveMessage.line2 }}
-            </p>
-
-            <p class="text-slate-700">
-              {{ adaptiveMessage.line3 }}
-            </p>
-
-            <button
-                @click="goToProgramme"
-                class="mt-4 px-6 py-3 bg-slate-900 text-white rounded-xl"
-            >
-              Start the guided process
-            </button>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </div>
-
-  </main>
-
-</template>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 180ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
