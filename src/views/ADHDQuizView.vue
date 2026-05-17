@@ -1,7 +1,6 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
     <div class="max-w-3xl mx-auto space-y-16">
-
       <header class="space-y-4">
         <p class="text-xs uppercase tracking-widest text-slate-500">
           System Mapping
@@ -12,7 +11,10 @@
         </h1>
       </header>
 
-      <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
+      <div
+          v-if="!activeText"
+          class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300"
+      >
         <div class="px-4 py-3 space-y-2">
           <div class="flex justify-between text-sm text-slate-600">
             <span>Progress</span>
@@ -33,9 +35,9 @@
       </div>
 
       <section class="space-y-12 rounded-2xl bg-white/80 px-6 py-8">
-
         <div
             v-for="(question, index) in adhdQuestions"
+            v-show="!activeText"
             :key="question.id"
             class="space-y-6"
         >
@@ -103,7 +105,7 @@
             </p>
           </div>
 
-          <div class="sticky top-36 z-30 bg-stone-50/95 backdrop-blur border-y border-stone-200 py-4 mb-8">
+          <div class="sticky top-16 z-30 bg-stone-50/95 backdrop-blur border-y border-stone-200 py-4 mb-8">
             <div class="flex gap-2 justify-center flex-wrap">
               <button
                   v-for="view in views"
@@ -169,13 +171,12 @@
 
             <button
                 @click="goToProgramme"
-                class="mt-4 px-6 py-3 bg-slate-900 text-white rounded-xl"
+                class="mt-4 px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
             >
               Start the guided process
             </button>
           </div>
         </div>
-
       </section>
     </div>
   </main>
@@ -287,11 +288,7 @@ const handleAnswer = async (questionId, value, index) => {
     return
   }
 
-  if (
-      quizComplete.value &&
-      !reportTexts.value.overview &&
-      !loading.value
-  ) {
+  if (quizComplete.value && !activeText.value && !loading.value) {
     await generateInitialReport()
   }
 }
@@ -325,6 +322,7 @@ const fetchReport = async () => {
 const generateInitialReport = async () => {
   loading.value = true
   showNextStep.value = false
+  downloadComplete.value = false
   loadingStage.value = "Analysing behavioural patterns..."
 
   await nextTick()
@@ -345,11 +343,13 @@ const generateInitialReport = async () => {
 
     const data = await fetchReport()
 
-    reportTexts.value.tldr = data.tldr || ""
-    reportTexts.value.overview = data.overview || ""
-    reportTexts.value.functioning = data.functioning || ""
-    reportTexts.value.patterns = data.patterns || ""
-    reportTexts.value.closing = data.closing || ""
+    reportTexts.value = {
+      tldr: data.tldr || "",
+      overview: data.overview || "",
+      functioning: data.functioning || "",
+      patterns: data.patterns || "",
+      closing: data.closing || ""
+    }
 
     activeView.value = "overview"
 
@@ -361,7 +361,6 @@ const generateInitialReport = async () => {
       behavior: "smooth",
       block: "start"
     })
-
   } catch (err) {
     console.error("Generate error:", err)
     alert("Something went wrong. Check console.")
@@ -399,15 +398,23 @@ const activeViewIntro = computed(() =>
     views.find(v => v.key === activeView.value)?.intro || ""
 )
 
+const escapeHtml = (text) => {
+  return String(text || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;")
+}
+
 const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
 
   return activeText.value
       .split("\n\n")
-      .map(
-          p =>
-              `<p class="mb-6 leading-relaxed text-stone-800 text-[17px]">${p}</p>`
-      )
+      .map(p => {
+        return `<p class="mb-6 leading-relaxed text-stone-800 text-[17px]">${escapeHtml(p)}</p>`
+      })
       .join("")
 })
 
@@ -416,19 +423,17 @@ const formatParagraphsForDownload = (text) => {
 
   return text
       .split("\n\n")
-      .map(p => `<p>${p}</p>`)
+      .map(p => `<p>${escapeHtml(p)}</p>`)
       .join("")
 }
 
-const downloadReflection = async () => {
+const downloadReflection = () => {
   try {
-    const html = `
-<!DOCTYPE html>
+    const html = `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
 <title>MindWorks Reflection</title>
-
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -479,17 +484,14 @@ p {
 }
 </style>
 </head>
-
 <body>
 <h1>MindWorks Reflection</h1>
 
-<p>
-Behavioural continuity, interruption patterns, and attention structure.
-</p>
+<p>Behavioural continuity, interruption patterns, and attention structure.</p>
 
 <div class="tldr">
 <h2>TL;DR</h2>
-<p>${reportTexts.value.tldr}</p>
+<p>${escapeHtml(reportTexts.value.tldr)}</p>
 </div>
 
 <div class="section">
@@ -511,34 +513,33 @@ ${formatParagraphsForDownload(reportTexts.value.patterns)}
 </div>
 
 <div class="footer">
-<p>${reportTexts.value.closing}</p>
+<p>${escapeHtml(reportTexts.value.closing)}</p>
 </div>
-
 </body>
-</html>
-`
+</html>`
 
-    const blob = new Blob(
-        [html],
-        { type: "text/html;charset=utf-8" }
-    )
+    const blob = new Blob([html], {
+      type: "text/html;charset=utf-8"
+    })
 
     const url = URL.createObjectURL(blob)
     const link = document.createElement("a")
 
     link.href = url
     link.download = "mindworks-reflection.html"
+    document.body.appendChild(link)
     link.click()
+    document.body.removeChild(link)
 
     URL.revokeObjectURL(url)
 
     downloadComplete.value = true
+    showNextStep.value = false
 
     setTimeout(() => {
       downloadComplete.value = false
       showNextStep.value = true
     }, 1800)
-
   } catch (err) {
     console.error("Download failed:", err)
     alert("Download failed.")
