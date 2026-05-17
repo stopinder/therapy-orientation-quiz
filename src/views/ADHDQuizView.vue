@@ -3,7 +3,10 @@
     <div class="max-w-3xl mx-auto space-y-16">
 
       <header class="space-y-4">
-        <p class="text-xs uppercase tracking-widest text-slate-500">System Mapping</p>
+        <p class="text-xs uppercase tracking-widest text-slate-500">
+          System Mapping
+        </p>
+
         <h1 class="text-4xl font-medium tracking-tight text-stone-800">
           A closer look at how your mind actually operates
         </h1>
@@ -11,6 +14,7 @@
 
       <div class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300">
         <div class="px-4 py-3 space-y-2">
+
           <div class="flex justify-between text-sm text-slate-600">
             <span>Progress</span>
             <span>{{ progressPercent }}%</span>
@@ -20,12 +24,13 @@
             <div
                 class="h-full bg-slate-800 transition-all duration-300"
                 :style="{ width: progressPercent + '%' }"
-            ></div>
+            />
           </div>
 
           <p class="text-xs text-slate-500">
             Keep going — this gets clearer quickly.
           </p>
+
         </div>
       </div>
 
@@ -36,6 +41,7 @@
             :key="question.id"
             class="space-y-6"
         >
+
           <p
               class="text-xl text-stone-800 scroll-mt-36"
               :ref="el => questionTextRefs[index] = el"
@@ -44,6 +50,7 @@
           </p>
 
           <div class="space-y-3">
+
             <label
                 v-for="option in scale"
                 :key="option.value"
@@ -52,6 +59,7 @@
                 ? 'bg-slate-900 text-white border-slate-900'
                 : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'"
             >
+
               <span>{{ option.label }}</span>
 
               <input
@@ -62,14 +70,19 @@
                   @change="handleAnswer(question.id, option.value, index)"
                   class="h-5 w-5 accent-white"
               />
+
             </label>
+
           </div>
+
         </div>
 
+        <!-- Loading -->
         <div
             v-if="quizComplete && loading && !activeText"
             class="mt-10 max-w-md mx-auto text-center space-y-4"
         >
+
           <p class="text-lg font-medium text-slate-900">
             Generating your reflection…
           </p>
@@ -77,11 +90,35 @@
           <p class="text-sm text-slate-600">
             This usually takes a few seconds.
           </p>
+
         </div>
 
-        <div v-if="activeText" ref="reportContainerRef" class="mt-12 max-w-prose mx-auto">
+        <!-- Report -->
+        <div
+            v-if="activeText"
+            ref="reportContainerRef"
+            class="mt-12 max-w-prose mx-auto"
+        >
 
+          <!-- TLDR -->
+          <div
+              v-if="reportTexts.tldr"
+              class="mb-10 bg-slate-100 border border-slate-200 rounded-2xl p-8"
+          >
+
+            <h2 class="text-xl font-semibold text-slate-900 mb-4">
+              TL;DR
+            </h2>
+
+            <p class="text-slate-700 leading-relaxed whitespace-pre-line">
+              {{ reportTexts.tldr }}
+            </p>
+
+          </div>
+
+          <!-- Tabs -->
           <div class="flex gap-2 mb-6 justify-center">
+
             <button
                 v-for="view in views"
                 :key="view.key"
@@ -93,12 +130,19 @@
             >
               {{ view.label }}
             </button>
+
           </div>
 
+          <!-- Report Content -->
           <div v-html="formattedActiveText"></div>
 
+          <!-- Buttons -->
           <div class="mt-6 flex gap-4 justify-center">
-            <button @click="copyReflection" class="px-4 py-2 bg-stone-200 rounded-md">
+
+            <button
+                @click="copyReflection"
+                class="px-4 py-2 bg-stone-200 rounded-md"
+            >
               Copy
             </button>
 
@@ -108,12 +152,26 @@
             >
               Download
             </button>
+
           </div>
 
-          <div v-if="showNextStep" class="mt-10 text-center space-y-6 max-w-xl mx-auto">
-            <p class="text-slate-700">{{ adaptiveMessage.line1 }}</p>
-            <p class="text-slate-700">{{ adaptiveMessage.line2 }}</p>
-            <p class="text-slate-700">{{ adaptiveMessage.line3 }}</p>
+          <!-- CTA -->
+          <div
+              v-if="showNextStep"
+              class="mt-10 text-center space-y-6 max-w-xl mx-auto"
+          >
+
+            <p class="text-slate-700">
+              {{ adaptiveMessage.line1 }}
+            </p>
+
+            <p class="text-slate-700">
+              {{ adaptiveMessage.line2 }}
+            </p>
+
+            <p class="text-slate-700">
+              {{ adaptiveMessage.line3 }}
+            </p>
 
             <button
                 @click="goToProgramme"
@@ -121,11 +179,13 @@
             >
               Start the guided process
             </button>
+
           </div>
 
         </div>
 
       </section>
+
     </div>
   </main>
 </template>
@@ -142,9 +202,11 @@ const loading = ref(false)
 const showNextStep = ref(false)
 
 const reportTexts = ref({
+  tldr: "",
   overview: "",
   functioning: "",
-  patterns: ""
+  patterns: "",
+  closing: ""
 })
 
 const views = [
@@ -223,29 +285,28 @@ const handleAnswer = async (questionId, value, index) => {
   }
 }
 
-const fetchReport = async (mode) => {
+const fetchReport = async () => {
   const response = await fetch("/api/expand-report-v2", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      profile: scores.value,
-      mode
+      profile: scores.value
     })
   })
 
   const raw = await response.text()
 
   if (!response.ok) {
-    console.error(`API error (${mode}):`, raw)
+    console.error("API ERROR:", raw)
     throw new Error(`API failed with status ${response.status}`)
   }
 
   try {
     return JSON.parse(raw)
   } catch (err) {
-    console.error(`Invalid JSON from API (${mode}):`, raw)
+    console.error("INVALID JSON:", raw)
     throw err
   }
 }
@@ -255,9 +316,16 @@ const generateInitialReport = async () => {
   showNextStep.value = false
 
   try {
-    const data = await fetchReport("overview")
+    const data = await fetchReport()
 
-    reportTexts.value.overview = data.text || ""
+    console.log("FULL API RESPONSE:", data)
+
+    reportTexts.value.tldr = data.tldr || ""
+    reportTexts.value.overview = data.overview || ""
+    reportTexts.value.functioning = data.functioning || ""
+    reportTexts.value.patterns = data.patterns || ""
+    reportTexts.value.closing = data.closing || ""
+
     activeView.value = "overview"
 
     saveReflectionLocally()
@@ -277,17 +345,6 @@ const generateInitialReport = async () => {
   }
 }
 
-const ensureAllReportsLoaded = async () => {
-  for (const view of views) {
-    if (!reportTexts.value[view.key]) {
-      const data = await fetchReport(view.key)
-      reportTexts.value[view.key] = data.text || ""
-    }
-  }
-
-  saveReflectionLocally()
-}
-
 const saveReflectionLocally = () => {
   const reflectionData = {
     createdAt: new Date().toISOString(),
@@ -301,33 +358,15 @@ const saveReflectionLocally = () => {
   )
 }
 
-const selectView = async (viewKey) => {
+const selectView = (viewKey) => {
   activeView.value = viewKey
 
-  if (reportTexts.value[viewKey] || loading.value) return
-
-  loading.value = true
-
-  try {
-    const data = await fetchReport(viewKey)
-
-    reportTexts.value[viewKey] = data.text || ""
-
-    saveReflectionLocally()
-
-    await nextTick()
-
+  nextTick(() => {
     reportContainerRef.value?.scrollIntoView({
       behavior: "smooth",
       block: "start"
     })
-
-  } catch (err) {
-    console.error("View load error:", err)
-    alert("Could not load this section. Check console.")
-  } finally {
-    loading.value = false
-  }
+  })
 }
 
 const activeText = computed(() =>
@@ -339,7 +378,9 @@ const formattedActiveText = computed(() => {
 
   return activeText.value
       .split("\n\n")
-      .map(p => `<p class="mb-5 leading-relaxed text-stone-800">${p}</p>`)
+      .map(
+          p => `<p class="mb-5 leading-relaxed text-stone-800">${p}</p>`
+      )
       .join("")
 })
 
@@ -358,8 +399,6 @@ const combinedReflectionText = computed(() => {
 
 const copyReflection = async () => {
   try {
-    await ensureAllReportsLoaded()
-
     await navigator.clipboard.writeText(
         combinedReflectionText.value
     )
@@ -376,18 +415,18 @@ const copyReflection = async () => {
 
 const downloadReflection = async () => {
   try {
-    await ensureAllReportsLoaded()
-
     const blob = new Blob(
         [combinedReflectionText.value],
         { type: "text/plain;charset=utf-8" }
     )
 
     const url = URL.createObjectURL(blob)
+
     const link = document.createElement("a")
 
     link.href = url
     link.download = "mindworks-reflection.txt"
+
     link.click()
 
     URL.revokeObjectURL(url)
