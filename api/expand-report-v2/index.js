@@ -11,11 +11,36 @@ Do NOT:
 - interpret motives
 - diagnose
 - mention disorders
+- mention symptoms
 - use therapeutic language
 - use self-help language
 - reassure
 - motivate
 - moralise
+- sound compassionate
+- sound inspirational
+- sound poetic
+- sound literary
+
+Do NOT write:
+- cinematic descriptions
+- sensory imagery
+- body-language narration
+- decorative prose
+- fictional scenes
+- metaphors
+- symbolic imagery
+
+Avoid repeatedly describing:
+- hands
+- eyes
+- fingers
+- feet
+- posture
+- glances
+- hovering
+- staring
+- pausing dramatically
 
 Focus only on:
 - observable behaviour
@@ -25,57 +50,97 @@ Focus only on:
 - restarting
 - hesitation
 - friction between intention and action
+- behavioural inconsistency
+- avoidance loops
+- partial task engagement
+- repeated re-entry into tasks
 
 The writing must:
+- stay behaviourally precise
+- stay psychologically recognisable
+- stay compressed
+- stay modern
 - stay concrete
-- unfold moment by moment
-- feel psychologically recognisable
-- feel behaviourally precise
+- sound direct and observant
+
+Write shorter sentences.
+
+Avoid repetition between paragraphs.
+
+Each paragraph must introduce a NEW behavioural pattern.
+
+Do not repeat the same behavioural example using different objects.
 
 Do not write like a therapist.
 Do not write like an article.
-Write like direct observation.
+Do not write like fiction.
+
+Write like blunt behavioural recognition.
 `
 
 const MODE_PROMPTS = {
+
     tldr: `
 ${CORE_RULES}
 
 Goal:
-Write a short behavioural summary.
+Write a compressed behavioural recognition summary.
 
-Write 1 paragraph only.
+Length:
+6-10 sentences maximum.
+
+Rules:
+- no decorative writing
+- no examples involving objects
+- no cinematic narration
+- no fictional scene-setting
 
 Focus on:
-- effort without continuity
+- broken continuity
 - repeated restarting
-- drifting attention
-- unfinished momentum
+- fragmented effort
+- inconsistent follow-through
+- attention drift
+- partial engagement
 
 Tone:
-clinical
 direct
+compressed
 recognisable
+unsentimental
 `,
 
     overview: `
 ${CORE_RULES}
 
 Goal:
-Describe how these patterns appear in real life.
+Describe how these patterns appear behaviourally in ordinary life.
 
 Write 5 short paragraphs.
 
-Include:
-- intention without sustained follow-through
-- drifting attention
-- unfinished actions
-- physical restlessness
-- partial engagement
+Each paragraph must describe:
+- a DIFFERENT behavioural pattern
+- a DIFFERENT type of interruption
+- a DIFFERENT form of inconsistency
+
+Good topics:
+- switching tasks too early
+- remaining near tasks without progressing
+- abandoning actions midway
+- restarting repeatedly
+- losing behavioural continuity
+- drifting into low-priority actions
+
+Avoid:
+- domestic storytelling
+- cinematic detail
+- object-heavy examples
+- repeated "you start something" structures
 
 Tone:
-direct
 observational
+behavioural
+direct
 quietly exposing
 `,
 
@@ -83,20 +148,34 @@ quietly exposing
 ${CORE_RULES}
 
 Goal:
-Show the effect on ordinary daily functioning.
+Show the cumulative effect on ordinary functioning.
 
 Write 5 short paragraphs.
 
 Focus on:
-- unfinished responsibilities
-- losing continuity
-- mental fatigue
-- restarting tasks
-- effort not accumulating
+- backlog accumulation
+- delayed responses
+- unfinished admin
+- forgotten messages
+- inconsistent routines
+- energy fragmentation
+- effort without accumulation
+- staying busy without advancing
+
+This section should feel:
+- practical
+- familiar
+- quietly exhausting
+
+Avoid:
+- fictional scenes
+- physical gesture descriptions
+- over-dramatic wording
 
 Tone:
 plain
 clinical
+recognisable
 fatiguing
 `,
 
@@ -108,18 +187,24 @@ Show the contradictions created by these patterns.
 
 Write 5 short paragraphs.
 
-Include:
+Focus on contradictions like:
 - pressure creates movement but destroys consistency
 - avoidance reduces strain but increases backlog
-- bursts of effort without stability
-- repeated behavioural cycles
+- urgency produces bursts of action without stability
+- restarting creates the feeling of effort without completion
+- activity masks lack of sustained progress
 
 Do not resolve the contradictions.
+
+Do not reassure.
+
+Keep paragraphs shorter and sharper than other sections.
 
 Tone:
 measured
 behavioural
 unsentimental
+exposing
 `
 }
 
@@ -138,6 +223,7 @@ function sanitizeProfile(profile) {
 }
 
 async function generateSection(prompt, profile, apiKey) {
+
     const response = await fetch(
         "https://api.openai.com/v1/chat/completions",
         {
@@ -148,8 +234,8 @@ async function generateSection(prompt, profile, apiKey) {
             },
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
-                temperature: 0.55,
-                max_tokens: 700,
+                temperature: 0.4,
+                max_tokens: 550,
                 messages: [
                     {
                         role: "system",
@@ -157,7 +243,7 @@ async function generateSection(prompt, profile, apiKey) {
                     },
                     {
                         role: "user",
-                        content: `Profile:\n${profile}`
+                        content: `Behavioural profile:\n${profile}`
                     }
                 ]
             })
@@ -170,7 +256,9 @@ async function generateSection(prompt, profile, apiKey) {
 }
 
 export default async function handler(req, res) {
+
     try {
+
         if (req.method !== "POST") {
             return res.status(405).json({
                 error: "Method not allowed"
@@ -223,10 +311,11 @@ export default async function handler(req, res) {
             functioning,
             patterns,
             closing:
-                "These patterns often persist because they temporarily reduce pressure, even while creating longer-term instability and repeated friction with ordinary responsibilities.\n\nRecognition alone rarely changes the cycle.\n\nThe MindWorks 6-Week Programme is designed to help you work with these patterns more directly through structured behavioural observation, sustained attention practice, and guided exercises focused on continuity rather than motivation."
+                "Recognition does not automatically interrupt these cycles.\n\nThe pattern often continues through repetition, partial engagement, avoidance, and repeated behavioural restarting.\n\nThe MindWorks programme focuses on continuity, sustained attention, behavioural observation, and reducing interruption patterns in real time."
         })
 
     } catch (err) {
+
         console.error("SERVER CRASH:", err)
 
         return res.status(500).json({
