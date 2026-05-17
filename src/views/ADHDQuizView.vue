@@ -227,6 +227,7 @@ const activeView = ref("overview")
 const questionTextRefs = ref([])
 const loadingContainerRef = ref(null)
 const reportContainerRef = ref(null)
+const reportContentTopRef = ref(null)
 
 const scale = [
   { label: "Never", value: 0 },
@@ -323,6 +324,7 @@ const generateInitialReport = async () => {
   loading.value = true
   showNextStep.value = false
   downloadComplete.value = false
+
   loadingStage.value = "Analysing behavioural patterns..."
 
   await nextTick()
@@ -361,6 +363,7 @@ const generateInitialReport = async () => {
       behavior: "smooth",
       block: "start"
     })
+
   } catch (err) {
     console.error("Generate error:", err)
     alert("Something went wrong. Check console.")
@@ -382,8 +385,15 @@ const saveReflectionLocally = () => {
   )
 }
 
-const selectView = (viewKey) => {
+const selectView = async (viewKey) => {
   activeView.value = viewKey
+
+  await nextTick()
+
+  reportContentTopRef.value?.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  })
 }
 
 const activeText = computed(() =>
@@ -527,6 +537,7 @@ ${formatParagraphsForDownload(reportTexts.value.patterns)}
 
     link.href = url
     link.download = "mindworks-reflection.html"
+
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -540,6 +551,7 @@ ${formatParagraphsForDownload(reportTexts.value.patterns)}
       downloadComplete.value = false
       showNextStep.value = true
     }, 1800)
+
   } catch (err) {
     console.error("Download failed:", err)
     alert("Download failed.")
@@ -603,15 +615,3 @@ const goToProgramme = () => {
   router.push("/programme")
 }
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 180ms ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
