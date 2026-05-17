@@ -100,9 +100,10 @@
               TL;DR
             </h2>
 
-            <p class="text-slate-700 leading-relaxed whitespace-pre-line text-[17px]">
-              {{ reportTexts.tldr }}
-            </p>
+            <div
+                class="text-slate-700 leading-relaxed text-[17px]"
+                v-html="formattedTldrText"
+            ></div>
           </div>
 
           <div class="sticky top-16 z-30 bg-stone-50/95 backdrop-blur border-y border-stone-200 py-4 mb-8">
@@ -120,6 +121,11 @@
               </button>
             </div>
           </div>
+
+          <div
+              ref="reportContentTopRef"
+              class="h-px w-full"
+          ></div>
 
           <transition name="fade" mode="out-in">
             <div :key="activeView">
@@ -390,9 +396,16 @@ const selectView = async (viewKey) => {
 
   await nextTick()
 
-  reportContentTopRef.value?.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+  if (!reportContentTopRef.value) return
+
+  const targetY =
+      reportContentTopRef.value.getBoundingClientRect().top +
+      window.scrollY -
+      120
+
+  window.scrollTo({
+    top: targetY,
+    behavior: "smooth"
   })
 }
 
@@ -421,9 +434,49 @@ const allowBasicFormatting = (text) => {
   if (!text) return ""
 
   return text
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replaceAll("&lt;strong&gt;", "<strong>")
       .replaceAll("&lt;/strong&gt;", "</strong>")
 }
+
+const normaliseBulletLine = (line) => {
+  return line
+      .replace(/^[-*•]\s*/, "")
+      .trim()
+}
+
+const formattedTldrText = computed(() => {
+  if (!reportTexts.value.tldr) return ""
+
+  const lines = reportTexts.value.tldr
+      .split("\n")
+      .map(line => line.trim())
+      .filter(Boolean)
+
+  const looksLikeBullets = lines.some(line =>
+      /^[-*•]\s+/.test(line)
+  )
+
+  if (looksLikeBullets) {
+    const items = lines
+        .map(line => {
+          const safeLine = allowBasicFormatting(
+              escapeHtml(normaliseBulletLine(line))
+          )
+
+          return `<li>${safeLine}</li>`
+        })
+        .join("")
+
+    return `<ul class="space-y-3 list-disc pl-5">${items}</ul>`
+  }
+
+  const safeText = allowBasicFormatting(
+      escapeHtml(reportTexts.value.tldr)
+  )
+
+  return `<p>${safeText}</p>`
+})
 
 const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
@@ -431,7 +484,6 @@ const formattedActiveText = computed(() => {
   return activeText.value
       .split("\n\n")
       .map(p => {
-
         const safeParagraph = allowBasicFormatting(
             escapeHtml(p)
         )
@@ -451,7 +503,6 @@ const formatParagraphsForDownload = (text) => {
   return text
       .split("\n\n")
       .map(p => {
-
         const safeParagraph = allowBasicFormatting(
             escapeHtml(p)
         )
@@ -459,6 +510,39 @@ const formatParagraphsForDownload = (text) => {
         return `<p>${safeParagraph}</p>`
       })
       .join("")
+}
+
+const formatTldrForDownload = (text) => {
+  if (!text) return ""
+
+  const lines = text
+      .split("\n")
+      .map(line => line.trim())
+      .filter(Boolean)
+
+  const looksLikeBullets = lines.some(line =>
+      /^[-*•]\s+/.test(line)
+  )
+
+  if (looksLikeBullets) {
+    const items = lines
+        .map(line => {
+          const safeLine = allowBasicFormatting(
+              escapeHtml(normaliseBulletLine(line))
+          )
+
+          return `<li>${safeLine}</li>`
+        })
+        .join("")
+
+    return `<ul>${items}</ul>`
+  }
+
+  const safeText = allowBasicFormatting(
+      escapeHtml(text)
+  )
+
+  return `<p>${safeText}</p>`
 }
 
 const downloadReflection = () => {
@@ -511,6 +595,15 @@ p {
   margin-bottom: 18px;
 }
 
+ul {
+  margin-top: 18px;
+  padding-left: 24px;
+}
+
+li {
+  margin-bottom: 12px;
+}
+
 strong {
   font-weight: 700;
   color: #0f172a;
@@ -535,9 +628,7 @@ Behavioural continuity, interruption patterns, and attention structure.
 
 <div class="tldr">
 <h2>TL;DR</h2>
-<p>${allowBasicFormatting(
-        escapeHtml(reportTexts.value.tldr)
-    )}</p>
+${formatTldrForDownload(reportTexts.value.tldr)}
 </div>
 
 <div class="section">
@@ -592,9 +683,7 @@ ${formatParagraphsForDownload(reportTexts.value.patterns)}
     link.download = "mindworks-reflection.html"
 
     document.body.appendChild(link)
-
     link.click()
-
     document.body.removeChild(link)
 
     URL.revokeObjectURL(url)
@@ -621,9 +710,7 @@ const dominantPattern = computed(() => {
 })
 
 const adaptiveMessage = computed(() => {
-
   switch (dominantPattern.value) {
-
     case "inattention":
       return {
         line1: "Your attention drops before your intention completes.",
@@ -672,3 +759,15 @@ const goToProgramme = () => {
   router.push("/programme")
 }
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 180ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
