@@ -1,6 +1,7 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
     <div class="max-w-3xl mx-auto space-y-16">
+
       <header class="space-y-4">
         <p class="text-xs uppercase tracking-widest text-slate-500">
           System Mapping
@@ -16,6 +17,7 @@
           class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300"
       >
         <div class="px-4 py-3 space-y-2">
+
           <div class="flex justify-between text-sm text-slate-600">
             <span>Progress</span>
             <span>{{ progressPercent }}%</span>
@@ -31,16 +33,19 @@
           <p class="text-xs text-slate-500">
             Keep going — this gets clearer quickly.
           </p>
+
         </div>
       </div>
 
       <section class="space-y-12 rounded-2xl bg-white/80 px-6 py-8">
+
         <div
             v-for="(question, index) in adhdQuestions"
             v-show="!activeText"
             :key="question.id"
             class="space-y-6"
         >
+
           <p
               class="text-xl text-stone-800 scroll-mt-36"
               :ref="el => questionTextRefs[index] = el"
@@ -49,6 +54,7 @@
           </p>
 
           <div class="space-y-3">
+
             <label
                 v-for="option in scale"
                 :key="option.value"
@@ -57,6 +63,7 @@
                 ? 'bg-slate-900 text-white border-slate-900'
                 : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'"
             >
+
               <span>{{ option.label }}</span>
 
               <input
@@ -67,7 +74,9 @@
                   @change="handleAnswer(question.id, option.value, index)"
                   class="h-5 w-5 accent-white"
               />
+
             </label>
+
           </div>
         </div>
 
@@ -76,7 +85,9 @@
             ref="loadingContainerRef"
             class="mt-16 text-center space-y-5 scroll-mt-36"
         >
+
           <div class="animate-pulse space-y-4">
+
             <p class="text-lg font-medium text-slate-900">
               {{ loadingStage }}
             </p>
@@ -84,7 +95,9 @@
             <p class="text-sm text-slate-500">
               This usually takes a few seconds.
             </p>
+
           </div>
+
         </div>
 
         <div
@@ -92,10 +105,12 @@
             ref="reportContainerRef"
             class="mt-12 max-w-prose mx-auto scroll-mt-36"
         >
+
           <div
               v-if="reportTexts.tldr"
               class="mb-10 bg-slate-100 border border-slate-200 rounded-2xl p-8"
           >
+
             <h2 class="text-xl font-semibold text-slate-900 mb-4">
               TL;DR
             </h2>
@@ -104,86 +119,152 @@
                 class="text-slate-700 leading-relaxed text-[17px]"
                 v-html="formattedTldrText"
             ></div>
-          </div>
 
-          <div class="sticky top-16 z-30 bg-stone-50/95 backdrop-blur border-y border-stone-200 py-4 mb-8">
-            <div class="flex gap-2 justify-center flex-wrap">
-              <button
-                  v-for="view in views"
-                  :key="view.key"
-                  @click="selectView(view.key)"
-                  class="px-4 py-1.5 rounded-full text-sm border transition"
-                  :class="activeView === view.key
-                  ? 'bg-slate-900 text-white border-slate-900'
-                  : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
-              >
-                {{ view.label }}
-              </button>
-            </div>
           </div>
 
           <div
-              ref="reportContentTopRef"
-              class="h-px w-full"
-          ></div>
+              v-if="!emailSubmitted"
+              class="mb-10 rounded-2xl border border-stone-200 bg-white p-8"
+          >
 
-          <transition name="fade" mode="out-in">
-            <div :key="activeView">
-              <div class="mb-8">
-                <h2 class="text-3xl font-medium text-stone-900 mb-3">
-                  {{ activeViewLabel }}
-                </h2>
+            <div class="space-y-5">
 
-                <p class="text-slate-600 text-lg leading-relaxed">
-                  {{ activeViewIntro }}
+              <div class="space-y-2">
+
+                <h3 class="text-2xl font-medium text-stone-900">
+                  Unlock the full reflection
+                </h3>
+
+                <p class="text-slate-600 leading-relaxed">
+                  Enter your email to continue reading the full reflection and download your report.
                 </p>
+
               </div>
 
-              <div v-html="formattedActiveText"></div>
+              <input
+                  v-model="email"
+                  type="email"
+                  placeholder="Email address"
+                  class="w-full rounded-xl border border-stone-300 px-4 py-3 text-stone-800 outline-none focus:border-slate-500"
+              />
+
+              <p
+                  v-if="emailError"
+                  class="text-sm text-red-600"
+              >
+                {{ emailError }}
+              </p>
+
+              <button
+                  @click="unlockReport"
+                  class="w-full rounded-xl bg-slate-900 px-6 py-3 text-white transition hover:bg-slate-800"
+              >
+                Unlock full reflection
+              </button>
+
             </div>
-          </transition>
 
-          <div class="mt-10 flex justify-center">
-            <button
-                @click="downloadReflection"
-                class="px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
+          </div>
+
+          <div v-if="emailSubmitted">
+
+            <div class="sticky top-16 z-30 bg-stone-50/95 backdrop-blur border-y border-stone-200 py-4 mb-8">
+
+              <div class="flex gap-2 justify-center flex-wrap">
+
+                <button
+                    v-for="view in views"
+                    :key="view.key"
+                    @click="selectView(view.key)"
+                    class="px-4 py-1.5 rounded-full text-sm border transition"
+                    :class="activeView === view.key
+                    ? 'bg-slate-900 text-white border-slate-900'
+                    : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
+                >
+                  {{ view.label }}
+                </button>
+
+              </div>
+
+            </div>
+
+            <div
+                ref="reportContentTopRef"
+                class="h-px w-full"
+            ></div>
+
+            <transition name="fade" mode="out-in">
+
+              <div :key="activeView">
+
+                <div class="mb-8">
+
+                  <h2 class="text-3xl font-medium text-stone-900 mb-3">
+                    {{ activeViewLabel }}
+                  </h2>
+
+                  <p class="text-slate-600 text-lg leading-relaxed">
+                    {{ activeViewIntro }}
+                  </p>
+
+                </div>
+
+                <div v-html="formattedActiveText"></div>
+
+              </div>
+
+            </transition>
+
+            <div class="mt-10 flex justify-center">
+
+              <button
+                  @click="downloadReflection"
+                  class="px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
+              >
+                Download reflection
+              </button>
+
+            </div>
+
+            <div
+                v-if="downloadComplete"
+                class="mt-4 text-center text-sm text-slate-500"
             >
-              Download reflection
-            </button>
-          </div>
+              Reflection downloaded.
+            </div>
 
-          <div
-              v-if="downloadComplete"
-              class="mt-4 text-center text-sm text-slate-500"
-          >
-            Reflection downloaded.
-          </div>
-
-          <div
-              v-if="showNextStep"
-              class="mt-16 text-center space-y-6 max-w-xl mx-auto"
-          >
-            <p class="text-slate-700">
-              {{ adaptiveMessage.line1 }}
-            </p>
-
-            <p class="text-slate-700">
-              {{ adaptiveMessage.line2 }}
-            </p>
-
-            <p class="text-slate-700">
-              {{ adaptiveMessage.line3 }}
-            </p>
-
-            <button
-                @click="goToProgramme"
-                class="mt-4 px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
+            <div
+                v-if="showNextStep"
+                class="mt-16 text-center space-y-6 max-w-xl mx-auto"
             >
-              Start the guided process
-            </button>
+
+              <p class="text-slate-700">
+                {{ adaptiveMessage.line1 }}
+              </p>
+
+              <p class="text-slate-700">
+                {{ adaptiveMessage.line2 }}
+              </p>
+
+              <p class="text-slate-700">
+                {{ adaptiveMessage.line3 }}
+              </p>
+
+              <button
+                  @click="goToProgramme"
+                  class="mt-4 px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
+              >
+                Start the guided process
+              </button>
+
+            </div>
+
           </div>
+
         </div>
+
       </section>
+
     </div>
   </main>
 </template>
@@ -201,6 +282,10 @@ const loadingStage = ref("")
 
 const downloadComplete = ref(false)
 const showNextStep = ref(false)
+
+const email = ref("")
+const emailSubmitted = ref(false)
+const emailError = ref("")
 
 const reportTexts = ref({
   tldr: "",
@@ -258,6 +343,7 @@ const progressPercent = computed(() =>
 )
 
 const scores = computed(() => {
+
   const totals = {
     inattention: 0,
     hyperactivity: 0,
@@ -268,17 +354,21 @@ const scores = computed(() => {
   }
 
   for (const [id, value] of Object.entries(answers.value)) {
+
     const question = adhdQuestions.find(q => q.id === id)
 
     if (question && totals[question.dimension] !== undefined) {
       totals[question.dimension] += Number(value)
     }
+
   }
 
   return totals
+
 })
 
 const handleAnswer = async (questionId, value, index) => {
+
   answers.value[questionId] = value
 
   await nextTick()
@@ -287,20 +377,24 @@ const handleAnswer = async (questionId, value, index) => {
   const nextQuestion = questionTextRefs.value[index + 1]
 
   if (nextQuestion) {
+
     nextQuestion.scrollIntoView({
       behavior: "smooth",
       block: "start"
     })
 
     return
+
   }
 
   if (quizComplete.value && !activeText.value && !loading.value) {
     await generateInitialReport()
   }
+
 }
 
 const fetchReport = async () => {
+
   const response = await fetch("/api/expand-report-v2", {
     method: "POST",
     headers: {
@@ -324,9 +418,11 @@ const fetchReport = async () => {
     console.error("INVALID JSON:", raw)
     throw err
   }
+
 }
 
 const generateInitialReport = async () => {
+
   loading.value = true
   showNextStep.value = false
   downloadComplete.value = false
@@ -341,6 +437,7 @@ const generateInitialReport = async () => {
   })
 
   try {
+
     await new Promise(resolve => setTimeout(resolve, 700))
 
     loadingStage.value = "Mapping interruption loops..."
@@ -371,14 +468,20 @@ const generateInitialReport = async () => {
     })
 
   } catch (err) {
+
     console.error("Generate error:", err)
     alert("Something went wrong. Check console.")
+
   } finally {
+
     loading.value = false
+
   }
+
 }
 
 const saveReflectionLocally = () => {
+
   const reflectionData = {
     createdAt: new Date().toISOString(),
     scores: scores.value,
@@ -389,9 +492,35 @@ const saveReflectionLocally = () => {
       "mindworks_latest_reflection",
       JSON.stringify(reflectionData)
   )
+
+}
+
+const unlockReport = () => {
+
+  emailError.value = ""
+
+  if (!email.value || !email.value.includes("@")) {
+
+    emailError.value = "Please enter a valid email address."
+    return
+
+  }
+
+  emailSubmitted.value = true
+
+  nextTick(() => {
+
+    reportContainerRef.value?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
+
+  })
+
 }
 
 const selectView = async (viewKey) => {
+
   activeView.value = viewKey
 
   await nextTick()
@@ -407,6 +536,7 @@ const selectView = async (viewKey) => {
     top: targetY,
     behavior: "smooth"
   })
+
 }
 
 const activeText = computed(() =>
@@ -422,30 +552,37 @@ const activeViewIntro = computed(() =>
 )
 
 const escapeHtml = (text) => {
+
   return String(text || "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;")
+
 }
 
 const allowBasicFormatting = (text) => {
+
   if (!text) return ""
 
   return text
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replaceAll("&lt;strong&gt;", "<strong>")
       .replaceAll("&lt;/strong&gt;", "</strong>")
+
 }
 
 const normaliseBulletLine = (line) => {
+
   return line
       .replace(/^[-*•]\s*/, "")
       .trim()
+
 }
 
 const formattedTldrText = computed(() => {
+
   if (!reportTexts.value.tldr) return ""
 
   const lines = reportTexts.value.tldr
@@ -458,17 +595,21 @@ const formattedTldrText = computed(() => {
   )
 
   if (looksLikeBullets) {
+
     const items = lines
         .map(line => {
+
           const safeLine = allowBasicFormatting(
               escapeHtml(normaliseBulletLine(line))
           )
 
           return `<li>${safeLine}</li>`
+
         })
         .join("")
 
     return `<ul class="space-y-3 list-disc pl-5">${items}</ul>`
+
   }
 
   const safeText = allowBasicFormatting(
@@ -476,14 +617,17 @@ const formattedTldrText = computed(() => {
   )
 
   return `<p>${safeText}</p>`
+
 })
 
 const formattedActiveText = computed(() => {
+
   if (!activeText.value) return ""
 
   return activeText.value
       .split("\n\n")
       .map(p => {
+
         const safeParagraph = allowBasicFormatting(
             escapeHtml(p)
         )
@@ -493,26 +637,33 @@ const formattedActiveText = computed(() => {
           ${safeParagraph}
         </p>
       `
+
       })
       .join("")
+
 })
 
 const formatParagraphsForDownload = (text) => {
+
   if (!text) return ""
 
   return text
       .split("\n\n")
       .map(p => {
+
         const safeParagraph = allowBasicFormatting(
             escapeHtml(p)
         )
 
         return `<p>${safeParagraph}</p>`
+
       })
       .join("")
+
 }
 
 const formatTldrForDownload = (text) => {
+
   if (!text) return ""
 
   const lines = text
@@ -525,17 +676,21 @@ const formatTldrForDownload = (text) => {
   )
 
   if (looksLikeBullets) {
+
     const items = lines
         .map(line => {
+
           const safeLine = allowBasicFormatting(
               escapeHtml(normaliseBulletLine(line))
           )
 
           return `<li>${safeLine}</li>`
+
         })
         .join("")
 
     return `<ul>${items}</ul>`
+
   }
 
   const safeText = allowBasicFormatting(
@@ -543,10 +698,13 @@ const formatTldrForDownload = (text) => {
   )
 
   return `<p>${safeText}</p>`
+
 }
 
 const downloadReflection = () => {
+
   try {
+
     const html = `<!DOCTYPE html>
 <html>
 <head>
@@ -554,6 +712,7 @@ const downloadReflection = () => {
 <title>MindWorks Reflection</title>
 
 <style>
+
 body {
   font-family: Arial, sans-serif;
   background: #fafaf9;
@@ -615,6 +774,7 @@ strong {
   border-top: 1px solid #d6d3d1;
   color: #57534e;
 }
+
 </style>
 </head>
 
@@ -627,11 +787,15 @@ Behavioural continuity, interruption patterns, and attention structure.
 </p>
 
 <div class="tldr">
+
 <h2>TL;DR</h2>
+
 ${formatTldrForDownload(reportTexts.value.tldr)}
+
 </div>
 
 <div class="section">
+
 <h2>Overview</h2>
 
 <p class="intro">
@@ -639,9 +803,11 @@ How the pattern tends to operate moment to moment.
 </p>
 
 ${formatParagraphsForDownload(reportTexts.value.overview)}
+
 </div>
 
 <div class="section">
+
 <h2>Daily functioning</h2>
 
 <p class="intro">
@@ -649,9 +815,11 @@ How the pattern accumulates across ordinary responsibilities.
 </p>
 
 ${formatParagraphsForDownload(reportTexts.value.functioning)}
+
 </div>
 
 <div class="section">
+
 <h2>Patterns & trade-offs</h2>
 
 <p class="intro">
@@ -659,12 +827,17 @@ The contradictions that quietly keep the cycle going.
 </p>
 
 ${formatParagraphsForDownload(reportTexts.value.patterns)}
+
 </div>
 
 <div class="footer">
-<p>${allowBasicFormatting(
+
+<p>
+${allowBasicFormatting(
         escapeHtml(reportTexts.value.closing)
-    )}</p>
+    )}
+</p>
+
 </div>
 
 </body>
@@ -683,7 +856,9 @@ ${formatParagraphsForDownload(reportTexts.value.patterns)}
     link.download = "mindworks-reflection.html"
 
     document.body.appendChild(link)
+
     link.click()
+
     document.body.removeChild(link)
 
     URL.revokeObjectURL(url)
@@ -692,25 +867,34 @@ ${formatParagraphsForDownload(reportTexts.value.patterns)}
     showNextStep.value = false
 
     setTimeout(() => {
+
       downloadComplete.value = false
       showNextStep.value = true
+
     }, 1800)
 
   } catch (err) {
+
     console.error("Download failed:", err)
     alert("Download failed.")
+
   }
+
 }
 
 const dominantPattern = computed(() => {
+
   const sorted = [...Object.entries(scores.value)]
       .sort((a, b) => b[1] - a[1])
 
   return sorted[0]?.[0] || "general"
+
 })
 
 const adaptiveMessage = computed(() => {
+
   switch (dominantPattern.value) {
+
     case "inattention":
       return {
         line1: "Your attention drops before your intention completes.",
@@ -752,7 +936,9 @@ const adaptiveMessage = computed(() => {
         line2: "The difficulty is what happens when it breaks.",
         line3: "That moment repeats unless you work with it."
       }
+
   }
+
 })
 
 const goToProgramme = () => {
@@ -761,6 +947,7 @@ const goToProgramme = () => {
 </script>
 
 <style scoped>
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 180ms ease;
@@ -770,4 +957,5 @@ const goToProgramme = () => {
 .fade-leave-to {
   opacity: 0;
 }
+
 </style>
