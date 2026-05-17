@@ -1,35 +1,45 @@
 export const adhdQuestions = [
 
-    // ===== HOOK (attention breaks immediately) =====
+    // ===== CONTINUITY BREAKS =====
     {
         id: "IA1",
         dimension: "inattention",
-        text: "You start focusing with intention, but your attention drifts without you deciding to stop.",
-    },
-    {
-        id: "EF3",
-        dimension: "executive_function",
-        text: "You begin tasks with intention but struggle to follow them through.",
-    },
-    {
-        id: "IA4",
-        dimension: "inattention",
-        text: "You only realise your focus has slipped after you’ve already disengaged.",
-    },
-
-    // ===== CORE ATTENTION INSTABILITY =====
-    {
-        id: "IA3",
-        dimension: "inattention",
-        text: "Your mind wanders when something doesn’t immediately hold your interest.",
+        text: "You begin tasks with intention, but your attention drifts before the task is complete.",
     },
     {
         id: "IA2",
         dimension: "inattention",
-        text: "You lose track of conversations, even when you’re trying to follow them.",
+        text: "You only realise your focus has slipped after you’ve already disengaged.",
+    },
+    {
+        id: "IA3",
+        dimension: "inattention",
+        text: "You stay mentally near tasks without fully progressing them.",
+    },
+    {
+        id: "IA4",
+        dimension: "inattention",
+        text: "You reopen tasks repeatedly without moving them much further forward.",
     },
 
-    // ===== INITIATION + OVERWHELM =====
+    // ===== ATTENTION CAPTURE =====
+    {
+        id: "IA5",
+        dimension: "inattention",
+        text: "Your attention shifts quickly toward whatever feels most immediate, interesting, or relieving.",
+    },
+    {
+        id: "IA6",
+        dimension: "inattention",
+        text: "You move between tabs, apps, thoughts, or tasks faster than you complete them.",
+    },
+    {
+        id: "IA7",
+        dimension: "inattention",
+        text: "You lose continuity easily when interrupted, even briefly.",
+    },
+
+    // ===== EXECUTIVE FRICTION =====
     {
         id: "EF1",
         dimension: "executive_function",
@@ -38,97 +48,112 @@ export const adhdQuestions = [
     {
         id: "EF2",
         dimension: "executive_function",
-        text: "Tasks feel unclear or too large, making it hard to begin.",
+        text: "You spend time preparing to work without fully entering the work itself.",
+    },
+    {
+        id: "EF3",
+        dimension: "executive_function",
+        text: "Tasks become mentally harder to return to once they’ve been interrupted.",
     },
     {
         id: "EF4",
         dimension: "executive_function",
-        text: "Multiple responsibilities quickly become overwhelming.",
-    },
-
-    // ===== PRESSURE DEPENDENCE =====
-    {
-        id: "IA4_dup",
-        dimension: "inattention",
-        text: "You rely on urgency, pressure, or interest to stay mentally engaged.",
+        text: "You restart systems, routines, or plans more often than you sustain them.",
     },
     {
         id: "EF5",
         dimension: "executive_function",
-        text: "External pressure or deadlines help you function more effectively.",
+        text: "Multiple responsibilities quickly become mentally tangled or difficult to organise.",
     },
 
-    // ===== IMPULSIVITY / CAPTURE =====
+    // ===== PRESSURE DEPENDENCE =====
+    {
+        id: "PD1",
+        dimension: "executive_function",
+        text: "Urgency, pressure, or consequences make it easier to engage consistently.",
+    },
+    {
+        id: "PD2",
+        dimension: "executive_function",
+        text: "You function better when something feels immediate, stimulating, or unavoidable.",
+    },
+
+    // ===== IMPULSIVITY =====
+    {
+        id: "IM1",
+        dimension: "impulsivity",
+        text: "You act, respond, or commit before fully thinking things through.",
+    },
     {
         id: "IM2",
         dimension: "impulsivity",
-        text: "You find it difficult to pause before reacting when something grabs your attention.",
+        text: "You shift direction quickly once something else captures your attention.",
     },
     {
         id: "IM3",
         dimension: "impulsivity",
-        text: "Decisions are often made in the moment rather than considered beforehand.",
-    },
-    {
-        id: "IM1",
-        dimension: "impulsivity",
-        text: "You act or speak quickly, and only reflect on it afterwards.",
+        text: "You make decisions quickly and later feel trapped by them.",
     },
     {
         id: "IM4",
         dimension: "impulsivity",
-        text: "You commit to things quickly and later feel overwhelmed or regretful.",
+        text: "You interrupt your own plans by reacting to whatever feels strongest in the moment.",
     },
 
     // ===== INTERNAL ACTIVATION =====
     {
         id: "HY1",
         dimension: "hyperactivity",
-        text: "There is a sense of internal restlessness, even when you are physically still.",
+        text: "Slowing down or doing nothing feels internally uncomfortable.",
     },
     {
         id: "HY2",
         dimension: "hyperactivity",
-        text: "Slowing down or doing nothing feels uncomfortable.",
+        text: "Your mind rarely feels fully settled, even during rest.",
     },
     {
         id: "HY3",
         dimension: "hyperactivity",
-        text: "Your thoughts remain active and rarely settle on their own.",
+        text: "You feel driven to keep moving mentally, physically, or behaviourally.",
     },
 
-    // ===== EMOTIONAL LAYER =====
+    // ===== EMOTIONAL FRICTION =====
     {
         id: "ER1",
         dimension: "emotional_regulation",
-        text: "Your emotional responses to stress or frustration feel immediate and strong.",
+        text: "You avoid tasks that already feel emotionally heavy, complicated, or draining.",
     },
     {
         id: "ER2",
         dimension: "emotional_regulation",
-        text: "Once activated, it takes time to settle back down.",
+        text: "Frustration quickly disrupts your ability to stay engaged with something.",
     },
     {
         id: "ER3",
         dimension: "emotional_regulation",
-        text: "You avoid things because they feel emotionally heavy or overwhelming.",
+        text: "Once emotionally activated, it becomes difficult to regain steady focus.",
     },
 
-    // ===== IMPACT =====
+    // ===== FUNCTIONAL IMPACT =====
     {
         id: "FI1",
         dimension: "functional_impact",
-        text: "These patterns interfere with your day-to-day functioning.",
+        text: "You spend large amounts of energy trying not to fall behind.",
     },
     {
         id: "FI2",
         dimension: "functional_impact",
-        text: "You feel mentally drained from trying to stay on top of things.",
+        text: "You stay busy for long periods without feeling meaningfully complete or caught up.",
     },
     {
         id: "FI3",
         dimension: "functional_impact",
-        text: "You feel like you’re pushing through rather than functioning with ease.",
+        text: "Unfinished responsibilities remain mentally active even when you are not working on them.",
     },
+    {
+        id: "FI4",
+        dimension: "functional_impact",
+        text: "You feel mentally exhausted from repeatedly restarting and re-engaging with tasks.",
+    }
 
 ];
