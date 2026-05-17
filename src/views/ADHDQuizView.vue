@@ -500,8 +500,7 @@ const saveReflectionLocally = () => {
   )
 
 }
-
-const unlockReport = () => {
+const unlockReport = async () => {
 
   emailError.value = ""
 
@@ -512,16 +511,43 @@ const unlockReport = () => {
 
   }
 
-  emailSubmitted.value = true
+  try {
 
-  nextTick(() => {
-
-    reportContainerRef.value?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
+    const response = await fetch("/api/capture-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email.value
+      })
     })
 
-  })
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || "Failed")
+    }
+
+    emailSubmitted.value = true
+
+    nextTick(() => {
+
+      reportContainerRef.value?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      })
+
+    })
+
+  } catch (err) {
+
+    console.error("Unlock error:", err)
+
+    emailError.value =
+        "Something went wrong. Please try again."
+
+  }
 
 }
 

@@ -21,7 +21,7 @@
 
       <!-- Credibility -->
       <section class="bg-white border border-stone-200 rounded-xl p-6 space-y-3 text-slate-700">
-        <p>• Takes around 5–10 minutes</p>
+        <p>• Takes around 2–3 minutes</p>
         <p>• No labels or diagnoses</p>
         <p>• Produces a structured, in-depth reflection</p>
       </section>
