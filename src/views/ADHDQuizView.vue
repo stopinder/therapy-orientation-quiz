@@ -417,13 +417,30 @@ const escapeHtml = (text) => {
       .replaceAll("'", "&#039;")
 }
 
+const allowBasicFormatting = (text) => {
+  if (!text) return ""
+
+  return text
+      .replaceAll("&lt;strong&gt;", "<strong>")
+      .replaceAll("&lt;/strong&gt;", "</strong>")
+}
+
 const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
 
   return activeText.value
       .split("\n\n")
       .map(p => {
-        return `<p class="mb-6 leading-relaxed text-stone-800 text-[17px]">${escapeHtml(p)}</p>`
+
+        const safeParagraph = allowBasicFormatting(
+            escapeHtml(p)
+        )
+
+        return `
+        <p class="mb-6 leading-relaxed text-stone-800 text-[17px]">
+          ${safeParagraph}
+        </p>
+      `
       })
       .join("")
 })
@@ -433,7 +450,14 @@ const formatParagraphsForDownload = (text) => {
 
   return text
       .split("\n\n")
-      .map(p => `<p>${escapeHtml(p)}</p>`)
+      .map(p => {
+
+        const safeParagraph = allowBasicFormatting(
+            escapeHtml(p)
+        )
+
+        return `<p>${safeParagraph}</p>`
+      })
       .join("")
 }
 
@@ -444,6 +468,7 @@ const downloadReflection = () => {
 <head>
 <meta charset="UTF-8" />
 <title>MindWorks Reflection</title>
+
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -486,6 +511,11 @@ p {
   margin-bottom: 18px;
 }
 
+strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
 .footer {
   margin-top: 80px;
   padding-top: 24px;
@@ -494,52 +524,77 @@ p {
 }
 </style>
 </head>
+
 <body>
+
 <h1>MindWorks Reflection</h1>
 
-<p>Behavioural continuity, interruption patterns, and attention structure.</p>
+<p>
+Behavioural continuity, interruption patterns, and attention structure.
+</p>
 
 <div class="tldr">
 <h2>TL;DR</h2>
-<p>${escapeHtml(reportTexts.value.tldr)}</p>
+<p>${allowBasicFormatting(
+        escapeHtml(reportTexts.value.tldr)
+    )}</p>
 </div>
 
 <div class="section">
 <h2>Overview</h2>
-<p class="intro">How the pattern tends to operate moment to moment.</p>
+
+<p class="intro">
+How the pattern tends to operate moment to moment.
+</p>
+
 ${formatParagraphsForDownload(reportTexts.value.overview)}
 </div>
 
 <div class="section">
 <h2>Daily functioning</h2>
-<p class="intro">How the pattern accumulates across ordinary responsibilities.</p>
+
+<p class="intro">
+How the pattern accumulates across ordinary responsibilities.
+</p>
+
 ${formatParagraphsForDownload(reportTexts.value.functioning)}
 </div>
 
 <div class="section">
 <h2>Patterns & trade-offs</h2>
-<p class="intro">The contradictions that quietly keep the cycle going.</p>
+
+<p class="intro">
+The contradictions that quietly keep the cycle going.
+</p>
+
 ${formatParagraphsForDownload(reportTexts.value.patterns)}
 </div>
 
 <div class="footer">
-<p>${escapeHtml(reportTexts.value.closing)}</p>
+<p>${allowBasicFormatting(
+        escapeHtml(reportTexts.value.closing)
+    )}</p>
 </div>
+
 </body>
 </html>`
 
-    const blob = new Blob([html], {
-      type: "text/html;charset=utf-8"
-    })
+    const blob = new Blob(
+        [html],
+        { type: "text/html;charset=utf-8" }
+    )
 
     const url = URL.createObjectURL(blob)
+
     const link = document.createElement("a")
 
     link.href = url
     link.download = "mindworks-reflection.html"
 
     document.body.appendChild(link)
+
     link.click()
+
     document.body.removeChild(link)
 
     URL.revokeObjectURL(url)
@@ -566,7 +621,9 @@ const dominantPattern = computed(() => {
 })
 
 const adaptiveMessage = computed(() => {
+
   switch (dominantPattern.value) {
+
     case "inattention":
       return {
         line1: "Your attention drops before your intention completes.",
