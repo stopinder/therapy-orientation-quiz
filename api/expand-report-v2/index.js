@@ -3,7 +3,7 @@ export const config = {
 }
 
 const CORE_RULES = `
-Write in second person using "you".
+Write in second person using "you" only occasionally.
 
 Do NOT:
 - explain behaviour
@@ -41,18 +41,23 @@ Avoid repeatedly describing:
 - hovering
 - dramatic pauses
 
-Focus only on:
-- observable behaviour
-- interrupted momentum
-- unfinished actions
-- drifting attention
-- restarting
-- hesitation
-- friction between intention and action
+Avoid abstract behavioural language like:
+- task engagement
 - behavioural inconsistency
-- avoidance loops
-- partial task engagement
-- repeated re-entry into tasks
+- momentum disruption
+- attention regulation
+- cognitive patterns
+- follow-through difficulties
+
+Prefer:
+- short direct observations
+- plain behavioural language
+- interruption patterns
+- unfinished actions
+- stalled momentum
+- repeated restarting
+- drifting attention
+- friction between intention and action
 
 The writing must:
 - stay behaviourally precise
@@ -66,7 +71,11 @@ Write shorter sentences.
 
 Avoid repetition between paragraphs.
 
-Do NOT begin consecutive paragraphs with "You".
+Do NOT begin consecutive paragraphs with:
+- You
+- Tasks
+- Attention
+- Momentum
 
 Avoid repeating sentence openings.
 
@@ -75,30 +84,14 @@ Vary sentence rhythm:
 - some medium-length
 - occasional abrupt behavioural conclusions
 
-Begin paragraphs using varied structures like:
-- unfinished tasks
-- pressure
-- interruptions
-- backlog
-- routines
-- momentum
-- urgency
-- inconsistency
-- avoidance
-- partial completion
-- restarting
-- drifting attention
+Use markdown bold VERY SPARSELY.
 
-Each paragraph must introduce:
-- a NEW behavioural pattern
-- a NEW type of interruption
-- a NEW consequence
+Example:
+**interrupted effort**
 
-Do not recycle the same behavioural example.
-
-Use <strong> tags SPARSELY:
-- maximum 1-2 per paragraph
-- short behavioural phrases only
+Rules:
+- maximum 1-2 bold phrases per paragraph
+- short phrases only
 - never entire sentences
 - never motivational wording
 
@@ -118,18 +111,23 @@ Goal:
 Write a compressed behavioural recognition summary.
 
 Length:
-3-4 sentences maximum.
+Maximum 4 bullet points.
+
+Formatting:
+- use bullet points only
+- one sentence per bullet
+- keep bullets visually short
+- at least one bullet should be very short
+- final bullet should land sharply
 
 Rules:
-- single paragraph only
-- every sentence must land distinctly
-- avoid repeated sentence openings
-- avoid beginning multiple sentences with "You"
-- no examples involving objects
-- no scene-setting
-- no descriptive storytelling
-- no repeated cadence
-- no repetitive syntax patterns
+- avoid repeated openings
+- avoid repeated cadence
+- avoid abstraction
+- avoid behavioural jargon
+- avoid filler wording
+- avoid scene-setting
+- avoid descriptive storytelling
 
 Focus on:
 - broken continuity
@@ -138,21 +136,15 @@ Focus on:
 - repeated restarting
 - partial engagement
 - attention drift
-- inconsistent follow-through
-
-Use <strong> tags SPARSELY:
-- maximum 2 total
-- short phrases only
-- never entire sentences
+- inconsistent completion
 
 This should feel:
 - sharp
 - compressed
 - recognisable
-- behaviourally precise
+- direct
 
 Tone:
-direct
 measured
 unsentimental
 `,
@@ -163,7 +155,7 @@ ${CORE_RULES}
 Goal:
 Describe how these patterns appear behaviourally in ordinary life.
 
-Write 5 short paragraphs.
+Write 4 paragraphs only.
 
 Each paragraph must describe:
 - a DIFFERENT behavioural pattern
@@ -178,7 +170,6 @@ Focus on:
 - drifting into low-priority activity
 
 Avoid:
-- examples involving household objects
 - repeated "you start tasks" phrasing
 - repeated mention of distraction
 - repetitive paragraph openings
@@ -195,7 +186,7 @@ ${CORE_RULES}
 Goal:
 Show the practical cumulative effect on daily functioning.
 
-Write 5 short paragraphs.
+Write 4 paragraphs only.
 
 Focus on:
 - backlog accumulation
@@ -207,12 +198,11 @@ Focus on:
 - fragmented energy
 - remaining busy without meaningful advancement
 
-This section must focus on CONSEQUENCES rather than behaviour itself.
+This section must focus on consequences rather than behaviour itself.
 
 Avoid:
 - repeating overview patterns
 - fictional scenes
-- object-heavy examples
 - repetitive sentence openings
 
 This section should feel:
@@ -227,7 +217,7 @@ ${CORE_RULES}
 Goal:
 Show the contradictions created by these behavioural cycles.
 
-Write 5 short paragraphs.
+Write 3 shorter paragraphs only.
 
 Focus on contradictions like:
 - pressure creates movement but destabilises consistency
@@ -236,10 +226,7 @@ Focus on contradictions like:
 - restarting creates the feeling of effort without closure
 - activity disguises lack of sustained progress
 
-Keep paragraphs shorter than other sections.
-
 Avoid:
-- repeating functioning examples
 - behavioural storytelling
 - repetitive openings
 - repetitive cadence
@@ -285,8 +272,8 @@ async function generateSection(prompt, profile, apiKey) {
             },
             body: JSON.stringify({
                 model: "gpt-4.1-mini",
-                temperature: 0.45,
-                max_tokens: 500,
+                temperature: 0.5,
+                max_tokens: 450,
                 messages: [
                     {
                         role: "system",
@@ -373,7 +360,7 @@ export default async function handler(req, res) {
             patterns,
 
             closing:
-                "Recognition alone rarely interrupts these cycles.\n\n<strong>Repeated restarting</strong>, partial engagement, unstable momentum, and avoidance loops usually continue automatically unless behaviour itself changes.\n\nThe MindWorks programme focuses on continuity, sustained attention, behavioural observation, and reducing interruption patterns in real time."
+                "Recognition alone rarely interrupts these cycles.\n\n**Repeated restarting** and unstable momentum usually continue automatically unless behaviour itself changes.\n\nThe MindWorks programme focuses on continuity, sustained attention, behavioural observation, and reducing interruption patterns in real time."
 
         })
 
