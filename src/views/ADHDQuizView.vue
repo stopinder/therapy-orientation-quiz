@@ -270,12 +270,18 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick } from "vue"
+import { ref, computed, nextTick, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 
 const router = useRouter()
 
+onMounted(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "instant"
+  })
+})
 const answers = ref({})
 const loading = ref(false)
 const loadingStage = ref("")
