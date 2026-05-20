@@ -422,7 +422,7 @@ const handleAnswer = async (questionId, value, index) => {
 
     nextQuestion.scrollIntoView({
       behavior: "smooth",
-      block: "start"
+      block: "center"
     })
 
     return
