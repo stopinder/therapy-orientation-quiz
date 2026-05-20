@@ -102,7 +102,16 @@
         </div>
 
         <div
-            v-if="activeText"
+            v-if="loading && quizComplete"
+            class="flex justify-center pt-6"
+        >
+          <div class="animate-bounce text-sm tracking-[0.18em] uppercase text-slate-500">
+            Reflection appearing below
+          </div>
+        </div>
+
+        <div
+            v-if="activeText || isTypingOverview || displayedOverview"
             ref="reportContainerRef"
             class="mx-auto mt-12 max-w-prose scroll-mt-36"
         >
@@ -204,6 +213,7 @@
             ></div>
 
             <transition name="fade" mode="out-in">
+
               <div
                   :key="activeView"
                   @click="completeTyping"
@@ -472,9 +482,12 @@ const typeOverviewText = async (text) => {
   for (let i = 0; i < text.length; i++) {
 
     if (!isTypingOverview.value) {
+
       displayedOverview.value = text
       overviewTypingComplete.value = true
+
       return
+
     }
 
     displayedOverview.value += text[i]
@@ -530,9 +543,7 @@ const generateInitialReport = async () => {
 
     activeView.value = "overview"
 
-    await typeOverviewText(reportTexts.value.overview)
-
-    saveReflectionLocally()
+    loading.value = false
 
     await nextTick()
 
@@ -541,14 +552,23 @@ const generateInitialReport = async () => {
       block: "start"
     })
 
+    await new Promise(resolve =>
+        setTimeout(resolve, 900)
+    )
+
+    await typeOverviewText(
+        reportTexts.value.overview
+    )
+
+    saveReflectionLocally()
+
   } catch (err) {
 
     console.error("Generate error:", err)
-    alert("Something went wrong. Check console.")
-
-  } finally {
 
     loading.value = false
+
+    alert("Something went wrong. Check console.")
 
   }
 
@@ -770,6 +790,64 @@ const formattedActiveText = computed(() => {
       .join("")
 
 })
+
+const formatParagraphsForDownload = (text) => {
+
+  if (!text) return ""
+
+  return text
+      .split("\n\n")
+      .map(p => {
+
+        const safeParagraph = allowBasicFormatting(
+            escapeHtml(p)
+        )
+
+        return `<p>${safeParagraph}</p>`
+
+      })
+      .join("")
+
+}
+
+const formatTldrForDownload = (text) => {
+
+  if (!text) return ""
+
+  const lines = text
+      .split("\n")
+      .map(line => line.trim())
+      .filter(Boolean)
+
+  const looksLikeBullets = lines.some(line =>
+      /^[-*•]\s+/.test(line)
+  )
+
+  if (looksLikeBullets) {
+
+    const items = lines
+        .map(line => {
+
+          const safeLine = allowBasicFormatting(
+              escapeHtml(normaliseBulletLine(line))
+          )
+
+          return `<li>${safeLine}</li>`
+
+        })
+        .join("")
+
+    return `<ul>${items}</ul>`
+
+  }
+
+  const safeText = allowBasicFormatting(
+      escapeHtml(text)
+  )
+
+  return `<p>${safeText}</p>`
+
+}
 
 const dominantPattern = computed(() => {
 
