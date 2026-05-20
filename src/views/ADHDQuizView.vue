@@ -2,9 +2,7 @@
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
     <div class="max-w-3xl mx-auto space-y-16">
 
-      <!-- HEADER -->
       <header class="space-y-4">
-
         <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
           System Mapping
         </p>
@@ -12,15 +10,12 @@
         <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-stone-900">
           A closer look at how your mind actually operates
         </h1>
-
       </header>
 
-      <!-- PROGRESS -->
       <div
-          v-if="!reportReady"
+          v-if="!activeText"
           class="sticky top-16 z-40 border-b border-stone-300 bg-stone-100/95 backdrop-blur"
       >
-
         <div class="space-y-2 px-4 py-3">
 
           <div class="flex justify-between text-sm text-slate-600">
@@ -29,12 +24,10 @@
           </div>
 
           <div class="h-2 w-full overflow-hidden rounded-full bg-stone-200">
-
             <div
                 class="h-full bg-slate-800 transition-all duration-300"
                 :style="{ width: progressPercent + '%' }"
             />
-
           </div>
 
           <p class="text-xs text-slate-500">
@@ -42,15 +35,13 @@
           </p>
 
         </div>
-
       </div>
 
-      <!-- QUIZ -->
       <section class="space-y-12 rounded-2xl bg-white/70 px-6 py-8">
 
         <div
             v-for="(question, index) in adhdQuestions"
-            v-show="!reportReady"
+            v-show="!activeText"
             :key="question.id"
             class="space-y-6"
         >
@@ -90,9 +81,8 @@
 
         </div>
 
-        <!-- LOADING -->
         <div
-            v-if="quizComplete && loading"
+            v-if="quizComplete && loading && !activeText"
             ref="loadingContainerRef"
             class="mt-16 scroll-mt-36 space-y-5 text-center"
         >
@@ -111,14 +101,37 @@
 
         </div>
 
-        <!-- REPORT -->
         <div
-            v-if="reportReady"
+            v-if="loading && quizComplete"
+            class="flex justify-center pt-6"
+        >
+          <div class="animate-bounce text-sm tracking-[0.18em] uppercase text-slate-500">
+            Reflection appearing below
+          </div>
+        </div>
+
+        <div
+            v-if="activeText || isTypingOverview || displayedOverview"
             ref="reportContainerRef"
             class="mx-auto mt-12 max-w-prose scroll-mt-36"
         >
 
-          <!-- EMAIL GATE -->
+          <div
+              v-if="reportTexts.tldr"
+              class="mb-10 rounded-2xl border border-slate-200 bg-slate-100 p-8"
+          >
+
+            <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
+              TL;DR
+            </h2>
+
+            <div
+                class="text-[1rem] leading-[1.85] text-slate-700"
+                v-html="formattedTldrText"
+            ></div>
+
+          </div>
+
           <div
               v-if="!emailSubmitted"
               class="mb-10 rounded-2xl border border-stone-200 bg-white/80 p-8"
@@ -135,14 +148,12 @@
                 <div class="max-w-xl space-y-3 text-[1rem] leading-[1.8] text-slate-600">
 
                   <p>
-                    Your reflection has been generated.
+                    Receive the complete reflection and downloadable report.
                   </p>
 
                   <p>
-                    Receive the complete report exploring interruption patterns,
-                    emotional organisation,
-                    contradiction,
-                    and continuity breakdowns.
+                    The aim is not diagnosis or self-improvement performance.
+                    It is clearer recognition of how continuity breaks down in everyday life.
                   </p>
 
                 </div>
@@ -174,27 +185,8 @@
 
           </div>
 
-          <!-- FULL REPORT -->
           <div v-if="emailSubmitted">
 
-            <!-- TLDR -->
-            <div
-                v-if="reportTexts.tldr"
-                class="mb-10 rounded-2xl border border-slate-200 bg-slate-100 p-8"
-            >
-
-              <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
-                TL;DR
-              </h2>
-
-              <div
-                  class="text-[1rem] leading-[1.85] text-slate-700"
-                  v-html="formattedTldrText"
-              ></div>
-
-            </div>
-
-            <!-- NAV -->
             <div class="sticky top-16 z-30 mb-8 border-y border-stone-200 bg-stone-50/95 py-4 backdrop-blur">
 
               <div class="flex flex-wrap justify-center gap-2">
@@ -220,10 +212,12 @@
                 class="h-px w-full"
             ></div>
 
-            <!-- REPORT CONTENT -->
             <transition name="fade" mode="out-in">
 
-              <div :key="activeView">
+              <div
+                  :key="activeView"
+                  @click="completeTyping"
+              >
 
                 <div class="mb-10">
 
@@ -243,7 +237,6 @@
 
             </transition>
 
-            <!-- DOWNLOAD -->
             <div class="mt-12 flex justify-center">
 
               <button
@@ -262,7 +255,6 @@
               Reflection downloaded.
             </div>
 
-            <!-- NEXT STEP -->
             <div
                 v-if="showNextStep"
                 class="mx-auto mt-20 max-w-2xl space-y-6 text-center"
@@ -270,9 +262,17 @@
 
               <div class="space-y-5 text-[1rem] leading-[1.9] text-slate-700">
 
-                <p>{{ adaptiveMessage.line1 }}</p>
-                <p>{{ adaptiveMessage.line2 }}</p>
-                <p>{{ adaptiveMessage.line3 }}</p>
+                <p>
+                  {{ adaptiveMessage.line1 }}
+                </p>
+
+                <p>
+                  {{ adaptiveMessage.line2 }}
+                </p>
+
+                <p>
+                  {{ adaptiveMessage.line3 }}
+                </p>
 
               </div>
 
@@ -303,7 +303,6 @@
     </div>
   </main>
 </template>
-
 <script setup>
 import { computed, nextTick, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
