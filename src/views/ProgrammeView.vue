@@ -1,6 +1,6 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 pt-10 pb-20">
-    <div class="max-w-4xl mx-auto space-y-24">
+    <div class="max-w-4xl mx-auto space-y-28">
 
       <!-- HERO -->
       <section class="pt-10 space-y-6 max-w-3xl">
@@ -8,7 +8,7 @@
           Six-Week Guided Programme
         </p>
 
-        <h1 class="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05] text-slate-900">
+        <h1 class="text-3xl md:text-5xl font-semibold tracking-tight leading-[1.08] text-slate-900 max-w-4xl">
           A structured reflection on attention, fragmentation,
           emotional avoidance, and continuity.
         </h1>
@@ -19,17 +19,19 @@
         </p>
 
         <div class="flex flex-wrap gap-3 pt-4">
-          <button
-              class="rounded-full bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
+          <router-link
+              to="/contact"
+              class="inline-flex items-center rounded-full bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
           >
             Join the programme
-          </button>
+          </router-link>
 
-          <button
-              class="rounded-full border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
+          <router-link
+              to="/adhd-quiz"
+              class="inline-flex items-center rounded-full border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
           >
-            Preview Week One
-          </button>
+            Begin the free reflection
+          </router-link>
         </div>
       </section>
 
@@ -201,17 +203,19 @@
           </p>
 
           <div class="flex justify-center gap-3 flex-wrap">
-            <button
-                class="rounded-full bg-slate-900 px-7 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
+            <router-link
+                to="/contact"
+                class="inline-flex items-center rounded-full bg-slate-900 px-7 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
             >
               Join the programme
-            </button>
+            </router-link>
 
-            <button
-                class="rounded-full border border-slate-300 px-7 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
+            <router-link
+                to="/adhd-quiz"
+                class="inline-flex items-center rounded-full border border-slate-300 px-7 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
             >
-              Read the reflection first
-            </button>
+              Begin the free reflection
+            </router-link>
           </div>
 
           <p class="text-sm text-slate-500 pt-2">
@@ -279,7 +283,7 @@ const weeks = [
 }
 
 .week-card {
-  @apply flex flex-col md:flex-row gap-5 rounded-2xl border border-slate-200 bg-white/75 px-6 py-6 shadow-sm;
+  @apply flex flex-col md:flex-row gap-5 rounded-2xl border border-slate-200 bg-white/75 px-6 py-6 shadow-sm transition hover:border-slate-300;
 }
 
 .week-number {
