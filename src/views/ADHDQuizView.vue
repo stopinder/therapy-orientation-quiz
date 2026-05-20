@@ -513,10 +513,14 @@ const generateInitialReport = async () => {
 
   await nextTick()
 
-  loadingContainerRef.value?.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  })
+  setTimeout(() => {
+
+    reportContainerRef.value?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    })
+
+  }, 300)
 
   try {
 
