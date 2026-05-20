@@ -410,12 +410,11 @@ const scores = computed(() => {
 
 })
 
-const handleAnswer = async (questionId, value, index) => {
+cconst handleAnswer = async (questionId, value, index) => {
 
   answers.value[questionId] = value
 
   await nextTick()
-  await new Promise(resolve => setTimeout(resolve, 120))
 
   const nextQuestion = questionTextRefs.value[index + 1]
 
@@ -431,7 +430,22 @@ const handleAnswer = async (questionId, value, index) => {
   }
 
   if (quizComplete.value && !loading.value && !reportReady.value) {
+
+    loading.value = true
+
+    await nextTick()
+
+    setTimeout(() => {
+
+      loadingContainerRef.value?.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      })
+
+    }, 150)
+
     await generateInitialReport()
+
   }
 
 }
