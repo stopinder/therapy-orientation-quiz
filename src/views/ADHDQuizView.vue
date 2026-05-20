@@ -410,7 +410,7 @@ const scores = computed(() => {
 
 })
 
-cconst handleAnswer = async (questionId, value, index) => {
+const handleAnswer = async (questionId, value, index) => {
 
   answers.value[questionId] = value
 
