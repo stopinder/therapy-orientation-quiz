@@ -3,27 +3,27 @@
     <div class="max-w-3xl mx-auto space-y-16">
 
       <header class="space-y-4">
-        <p class="text-xs uppercase tracking-widest text-slate-500">
+        <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
           System Mapping
         </p>
 
-        <h1 class="text-4xl font-medium tracking-tight text-stone-800">
+        <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-stone-900">
           A closer look at how your mind actually operates
         </h1>
       </header>
 
       <div
           v-if="!activeText"
-          class="sticky top-16 z-40 bg-stone-100 border-b border-stone-300"
+          class="sticky top-16 z-40 border-b border-stone-300 bg-stone-100/95 backdrop-blur"
       >
-        <div class="px-4 py-3 space-y-2">
+        <div class="space-y-2 px-4 py-3">
 
           <div class="flex justify-between text-sm text-slate-600">
             <span>Progress</span>
             <span>{{ progressPercent }}%</span>
           </div>
 
-          <div class="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
+          <div class="h-2 w-full overflow-hidden rounded-full bg-stone-200">
             <div
                 class="h-full bg-slate-800 transition-all duration-300"
                 :style="{ width: progressPercent + '%' }"
@@ -31,13 +31,13 @@
           </div>
 
           <p class="text-xs text-slate-500">
-            Keep going — this gets clearer quickly.
+            Recognition becomes clearer as the pattern accumulates.
           </p>
 
         </div>
       </div>
 
-      <section class="space-y-12 rounded-2xl bg-white/80 px-6 py-8">
+      <section class="space-y-12 rounded-2xl bg-white/70 px-6 py-8">
 
         <div
             v-for="(question, index) in adhdQuestions"
@@ -47,7 +47,7 @@
         >
 
           <p
-              class="text-xl text-stone-800 scroll-mt-36"
+              class="scroll-mt-36 text-[1.3rem] leading-[1.7] text-stone-800"
               :ref="el => questionTextRefs[index] = el"
           >
             {{ question.text }}
@@ -58,10 +58,10 @@
             <label
                 v-for="option in scale"
                 :key="option.value"
-                class="flex justify-between px-6 py-4 rounded-xl border cursor-pointer transition"
+                class="flex cursor-pointer justify-between rounded-xl border px-6 py-4 transition"
                 :class="answers[question.id] === option.value
-                ? 'bg-slate-900 text-white border-slate-900'
-                : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'"
+                ? 'border-slate-900 bg-slate-900 text-white'
+                : 'border-stone-200 bg-white text-stone-700 hover:bg-stone-50'"
             >
 
               <span>{{ option.label }}</span>
@@ -78,12 +78,13 @@
             </label>
 
           </div>
+
         </div>
 
         <div
             v-if="quizComplete && loading && !activeText"
             ref="loadingContainerRef"
-            class="mt-16 text-center space-y-5 scroll-mt-36"
+            class="mt-16 scroll-mt-36 space-y-5 text-center"
         >
 
           <div class="animate-pulse space-y-4">
@@ -103,20 +104,20 @@
         <div
             v-if="activeText"
             ref="reportContainerRef"
-            class="mt-12 max-w-prose mx-auto scroll-mt-36"
+            class="mx-auto mt-12 max-w-prose scroll-mt-36"
         >
 
           <div
               v-if="reportTexts.tldr"
-              class="mb-10 bg-slate-100 border border-slate-200 rounded-2xl p-8"
+              class="mb-10 rounded-2xl border border-slate-200 bg-slate-100 p-8"
           >
 
-            <h2 class="text-xl font-semibold text-slate-900 mb-4">
+            <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
               TL;DR
             </h2>
 
             <div
-                class="text-slate-700 leading-relaxed text-[17px]"
+                class="text-[1rem] leading-[1.85] text-slate-700"
                 v-html="formattedTldrText"
             ></div>
 
@@ -124,20 +125,29 @@
 
           <div
               v-if="!emailSubmitted"
-              class="mb-10 rounded-2xl border border-stone-200 bg-white p-8"
+              class="mb-10 rounded-2xl border border-stone-200 bg-white/80 p-8"
           >
 
-            <div class="space-y-5">
+            <div class="space-y-6">
 
-              <div class="space-y-2">
+              <div class="space-y-3">
 
-                <h3 class="text-2xl font-medium text-stone-900">
-                  Unlock the full reflection
+                <h3 class="text-[1.7rem] font-medium tracking-[-0.02em] leading-tight text-stone-900">
+                  Continue with the full reflection
                 </h3>
 
-                <p class="text-slate-600 leading-relaxed">
-                  Enter your email to continue reading the full reflection and download your report.
-                </p>
+                <div class="max-w-xl space-y-3 text-[1rem] leading-[1.8] text-slate-600">
+
+                  <p>
+                    Receive the complete reflection and downloadable report.
+                  </p>
+
+                  <p>
+                    The aim is not diagnosis or self-improvement performance.
+                    It is clearer recognition of how continuity breaks down in everyday life.
+                  </p>
+
+                </div>
 
               </div>
 
@@ -145,7 +155,7 @@
                   v-model="email"
                   type="email"
                   placeholder="Email address"
-                  class="w-full rounded-xl border border-stone-300 px-4 py-3 text-stone-800 outline-none focus:border-slate-500"
+                  class="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-stone-800 outline-none transition focus:border-slate-500"
               />
 
               <p
@@ -157,9 +167,9 @@
 
               <button
                   @click="unlockReport"
-                  class="w-full rounded-xl bg-slate-900 px-6 py-3 text-white transition hover:bg-slate-800"
+                  class="w-full rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
               >
-                Unlock full reflection
+                Receive full reflection
               </button>
 
             </div>
@@ -168,18 +178,18 @@
 
           <div v-if="emailSubmitted">
 
-            <div class="sticky top-16 z-30 bg-stone-50/95 backdrop-blur border-y border-stone-200 py-4 mb-8">
+            <div class="sticky top-16 z-30 mb-8 border-y border-stone-200 bg-stone-50/95 py-4 backdrop-blur">
 
-              <div class="flex gap-2 justify-center flex-wrap">
+              <div class="flex flex-wrap justify-center gap-2">
 
                 <button
                     v-for="view in views"
                     :key="view.key"
                     @click="selectView(view.key)"
-                    class="px-4 py-1.5 rounded-full text-sm border transition"
+                    class="rounded-full border px-4 py-1.5 text-sm transition"
                     :class="activeView === view.key
-                    ? 'bg-slate-900 text-white border-slate-900'
-                    : 'bg-white text-slate-700 border-stone-300 hover:bg-stone-50'"
+                    ? 'border-slate-900 bg-slate-900 text-white'
+                    : 'border-stone-300 bg-white text-slate-700 hover:bg-stone-50'"
                 >
                   {{ view.label }}
                 </button>
@@ -197,13 +207,13 @@
 
               <div :key="activeView">
 
-                <div class="mb-8">
+                <div class="mb-10">
 
-                  <h2 class="text-3xl font-medium text-stone-900 mb-3">
+                  <h2 class="mb-3 text-[2rem] font-medium tracking-[-0.02em] leading-tight text-stone-900">
                     {{ activeViewLabel }}
                   </h2>
 
-                  <p class="text-slate-600 text-lg leading-relaxed">
+                  <p class="max-w-2xl text-[1rem] leading-[1.8] text-slate-600">
                     {{ activeViewIntro }}
                   </p>
 
@@ -215,11 +225,11 @@
 
             </transition>
 
-            <div class="mt-10 flex justify-center">
+            <div class="mt-12 flex justify-center">
 
               <button
                   @click="downloadReflection"
-                  class="px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
+                  class="rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
               >
                 Download reflection
               </button>
@@ -235,27 +245,40 @@
 
             <div
                 v-if="showNextStep"
-                class="mt-16 text-center space-y-6 max-w-xl mx-auto"
+                class="mx-auto mt-20 max-w-2xl space-y-6 text-center"
             >
 
-              <p class="text-slate-700">
-                {{ adaptiveMessage.line1 }}
-              </p>
+              <div class="space-y-5 text-[1rem] leading-[1.9] text-slate-700">
 
-              <p class="text-slate-700">
-                {{ adaptiveMessage.line2 }}
-              </p>
+                <p>
+                  {{ adaptiveMessage.line1 }}
+                </p>
 
-              <p class="text-slate-700">
-                {{ adaptiveMessage.line3 }}
-              </p>
+                <p>
+                  {{ adaptiveMessage.line2 }}
+                </p>
 
-              <button
-                  @click="goToProgramme"
-                  class="mt-4 px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 transition"
-              >
-                Start the guided process
-              </button>
+                <p>
+                  {{ adaptiveMessage.line3 }}
+                </p>
+
+              </div>
+
+              <div class="space-y-4 pt-2">
+
+                <p class="mx-auto max-w-xl text-[1rem] leading-[1.8] text-slate-600">
+                  The six-week guided programme continues this work through structured
+                  observation, embodied attention practices, and continuity exercises.
+                </p>
+
+                <button
+                    @click="goToProgramme"
+                    class="rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+                >
+                  Continue to the programme
+                </button>
+
+              </div>
 
             </div>
 
@@ -270,7 +293,7 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick, onMounted } from "vue"
+import { computed, nextTick, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 
@@ -282,6 +305,7 @@ onMounted(() => {
     behavior: "instant"
   })
 })
+
 const answers = ref({})
 const loading = ref(false)
 const loadingStage = ref("")
@@ -500,6 +524,7 @@ const saveReflectionLocally = () => {
   )
 
 }
+
 const unlockReport = async () => {
 
   emailError.value = ""
@@ -665,7 +690,7 @@ const formattedActiveText = computed(() => {
         )
 
         return `
-        <p class="mb-6 leading-relaxed text-stone-800 text-[17px]">
+        <p class="mb-6 text-[1rem] leading-[1.9] text-stone-800">
           ${safeParagraph}
         </p>
       `
@@ -930,43 +955,43 @@ const adaptiveMessage = computed(() => {
     case "inattention":
       return {
         line1: "Your attention drops before your intention completes.",
-        line2: "You don’t lose direction — you lose continuity.",
-        line3: "That break repeats unless you work directly with it."
+        line2: "You do not lose direction — you lose continuity.",
+        line3: "That break repeats unless it is worked with directly."
       }
 
     case "executive_function":
       return {
-        line1: "You know what needs to be done.",
-        line2: "The problem is getting into and staying in it.",
-        line3: "That gap doesn’t close through effort alone."
+        line1: "You usually know what needs to happen.",
+        line2: "The difficulty is entering and remaining inside it.",
+        line3: "That gap rarely closes through effort alone."
       }
 
     case "impulsivity":
       return {
-        line1: "Your system moves before it stabilises.",
-        line2: "Action happens faster than reflection.",
-        line3: "That speed creates patterns you don’t hold."
+        line1: "Your system often moves before it stabilises.",
+        line2: "Action arrives faster than reflection.",
+        line3: "That speed creates patterns you do not fully hold."
       }
 
     case "emotional_regulation":
       return {
         line1: "Your state shifts quickly under pressure.",
-        line2: "Once activated, it pulls you off track.",
-        line3: "That loop repeats unless you intervene directly."
+        line2: "Once activated, it reorganises attention.",
+        line3: "That loop repeats unless recognised earlier."
       }
 
     case "hyperactivity":
       return {
-        line1: "Your system struggles to settle.",
-        line2: "Stillness feels unnatural.",
+        line1: "Your system struggles to settle into sustained contact.",
+        line2: "Stillness can begin to feel unfamiliar.",
         line3: "That constant activation disrupts continuity."
       }
 
     default:
       return {
         line1: "You can recognise the pattern clearly.",
-        line2: "The difficulty is what happens when it breaks.",
-        line3: "That moment repeats unless you work with it."
+        line2: "The difficulty is what happens when continuity breaks.",
+        line3: "That interruption tends to repeat automatically."
       }
 
   }

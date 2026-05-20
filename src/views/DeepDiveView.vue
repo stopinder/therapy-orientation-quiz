@@ -1,207 +1,307 @@
 <template>
-  <main class="min-h-screen bg-stone-50 px-6 py-20">
-    <div class="max-w-3xl mx-auto">
+  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
 
-      <!-- Header -->
-      <header class="mb-14">
-        <h1 class="text-4xl font-semibold tracking-tight text-slate-900 mb-4">
-          Your Reflection Report
+    <div class="max-w-3xl mx-auto space-y-16">
+
+      <!-- HEADER -->
+      <header class="space-y-5 max-w-2xl">
+
+        <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
+          Reflection Report
+        </p>
+
+        <h1 class="text-3xl md:text-[2.5rem] font-medium tracking-[-0.025em] leading-[1.12] text-slate-900">
+          A closer look at interruption,
+          continuity,
+          and behavioural contradiction.
         </h1>
 
-        <p class="text-lg text-slate-600 leading-relaxed">
-          Behavioural Patterns & Attention Profile
+        <p class="text-[1.02rem] leading-[1.9] text-slate-700">
+          This reflection explores how attention,
+          emotional pressure,
+          fragmentation,
+          and internal contradiction may be shaping ordinary functioning.
         </p>
+
       </header>
 
-      <!-- Email Capture -->
+      <!-- EMAIL CAPTURE -->
       <section
           v-if="!report.overview"
-          class="bg-white border border-stone-200 rounded-2xl p-8 space-y-5 shadow-sm"
+          class="rounded-2xl border border-stone-200 bg-white/70 px-8 py-8"
       >
-        <p class="text-slate-700">
-          Enter your email to generate your full report.
-        </p>
 
-        <input
-            v-model="email"
-            type="email"
-            placeholder="you@example.com"
-            class="w-full px-4 py-3 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-300"
-        />
+        <div class="max-w-xl space-y-6">
 
-        <button
-            @click="handleSubmit"
-            class="w-full px-4 py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition"
-        >
-          {{ loading ? "Generating..." : "Generate Full Report" }}
-        </button>
+          <div class="space-y-3">
 
-        <p class="text-xs text-slate-500">
-          Your email may be used to send occasional updates related to MindWorks.
-        </p>
+            <p class="section-label">
+              Continue
+            </p>
+
+            <h2 class="section-title">
+              Receive the full reflection.
+            </h2>
+
+          </div>
+
+          <div class="space-y-4 text-[1rem] leading-[1.85] text-slate-700">
+
+            <p>
+              The report explores interruption patterns,
+              emotional organisation,
+              contradiction,
+              and continuity breakdowns.
+            </p>
+
+            <p>
+              The emphasis is behavioural recognition rather than diagnosis or explanation.
+            </p>
+
+          </div>
+
+          <input
+              v-model="email"
+              type="email"
+              placeholder="Email address"
+              class="w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-stone-800 outline-none transition focus:border-slate-500"
+          />
+
+          <button
+              @click="handleSubmit"
+              class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+          >
+            {{ loading ? "Generating reflection..." : "Receive full reflection" }}
+          </button>
+
+          <p class="text-xs leading-relaxed text-slate-500">
+            Your email may occasionally receive continuation updates related to MindWorks.
+          </p>
+
+        </div>
+
       </section>
-      <pre>{{ report }}</pre>
+
       <!-- TLDR -->
       <section
           v-if="report.tldr"
-          class="mb-10 bg-slate-100 border border-slate-200 rounded-2xl p-8"
+          class="rounded-2xl border border-slate-200 bg-slate-100 px-8 py-8"
       >
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-xl font-semibold text-slate-900">
-            TL;DR
-          </h2>
+
+        <div class="mb-5 flex items-center justify-between gap-4 flex-wrap">
+
+          <div>
+
+            <p class="section-label mb-2">
+              TL;DR
+            </p>
+
+            <h2 class="text-[1.45rem] font-medium text-slate-900">
+              Immediate recognition
+            </h2>
+
+          </div>
 
           <button
               @click="downloadReport"
-              class="text-sm px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-200 transition"
+              class="rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
           >
-            Download Full Report
+            Download report
           </button>
+
         </div>
 
-        <p class="text-slate-700 leading-relaxed whitespace-pre-line">
+        <div
+            class="text-[1rem] leading-[1.9] text-slate-700 whitespace-pre-line"
+        >
           {{ report.tldr }}
-        </p>
+        </div>
+
       </section>
 
-      <!-- Section 1 -->
+      <!-- OVERVIEW -->
       <section
           v-if="report.overview"
-          class="mb-12"
+          class="space-y-5"
       >
-        <div class="flex justify-between items-center mb-5">
-          <h2 class="text-2xl font-semibold text-slate-900">
-            1. Behavioural Patterns
-          </h2>
+
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+
+          <div>
+
+            <p class="section-label mb-2">
+              Section 1
+            </p>
+
+            <h2 class="section-title">
+              Behavioural patterns
+            </h2>
+
+          </div>
 
           <button
               @click="downloadReport"
-              class="text-sm px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 transition"
+              class="rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
           >
-            Download Full Report
+            Download
           </button>
+
         </div>
 
-        <div class="bg-white rounded-2xl border border-stone-200 p-8 shadow-sm">
-          <p class="whitespace-pre-line leading-relaxed text-slate-700">
+        <div class="report-card">
+
+          <p class="report-copy whitespace-pre-line">
             {{ report.overview }}
           </p>
+
         </div>
+
       </section>
 
-      <!-- Section 2 -->
+      <!-- FUNCTIONING -->
       <section
           v-if="report.functioning"
-          class="mb-12"
+          class="space-y-5"
       >
-        <div class="flex justify-between items-center mb-5">
-          <h2 class="text-2xl font-semibold text-slate-900">
-            2. Daily Functioning
-          </h2>
+
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+
+          <div>
+
+            <p class="section-label mb-2">
+              Section 2
+            </p>
+
+            <h2 class="section-title">
+              Daily functioning
+            </h2>
+
+          </div>
 
           <button
               @click="downloadReport"
-              class="text-sm px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 transition"
+              class="rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
           >
-            Download Full Report
+            Download
           </button>
+
         </div>
 
-        <div class="bg-white rounded-2xl border border-stone-200 p-8 shadow-sm">
-          <p class="whitespace-pre-line leading-relaxed text-slate-700">
+        <div class="report-card">
+
+          <p class="report-copy whitespace-pre-line">
             {{ report.functioning }}
           </p>
+
         </div>
+
       </section>
 
-      <!-- Section 3 -->
+      <!-- PATTERNS -->
       <section
           v-if="report.patterns"
-          class="mb-12"
+          class="space-y-5"
       >
-        <div class="flex justify-between items-center mb-5">
-          <h2 class="text-2xl font-semibold text-slate-900">
-            3. Patterns & Trade-Offs
-          </h2>
+
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+
+          <div>
+
+            <p class="section-label mb-2">
+              Section 3
+            </p>
+
+            <h2 class="section-title">
+              Patterns & trade-offs
+            </h2>
+
+          </div>
 
           <button
               @click="downloadReport"
-              class="text-sm px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-100 transition"
+              class="rounded-xl border border-slate-300 px-4 py-2 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
           >
-            Download Full Report
+            Download
           </button>
+
         </div>
 
-        <div class="bg-white rounded-2xl border border-stone-200 p-8 shadow-sm">
-          <p class="whitespace-pre-line leading-relaxed text-slate-700">
+        <div class="report-card">
+
+          <p class="report-copy whitespace-pre-line">
             {{ report.patterns }}
           </p>
+
         </div>
+
       </section>
 
-      <!-- CTA -->
+      <!-- CONTINUATION -->
       <section
           v-if="report.closing"
-          class="bg-slate-900 text-white rounded-3xl p-10 mt-16 shadow-xl"
+          class="rounded-2xl border border-slate-200 bg-white/60 px-8 py-10"
       >
-        <h2 class="text-3xl font-semibold mb-6">
-          Next Step
-        </h2>
 
-        <p class="leading-relaxed text-slate-200 whitespace-pre-line mb-8">
-          {{ report.closing }}
-        </p>
+        <div class="max-w-2xl space-y-7">
 
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 mb-8">
-          <h3 class="text-xl font-medium mb-4">
-            MindWorks 6-Week Programme
-          </h3>
+          <div class="space-y-3">
 
-          <p class="text-slate-300 leading-relaxed mb-6">
-            A structured behavioural programme focused on sustained attention,
-            interruption patterns, behavioural continuity, and repeated re-entry
-            into tasks.
+            <p class="section-label">
+              Continuation
+            </p>
 
-            This is not based around motivation hacks or productivity systems.
-            The focus is on understanding and gradually interrupting the cycle
-            while it is actively happening.
-          </p>
+            <h2 class="section-title">
+              Recognition is usually the beginning,
+              not the end.
+            </h2>
 
-          <div class="flex items-center justify-between flex-wrap gap-4">
-            <div>
-              <p class="text-2xl font-semibold">
-                $29.99
-              </p>
-
-              <p class="text-sm text-slate-400">
-                One-time payment
-              </p>
-            </div>
-
-            <a
-                href="https://gpttherapyassist.lemonsqueezy.com/checkout"
-                class="lemonsqueezy-button px-6 py-3 bg-white text-slate-900 rounded-xl hover:bg-slate-200 transition inline-flex items-center justify-center font-medium"
-            >
-              Begin the Programme
-            </a>
           </div>
+
+          <div class="space-y-5 text-[1rem] leading-[1.9] text-slate-700 whitespace-pre-line">
+
+            <p>
+              {{ report.closing }}
+            </p>
+
+            <p>
+              The six-week guided programme continues this work through:
+              embodied attention,
+              self-observation,
+              interruption recognition,
+              and continuity practices integrated into ordinary life.
+            </p>
+
+          </div>
+
+          <div class="flex flex-wrap gap-3 pt-2">
+
+            <router-link
+                to="/programme"
+                class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
+            >
+              Explore the programme
+            </router-link>
+
+            <button
+                @click="downloadReport"
+                class="inline-flex items-center rounded-xl border border-slate-300 px-6 py-3 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
+            >
+              Download report
+            </button>
+
+          </div>
+
         </div>
 
-        <button
-            @click="downloadReport"
-            class="px-6 py-3 border border-white/20 rounded-xl hover:bg-white/10 transition"
-        >
-          Download Full Report
-        </button>
       </section>
 
     </div>
+
   </main>
 </template>
 
 <script setup>
 import { ref } from "vue"
-// import { supabase } from "../lib/supabase.js"
 
 const email = ref("")
 const loading = ref(false)
@@ -215,12 +315,12 @@ const report = ref({
 })
 
 const handleSubmit = async () => {
+
   if (!email.value) return
 
   loading.value = true
 
   try {
-
 
     const storedProfile =
         sessionStorage.getItem("quizProfile")
@@ -245,116 +345,123 @@ const handleSubmit = async () => {
 
     report.value = data
 
+  } catch (err) {
+
+    console.error(err)
+
   } finally {
+
     loading.value = false
+
   }
+
 }
 
 const downloadReport = () => {
+
   const html = `
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>Reflection Report</title>
+<title>MindWorks Reflection</title>
 
 <style>
+
 body {
   font-family: Arial, sans-serif;
-  max-width: 760px;
-  margin: 40px auto;
-  padding: 32px;
-  line-height: 1.8;
-  color: #1e293b;
   background: #fafaf9;
+  color: #1c1917;
+  line-height: 1.85;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 32px;
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 38px;
   margin-bottom: 8px;
 }
 
 h2 {
-  margin-top: 40px;
-  margin-bottom: 14px;
-  font-size: 24px;
+  margin-top: 48px;
+  margin-bottom: 12px;
+  font-size: 28px;
 }
 
 .section {
-  margin-bottom: 48px;
+  margin-bottom: 56px;
   background: white;
-  padding: 28px;
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid #e7e5e4;
+  padding: 28px;
 }
 
 .tldr {
   background: #f1f5f9;
+  border-radius: 18px;
   padding: 28px;
-  border-radius: 16px;
-  margin-bottom: 48px;
+  margin-bottom: 56px;
 }
 
-.cta {
-  margin-top: 60px;
-  background: #0f172a;
-  color: white;
-  padding: 36px;
-  border-radius: 22px;
+.footer {
+  margin-top: 72px;
+  border-top: 1px solid #d6d3d1;
+  padding-top: 28px;
+  color: #57534e;
 }
 
-.button {
-  display: inline-block;
-  margin-top: 18px;
-  background: white;
-  color: #0f172a;
-  padding: 12px 22px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: 600;
+p {
+  margin-bottom: 18px;
 }
+
 </style>
 </head>
 
 <body>
 
-<h1>Your Reflection Report</h1>
+<h1>MindWorks Reflection</h1>
 
 <p>
-Behavioural Patterns & Attention Profile
+Behavioural continuity, interruption patterns, and emotional organisation.
 </p>
 
 <div class="tldr">
+
 <h2>TL;DR</h2>
+
 <p>${report.value.tldr}</p>
+
 </div>
 
 <div class="section">
-<h2>1. Behavioural Patterns</h2>
+
+<h2>Behavioural patterns</h2>
+
 <p>${report.value.overview}</p>
+
 </div>
 
 <div class="section">
-<h2>2. Daily Functioning</h2>
+
+<h2>Daily functioning</h2>
+
 <p>${report.value.functioning}</p>
+
 </div>
 
 <div class="section">
-<h2>3. Patterns & Trade-Offs</h2>
+
+<h2>Patterns & trade-offs</h2>
+
 <p>${report.value.patterns}</p>
+
 </div>
 
-<div class="cta">
-<h2>Next Step</h2>
+<div class="footer">
 
 <p>${report.value.closing}</p>
 
-<a
-  class="button"
-  href="https://gpttherapyassist.lemonsqueezy.com/buy/230d911f-446a-490f-94ab-509fae996c4f"
->
-  Begin the 6-Week Programme — $29.99
-</a>
 </div>
 
 </body>
@@ -371,10 +478,31 @@ Behavioural Patterns & Attention Profile
   const link = document.createElement("a")
 
   link.href = url
-  link.download = "reflection-report.html"
+  link.download = "mindworks-reflection.html"
 
   link.click()
 
   URL.revokeObjectURL(url)
+
 }
 </script>
+
+<style scoped>
+
+.section-label {
+  @apply text-[11px] uppercase tracking-[0.24em] text-slate-500;
+}
+
+.section-title {
+  @apply text-[1.8rem] md:text-[2.2rem] font-medium tracking-[-0.025em] leading-[1.16] text-slate-900;
+}
+
+.report-card {
+  @apply rounded-2xl border border-stone-200 bg-white/70 px-8 py-8;
+}
+
+.report-copy {
+  @apply text-[1rem] leading-[1.9] text-slate-700;
+}
+
+</style>

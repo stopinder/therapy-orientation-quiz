@@ -1,42 +1,49 @@
 <template>
-  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 pt-10 pb-20">
-    <div class="max-w-4xl mx-auto space-y-28">
+  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 pt-10 pb-24">
+    <div class="max-w-4xl mx-auto space-y-24">
 
       <!-- HERO -->
-      <section class="pt-10 space-y-6 max-w-3xl">
-        <p class="text-sm uppercase tracking-[0.24em] text-slate-500">
+      <section class="pt-8 max-w-3xl space-y-5">
+        <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
           Six-Week Guided Programme
         </p>
 
-        <h1 class="text-3xl md:text-5xl font-semibold tracking-tight leading-[1.08] text-slate-900 max-w-4xl">
+        <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-slate-900">
           A structured reflection on attention, fragmentation,
           emotional avoidance, and continuity.
         </h1>
 
-        <p class="text-lg md:text-xl leading-relaxed text-slate-700 max-w-2xl">
-          Structured weekly practices combining psychological reflection,
-          embodied attention, and grounded self-observation.
-        </p>
+        <div class="space-y-4 text-[1.03rem] leading-[1.85] text-slate-700 max-w-2xl">
+          <p>
+            Structured weekly practices combining psychological reflection,
+            embodied attention, and grounded self-observation.
+          </p>
 
-        <div class="flex flex-wrap gap-3 pt-4">
-          <router-link
-              to="/contact"
-              class="inline-flex items-center rounded-full bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
+          <p>
+            This is not a productivity system or self-improvement programme.
+            It is an attempt to understand how continuity repeatedly breaks down,
+            particularly under emotional pressure, fragmentation, and overload.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3 pt-2">
+          <button
+              class="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
           >
-            Join the programme
-          </router-link>
+            Programme access opening shortly
+          </button>
 
           <router-link
               to="/adhd-quiz"
-              class="inline-flex items-center rounded-full border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
+              class="inline-flex items-center rounded-xl px-5 py-3 text-sm text-slate-600 transition hover:text-slate-900"
           >
             Begin the free reflection
           </router-link>
         </div>
       </section>
 
-      <!-- THE PROBLEM -->
-      <section class="max-w-3xl space-y-6">
+      <!-- THE PATTERN -->
+      <section class="max-w-3xl space-y-8">
         <div class="space-y-3">
           <p class="section-label">
             The pattern
@@ -81,7 +88,7 @@
 
           <div class="problem-card">
             <p>
-              Recognising patterns intellectually while still being pulled by them emotionally.
+              Recognising patterns intellectually while still being emotionally organised by them.
             </p>
           </div>
         </div>
@@ -96,11 +103,11 @@
 
           <h2 class="section-title">
             A gradual movement from recognition
-            toward continuity.
+            toward greater continuity.
           </h2>
         </div>
 
-        <div class="grid gap-4">
+        <div class="grid gap-3">
           <div
               v-for="week in weeks"
               :key="week.title"
@@ -111,11 +118,11 @@
             </div>
 
             <div class="space-y-2">
-              <h3 class="text-xl font-semibold text-slate-900">
+              <h3 class="text-[1.08rem] font-medium text-slate-900">
                 {{ week.title }}
               </h3>
 
-              <p class="text-slate-600 leading-relaxed">
+              <p class="text-[0.98rem] leading-[1.8] text-slate-600">
                 {{ week.description }}
               </p>
             </div>
@@ -135,7 +142,7 @@
           </h2>
         </div>
 
-        <div class="space-y-5 text-slate-700 leading-relaxed text-lg">
+        <div class="body-copy">
           <p>
             The programme combines psychological reflection with embodied attention practices:
             learning to remain partially connected to bodily sensation while observing emotional,
@@ -144,7 +151,7 @@
 
           <p>
             Each week includes preparation exercises, body sensing practices,
-            reflective prompts, and practical integration into ordinary daily life.
+            reflective prompts, and ordinary-life integration exercises.
           </p>
 
           <p>
@@ -155,7 +162,7 @@
         </div>
       </section>
 
-      <!-- WHO IT'S FOR -->
+      <!-- WHO THIS IS FOR -->
       <section class="max-w-3xl space-y-6">
         <div class="space-y-3">
           <p class="section-label">
@@ -181,7 +188,7 @@
           </div>
 
           <div class="audience-card">
-            Inconsistent but capable people who want greater continuity.
+            Inconsistent but capable people wanting greater continuity.
           </div>
 
           <div class="audience-card">
@@ -194,33 +201,67 @@
         </div>
       </section>
 
-      <!-- FINAL CTA -->
-      <section class="rounded-3xl border border-slate-200 bg-white/70 px-8 py-12 text-center shadow-sm">
-        <div class="max-w-2xl mx-auto space-y-6">
-          <p class="text-lg text-slate-700 leading-relaxed">
-            You do not need to arrive certain.
-            Recognition is enough to begin.
+      <!-- WHAT CHANGES -->
+      <section class="max-w-3xl space-y-6">
+        <div class="space-y-3">
+          <p class="section-label">
+            What changes
           </p>
 
-          <div class="flex justify-center gap-3 flex-wrap">
-            <router-link
-                to="/contact"
-                class="inline-flex items-center rounded-full bg-slate-900 px-7 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
+          <h2 class="section-title">
+            Not transformation.
+            Greater recognition.
+          </h2>
+        </div>
+
+        <div class="body-copy">
+          <p>
+            Over time, many people begin recognising interruption earlier:
+            the moment attention narrows,
+            the body disappears,
+            emotion takes over,
+            or continuity starts collapsing.
+          </p>
+
+          <p>
+            The aim is not permanent control.
+            It is increased contact with yourself while functioning in ordinary life.
+          </p>
+
+          <p>
+            For many people, that alone changes the quality of everyday experience substantially.
+          </p>
+        </div>
+      </section>
+
+      <!-- FUTURE CHECKOUT -->
+      <section class="rounded-2xl border border-slate-200 bg-white/60 px-8 py-10">
+        <div class="max-w-2xl mx-auto text-center space-y-6">
+
+          <p class="text-[1.02rem] leading-[1.85] text-slate-700">
+            You do not need certainty before beginning.
+            Recognition is enough.
+          </p>
+
+          <div class="flex justify-center flex-wrap gap-3">
+            <button
+                class="inline-flex items-center rounded-xl border border-slate-300 px-6 py-3 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
             >
-              Join the programme
-            </router-link>
+              Programme access opening shortly
+            </button>
 
             <router-link
                 to="/adhd-quiz"
-                class="inline-flex items-center rounded-full border border-slate-300 px-7 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
+                class="inline-flex items-center rounded-xl px-6 py-3 text-sm text-slate-600 transition hover:text-slate-900"
             >
               Begin the free reflection
             </router-link>
           </div>
 
-          <p class="text-sm text-slate-500 pt-2">
-            Full checkout and guided access coming shortly.
+          <p class="text-xs tracking-[0.04em] text-slate-500">
+            Guided access and structured continuation will be released shortly.
           </p>
+
         </div>
       </section>
 
@@ -271,26 +312,30 @@ const weeks = [
 
 <style scoped>
 .section-label {
-  @apply text-sm uppercase tracking-[0.22em] text-slate-500;
+  @apply text-[11px] uppercase tracking-[0.24em] text-slate-500;
 }
 
 .section-title {
-  @apply text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-slate-900;
+  @apply text-[1.9rem] md:text-[2.35rem] font-medium tracking-[-0.02em] leading-[1.18] text-slate-900;
+}
+
+.body-copy {
+  @apply space-y-4 text-[1.02rem] leading-[1.85] text-slate-700;
 }
 
 .problem-card {
-  @apply rounded-2xl border border-slate-200 bg-white/70 p-5 text-slate-700 leading-relaxed shadow-sm;
+  @apply rounded-2xl border border-slate-200 bg-white/60 p-5 text-[0.98rem] leading-[1.8] text-slate-700;
 }
 
 .week-card {
-  @apply flex flex-col md:flex-row gap-5 rounded-2xl border border-slate-200 bg-white/75 px-6 py-6 shadow-sm transition hover:border-slate-300;
+  @apply flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white/60 px-6 py-6 transition hover:border-slate-300 md:flex-row;
 }
 
 .week-number {
-  @apply text-sm uppercase tracking-[0.22em] text-slate-500 min-w-[90px] pt-1;
+  @apply min-w-[90px] pt-1 text-[10px] uppercase tracking-[0.24em] text-slate-500;
 }
 
 .audience-card {
-  @apply rounded-2xl border border-slate-200 bg-white/70 p-5 text-slate-700 leading-relaxed shadow-sm;
+  @apply rounded-2xl border border-slate-200 bg-white/60 p-5 text-[0.98rem] leading-[1.8] text-slate-700;
 }
 </style>

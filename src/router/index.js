@@ -12,28 +12,57 @@ import PrivacyView from "../views/PrivacyView.vue"
 import ContactView from "../views/ContactView.vue"
 
 const routes = [
-    { path: "/", redirect: "/about" },
+    {
+        path: "/",
+        redirect: "/about"
+    },
 
-    { path: "/about", name: "About", component: About },
+    {
+        path: "/about",
+        name: "About",
+        component: About
+    },
 
-    { path: "/terms", name: "Terms", component: TermsView },
-    { path: "/privacy", name: "Privacy", component: PrivacyView },
-    { path: "/contact", name: "Contact", component: ContactView },
+    {
+        path: "/terms",
+        name: "Terms",
+        component: TermsView
+    },
 
-    { path: "/gateway", name: "Gateway", component: QuizGateway },
+    {
+        path: "/privacy",
+        name: "Privacy",
+        component: PrivacyView
+    },
+
+    {
+        path: "/contact",
+        name: "Contact",
+        component: ContactView
+    },
+
+    {
+        path: "/gateway",
+        name: "Gateway",
+        component: QuizGateway
+    },
 
     {
         path: "/adhd-quiz",
         name: "ADHDQuiz",
         component: ADHDQuizView,
-        meta: { requiresGateway: true }
+        meta: {
+            requiresGateway: true
+        }
     },
 
     {
         path: "/deep-dive",
         name: "DeepDive",
         component: DeepDiveView,
-        meta: { requiresGateway: true }
+        meta: {
+            requiresGateway: true
+        }
     },
 
     {
@@ -61,7 +90,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresGateway && !sessionStorage.getItem("passedGateway")) {
+    if (
+        to.meta.requiresGateway &&
+        !sessionStorage.getItem("passedGateway")
+    ) {
         next("/gateway")
     } else {
         next()
