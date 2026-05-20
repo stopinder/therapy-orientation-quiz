@@ -204,8 +204,10 @@
             ></div>
 
             <transition name="fade" mode="out-in">
-
-              <div :key="activeView">
+              <div
+                  :key="activeView"
+                  @click="completeTyping"
+              >
 
                 <div class="mb-10">
 
@@ -316,6 +318,10 @@ const showNextStep = ref(false)
 const email = ref("")
 const emailSubmitted = ref(false)
 const emailError = ref("")
+
+const displayedOverview = ref("")
+const overviewTypingComplete = ref(false)
+const isTypingOverview = ref(false)
 
 const reportTexts = ref({
   tldr: "",
@@ -451,6 +457,39 @@ const fetchReport = async () => {
 
 }
 
+const typeOverviewText = async (text) => {
+
+  if (!text || overviewTypingComplete.value) {
+    displayedOverview.value = text
+    return
+  }
+
+  isTypingOverview.value = true
+  displayedOverview.value = ""
+
+  const typingSpeed = 8
+
+  for (let i = 0; i < text.length; i++) {
+
+    if (!isTypingOverview.value) {
+      displayedOverview.value = text
+      overviewTypingComplete.value = true
+      return
+    }
+
+    displayedOverview.value += text[i]
+
+    await new Promise(resolve =>
+        setTimeout(resolve, typingSpeed)
+    )
+
+  }
+
+  overviewTypingComplete.value = true
+  isTypingOverview.value = false
+
+}
+
 const generateInitialReport = async () => {
 
   loading.value = true
@@ -486,7 +525,12 @@ const generateInitialReport = async () => {
       closing: data.closing || ""
     }
 
+    displayedOverview.value = ""
+    overviewTypingComplete.value = false
+
     activeView.value = "overview"
+
+    await typeOverviewText(reportTexts.value.overview)
 
     saveReflectionLocally()
 
@@ -596,6 +640,24 @@ const selectView = async (viewKey) => {
 
 }
 
+const completeTyping = () => {
+
+  if (
+      activeView.value === "overview" &&
+      isTypingOverview.value
+  ) {
+
+    isTypingOverview.value = false
+
+    displayedOverview.value =
+        reportTexts.value.overview
+
+    overviewTypingComplete.value = true
+
+  }
+
+}
+
 const activeText = computed(() =>
     reportTexts.value[activeView.value] || ""
 )
@@ -679,9 +741,18 @@ const formattedTldrText = computed(() => {
 
 const formattedActiveText = computed(() => {
 
-  if (!activeText.value) return ""
+  let sourceText = activeText.value
 
-  return activeText.value
+  if (
+      activeView.value === "overview" &&
+      !overviewTypingComplete.value
+  ) {
+    sourceText = displayedOverview.value
+  }
+
+  if (!sourceText) return ""
+
+  return sourceText
       .split("\n\n")
       .map(p => {
 
@@ -699,245 +770,6 @@ const formattedActiveText = computed(() => {
       .join("")
 
 })
-
-const formatParagraphsForDownload = (text) => {
-
-  if (!text) return ""
-
-  return text
-      .split("\n\n")
-      .map(p => {
-
-        const safeParagraph = allowBasicFormatting(
-            escapeHtml(p)
-        )
-
-        return `<p>${safeParagraph}</p>`
-
-      })
-      .join("")
-
-}
-
-const formatTldrForDownload = (text) => {
-
-  if (!text) return ""
-
-  const lines = text
-      .split("\n")
-      .map(line => line.trim())
-      .filter(Boolean)
-
-  const looksLikeBullets = lines.some(line =>
-      /^[-*•]\s+/.test(line)
-  )
-
-  if (looksLikeBullets) {
-
-    const items = lines
-        .map(line => {
-
-          const safeLine = allowBasicFormatting(
-              escapeHtml(normaliseBulletLine(line))
-          )
-
-          return `<li>${safeLine}</li>`
-
-        })
-        .join("")
-
-    return `<ul>${items}</ul>`
-
-  }
-
-  const safeText = allowBasicFormatting(
-      escapeHtml(text)
-  )
-
-  return `<p>${safeText}</p>`
-
-}
-
-const downloadReflection = () => {
-
-  try {
-
-    const html = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8" />
-<title>MindWorks Reflection</title>
-
-<style>
-
-body {
-  font-family: Arial, sans-serif;
-  background: #fafaf9;
-  color: #1c1917;
-  line-height: 1.8;
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 48px 32px;
-}
-
-h1 {
-  font-size: 38px;
-  margin-bottom: 8px;
-}
-
-h2 {
-  margin-top: 48px;
-  margin-bottom: 10px;
-  font-size: 28px;
-}
-
-.intro {
-  color: #57534e;
-  margin-bottom: 20px;
-}
-
-.section {
-  margin-bottom: 56px;
-}
-
-.tldr {
-  background: #f1f5f9;
-  border-radius: 18px;
-  padding: 28px;
-  margin-top: 36px;
-}
-
-p {
-  margin-bottom: 18px;
-}
-
-ul {
-  margin-top: 18px;
-  padding-left: 24px;
-}
-
-li {
-  margin-bottom: 12px;
-}
-
-strong {
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.footer {
-  margin-top: 80px;
-  padding-top: 24px;
-  border-top: 1px solid #d6d3d1;
-  color: #57534e;
-}
-
-</style>
-</head>
-
-<body>
-
-<h1>MindWorks Reflection</h1>
-
-<p>
-Behavioural continuity, interruption patterns, and attention structure.
-</p>
-
-<div class="tldr">
-
-<h2>TL;DR</h2>
-
-${formatTldrForDownload(reportTexts.value.tldr)}
-
-</div>
-
-<div class="section">
-
-<h2>Overview</h2>
-
-<p class="intro">
-How the pattern tends to operate moment to moment.
-</p>
-
-${formatParagraphsForDownload(reportTexts.value.overview)}
-
-</div>
-
-<div class="section">
-
-<h2>Daily functioning</h2>
-
-<p class="intro">
-How the pattern accumulates across ordinary responsibilities.
-</p>
-
-${formatParagraphsForDownload(reportTexts.value.functioning)}
-
-</div>
-
-<div class="section">
-
-<h2>Patterns & trade-offs</h2>
-
-<p class="intro">
-The contradictions that quietly keep the cycle going.
-</p>
-
-${formatParagraphsForDownload(reportTexts.value.patterns)}
-
-</div>
-
-<div class="footer">
-
-<p>
-${allowBasicFormatting(
-        escapeHtml(reportTexts.value.closing)
-    )}
-</p>
-
-</div>
-
-</body>
-</html>`
-
-    const blob = new Blob(
-        [html],
-        { type: "text/html;charset=utf-8" }
-    )
-
-    const url = URL.createObjectURL(blob)
-
-    const link = document.createElement("a")
-
-    link.href = url
-    link.download = "mindworks-reflection.html"
-
-    document.body.appendChild(link)
-
-    link.click()
-
-    document.body.removeChild(link)
-
-    URL.revokeObjectURL(url)
-
-    downloadComplete.value = true
-    showNextStep.value = false
-
-    setTimeout(() => {
-
-      downloadComplete.value = false
-      showNextStep.value = true
-
-    }, 1800)
-
-  } catch (err) {
-
-    console.error("Download failed:", err)
-    alert("Download failed.")
-
-  }
-
-}
 
 const dominantPattern = computed(() => {
 
@@ -1002,17 +834,3 @@ const goToProgramme = () => {
   router.push("/programme")
 }
 </script>
-
-<style scoped>
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 180ms ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-</style>
