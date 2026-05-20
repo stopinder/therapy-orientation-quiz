@@ -2,7 +2,9 @@
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
     <div class="max-w-3xl mx-auto space-y-16">
 
+      <!-- HEADER -->
       <header class="space-y-4">
+
         <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
           System Mapping
         </p>
@@ -10,12 +12,15 @@
         <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-stone-900">
           A closer look at how your mind actually operates
         </h1>
+
       </header>
 
+      <!-- PROGRESS -->
       <div
-          v-if="!activeText"
+          v-if="!reportReady"
           class="sticky top-16 z-40 border-b border-stone-300 bg-stone-100/95 backdrop-blur"
       >
+
         <div class="space-y-2 px-4 py-3">
 
           <div class="flex justify-between text-sm text-slate-600">
@@ -24,10 +29,12 @@
           </div>
 
           <div class="h-2 w-full overflow-hidden rounded-full bg-stone-200">
+
             <div
                 class="h-full bg-slate-800 transition-all duration-300"
                 :style="{ width: progressPercent + '%' }"
             />
+
           </div>
 
           <p class="text-xs text-slate-500">
@@ -35,13 +42,15 @@
           </p>
 
         </div>
+
       </div>
 
+      <!-- QUIZ -->
       <section class="space-y-12 rounded-2xl bg-white/70 px-6 py-8">
 
         <div
             v-for="(question, index) in adhdQuestions"
-            v-show="!activeText"
+            v-show="!reportReady"
             :key="question.id"
             class="space-y-6"
         >
@@ -81,8 +90,9 @@
 
         </div>
 
+        <!-- LOADING -->
         <div
-            v-if="quizComplete && loading && !activeText"
+            v-if="quizComplete && loading"
             ref="loadingContainerRef"
             class="mt-16 scroll-mt-36 space-y-5 text-center"
         >
@@ -101,37 +111,14 @@
 
         </div>
 
+        <!-- REPORT -->
         <div
-            v-if="loading && quizComplete"
-            class="flex justify-center pt-6"
-        >
-          <div class="animate-bounce text-sm tracking-[0.18em] uppercase text-slate-500">
-            Reflection appearing below
-          </div>
-        </div>
-
-        <div
-            v-if="activeText || isTypingOverview || displayedOverview"
+            v-if="reportReady"
             ref="reportContainerRef"
             class="mx-auto mt-12 max-w-prose scroll-mt-36"
         >
 
-          <div
-              v-if="reportTexts.tldr"
-              class="mb-10 rounded-2xl border border-slate-200 bg-slate-100 p-8"
-          >
-
-            <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
-              TL;DR
-            </h2>
-
-            <div
-                class="text-[1rem] leading-[1.85] text-slate-700"
-                v-html="formattedTldrText"
-            ></div>
-
-          </div>
-
+          <!-- EMAIL GATE -->
           <div
               v-if="!emailSubmitted"
               class="mb-10 rounded-2xl border border-stone-200 bg-white/80 p-8"
@@ -148,12 +135,14 @@
                 <div class="max-w-xl space-y-3 text-[1rem] leading-[1.8] text-slate-600">
 
                   <p>
-                    Receive the complete reflection and downloadable report.
+                    Your reflection has been generated.
                   </p>
 
                   <p>
-                    The aim is not diagnosis or self-improvement performance.
-                    It is clearer recognition of how continuity breaks down in everyday life.
+                    Receive the complete report exploring interruption patterns,
+                    emotional organisation,
+                    contradiction,
+                    and continuity breakdowns.
                   </p>
 
                 </div>
@@ -185,8 +174,27 @@
 
           </div>
 
+          <!-- FULL REPORT -->
           <div v-if="emailSubmitted">
 
+            <!-- TLDR -->
+            <div
+                v-if="reportTexts.tldr"
+                class="mb-10 rounded-2xl border border-slate-200 bg-slate-100 p-8"
+            >
+
+              <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
+                TL;DR
+              </h2>
+
+              <div
+                  class="text-[1rem] leading-[1.85] text-slate-700"
+                  v-html="formattedTldrText"
+              ></div>
+
+            </div>
+
+            <!-- NAV -->
             <div class="sticky top-16 z-30 mb-8 border-y border-stone-200 bg-stone-50/95 py-4 backdrop-blur">
 
               <div class="flex flex-wrap justify-center gap-2">
@@ -212,12 +220,10 @@
                 class="h-px w-full"
             ></div>
 
+            <!-- REPORT CONTENT -->
             <transition name="fade" mode="out-in">
 
-              <div
-                  :key="activeView"
-                  @click="completeTyping"
-              >
+              <div :key="activeView">
 
                 <div class="mb-10">
 
@@ -237,6 +243,7 @@
 
             </transition>
 
+            <!-- DOWNLOAD -->
             <div class="mt-12 flex justify-center">
 
               <button
@@ -255,6 +262,7 @@
               Reflection downloaded.
             </div>
 
+            <!-- NEXT STEP -->
             <div
                 v-if="showNextStep"
                 class="mx-auto mt-20 max-w-2xl space-y-6 text-center"
@@ -262,17 +270,9 @@
 
               <div class="space-y-5 text-[1rem] leading-[1.9] text-slate-700">
 
-                <p>
-                  {{ adaptiveMessage.line1 }}
-                </p>
-
-                <p>
-                  {{ adaptiveMessage.line2 }}
-                </p>
-
-                <p>
-                  {{ adaptiveMessage.line3 }}
-                </p>
+                <p>{{ adaptiveMessage.line1 }}</p>
+                <p>{{ adaptiveMessage.line2 }}</p>
+                <p>{{ adaptiveMessage.line3 }}</p>
 
               </div>
 
@@ -329,9 +329,7 @@ const email = ref("")
 const emailSubmitted = ref(false)
 const emailError = ref("")
 
-const displayedOverview = ref("")
-const overviewTypingComplete = ref(false)
-const isTypingOverview = ref(false)
+const reportReady = ref(false)
 
 const reportTexts = ref({
   tldr: "",
@@ -433,7 +431,7 @@ const handleAnswer = async (questionId, value, index) => {
 
   }
 
-  if (quizComplete.value && !activeText.value && !loading.value) {
+  if (quizComplete.value && !loading.value && !reportReady.value) {
     await generateInitialReport()
   }
 
@@ -467,42 +465,6 @@ const fetchReport = async () => {
 
 }
 
-const typeOverviewText = async (text) => {
-
-  if (!text || overviewTypingComplete.value) {
-    displayedOverview.value = text
-    return
-  }
-
-  isTypingOverview.value = true
-  displayedOverview.value = ""
-
-  const typingSpeed = 8
-
-  for (let i = 0; i < text.length; i++) {
-
-    if (!isTypingOverview.value) {
-
-      displayedOverview.value = text
-      overviewTypingComplete.value = true
-
-      return
-
-    }
-
-    displayedOverview.value += text[i]
-
-    await new Promise(resolve =>
-        setTimeout(resolve, typingSpeed)
-    )
-
-  }
-
-  overviewTypingComplete.value = true
-  isTypingOverview.value = false
-
-}
-
 const generateInitialReport = async () => {
 
   loading.value = true
@@ -510,17 +472,6 @@ const generateInitialReport = async () => {
   downloadComplete.value = false
 
   loadingStage.value = "Analysing behavioural patterns..."
-
-  await nextTick()
-
-  setTimeout(() => {
-
-    reportContainerRef.value?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    })
-
-  }, 300)
 
   try {
 
@@ -542,27 +493,22 @@ const generateInitialReport = async () => {
       closing: data.closing || ""
     }
 
-    displayedOverview.value = ""
-    overviewTypingComplete.value = false
-
     activeView.value = "overview"
+
+    reportReady.value = true
 
     loading.value = false
 
     await nextTick()
 
-    reportContainerRef.value?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    })
+    setTimeout(() => {
 
-    await new Promise(resolve =>
-        setTimeout(resolve, 900)
-    )
+      reportContainerRef.value?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      })
 
-    await typeOverviewText(
-        reportTexts.value.overview
-    )
+    }, 250)
 
     saveReflectionLocally()
 
@@ -624,13 +570,11 @@ const unlockReport = async () => {
 
     emailSubmitted.value = true
 
-    nextTick(() => {
+    await nextTick()
 
-      reportContainerRef.value?.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      })
-
+    window.scrollTo({
+      top: reportContainerRef.value.offsetTop - 100,
+      behavior: "smooth"
     })
 
   } catch (err) {
@@ -661,24 +605,6 @@ const selectView = async (viewKey) => {
     top: targetY,
     behavior: "smooth"
   })
-
-}
-
-const completeTyping = () => {
-
-  if (
-      activeView.value === "overview" &&
-      isTypingOverview.value
-  ) {
-
-    isTypingOverview.value = false
-
-    displayedOverview.value =
-        reportTexts.value.overview
-
-    overviewTypingComplete.value = true
-
-  }
 
 }
 
@@ -765,18 +691,9 @@ const formattedTldrText = computed(() => {
 
 const formattedActiveText = computed(() => {
 
-  let sourceText = activeText.value
+  if (!activeText.value) return ""
 
-  if (
-      activeView.value === "overview" &&
-      !overviewTypingComplete.value
-  ) {
-    sourceText = displayedOverview.value
-  }
-
-  if (!sourceText) return ""
-
-  return sourceText
+  return activeText.value
       .split("\n\n")
       .map(p => {
 
@@ -794,64 +711,6 @@ const formattedActiveText = computed(() => {
       .join("")
 
 })
-
-const formatParagraphsForDownload = (text) => {
-
-  if (!text) return ""
-
-  return text
-      .split("\n\n")
-      .map(p => {
-
-        const safeParagraph = allowBasicFormatting(
-            escapeHtml(p)
-        )
-
-        return `<p>${safeParagraph}</p>`
-
-      })
-      .join("")
-
-}
-
-const formatTldrForDownload = (text) => {
-
-  if (!text) return ""
-
-  const lines = text
-      .split("\n")
-      .map(line => line.trim())
-      .filter(Boolean)
-
-  const looksLikeBullets = lines.some(line =>
-      /^[-*•]\s+/.test(line)
-  )
-
-  if (looksLikeBullets) {
-
-    const items = lines
-        .map(line => {
-
-          const safeLine = allowBasicFormatting(
-              escapeHtml(normaliseBulletLine(line))
-          )
-
-          return `<li>${safeLine}</li>`
-
-        })
-        .join("")
-
-    return `<ul>${items}</ul>`
-
-  }
-
-  const safeText = allowBasicFormatting(
-      escapeHtml(text)
-  )
-
-  return `<p>${safeText}</p>`
-
-}
 
 const dominantPattern = computed(() => {
 
