@@ -3,7 +3,6 @@
     <div class="max-w-3xl mx-auto space-y-16">
 
       <header class="space-y-4">
-
         <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
           System Mapping
         </p>
@@ -11,48 +10,39 @@
         <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-stone-900">
           A closer look at how your mind actually operates
         </h1>
-
       </header>
 
       <div
           v-if="!activeText"
           class="sticky top-16 z-40 border-b border-stone-300 bg-stone-100/95 backdrop-blur"
       >
-
         <div class="space-y-2 px-4 py-3">
-
           <div class="flex justify-between text-sm text-slate-600">
             <span>Progress</span>
             <span>{{ progressPercent }}%</span>
           </div>
 
           <div class="h-2 w-full overflow-hidden rounded-full bg-stone-200">
-
             <div
                 class="h-full bg-slate-800 transition-all duration-300"
                 :style="{ width: progressPercent + '%' }"
             />
-
           </div>
 
           <p class="text-xs text-slate-500">
             Recognition becomes clearer as the pattern accumulates.
           </p>
-
         </div>
-
       </div>
 
       <section class="space-y-12 rounded-2xl bg-white/70 px-6 py-8">
 
-        <!-- QUESTIONS -->
         <div
             v-for="(question, index) in adhdQuestions"
             v-show="!activeText"
             :key="question.id"
             class="space-y-6"
         >
-
           <p
               class="scroll-mt-52 md:scroll-mt-36 text-[1.3rem] leading-[1.7] text-stone-800"
               :ref="el => questionTextRefs[index] = el"
@@ -61,7 +51,6 @@
           </p>
 
           <div class="space-y-3">
-
             <label
                 v-for="option in scale"
                 :key="option.value"
@@ -70,7 +59,6 @@
                 ? 'border-slate-900 bg-slate-900 text-white'
                 : 'border-stone-200 bg-white text-stone-700 hover:bg-stone-50'"
             >
-
               <span>{{ option.label }}</span>
 
               <input
@@ -81,22 +69,16 @@
                   @change="handleAnswer(question.id, option.value, index)"
                   class="h-5 w-5 accent-white"
               />
-
             </label>
-
           </div>
-
         </div>
 
-        <!-- LOADING -->
         <div
             v-if="quizComplete && loading && !activeText"
             ref="loadingContainerRef"
             class="mt-16 scroll-mt-36 space-y-5 text-center"
         >
-
           <div class="animate-pulse space-y-4">
-
             <p class="text-lg font-medium text-slate-900">
               {{ loadingStage }}
             </p>
@@ -104,34 +86,25 @@
             <p class="text-sm text-slate-500">
               This usually takes a few seconds.
             </p>
-
           </div>
-
         </div>
 
-        <!-- REPORT CONTAINER -->
         <div
             v-if="activeText || isTypingOverview || displayedOverview"
             ref="reportContainerRef"
             class="mx-auto mt-12 max-w-prose scroll-mt-36"
         >
-
-          <!-- EMAIL GATE -->
           <div
               v-if="!emailSubmitted"
               class="mb-10 rounded-2xl border border-stone-200 bg-white/80 p-8"
           >
-
             <div class="space-y-6">
-
               <div class="space-y-3">
-
                 <h3 class="text-[1.7rem] font-medium tracking-[-0.02em] leading-tight text-stone-900">
                   Continue with the full reflection
                 </h3>
 
                 <div class="max-w-xl space-y-3 text-[1rem] leading-[1.8] text-slate-600">
-
                   <p>
                     Receive the complete reflection and downloadable report.
                   </p>
@@ -140,9 +113,7 @@
                     The aim is not diagnosis or self-improvement performance.
                     It is clearer recognition of how continuity breaks down in everyday life.
                   </p>
-
                 </div>
-
               </div>
 
               <input
@@ -165,36 +136,12 @@
               >
                 Receive full reflection
               </button>
-
             </div>
-
           </div>
 
-          <!-- FULL REPORT -->
           <div v-if="emailSubmitted">
-
-            <!-- TLDR -->
-            <div
-                v-if="reportTexts.tldr"
-                class="mb-10 rounded-2xl border border-slate-200 bg-slate-100 p-8"
-            >
-
-              <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
-                TL;DR
-              </h2>
-
-              <div
-                  class="text-[1rem] leading-[1.85] text-slate-700"
-                  v-html="formattedTldrText"
-              ></div>
-
-            </div>
-
-            <!-- NAV -->
             <div class="sticky top-16 z-30 mb-8 border-y border-stone-200 bg-stone-50/95 py-4 backdrop-blur">
-
               <div class="flex flex-wrap justify-center gap-2">
-
                 <button
                     v-for="view in views"
                     :key="view.key"
@@ -206,9 +153,7 @@
                 >
                   {{ view.label }}
                 </button>
-
               </div>
-
             </div>
 
             <div
@@ -216,13 +161,9 @@
                 class="h-px w-full"
             ></div>
 
-            <!-- REPORT CONTENT -->
             <transition name="fade" mode="out-in">
-
               <div :key="activeView">
-
                 <div class="mb-10">
-
                   <h2 class="mb-3 text-[2rem] font-medium tracking-[-0.02em] leading-tight text-stone-900">
                     {{ activeViewLabel }}
                   </h2>
@@ -230,25 +171,33 @@
                   <p class="max-w-2xl text-[1rem] leading-[1.8] text-slate-600">
                     {{ activeViewIntro }}
                   </p>
-
                 </div>
 
                 <div v-html="formattedActiveText"></div>
-
               </div>
-
             </transition>
 
-            <!-- DOWNLOAD -->
-            <div class="mt-12 flex justify-center">
+            <div
+                v-if="reportTexts.tldr"
+                class="mt-16 rounded-2xl border border-slate-200 bg-slate-100 p-8"
+            >
+              <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
+                TL;DR
+              </h2>
 
+              <div
+                  class="text-[1rem] leading-[1.85] text-slate-700"
+                  v-html="formattedTldrText"
+              ></div>
+            </div>
+
+            <div class="mt-12 flex justify-center">
               <button
                   @click="downloadReflection"
                   class="rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
               >
                 Download reflection
               </button>
-
             </div>
 
             <div
@@ -258,22 +207,17 @@
               Reflection downloaded.
             </div>
 
-            <!-- NEXT STEP -->
             <div
                 v-if="showNextStep"
                 class="mx-auto mt-20 max-w-2xl space-y-6 text-center"
             >
-
               <div class="space-y-5 text-[1rem] leading-[1.9] text-slate-700">
-
                 <p>{{ adaptiveMessage.line1 }}</p>
                 <p>{{ adaptiveMessage.line2 }}</p>
                 <p>{{ adaptiveMessage.line3 }}</p>
-
               </div>
 
               <div class="space-y-4 pt-2">
-
                 <p class="mx-auto max-w-xl text-[1rem] leading-[1.8] text-slate-600">
                   The six-week guided programme continues this work through structured
                   observation, embodied attention practices, and continuity exercises.
@@ -285,21 +229,26 @@
                 >
                   Continue to the programme
                 </button>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
 
       </section>
-
     </div>
   </main>
 </template>
-<script setup>
+  ```
+
+  This version ACTUALLY changes the layout:
+
+  * tabs stay at top
+  * section heading appears immediately underneath
+  * TL;DR is moved BELOW the report sections entirely
+  * TL;DR no longer interferes with tab navigation
+  * the layout hierarchy is now psychologically coherent
+
+  <script setup>
 import { computed, nextTick, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import { adhdQuestions } from "../quiz/adhd/questions.js"
