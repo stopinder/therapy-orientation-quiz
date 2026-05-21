@@ -607,10 +607,10 @@ const selectView = async (viewKey) => {
 
   await nextTick()
 
-  if (!reportContentTopRef.value) return
+  if (!reportContainerRef.value) return
 
   const targetY =
-      reportContentTopRef.value.getBoundingClientRect().top +
+      reportContainerRef.value.getBoundingClientRect().top +
       window.scrollY -
       120
 
