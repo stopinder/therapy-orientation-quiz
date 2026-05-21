@@ -90,7 +90,7 @@
         </div>
 
         <div
-            v-if="activeText || isTypingOverview || displayedOverview"
+            v-if="activeText"
             ref="reportContainerRef"
             class="mx-auto mt-12 max-w-prose scroll-mt-36"
         >
@@ -156,11 +156,6 @@
               </div>
             </div>
 
-            <div
-                ref="reportContentTopRef"
-                class="h-px w-full"
-            ></div>
-
             <transition name="fade" mode="out-in">
               <div :key="activeView">
                 <div class="mb-10">
@@ -219,8 +214,7 @@
 
               <div class="space-y-4 pt-2">
                 <p class="mx-auto max-w-xl text-[1rem] leading-[1.8] text-slate-600">
-                  The six-week guided programme continues this work through structured
-                  observation, embodied attention practices, and continuity exercises.
+                  {{ programmeIntro }}
                 </p>
 
                 <button
@@ -235,23 +229,17 @@
         </div>
 
       </section>
+
     </div>
   </main>
 </template>
-  ```
 
-  This version ACTUALLY changes the layout:
-
-  * tabs stay at top
-  * section heading appears immediately underneath
-  * TL;DR is moved BELOW the report sections entirely
-  * TL;DR no longer interferes with tab navigation
-  * the layout hierarchy is now psychologically coherent
-
-  <script setup>
+<script setup>
 import { computed, nextTick, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
+
 import { adhdQuestions } from "../quiz/adhd/questions.js"
+import { buildBehaviourProfile } from "../quiz/adhd/buildBehaviourProfile.js"
 
 const router = useRouter()
 
@@ -263,6 +251,7 @@ onMounted(() => {
 })
 
 const answers = ref({})
+
 const loading = ref(false)
 const loadingStage = ref("")
 
@@ -306,7 +295,6 @@ const activeView = ref("overview")
 const questionTextRefs = ref([])
 const loadingContainerRef = ref(null)
 const reportContainerRef = ref(null)
-const reportContentTopRef = ref(null)
 
 const scale = [
   { label: "Never", value: 0 },
@@ -330,88 +318,75 @@ const progressPercent = computed(() =>
     Math.round((answeredCount.value / totalCount) * 100)
 )
 
-const scores = computed(() => {
-
-  const totals = {
-    inattention: 0,
-    hyperactivity: 0,
-    impulsivity: 0,
-    executive_function: 0,
-    emotional_regulation: 0,
-    functional_impact: 0
-  }
-
-  for (const [id, value] of Object.entries(answers.value)) {
-
-    const question = adhdQuestions.find(q => q.id === id)
-
-    if (question && totals[question.dimension] !== undefined) {
-      totals[question.dimension] += Number(value)
-    }
-
-  }
-
-  return totals
-
+const behaviourProfile = computed(() => {
+  return buildBehaviourProfile(answers.value)
 })
 
-const handleAnswer = async (questionId, value, index) => {
-
+const handleAnswer = async (
+    questionId,
+    value,
+    index
+) => {
   answers.value[questionId] = value
 
   await nextTick()
 
-  const nextQuestion = questionTextRefs.value[index + 1]
+  const nextQuestion =
+      questionTextRefs.value[index + 1]
 
   if (nextQuestion) {
-
     nextQuestion.scrollIntoView({
       behavior: "smooth",
       block: "start"
     })
 
     return
-
   }
 
-  if (quizComplete.value && !loading.value && !reportReady.value) {
-
+  if (
+      quizComplete.value &&
+      !loading.value &&
+      !reportReady.value
+  ) {
     loading.value = true
 
     await nextTick()
 
     setTimeout(() => {
-
       loadingContainerRef.value?.scrollIntoView({
         behavior: "smooth",
         block: "center"
       })
-
     }, 150)
 
     await generateInitialReport()
-
   }
-
 }
 
 const fetchReport = async () => {
+  const response = await fetch(
+      "/api/expand-report-v2",
+      {
+        method: "POST",
 
-  const response = await fetch("/api/expand-report-v2", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      profile: scores.value
-    })
-  })
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          profile: behaviourProfile.value
+        })
+      }
+  )
 
   const raw = await response.text()
 
   if (!response.ok) {
     console.error("API ERROR:", raw)
-    throw new Error(`API failed with status ${response.status}`)
+
+    throw new Error(
+        `API failed with status ${response.status}`
+    )
   }
 
   try {
@@ -420,26 +395,30 @@ const fetchReport = async () => {
     console.error("INVALID JSON:", raw)
     throw err
   }
-
 }
 
 const generateInitialReport = async () => {
-
   loading.value = true
   showNextStep.value = false
   downloadComplete.value = false
 
-  loadingStage.value = "Analysing behavioural patterns..."
+  loadingStage.value =
+      "Analysing behavioural patterns..."
 
   try {
+    await new Promise(resolve =>
+        setTimeout(resolve, 700)
+    )
 
-    await new Promise(resolve => setTimeout(resolve, 700))
+    loadingStage.value =
+        "Mapping interruption loops..."
 
-    loadingStage.value = "Mapping interruption loops..."
+    await new Promise(resolve =>
+        setTimeout(resolve, 700)
+    )
 
-    await new Promise(resolve => setTimeout(resolve, 700))
-
-    loadingStage.value = "Generating reflection..."
+    loadingStage.value =
+        "Generating reflection..."
 
     const data = await fetchReport()
 
@@ -454,39 +433,31 @@ const generateInitialReport = async () => {
     activeView.value = "overview"
 
     reportReady.value = true
-
     loading.value = false
 
     await nextTick()
 
     setTimeout(() => {
-
       reportContainerRef.value?.scrollIntoView({
         behavior: "smooth",
         block: "start"
       })
-
     }, 250)
 
     saveReflectionLocally()
-
   } catch (err) {
-
     console.error("Generate error:", err)
 
     loading.value = false
 
     alert("Something went wrong. Check console.")
-
   }
-
 }
 
 const saveReflectionLocally = () => {
-
   const reflectionData = {
     createdAt: new Date().toISOString(),
-    scores: scores.value,
+    profile: behaviourProfile.value,
     reports: reportTexts.value
   }
 
@@ -494,36 +465,43 @@ const saveReflectionLocally = () => {
       "mindworks_latest_reflection",
       JSON.stringify(reflectionData)
   )
-
 }
 
 const unlockReport = async () => {
-
   emailError.value = ""
 
-  if (!email.value || !email.value.includes("@")) {
+  if (
+      !email.value ||
+      !email.value.includes("@")
+  ) {
+    emailError.value =
+        "Please enter a valid email address."
 
-    emailError.value = "Please enter a valid email address."
     return
-
   }
 
   try {
+    const response = await fetch(
+        "/api/capture-email",
+        {
+          method: "POST",
 
-    const response = await fetch("/api/capture-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: email.value
-      })
-    })
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            email: email.value
+          })
+        }
+    )
 
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(data.error || "Failed")
+      throw new Error(
+          data.error || "Failed"
+      )
     }
 
     emailSubmitted.value = true
@@ -531,23 +509,19 @@ const unlockReport = async () => {
     await nextTick()
 
     window.scrollTo({
-      top: reportContainerRef.value.offsetTop - 100,
+      top:
+          reportContainerRef.value.offsetTop - 100,
       behavior: "smooth"
     })
-
   } catch (err) {
-
     console.error("Unlock error:", err)
 
     emailError.value =
         "Something went wrong. Please try again."
-
   }
-
 }
 
 const selectView = async (viewKey) => {
-
   activeView.value = viewKey
 
   await nextTick()
@@ -555,7 +529,8 @@ const selectView = async (viewKey) => {
   if (!reportContainerRef.value) return
 
   const targetY =
-      reportContainerRef.value.getBoundingClientRect().top +
+      reportContainerRef.value
+          .getBoundingClientRect().top +
       window.scrollY -
       120
 
@@ -563,7 +538,6 @@ const selectView = async (viewKey) => {
     top: targetY,
     behavior: "smooth"
   })
-
 }
 
 const activeText = computed(() =>
@@ -571,125 +545,121 @@ const activeText = computed(() =>
 )
 
 const activeViewLabel = computed(() =>
-    views.find(v => v.key === activeView.value)?.label || ""
+    views.find(v =>
+        v.key === activeView.value
+    )?.label || ""
 )
 
 const activeViewIntro = computed(() =>
-    views.find(v => v.key === activeView.value)?.intro || ""
+    views.find(v =>
+        v.key === activeView.value
+    )?.intro || ""
 )
 
 const escapeHtml = (text) => {
-
   return String(text || "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;")
-
 }
 
 const allowBasicFormatting = (text) => {
-
   if (!text) return ""
 
   return text
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replaceAll("&lt;strong&gt;", "<strong>")
       .replaceAll("&lt;/strong&gt;", "</strong>")
-
 }
 
 const normaliseBulletLine = (line) => {
-
   return line
       .replace(/^[-*•]\s*/, "")
       .trim()
-
 }
 
 const formattedTldrText = computed(() => {
-
   if (!reportTexts.value.tldr) return ""
 
-  const lines = reportTexts.value.tldr
-      .split("\n")
-      .map(line => line.trim())
-      .filter(Boolean)
+  const lines =
+      reportTexts.value.tldr
+          .split("\n")
+          .map(line => line.trim())
+          .filter(Boolean)
 
-  const looksLikeBullets = lines.some(line =>
-      /^[-*•]\s+/.test(line)
-  )
+  const looksLikeBullets =
+      lines.some(line =>
+          /^[-*•]\s+/.test(line)
+      )
 
   if (looksLikeBullets) {
-
     const items = lines
         .map(line => {
-
-          const safeLine = allowBasicFormatting(
-              escapeHtml(normaliseBulletLine(line))
-          )
+          const safeLine =
+              allowBasicFormatting(
+                  escapeHtml(
+                      normaliseBulletLine(line)
+                  )
+              )
 
           return `<li>${safeLine}</li>`
-
         })
         .join("")
 
-    return `<ul class="space-y-3 list-disc pl-5">${items}</ul>`
-
+    return `
+      <ul class="space-y-3 list-disc pl-5">
+        ${items}
+      </ul>
+    `
   }
 
-  const safeText = allowBasicFormatting(
-      escapeHtml(reportTexts.value.tldr)
-  )
+  const safeText =
+      allowBasicFormatting(
+          escapeHtml(reportTexts.value.tldr)
+      )
 
   return `<p>${safeText}</p>`
-
 })
 
 const formattedActiveText = computed(() => {
-
   if (!activeText.value) return ""
 
   return activeText.value
       .split("\n\n")
       .map(p => {
-
-        const safeParagraph = allowBasicFormatting(
-            escapeHtml(p)
-        )
+        const safeParagraph =
+            allowBasicFormatting(
+                escapeHtml(p)
+            )
 
         return `
-        <p class="mb-6 text-[1rem] leading-[1.9] text-stone-800">
-          ${safeParagraph}
-        </p>
-      `
-
+          <p class="mb-6 text-[1rem] leading-[1.9] text-stone-800">
+            ${safeParagraph}
+          </p>
+        `
       })
       .join("")
-
 })
-const formatParagraphsForDownload = (text) => {
 
+const formatParagraphsForDownload = (text) => {
   if (!text) return ""
 
   return text
       .split("\n\n")
       .map(p => {
-
-        const safeParagraph = allowBasicFormatting(
-            escapeHtml(p)
-        )
+        const safeParagraph =
+            allowBasicFormatting(
+                escapeHtml(p)
+            )
 
         return `<p>${safeParagraph}</p>`
-
       })
       .join("")
-
 }
 
 const formatTldrForDownload = (text) => {
-
   if (!text) return ""
 
   const lines = text
@@ -697,40 +667,38 @@ const formatTldrForDownload = (text) => {
       .map(line => line.trim())
       .filter(Boolean)
 
-  const looksLikeBullets = lines.some(line =>
-      /^[-*•]\s+/.test(line)
-  )
+  const looksLikeBullets =
+      lines.some(line =>
+          /^[-*•]\s+/.test(line)
+      )
 
   if (looksLikeBullets) {
-
     const items = lines
         .map(line => {
-
-          const safeLine = allowBasicFormatting(
-              escapeHtml(normaliseBulletLine(line))
-          )
+          const safeLine =
+              allowBasicFormatting(
+                  escapeHtml(
+                      normaliseBulletLine(line)
+                  )
+              )
 
           return `<li>${safeLine}</li>`
-
         })
         .join("")
 
     return `<ul>${items}</ul>`
-
   }
 
-  const safeText = allowBasicFormatting(
-      escapeHtml(text)
-  )
+  const safeText =
+      allowBasicFormatting(
+          escapeHtml(text)
+      )
 
   return `<p>${safeText}</p>`
-
 }
 
 const downloadReflection = () => {
-
   try {
-
     const html = `<!DOCTYPE html>
 <html>
 <head>
@@ -871,15 +839,20 @@ ${allowBasicFormatting(
 
     const blob = new Blob(
         [html],
-        { type: "text/html;charset=utf-8" }
+        {
+          type: "text/html;charset=utf-8"
+        }
     )
 
-    const url = URL.createObjectURL(blob)
+    const url =
+        URL.createObjectURL(blob)
 
-    const link = document.createElement("a")
+    const link =
+        document.createElement("a")
 
     link.href = url
-    link.download = "mindworks-reflection.html"
+    link.download =
+        "mindworks-reflection.html"
 
     document.body.appendChild(link)
 
@@ -893,77 +866,167 @@ ${allowBasicFormatting(
     showNextStep.value = false
 
     setTimeout(() => {
-
       downloadComplete.value = false
       showNextStep.value = true
-
     }, 1800)
-
   } catch (err) {
+    console.error(
+        "Download failed:",
+        err
+    )
 
-    console.error("Download failed:", err)
     alert("Download failed.")
-
   }
-
 }
-const dominantPattern = computed(() => {
-
-  const sorted = [...Object.entries(scores.value)]
-      .sort((a, b) => b[1] - a[1])
-
-  return sorted[0]?.[0] || "general"
-
-})
 
 const adaptiveMessage = computed(() => {
+  const profile =
+      behaviourProfile.value
 
-  switch (dominantPattern.value) {
+  if (profile.veryLowSignal) {
+    return {
+      line1:
+          "No strong continuity pattern emerged from these responses.",
+      line2:
+          "The reflection remains limited because the behavioural signal is low.",
+      line3:
+          "That absence is still useful information."
+    }
+  }
 
-    case "inattention":
+  if (
+      profile.responseStyle ===
+      "minimal_endorsement"
+  ) {
+    return {
+      line1:
+          "The responses did not show a consolidated interruption pattern.",
+      line2:
+          "There may be occasional friction, but not a strong continuity failure.",
+      line3:
+          "The next step is only relevant if the reflection still felt recognisable."
+    }
+  }
+
+  if (
+      profile.responseStyle ===
+      "low_frequency_recognition"
+  ) {
+    return {
+      line1:
+          "The signal is present, but not strongly consolidated.",
+      line2:
+          "Continuity may break in specific contexts rather than across the whole day.",
+      line3:
+          "Those smaller breaks can still be worth observing directly."
+    }
+  }
+
+  const profileKey =
+      profile.profiles?.[0]?.key
+
+  switch (profileKey) {
+    case "pressure_sustained_functioning":
       return {
-        line1: "Your attention drops before your intention completes.",
-        line2: "You do not lose direction — you lose continuity.",
-        line3: "That break repeats unless it is worked with directly."
+        line1:
+            "Pressure temporarily stabilises movement.",
+        line2:
+            "Without urgency, continuity weakens more quickly.",
+        line3:
+            "That cycle often creates exhaustion without real stability."
       }
 
-    case "executive_function":
+    case "fragmented_completion":
       return {
-        line1: "You usually know what needs to happen.",
-        line2: "The difficulty is entering and remaining inside it.",
-        line3: "That gap rarely closes through effort alone."
+        line1:
+            "Tasks remain mentally active long after attention has drifted.",
+        line2:
+            "Progress repeatedly fragments before completion settles.",
+        line3:
+            "That unfinished carryover quietly accumulates."
       }
 
-    case "impulsivity":
+    case "restart_loop_instability":
       return {
-        line1: "Your system often moves before it stabilises.",
-        line2: "Action arrives faster than reflection.",
-        line3: "That speed creates patterns you do not fully hold."
+        line1:
+            "Momentum repeatedly resets before becoming fully established.",
+        line2:
+            "Restarting creates movement without preserving continuity.",
+        line3:
+            "The cycle repeats even with strong intention."
       }
 
-    case "emotional_regulation":
+    case "internally_accelerated_functioning":
       return {
-        line1: "Your state shifts quickly under pressure.",
-        line2: "Once activated, it reorganises attention.",
-        line3: "That loop repeats unless recognised earlier."
+        line1:
+            "Internal movement rarely settles fully.",
+        line2:
+            "Mental acceleration continues even during rest.",
+        line3:
+            "Sustained continuity becomes harder to stabilise over time."
       }
 
-    case "hyperactivity":
+    case "high_effort_stagnation":
       return {
-        line1: "Your system struggles to settle into sustained contact.",
-        line2: "Stillness can begin to feel unfamiliar.",
-        line3: "That constant activation disrupts continuity."
+        line1:
+            "Effort remains high while completion stays unstable.",
+        line2:
+            "Activity can create the feeling of progress without enough closure.",
+        line3:
+            "That gap quietly drains attention."
+      }
+
+    case "fragmented_attention_flow":
+      return {
+        line1:
+            "Attention moves faster than continuity can stabilise.",
+        line2:
+            "Shifts in focus repeatedly interrupt the intended line of action.",
+        line3:
+            "Completion becomes harder when every movement opens another direction."
+      }
+
+    case "emotionally_disrupted_continuity":
+      return {
+        line1:
+            "Emotional friction interrupts continuity before the task is complete.",
+        line2:
+            "Once activated, attention becomes harder to return deliberately.",
+        line3:
+            "The task remains present, but steadiness does not fully return."
       }
 
     default:
       return {
-        line1: "You can recognise the pattern clearly.",
-        line2: "The difficulty is what happens when continuity breaks.",
-        line3: "That interruption tends to repeat automatically."
+        line1:
+            "Interrupted continuity appears more consistently than stable progression.",
+        line2:
+            "Attention and effort repeatedly separate from intended direction.",
+        line3:
+            "That instability gradually reshapes daily functioning."
       }
+  }
+})
 
+const programmeIntro = computed(() => {
+  const profile =
+      behaviourProfile.value
+
+  if (
+      profile.veryLowSignal ||
+      profile.responseStyle === "minimal_endorsement"
+  ) {
+    return "The six-week guided programme is designed for people who recognise recurring continuity breaks strongly enough to observe them in real time."
   }
 
+  if (
+      profile.responseStyle ===
+      "low_frequency_recognition"
+  ) {
+    return "The six-week guided programme continues this work through structured observation of the specific contexts where continuity begins to break."
+  }
+
+  return "The six-week guided programme continues this work through structured observation, embodied attention practices, and continuity exercises."
 })
 
 const goToProgramme = () => {

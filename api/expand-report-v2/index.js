@@ -24,231 +24,45 @@ Do NOT:
 
 Do NOT write:
 - cinematic descriptions
-- sensory imagery
-- body-language narration
-- decorative prose
 - fictional scenes
+- sensory imagery
+- decorative prose
 - metaphors
 - symbolic imagery
 
-Avoid repeatedly describing:
-- hands
-- eyes
-- fingers
-- posture
-- glances
-- staring
-- hovering
-- dramatic pauses
-
-Avoid abstract behavioural language like:
-- task engagement
-- behavioural inconsistency
-- momentum disruption
-- attention regulation
-- cognitive patterns
-- follow-through difficulties
-
 Prefer:
-- short direct observations
-- plain behavioural language
-- interruption patterns
-- unfinished actions
-- stalled momentum
-- repeated restarting
-- drifting attention
-- friction between intention and action
-
-The writing must:
-- stay behaviourally precise
-- stay psychologically recognisable
-- stay compressed
-- stay modern
-- stay concrete
-- sound direct and observant
-
-Write shorter sentences.
-
-Avoid repetition between paragraphs.
-
-Do NOT begin consecutive paragraphs with:
-- You
-- Tasks
-- Attention
-- Momentum
-
-Avoid repeating sentence openings.
-
-Vary sentence rhythm:
-- some short
-- some medium-length
-- occasional abrupt behavioural conclusions
-
-Use markdown bold VERY SPARSELY.
-
-Example:
-**interrupted effort**
-
-Rules:
-- maximum 1-2 bold phrases per paragraph
-- short phrases only
-- never entire sentences
-- never motivational wording
-
-Do not write like a therapist.
-Do not write like an article.
-Do not write like fiction.
-
-Write like blunt behavioural recognition.
-`
-
-const MODE_PROMPTS = {
-
-    tldr: `
-${CORE_RULES}
-
-Goal:
-Write a compressed behavioural recognition summary.
-
-Length:
-Maximum 4 bullet points.
-
-Formatting:
-- use bullet points only
-- one sentence per bullet
-- keep bullets visually short
-- at least one bullet should be very short
-- final bullet should land sharply
-
-Rules:
-- avoid repeated openings
-- avoid repeated cadence
-- avoid abstraction
-- avoid behavioural jargon
-- avoid filler wording
-- avoid scene-setting
-- avoid descriptive storytelling
-
-Focus on:
-- broken continuity
-- fragmented effort
-- unstable momentum
-- repeated restarting
-- partial engagement
-- attention drift
-- inconsistent completion
-
-This should feel:
-- sharp
-- compressed
-- recognisable
-- direct
-
-Tone:
-measured
-unsentimental
-`,
-
-    overview: `
-${CORE_RULES}
-
-Goal:
-Describe how these patterns appear behaviourally in ordinary life.
-
-Write 4 paragraphs only.
-
-Each paragraph must describe:
-- a DIFFERENT behavioural pattern
-- a DIFFERENT interruption style
-- a DIFFERENT form of inconsistency
-
-Focus on:
-- abandoning actions midway
-- switching too early
-- hovering around tasks without progressing
-- repeatedly resetting momentum
-- drifting into low-priority activity
+- behavioural precision
+- interrupted continuity
+- unfinished effort
+- stalled progression
+- restart cycles
+- drift patterns
+- fragmented momentum
+- unstable follow-through
+- behavioural contradiction
+- practical consequences
 
 Avoid:
-- repeated "you start tasks" phrasing
-- repeated mention of distraction
-- repetitive paragraph openings
-
-This section should feel:
-- observational
-- exposing
-- behaviourally specific
-`,
-
-    functioning: `
-${CORE_RULES}
-
-Goal:
-Show the practical cumulative effect on daily functioning.
-
-Write 4 paragraphs only.
-
-Focus on:
-- backlog accumulation
-- unanswered communication
-- unfinished admin
-- inconsistent routines
-- time loss
-- forgotten obligations
-- fragmented energy
-- remaining busy without meaningful advancement
-
-This section must focus on consequences rather than behaviour itself.
-
-Avoid:
-- repeating overview patterns
-- fictional scenes
-- repetitive sentence openings
-
-This section should feel:
-- practical
-- familiar
-- quietly exhausting
-`,
-
-    patterns: `
-${CORE_RULES}
-
-Goal:
-Show the contradictions created by these behavioural cycles.
-
-Write 3 shorter paragraphs only.
-
-Focus on contradictions like:
-- pressure creates movement but destabilises consistency
-- avoidance reduces strain while increasing future pressure
-- urgency creates action without continuity
-- restarting creates the feeling of effort without closure
-- activity disguises lack of sustained progress
-
-Avoid:
-- behavioural storytelling
-- repetitive openings
+- generic ADHD language
 - repetitive cadence
+- repetitive openings
+- abstraction
+- personality typing
+- diagnostic framing
 
-Do not resolve the contradictions.
+Keep sentences compressed.
 
-Tone:
-measured
-direct
-behavioural
-unsentimental
+Write like direct behavioural recognition.
 `
-}
 
-function sanitizeProfile(profile) {
+function sanitiseProfile(profile) {
 
     try {
 
         const json = JSON.stringify(profile)
 
-        if (json.length > 12000) {
-            return json.slice(0, 12000)
+        if (json.length > 30000) {
+            return json.slice(0, 30000)
         }
 
         return json
@@ -258,42 +72,394 @@ function sanitizeProfile(profile) {
         return ""
 
     }
+
 }
 
-async function generateSection(prompt, profile, apiKey) {
+function buildSystemPrompt(section) {
+
+    const prompts = {
+
+        tldr: `
+${CORE_RULES}
+
+Goal:
+Write compressed behavioural recognition.
+
+Formatting:
+- exactly 4 bullet points
+- short bullets only
+- one sentence each
+- final bullet should land sharply
+
+Focus on:
+- interruption
+- unfinished progression
+- restart loops
+- drift patterns
+- unstable continuity
+
+Avoid:
+- abstraction
+- filler wording
+- interpretation
+- emotional reassurance
+`,
+
+        overview: `
+${CORE_RULES}
+
+Goal:
+Describe how continuity repeatedly breaks during ordinary effort.
+
+Write 4 paragraphs.
+
+Each paragraph should describe:
+- a different interruption pattern
+- a different behavioural instability
+- a different continuity failure
+
+Focus on:
+- drifting away from intended action
+- stalled progression
+- partial engagement
+- repeated resetting
+- unfinished movement
+- fragmented focus
+
+Avoid:
+- repeated paragraph openings
+- repeated cadence
+- broad personality language
+`,
+
+        functioning: `
+${CORE_RULES}
+
+Goal:
+Describe cumulative practical consequences.
+
+Write 4 paragraphs.
+
+Focus on:
+- backlog accumulation
+- lingering unfinished obligations
+- inconsistent routines
+- mental carryover
+- exhaustion accumulation
+- remaining active without meaningful completion
+- catch-up cycles
+- fragmented energy allocation
+
+Avoid:
+- repeating overview phrasing
+- motivational tone
+- emotional reassurance
+`,
+
+        patterns: `
+${CORE_RULES}
+
+Goal:
+Describe behavioural contradictions.
+
+Write 3 shorter paragraphs.
+
+Focus on contradictions like:
+- urgency creates movement without continuity
+- restarting creates the feeling of effort
+- activity disguises lack of completion
+- pressure temporarily stabilises behaviour
+- unfinished tasks remain mentally active
+- relief creates future overload
+
+Do not resolve the contradictions.
+`
+
+    }
+
+    return prompts[section]
+
+}
+
+function buildProfileContext(profile) {
+
+    const profiles =
+        profile.profiles || []
+
+    const contradictions =
+        profile.contradictions || []
+
+    const topTraits =
+        profile.topTraits || []
+
+    const behaviouralSummary =
+        profile.behaviouralSummary || {}
+
+    return `
+PROFILE SIGNALS
+
+Response style:
+${profile.responseStyle || "unknown"}
+
+Low signal:
+${profile.lowSignal ? "true" : "false"}
+
+Very low signal:
+${profile.veryLowSignal ? "true" : "false"}
+
+Total signal strength:
+${profile.totalSignalStrength || 0}
+
+Dominant pattern:
+${profile.dominantPattern || "unknown"}
+
+Profiles:
+${JSON.stringify(profiles, null, 2)}
+
+Top behavioural traits:
+${JSON.stringify(topTraits, null, 2)}
+
+Contradictions:
+${JSON.stringify(contradictions, null, 2)}
+
+Behavioural summary:
+${JSON.stringify(behaviouralSummary, null, 2)}
+`
+
+}
+
+function buildConditionalInstructions(profile) {
+
+    const instructions = []
+
+    if (profile.veryLowSignal) {
+
+        instructions.push(`
+The profile shows very low behavioural endorsement.
+
+IMPORTANT:
+- avoid intensity
+- avoid dysfunction framing
+- avoid certainty
+- avoid cumulative overwhelm descriptions
+- avoid severe continuity breakdown language
+- avoid exaggerated impairment
+- write in a lighter and more observational tone
+`)
+    }
+
+    if (
+        profile.responseStyle ===
+        "minimal_endorsement"
+    ) {
+
+        instructions.push(`
+Most responses were "never."
+
+Avoid:
+- describing strong instability
+- describing severe fragmentation
+- describing persistent dysfunction
+
+The profile should feel comparatively low intensity.
+`)
+    }
+
+    if (
+        profile.responseStyle ===
+        "mixed_inconsistency"
+    ) {
+
+        instructions.push(`
+The profile contains mixed endorsement patterns.
+
+Focus on:
+- inconsistency
+- fluctuation
+- intermittent continuity breakdown
+- unstable follow-through
+- variable engagement
+`)
+    }
+
+    if (
+        profile.responseStyle ===
+        "high_pattern_recognition"
+    ) {
+
+        instructions.push(`
+The profile shows strong pattern endorsement.
+
+You may:
+- describe more consolidated behavioural loops
+- describe stronger continuity instability
+- describe stronger cumulative consequences
+
+Still avoid diagnosis language.
+`)
+    }
+
+    if (
+        profile.profiles?.some(
+            p =>
+                p.key ===
+                "pressure_sustained_functioning"
+        )
+    ) {
+
+        instructions.push(`
+Pressure-dependent functioning is strongly present.
+
+Focus on:
+- urgency dependence
+- delayed activation
+- pressure-driven movement
+- exhaustion after mobilisation
+`)
+    }
+
+    if (
+        profile.profiles?.some(
+            p =>
+                p.key ===
+                "fragmented_completion"
+        )
+    ) {
+
+        instructions.push(`
+Fragmented completion patterns are strongly present.
+
+Focus on:
+- unfinished progression
+- repeated reopening
+- stalled completion
+- lingering mental carryover
+`)
+    }
+
+    if (
+        profile.profiles?.some(
+            p =>
+                p.key ===
+                "internally_accelerated_functioning"
+        )
+    ) {
+
+        instructions.push(`
+Internal acceleration is strongly present.
+
+Focus on:
+- inability to settle fully
+- ongoing internal movement
+- reduced recovery
+- difficulty sustaining stillness
+`)
+    }
+
+    return instructions.join("\n\n")
+
+}
+
+async function generateSection(
+    section,
+    profile,
+    apiKey
+) {
 
     const response = await fetch(
         "https://api.openai.com/v1/chat/completions",
         {
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${apiKey}`
             },
+
             body: JSON.stringify({
+
                 model: "gpt-4.1-mini",
-                temperature: 0.5,
-                max_tokens: 450,
+
+                temperature: 0.8,
+
+                max_tokens: 700,
+
                 messages: [
+
                     {
                         role: "system",
-                        content: prompt
+                        content:
+                            buildSystemPrompt(section)
                     },
+
+                    {
+                        role: "system",
+                        content:
+                            buildConditionalInstructions(profile)
+                    },
+
                     {
                         role: "user",
-                        content: `Behavioural profile:\n${profile}`
+
+                        content:
+                            `${buildProfileContext(profile)}
+
+IMPORTANT:
+
+Only describe patterns strongly supported by the profile.
+
+Do NOT:
+- invent instability
+- exaggerate dysfunction
+- describe traits absent from the profile
+- collapse all users into the same behavioural narrative
+
+Prioritise:
+- strongest behavioural mechanisms
+- contradiction density
+- continuity instability
+- restart behaviour
+- interruption patterns
+- pressure dependence
+- fragmentation
+- behavioural carryover
+`
                     }
+
                 ]
+
             })
         }
     )
 
-    const data = await response.json()
+    if (!response.ok) {
 
-    return data?.choices?.[0]?.message?.content?.trim() || ""
+        const text =
+            await response.text()
+
+        console.error(
+            "OPENAI ERROR:",
+            text
+        )
+
+        throw new Error(text)
+
+    }
+
+    const data =
+        await response.json()
+
+    return (
+        data?.choices?.[0]?.message?.content?.trim() ||
+        ""
+    )
+
 }
 
-export default async function handler(req, res) {
+export default async function handler(
+    req,
+    res
+) {
 
     try {
 
@@ -305,7 +471,19 @@ export default async function handler(req, res) {
 
         }
 
-        const { profile } = req.body || {}
+        const apiKey =
+            process.env.OPENAI_API_KEY
+
+        if (!apiKey) {
+
+            return res.status(500).json({
+                error: "Missing OpenAI API key"
+            })
+
+        }
+
+        const { profile } =
+        req.body || {}
 
         if (!profile) {
 
@@ -315,9 +493,11 @@ export default async function handler(req, res) {
 
         }
 
-        const serializedProfile = sanitizeProfile(profile)
+        const serialisedProfile =
+            sanitiseProfile(profile)
 
-        const apiKey = process.env.OPENAI_API_KEY
+        const parsedProfile =
+            JSON.parse(serialisedProfile)
 
         const [
             tldr,
@@ -327,26 +507,26 @@ export default async function handler(req, res) {
         ] = await Promise.all([
 
             generateSection(
-                MODE_PROMPTS.tldr,
-                serializedProfile,
+                "tldr",
+                parsedProfile,
                 apiKey
             ),
 
             generateSection(
-                MODE_PROMPTS.overview,
-                serializedProfile,
+                "overview",
+                parsedProfile,
                 apiKey
             ),
 
             generateSection(
-                MODE_PROMPTS.functioning,
-                serializedProfile,
+                "functioning",
+                parsedProfile,
                 apiKey
             ),
 
             generateSection(
-                MODE_PROMPTS.patterns,
-                serializedProfile,
+                "patterns",
+                parsedProfile,
                 apiKey
             )
 
@@ -360,17 +540,22 @@ export default async function handler(req, res) {
             patterns,
 
             closing:
-                "Recognition alone rarely interrupts these cycles.\n\n**Repeated restarting** and unstable momentum usually continue automatically unless behaviour itself changes.\n\nThe MindWorks programme focuses on continuity, sustained attention, behavioural observation, and reducing interruption patterns in real time."
+                "Recognition alone rarely interrupts these cycles.\n\nStable continuity usually requires repeated behavioural observation in real time.\n\nThe MindWorks programme focuses on continuity, interruption patterns, sustained attention, and reducing automatic behavioural drift."
 
         })
 
     } catch (err) {
 
-        console.error("SERVER CRASH:", err)
+        console.error(
+            "REPORT GENERATION ERROR:",
+            err
+        )
 
         return res.status(500).json({
-            error: "Server crashed"
+            error:
+                "Failed to generate reflection"
         })
 
     }
+
 }
