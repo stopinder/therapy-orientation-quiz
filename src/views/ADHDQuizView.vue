@@ -47,7 +47,7 @@
         >
 
           <p
-              class="scroll-mt-36 text-[1.3rem] leading-[1.7] text-stone-800"
+              class="scroll-mt-52 md:scroll-mt-36 text-[1.3rem] leading-[1.7] text-stone-800"
               :ref="el => questionTextRefs[index] = el"
           >
             {{ question.text }}
@@ -422,7 +422,7 @@ const handleAnswer = async (questionId, value, index) => {
 
     nextQuestion.scrollIntoView({
       behavior: "smooth",
-      block: "center"
+      block: "start"
     })
 
     return
