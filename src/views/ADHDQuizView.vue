@@ -116,19 +116,7 @@
             class="mx-auto mt-12 max-w-prose scroll-mt-36"
         >
 
-          <div
-              v-if="reportTexts.tldr"
-              class="mb-10 rounded-2xl border border-slate-200 bg-slate-100 p-8"
-          >
 
-            <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
-              TL;DR
-            </h2>
-
-            <div
-                class="text-[1rem] leading-[1.85] text-slate-700"
-                v-html="formattedTldrText"
-            ></div>
 
           </div>
 
@@ -186,7 +174,19 @@
           </div>
 
           <div v-if="emailSubmitted">
+            <div
+                v-if="reportTexts.tldr"
+                class="mb-10 rounded-2xl border border-slate-200 bg-slate-100 p-8"
+            >
 
+              <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
+                TL;DR
+              </h2>
+
+              <div
+                  class="text-[1rem] leading-[1.85] text-slate-700"
+                  v-html="formattedTldrText"
+              ></div>
             <div class="sticky top-16 z-30 mb-8 border-y border-stone-200 bg-stone-50/95 py-4 backdrop-blur">
 
               <div class="flex flex-wrap justify-center gap-2">
