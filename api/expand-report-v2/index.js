@@ -1,3 +1,4 @@
+
 export const config = {
     runtime: "nodejs"
 }
@@ -6,9 +7,6 @@ const CORE_RULES = `
 Write in second person using "you" only occasionally.
 
 Do NOT:
-- explain behaviour
-- analyse behaviour
-- interpret motives
 - diagnose
 - mention disorders
 - mention symptoms
@@ -21,6 +19,8 @@ Do NOT:
 - sound inspirational
 - sound poetic
 - sound literary
+- explain motives
+- invent causes
 
 Do NOT write:
 - cinematic descriptions
@@ -31,16 +31,12 @@ Do NOT write:
 - symbolic imagery
 
 Prefer:
-- behavioural precision
-- interrupted continuity
-- unfinished effort
-- stalled progression
-- restart cycles
-- drift patterns
-- fragmented momentum
-- unstable follow-through
-- behavioural contradiction
+- plain behavioural observation
+- concrete wording
+- short sentences
+- direct recognition
 - practical consequences
+- measured specificity
 
 Avoid:
 - generic ADHD language
@@ -53,6 +49,37 @@ Avoid:
 Keep sentences compressed.
 
 Write like direct behavioural recognition.
+`
+
+const LOW_SIGNAL_RULES = `
+This profile shows minimal behavioural endorsement.
+
+This is NOT a mild dysfunction profile.
+
+Treat it as absence of a strong continuity-disruption signal.
+
+Do NOT describe:
+- repeated restarting
+- fragmented momentum
+- stalled progression
+- unfinished carryover
+- unstable follow-through
+- backlog accumulation
+- pressure dependence
+- task collapse
+- persistent interruption
+- cumulative exhaustion
+
+Prefer:
+- stable continuity
+- ordinary variation
+- low behavioural signal
+- limited interruption
+- adequate follow-through
+- no strong pattern emerging
+- little evidence of recurring disruption
+
+The writing should feel sparse, restrained, and low-intensity.
 `
 
 function sanitiseProfile(profile) {
@@ -75,7 +102,116 @@ function sanitiseProfile(profile) {
 
 }
 
-function buildSystemPrompt(section) {
+function isLowSignalProfile(profile) {
+
+    return Boolean(
+        profile?.veryLowSignal ||
+        profile?.responseStyle === "minimal_endorsement"
+    )
+
+}
+
+function buildSystemPrompt(section, profile) {
+
+    const lowSignal =
+        isLowSignalProfile(profile)
+
+    if (lowSignal) {
+
+        const lowSignalPrompts = {
+
+            tldr: `
+${CORE_RULES}
+
+${LOW_SIGNAL_RULES}
+
+Goal:
+Write compressed low-signal behavioural recognition.
+
+Formatting:
+- exactly 4 bullet points
+- short bullets only
+- one sentence each
+
+Focus on:
+- no dominant interruption pattern
+- stable or adequate continuity
+- low endorsement
+- limited evidence of recurring disruption
+
+Do not turn absence into mild dysfunction.
+`,
+
+            overview: `
+${CORE_RULES}
+
+${LOW_SIGNAL_RULES}
+
+Goal:
+Describe the absence of a strong continuity-disruption pattern.
+
+Write 4 short paragraphs.
+
+Each paragraph should describe:
+- low behavioural signal
+- stable or adequate continuity
+- limited interruption
+- no consolidated pattern
+
+Do NOT describe continuity as repeatedly breaking.
+
+This section should feel like:
+- low intensity
+- restrained
+- accurate to minimal endorsement
+- non-pathologising
+`,
+
+            functioning: `
+${CORE_RULES}
+
+${LOW_SIGNAL_RULES}
+
+Goal:
+Describe daily functioning where no strong disruption pattern emerged.
+
+Write 4 short paragraphs.
+
+Focus on:
+- responsibilities not showing strong disruption
+- limited carryover
+- ordinary interruptions resolving adequately
+- no clear accumulation pattern
+- no strong evidence of repeated functional cost
+
+Do NOT describe backlog, exhaustion, or collapse unless strongly supported.
+`,
+
+            patterns: `
+${CORE_RULES}
+
+${LOW_SIGNAL_RULES}
+
+Goal:
+Describe the lack of a strong contradiction pattern.
+
+Write 3 short paragraphs.
+
+Focus on:
+- no clear pressure-dependence loop
+- no strong restart cycle
+- no consolidated drift pattern
+- no dominant behavioural contradiction
+
+Do not resolve anything.
+Do not create a problem where the profile does not support one.
+`
+
+        }
+
+        return lowSignalPrompts[section]
+
+    }
 
     const prompts = {
 
@@ -232,37 +368,32 @@ function buildConditionalInstructions(profile) {
 
     const instructions = []
 
-    if (profile.veryLowSignal) {
+    if (isLowSignalProfile(profile)) {
 
         instructions.push(`
-The profile shows very low behavioural endorsement.
+HARD ROUTING:
+This is a low-signal report.
 
-IMPORTANT:
-- avoid intensity
-- avoid dysfunction framing
-- avoid certainty
-- avoid cumulative overwhelm descriptions
-- avoid severe continuity breakdown language
-- avoid exaggerated impairment
-- write in a lighter and more observational tone
+You must describe the ABSENCE of a strong pattern.
+
+Do NOT write a softened version of the high-signal report.
+
+Do NOT use:
+- "drifts"
+- "stalls"
+- "fragments"
+- "restarts"
+- "unfinished"
+- "breaks down"
+- "loses continuity"
+- "pressure creates movement"
+unless clearly framed as not strongly present.
+
+The output should make clear that no dominant continuity instability emerged.
 `)
-    }
 
-    if (
-        profile.responseStyle ===
-        "minimal_endorsement"
-    ) {
+        return instructions.join("\n\n")
 
-        instructions.push(`
-Most responses were "never."
-
-Avoid:
-- describing strong instability
-- describing severe fragmentation
-- describing persistent dysfunction
-
-The profile should feel comparatively low intensity.
-`)
     }
 
     if (
@@ -360,49 +491,37 @@ Focus on:
 
 }
 
-async function generateSection(
-    section,
-    profile,
-    apiKey
-) {
+function buildUserInstruction(profile) {
 
-    const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-            method: "POST",
+    if (isLowSignalProfile(profile)) {
 
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${apiKey}`
-            },
+        return `
+${buildProfileContext(profile)}
 
-            body: JSON.stringify({
+IMPORTANT:
 
-                model: "gpt-4.1-mini",
+This is a minimal endorsement profile.
 
-                temperature: 0.8,
+Only describe what the profile supports:
+- no strong continuity failure
+- no strong interruption loop
+- no strong restart cycle
+- no strong pressure-dependence pattern
+- no strong functional accumulation pattern
 
-                max_tokens: 700,
+Do NOT infer hidden dysfunction.
 
-                messages: [
+Do NOT make the report sound like mild ADHD.
 
-                    {
-                        role: "system",
-                        content:
-                            buildSystemPrompt(section)
-                    },
+Do NOT create a behavioural problem just because this is a quiz.
 
-                    {
-                        role: "system",
-                        content:
-                            buildConditionalInstructions(profile)
-                    },
+The correct output should feel materially different from a high-signal report.
+`
 
-                    {
-                        role: "user",
+    }
 
-                        content:
-                            `${buildProfileContext(profile)}
+    return `
+${buildProfileContext(profile)}
 
 IMPORTANT:
 
@@ -424,6 +543,56 @@ Prioritise:
 - fragmentation
 - behavioural carryover
 `
+
+}
+
+async function generateSection(
+    section,
+    profile,
+    apiKey
+) {
+
+    const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiKey}`
+            },
+
+            body: JSON.stringify({
+
+                model: "gpt-4.1-mini",
+
+                temperature:
+                    isLowSignalProfile(profile) ? 0.35 : 0.75,
+
+                max_tokens:
+                    isLowSignalProfile(profile) ? 450 : 700,
+
+                messages: [
+
+                    {
+                        role: "system",
+                        content:
+                            buildSystemPrompt(
+                                section,
+                                profile
+                            )
+                    },
+
+                    {
+                        role: "system",
+                        content:
+                            buildConditionalInstructions(profile)
+                    },
+
+                    {
+                        role: "user",
+                        content:
+                            buildUserInstruction(profile)
                     }
 
                 ]
@@ -453,6 +622,18 @@ Prioritise:
         data?.choices?.[0]?.message?.content?.trim() ||
         ""
     )
+
+}
+
+function buildClosing(profile) {
+
+    if (isLowSignalProfile(profile)) {
+
+        return "This reflection did not identify a strong continuity-disruption pattern.\n\nThe MindWorks programme is designed for people who recognise recurring interruption, restart cycles, or unstable follow-through strongly enough to observe them in real time."
+
+    }
+
+    return "Recognition alone rarely interrupts these cycles.\n\nStable continuity usually requires repeated behavioural observation in real time.\n\nThe MindWorks programme focuses on continuity, interruption patterns, sustained attention, and reducing automatic behavioural drift."
 
 }
 
@@ -540,7 +721,7 @@ export default async function handler(
             patterns,
 
             closing:
-                "Recognition alone rarely interrupts these cycles.\n\nStable continuity usually requires repeated behavioural observation in real time.\n\nThe MindWorks programme focuses on continuity, interruption patterns, sustained attention, and reducing automatic behavioural drift."
+                buildClosing(parsedProfile)
 
         })
 
