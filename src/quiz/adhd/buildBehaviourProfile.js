@@ -70,27 +70,61 @@ function getTotalSignalStrength(traits) {
 
 }
 
-function detectLowSignal(traits) {
+function calculateAverageResponse(answers) {
+
+    const values =
+        Object.values(answers)
+            .map(Number)
+
+    if (!values.length) return 0
+
+    const total =
+        values.reduce(
+            (sum, value) => sum + value,
+            0
+        )
+
+    return total / values.length
+
+}
+
+function detectLowSignal(
+    traits,
+    averageResponse
+) {
 
     const total =
         getTotalSignalStrength(traits)
 
-    return total < 110
+    return (
+        total < 125 ||
+        averageResponse < 1.35
+    )
 
 }
 
-function detectVeryLowSignal(traits) {
+function detectVeryLowSignal(
+    traits,
+    averageResponse
+) {
 
     const total =
         getTotalSignalStrength(traits)
 
-    return total < 45
+    return (
+        total < 60 ||
+        averageResponse < 0.7
+    )
 
 }
 
-function getTopTraits(traits, limit = 8) {
+function getTopTraits(
+    traits,
+    limit = 8
+) {
 
     return Object.entries(traits)
+        .filter(([, value]) => value > 0)
         .sort((a, b) => b[1] - a[1])
         .slice(0, limit)
         .map(([name, value]) => ({
@@ -100,7 +134,9 @@ function getTopTraits(traits, limit = 8) {
 
 }
 
-function calculateDimensionTotals(answers) {
+function calculateDimensionTotals(
+    answers
+) {
 
     const totals = {
         inattention: 0,
@@ -111,66 +147,87 @@ function calculateDimensionTotals(answers) {
         functional_impact: 0
     }
 
-    Object.entries(answers).forEach(([id, value]) => {
+    Object.entries(answers)
+        .forEach(([id, value]) => {
 
-        const question =
-            adhdQuestions.find(q => q.id === id)
+            const question =
+                adhdQuestions.find(
+                    q => q.id === id
+                )
 
-        if (!question) return
+            if (!question) return
 
-        if (totals[question.dimension] === undefined) {
-            return
-        }
+            if (
+                totals[
+                    question.dimension
+                    ] === undefined
+            ) {
+                return
+            }
 
-        totals[question.dimension] += Number(value)
+            totals[
+                question.dimension
+                ] += Number(value)
 
-    })
+        })
 
     return totals
 
 }
 
-function detectProfiles(traits, dimensionTotals) {
+function detectProfiles(
+    traits,
+    dimensionTotals,
+    lowSignal
+) {
+
+    if (lowSignal) {
+        return []
+    }
 
     const profiles = []
 
     if (
-        traits.urgencyDependence >= 45 &&
-        traits.restartCycling >= 35 &&
-        traits.exhaustionAccumulation >= 35
+        traits.urgencyDependence >= 48 &&
+        traits.restartCycling >= 38 &&
+        traits.exhaustionAccumulation >= 34
     ) {
 
         profiles.push({
             key: "pressure_sustained_functioning",
-            label: "Pressure-sustained functioning",
+            label:
+                "Pressure-sustained functioning",
             confidence: "high"
         })
 
     }
 
     if (
-        traits.continuityBreakdown >= 40 &&
-        traits.partialEngagement >= 28 &&
+        traits.continuityBreakdown >= 42 &&
+        traits.partialEngagement >= 30 &&
         traits.completionInstability >= 34
     ) {
 
         profiles.push({
             key: "fragmented_completion",
-            label: "Fragmented completion",
+            label:
+                "Fragmented completion",
             confidence: "high"
         })
 
     }
 
     if (
-        traits.internalAcceleration >= 34 &&
-        traits.mentalOveractivity >= 20 &&
-        traits.lowRecovery >= 14
+        traits.internalAcceleration >= 36 &&
+        traits.mentalOveractivity >= 22 &&
+        traits.lowRecovery >= 15
     ) {
 
         profiles.push({
-            key: "internally_accelerated_functioning",
-            label: "Internally accelerated functioning",
+            key:
+                "internally_accelerated_functioning",
+            label:
+                "Internally accelerated functioning",
             confidence: "moderate"
         })
 
@@ -182,21 +239,25 @@ function detectProfiles(traits, dimensionTotals) {
     ) {
 
         profiles.push({
-            key: "restart_loop_instability",
-            label: "Restart-loop instability",
+            key:
+                "restart_loop_instability",
+            label:
+                "Restart-loop instability",
             confidence: "high"
         })
 
     }
 
     if (
-        traits.pseudoProductivity >= 28 &&
+        traits.pseudoProductivity >= 30 &&
         traits.exhaustionAccumulation >= 30
     ) {
 
         profiles.push({
-            key: "high_effort_stagnation",
-            label: "High-effort stagnation",
+            key:
+                "high_effort_stagnation",
+            label:
+                "High-effort stagnation",
             confidence: "moderate"
         })
 
@@ -208,21 +269,26 @@ function detectProfiles(traits, dimensionTotals) {
     ) {
 
         profiles.push({
-            key: "fragmented_attention_flow",
-            label: "Fragmented attention flow",
+            key:
+                "fragmented_attention_flow",
+            label:
+                "Fragmented attention flow",
             confidence: "high"
         })
 
     }
 
     if (
-        dimensionTotals.emotional_regulation >= 8 &&
+        dimensionTotals
+            .emotional_regulation >= 8 &&
         traits.emotionalInterference >= 22
     ) {
 
         profiles.push({
-            key: "emotionally_disrupted_continuity",
-            label: "Emotionally disrupted continuity",
+            key:
+                "emotionally_disrupted_continuity",
+            label:
+                "Emotionally disrupted continuity",
             confidence: "moderate"
         })
 
@@ -232,13 +298,20 @@ function detectProfiles(traits, dimensionTotals) {
 
 }
 
-function detectContradictions(traits) {
+function detectContradictions(
+    traits,
+    lowSignal
+) {
+
+    if (lowSignal) {
+        return []
+    }
 
     const contradictions = []
 
     if (
-        traits.compensatoryPressure >= 20 &&
-        traits.completionInstability >= 20
+        traits.compensatoryPressure >= 22 &&
+        traits.completionInstability >= 22
     ) {
 
         contradictions.push(
@@ -249,7 +322,7 @@ function detectContradictions(traits) {
 
     if (
         traits.pressureActivation >= 20 &&
-        traits.restartCycling >= 20
+        traits.restartCycling >= 22
     ) {
 
         contradictions.push(
@@ -259,7 +332,7 @@ function detectContradictions(traits) {
     }
 
     if (
-        traits.partialEngagement >= 16 &&
+        traits.partialEngagement >= 18 &&
         traits.pseudoProductivity >= 18
     ) {
 
@@ -270,7 +343,7 @@ function detectContradictions(traits) {
     }
 
     if (
-        traits.internalAcceleration >= 20 &&
+        traits.internalAcceleration >= 22 &&
         traits.lowRecovery >= 12
     ) {
 
@@ -281,7 +354,7 @@ function detectContradictions(traits) {
     }
 
     if (
-        traits.activationFriction >= 20 &&
+        traits.activationFriction >= 22 &&
         traits.urgencyDependence >= 18
     ) {
 
@@ -295,33 +368,53 @@ function detectContradictions(traits) {
 
 }
 
-function detectDominantPattern(traits) {
+function detectDominantPattern(
+    traits,
+    lowSignal
+) {
+
+    if (lowSignal) {
+        return "stable_continuity"
+    }
 
     const sorted =
         getTopTraits(traits, 1)
 
-    return sorted[0]?.name ||
+    return (
+        sorted[0]?.name ||
         "continuityBreakdown"
+    )
 
 }
 
-function getQuestionSignals(answers) {
+function getQuestionSignals(
+    answers,
+    lowSignal
+) {
+
+    if (lowSignal) {
+        return []
+    }
 
     return adhdQuestions
         .map(question => ({
             id: question.id,
             text: question.text,
-            group: question.group,
             value: Number(
-                answers[question.id] || 0
+                answers[
+                    question.id
+                    ] || 0
             )
         }))
+        .filter(item => item.value >= 2)
         .sort((a, b) => b.value - a.value)
         .slice(0, 12)
 
 }
 
-function calculateResponseDistribution(answers) {
+function calculateResponseDistribution(
+    answers
+) {
 
     const distribution = {
         never: 0,
@@ -331,42 +424,47 @@ function calculateResponseDistribution(answers) {
         veryOften: 0
     }
 
-    Object.values(answers).forEach(value => {
+    Object.values(answers)
+        .forEach(value => {
 
-        switch (Number(value)) {
+            switch (Number(value)) {
 
-            case 0:
-                distribution.never++
-                break
+                case 0:
+                    distribution.never++
+                    break
 
-            case 1:
-                distribution.rarely++
-                break
+                case 1:
+                    distribution.rarely++
+                    break
 
-            case 2:
-                distribution.sometimes++
-                break
+                case 2:
+                    distribution.sometimes++
+                    break
 
-            case 3:
-                distribution.often++
-                break
+                case 3:
+                    distribution.often++
+                    break
 
-            case 4:
-                distribution.veryOften++
-                break
+                case 4:
+                    distribution.veryOften++
+                    break
 
-        }
+            }
 
-    })
+        })
 
     return distribution
 
 }
 
-function detectResponseStyle(distribution) {
+function detectResponseStyle(
+    distribution,
+    averageResponse
+) {
 
     if (
-        distribution.never >= 20
+        distribution.never >= 22 ||
+        averageResponse < 0.6
     ) {
 
         return "minimal_endorsement"
@@ -374,8 +472,9 @@ function detectResponseStyle(distribution) {
     }
 
     if (
-        distribution.rarely >= 14 &&
-        distribution.often <= 3
+        distribution.never >= 12 &&
+        distribution.often <= 2 &&
+        distribution.veryOften === 0
     ) {
 
         return "low_frequency_recognition"
@@ -383,7 +482,8 @@ function detectResponseStyle(distribution) {
     }
 
     if (
-        distribution.sometimes >= 10
+        distribution.sometimes >= 10 &&
+        distribution.often <= 8
     ) {
 
         return "mixed_inconsistency"
@@ -419,7 +519,9 @@ export function buildBehaviourProfile(
                     ] || 0
 
             const mapping =
-                TRAIT_WEIGHTS[questionId]
+                TRAIT_WEIGHTS[
+                    questionId
+                    ]
 
             if (!mapping) return
 
@@ -427,54 +529,91 @@ export function buildBehaviourProfile(
                 .forEach(([trait, multiplier]) => {
 
                     traits[trait] +=
-                        weightedValue * multiplier
+                        weightedValue *
+                        multiplier
 
                 })
 
         })
 
+    const averageResponse =
+        calculateAverageResponse(
+            answers
+        )
+
     const dimensionTotals =
-        calculateDimensionTotals(answers)
+        calculateDimensionTotals(
+            answers
+        )
 
     const responseDistribution =
-        calculateResponseDistribution(answers)
+        calculateResponseDistribution(
+            answers
+        )
 
     const responseStyle =
-        detectResponseStyle(responseDistribution)
+        detectResponseStyle(
+            responseDistribution,
+            averageResponse
+        )
 
     const totalSignalStrength =
-        getTotalSignalStrength(traits)
+        getTotalSignalStrength(
+            traits
+        )
 
     const lowSignal =
-        detectLowSignal(traits)
+        detectLowSignal(
+            traits,
+            averageResponse
+        )
 
     const veryLowSignal =
-        detectVeryLowSignal(traits)
+        detectVeryLowSignal(
+            traits,
+            averageResponse
+        )
 
     const dominantPattern =
-        detectDominantPattern(traits)
+        detectDominantPattern(
+            traits,
+            lowSignal
+        )
 
     const profiles =
         detectProfiles(
             traits,
-            dimensionTotals
+            dimensionTotals,
+            lowSignal
         )
 
     const contradictions =
-        detectContradictions(traits)
+        detectContradictions(
+            traits,
+            lowSignal
+        )
 
     const topTraits =
-        getTopTraits(traits)
+        getTopTraits(
+            traits
+        )
 
     const answeredQuestions =
-        getAnsweredQuestionsCount(answers)
+        getAnsweredQuestionsCount(
+            answers
+        )
 
     const strongestQuestionSignals =
-        getQuestionSignals(answers)
+        getQuestionSignals(
+            answers,
+            lowSignal
+        )
 
     return {
 
         answeredQuestions,
+
+        averageResponse,
 
         responseStyle,
 
@@ -498,7 +637,8 @@ export function buildBehaviourProfile(
 
         dimensionTotals,
 
-        behaviouralTraits: traits,
+        behaviouralTraits:
+        traits,
 
         behaviouralSummary: {
 
