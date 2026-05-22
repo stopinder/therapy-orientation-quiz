@@ -1,8 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router"
 
+import AuthView from "../views/AuthView.vue"
+
 import About from "../views/About.vue"
 import QuizGateway from "../views/QuizGateway.vue"
 import ADHDQuizView from "../views/ADHDQuizView.vue"
+
+import CourseHubView from "../views/CourseHubView.vue"
+import CourseWeekView from "../views/CourseWeekView.vue"
+import AccessDeniedView from "../views/AccessDeniedView.vue"
 
 import DeepDiveView from "../views/DeepDiveView.vue"
 import ProgrammeView from "../views/ProgrammeView.vue"
@@ -10,6 +16,10 @@ import ProgrammeView from "../views/ProgrammeView.vue"
 import TermsView from "../views/TermsView.vue"
 import PrivacyView from "../views/PrivacyView.vue"
 import ContactView from "../views/ContactView.vue"
+
+import AuthDebugView from "../views/AuthDebugView.vue"
+
+import { useAuthStore } from "../stores/auth"
 
 const routes = [
     {
@@ -42,6 +52,12 @@ const routes = [
     },
 
     {
+        path: "/auth",
+        name: "Auth",
+        component: AuthView
+    },
+
+    {
         path: "/gateway",
         name: "Gateway",
         component: QuizGateway
@@ -69,6 +85,36 @@ const routes = [
         path: "/programme",
         name: "Programme",
         component: ProgrammeView
+    },
+
+    {
+        path: "/course",
+        name: "CourseHub",
+        component: CourseHubView,
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+    {
+        path: "/course/week-:weekNumber",
+        name: "CourseWeek",
+        component: CourseWeekView,
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+    {
+        path: "/access-denied",
+        name: "AccessDenied",
+        component: AccessDeniedView
+    },
+
+    {
+        path: "/auth-debug",
+        name: "AuthDebug",
+        component: AuthDebugView
     }
 ]
 
@@ -78,6 +124,7 @@ const router = createRouter({
     routes,
 
     scrollBehavior(to, from, savedPosition) {
+
         if (savedPosition) {
             return savedPosition
         }
@@ -86,18 +133,33 @@ const router = createRouter({
             top: 0,
             behavior: "smooth"
         }
+
     }
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+
+    const auth = useAuthStore()
+
+    if (!auth.user && auth.loading) {
+        await auth.fetchUser()
+    }
+
     if (
         to.meta.requiresGateway &&
         !sessionStorage.getItem("passedGateway")
     ) {
         next("/gateway")
-    } else {
-        next()
+        return
     }
+
+    if (to.meta.requiresAuth && !auth.user) {
+        next("/auth")
+        return
+    }
+
+    next()
+
 })
 
 export default router
