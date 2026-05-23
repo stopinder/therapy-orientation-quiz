@@ -1,56 +1,31 @@
-import { COURSE_VARIANTS }
-    from "../config/courseVariants"
-
-const STORE_URL =
-    "https://gpttherapyassist.lemonsqueezy.com"
+import { COURSE_CHECKOUT_LINKS }
+    from "../config/courseCheckoutLinks"
 
 export const useCoursePurchases = () => {
 
-    const redirectToCheckout = (variantId) => {
-
-        if (!variantId) {
-
-            console.error(
-                "Missing Lemon Squeezy variant ID"
-            )
-
-            return
-
-        }
-
-        const checkoutUrl =
-            `${STORE_URL}/checkout/buy/${variantId}`
-
-        window.location.href = checkoutUrl
-
-    }
-
     const purchaseFullProgramme = () => {
 
-        redirectToCheckout(
-            COURSE_VARIANTS.fullProgramme.variantId
-        )
+        window.location.href =
+            COURSE_CHECKOUT_LINKS.fullProgramme
 
     }
 
     const purchaseWeek = (weekNumber) => {
 
-        const variant =
-            COURSE_VARIANTS.weekly[weekNumber]
+        const checkoutUrl =
+            COURSE_CHECKOUT_LINKS.weekly[weekNumber]
 
-        if (!variant) {
+        if (!checkoutUrl) {
 
             console.error(
-                `Missing variant for week ${weekNumber}`
+                `Missing checkout URL for week ${weekNumber}`
             )
 
             return
 
         }
 
-        redirectToCheckout(
-            variant.variantId
-        )
+        window.location.href = checkoutUrl
 
     }
 
