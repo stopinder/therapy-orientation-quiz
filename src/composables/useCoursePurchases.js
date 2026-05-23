@@ -2,7 +2,7 @@ import { COURSE_VARIANTS }
     from "../config/courseVariants"
 
 const STORE_URL =
-    "https://gpttherapyassist.lemonsqueezy.com  ·  #159794"
+    "https://gpttherapyassist.lemonsqueezy.com"
 
 export const useCoursePurchases = () => {
 
