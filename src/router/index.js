@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"
 
 import AuthView from "../views/AuthView.vue"
+import ResetPasswordView from "../views/ResetPasswordView.vue"
 
 import About from "../views/About.vue"
 import QuizGateway from "../views/QuizGateway.vue"
@@ -55,6 +56,12 @@ const routes = [
         path: "/auth",
         name: "Auth",
         component: AuthView
+    },
+
+    {
+        path: "/reset-password",
+        name: "ResetPassword",
+        component: ResetPasswordView
     },
 
     {

@@ -13,6 +13,7 @@
       >
 
         <div>
+
           <label class="mb-2 block text-sm font-medium">
             Email
           </label>
@@ -22,9 +23,11 @@
               type="email"
               class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-slate-500"
           />
+
         </div>
 
         <div>
+
           <label class="mb-2 block text-sm font-medium">
             Password
           </label>
@@ -34,6 +37,7 @@
               type="password"
               class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-slate-500"
           />
+
         </div>
 
         <div class="flex gap-3 pt-2">
@@ -58,9 +62,16 @@
       </form>
 
       <button
+          @click="sendPasswordReset"
+          class="mt-6 text-sm text-slate-500 transition hover:text-slate-900"
+      >
+        Forgot Password?
+      </button>
+
+      <button
           v-if="auth.user"
           @click="signOut"
-          class="mt-6 text-sm text-red-600"
+          class="mt-6 block text-sm text-red-600"
       >
         Sign Out
       </button>
@@ -114,7 +125,8 @@ const signUp = async () => {
     return
   }
 
-  message.value = "Account created. Check your email if confirmation is enabled."
+  message.value =
+      "Account created. Check your email if confirmation is enabled."
 
   await auth.fetchUser()
 
@@ -148,7 +160,38 @@ const signOut = async () => {
 
   message.value = "Signed out."
 
-  await router.push("/auth")
+  await router.push("/about")
 
 }
-</script>
+
+const sendPasswordReset = async () => {
+
+  if (!email.value) {
+
+    message.value = "Please enter your email address first."
+
+    return
+
+  }
+
+  const { error } = await supabase.auth.resetPasswordForEmail(
+      email.value,
+      {
+        redirectTo:
+            `${window.location.origin}/reset-password`
+      }
+  )
+
+  if (error) {
+
+    message.value = error.message
+
+    return
+
+  }
+
+  message.value =
+      "Password reset email sent."
+
+}
+</script>npm run dev
