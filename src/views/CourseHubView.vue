@@ -17,7 +17,7 @@
 
     </div>
 
-    <!-- Full Programme Card -->
+    <!-- Full Programme -->
 
     <div
         class="relative mb-14 overflow-hidden rounded-3xl border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl"
@@ -54,6 +54,7 @@
         <div class="mt-8 flex flex-wrap gap-4">
 
           <button
+              @click="purchaseFullProgramme"
               class="rounded-xl bg-white px-6 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-200"
           >
             Unlock Full Programme
@@ -113,7 +114,7 @@
                 : 'bg-slate-200 text-slate-600'
             "
           >
-            {{ week.unlocked ? "Unlocked" : "Locked" }}
+            {{ week.unlocked ? 'Unlocked' : 'Locked' }}
           </div>
 
         </div>
@@ -132,7 +133,7 @@
           Continue
         </router-link>
 
-        <!-- Sequentially Available -->
+        <!-- Purchasable -->
 
         <div
             v-else-if="week.canPurchase"
@@ -140,6 +141,7 @@
         >
 
           <button
+              @click="purchaseWeek(week.number)"
               class="w-full rounded-xl border border-slate-300 px-5 py-3 text-sm font-medium transition hover:bg-slate-100"
           >
             Unlock Week {{ week.number }} —
@@ -147,6 +149,7 @@
           </button>
 
           <button
+              @click="purchaseFullProgramme"
               class="w-full rounded-xl bg-slate-900 px-5 py-3 text-sm text-white transition hover:bg-slate-700"
           >
             Unlock Full Programme —
@@ -155,7 +158,7 @@
 
         </div>
 
-        <!-- Locked By Sequence -->
+        <!-- Locked -->
 
         <div
             v-else
@@ -179,11 +182,18 @@ import { useEntitlementStore } from "../stores/entitlements"
 
 import { COURSE_PRODUCTS } from "../config/courseProducts"
 
+import { useCoursePurchases } from "../composables/useCoursePurchases"
+
 const auth = useAuthStore()
 
 const entitlements = useEntitlementStore()
 
 const products = COURSE_PRODUCTS
+
+const {
+  purchaseFullProgramme,
+  purchaseWeek
+} = useCoursePurchases()
 
 onMounted(async () => {
 
@@ -208,6 +218,7 @@ const weeks = computed(() => [
   {
     number: 1,
     title: "Recognition & Fragmentation",
+
     description:
         "Observing continuity breakdown and attentional drift.",
 
@@ -221,6 +232,7 @@ const weeks = computed(() => [
   {
     number: 2,
     title: "Pressure & Avoidance",
+
     description:
         "Understanding internal pressure accumulation.",
 
@@ -234,6 +246,7 @@ const weeks = computed(() => [
   {
     number: 3,
     title: "Emotional Interruption",
+
     description:
         "Tracking disruption and behavioural collapse.",
 
@@ -247,6 +260,7 @@ const weeks = computed(() => [
   {
     number: 4,
     title: "Reaction & Compensation",
+
     description:
         "Studying automatic compensatory behaviours.",
 
@@ -260,6 +274,7 @@ const weeks = computed(() => [
   {
     number: 5,
     title: "Embodied Continuity",
+
     description:
         "Restoring grounded attentional contact.",
 
@@ -273,6 +288,7 @@ const weeks = computed(() => [
   {
     number: 6,
     title: "Integration",
+
     description:
         "Stabilising continuity and long-range observation.",
 
