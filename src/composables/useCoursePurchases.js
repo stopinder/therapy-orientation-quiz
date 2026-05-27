@@ -1,57 +1,37 @@
-import { COURSE_CHECKOUT_LINKS }
-    from "../config/courseCheckoutLinks"
+import { computed } from "vue"
 
-export const useCoursePurchases = () => {
+import { useEntitlementStore } from "../stores/entitlements"
 
-    const purchaseFullProgramme = () => {
+const CHECKOUT_URL = import.meta.env.VITE_LEMON_CHECKOUT_URL
 
-        console.log(
-            "FULL PROGRAMME URL:",
-            COURSE_CHECKOUT_LINKS.fullProgramme
-        )
+export function useCoursePurchases() {
 
-        window.location.href =
-            COURSE_CHECKOUT_LINKS.fullProgramme
+    const entitlements = useEntitlementStore()
 
-    }
+    const purchaseProgramme = () => {
 
-    const purchaseWeek = (weekNumber) => {
-
-        console.log(
-            "CLICKED WEEK:",
-            weekNumber
-        )
-
-        console.log(
-            "ALL WEEKLY LINKS:",
-            COURSE_CHECKOUT_LINKS.weekly
-        )
-
-        const checkoutUrl =
-            COURSE_CHECKOUT_LINKS.weekly[weekNumber]
-
-        console.log(
-            "RESOLVED CHECKOUT URL:",
-            checkoutUrl
-        )
-
-        if (!checkoutUrl) {
-
-            console.error(
-                `Missing checkout URL for week ${weekNumber}`
-            )
-
+        if (!CHECKOUT_URL) {
+            console.error("Missing Lemon checkout URL")
             return
-
         }
 
-        window.location.href = checkoutUrl
+        window.location.href = CHECKOUT_URL
 
     }
 
+    const hasProgrammeAccess = computed(() => {
+
+        return entitlements.items.some(
+            (item) =>
+                item.entitlement_key === "mindworksProgramme" &&
+                item.status === "active"
+        )
+
+    })
+
     return {
-        purchaseFullProgramme,
-        purchaseWeek
+        purchaseProgramme,
+        hasProgrammeAccess
     }
 
 }

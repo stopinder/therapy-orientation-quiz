@@ -17,53 +17,39 @@
 
     </div>
 
-    <!-- Full Programme -->
+    <!-- Programme Card -->
 
     <div
         class="relative mb-14 overflow-hidden rounded-3xl border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl"
     >
 
-      <div
-          class="absolute right-6 top-6 rounded-full bg-white/10 px-4 py-1 text-xs font-medium uppercase tracking-wide"
-      >
-        Recommended
-      </div>
-
       <div class="max-w-3xl">
 
         <h2 class="text-3xl font-semibold">
-          {{ products.fullProgramme.title }}
+          MindWorks Programme
         </h2>
 
         <p class="mt-4 text-lg leading-relaxed text-slate-300">
-          {{ products.fullProgramme.description }}
+          Full access to the complete six-week programme.
+          The material is designed to be moved through gradually,
+          but all sections become available immediately after purchase.
         </p>
-
-        <div class="mt-8 flex items-end gap-3">
-
-          <div class="text-5xl font-semibold">
-            €{{ products.fullProgramme.price }}
-          </div>
-
-          <div class="pb-1 text-slate-400">
-            full access
-          </div>
-
-        </div>
 
         <div class="mt-8 flex flex-wrap gap-4">
 
           <button
-              @click="purchaseFullProgramme"
+              v-if="!hasProgrammeAccess"
+              @click="purchaseProgramme"
               class="rounded-xl bg-white px-6 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-200"
           >
             Unlock Full Programme
           </button>
 
           <div
-              class="flex items-center text-sm text-slate-400"
+              v-else
+              class="rounded-xl bg-emerald-500/20 px-5 py-3 text-sm font-medium text-emerald-200"
           >
-            Immediate access to all six weeks
+            Full programme access active
           </div>
 
         </div>
@@ -72,7 +58,7 @@
 
     </div>
 
-    <!-- Weeks -->
+    <!-- Loading -->
 
     <div
         v-if="entitlements.loading"
@@ -80,6 +66,8 @@
     >
       Loading access...
     </div>
+
+    <!-- Weeks -->
 
     <div
         v-else
@@ -109,12 +97,12 @@
           <div
               class="rounded-full px-3 py-1 text-xs font-medium"
               :class="
-              week.unlocked
+              hasProgrammeAccess
                 ? 'bg-emerald-100 text-emerald-700'
                 : 'bg-slate-200 text-slate-600'
             "
           >
-            {{ week.unlocked ? 'Unlocked' : 'Locked' }}
+            {{ hasProgrammeAccess ? 'Unlocked' : 'Locked' }}
           </div>
 
         </div>
@@ -123,49 +111,25 @@
           {{ week.description }}
         </p>
 
-        <!-- Unlocked -->
+        <!-- Access -->
 
         <router-link
-            v-if="week.unlocked"
+            v-if="hasProgrammeAccess"
             :to="`/course/week-${week.number}`"
             class="inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm text-white transition hover:bg-slate-700"
         >
           Continue
         </router-link>
 
-        <!-- Purchasable -->
-
-        <div
-            v-else-if="week.canPurchase"
-            class="space-y-3"
-        >
-
-          <button
-              @click="purchaseWeek(week.number)"
-              class="w-full rounded-xl border border-slate-300 px-5 py-3 text-sm font-medium transition hover:bg-slate-100"
-          >
-            Unlock Week {{ week.number }} —
-            €{{ week.price }}
-          </button>
-
-          <button
-              @click="purchaseFullProgramme"
-              class="w-full rounded-xl bg-slate-900 px-5 py-3 text-sm text-white transition hover:bg-slate-700"
-          >
-            Unlock Full Programme —
-            €{{ products.fullProgramme.price }}
-          </button>
-
-        </div>
-
         <!-- Locked -->
 
-        <div
+        <button
             v-else
-            class="rounded-xl bg-slate-100 p-4 text-sm leading-relaxed text-slate-500"
+            @click="purchaseProgramme"
+            class="w-full rounded-xl border border-slate-300 px-5 py-3 text-sm font-medium transition hover:bg-slate-100"
         >
-          Complete the previous week before unlocking this stage.
-        </div>
+          Unlock Programme
+        </button>
 
       </div>
 
@@ -180,19 +144,15 @@ import { computed, onMounted } from "vue"
 import { useAuthStore } from "../stores/auth"
 import { useEntitlementStore } from "../stores/entitlements"
 
-import { COURSE_PRODUCTS } from "../config/courseProducts"
-
 import { useCoursePurchases } from "../composables/useCoursePurchases"
 
 const auth = useAuthStore()
 
 const entitlements = useEntitlementStore()
 
-const products = COURSE_PRODUCTS
-
 const {
-  purchaseFullProgramme,
-  purchaseWeek
+  purchaseProgramme,
+  hasProgrammeAccess
 } = useCoursePurchases()
 
 onMounted(async () => {
@@ -203,16 +163,6 @@ onMounted(async () => {
 
 })
 
-const canPurchaseWeek = (weekNumber) => {
-
-  if (weekNumber === 1) {
-    return true
-  }
-
-  return entitlements.canAccessWeek(weekNumber - 1)
-
-}
-
 const weeks = computed(() => [
 
   {
@@ -220,13 +170,7 @@ const weeks = computed(() => [
     title: "Recognition & Fragmentation",
 
     description:
-        "Observing continuity breakdown and attentional drift.",
-
-    unlocked: entitlements.canAccessWeek(1),
-
-    canPurchase: canPurchaseWeek(1),
-
-    price: products.weekly[1].price
+        "Observing continuity breakdown and attentional drift."
   },
 
   {
@@ -234,13 +178,7 @@ const weeks = computed(() => [
     title: "Pressure & Avoidance",
 
     description:
-        "Understanding internal pressure accumulation.",
-
-    unlocked: entitlements.canAccessWeek(2),
-
-    canPurchase: canPurchaseWeek(2),
-
-    price: products.weekly[2].price
+        "Understanding internal pressure accumulation."
   },
 
   {
@@ -248,13 +186,7 @@ const weeks = computed(() => [
     title: "Emotional Interruption",
 
     description:
-        "Tracking disruption and behavioural collapse.",
-
-    unlocked: entitlements.canAccessWeek(3),
-
-    canPurchase: canPurchaseWeek(3),
-
-    price: products.weekly[3].price
+        "Tracking disruption and behavioural collapse."
   },
 
   {
@@ -262,13 +194,7 @@ const weeks = computed(() => [
     title: "Reaction & Compensation",
 
     description:
-        "Studying automatic compensatory behaviours.",
-
-    unlocked: entitlements.canAccessWeek(4),
-
-    canPurchase: canPurchaseWeek(4),
-
-    price: products.weekly[4].price
+        "Studying automatic compensatory behaviours."
   },
 
   {
@@ -276,13 +202,7 @@ const weeks = computed(() => [
     title: "Embodied Continuity",
 
     description:
-        "Restoring grounded attentional contact.",
-
-    unlocked: entitlements.canAccessWeek(5),
-
-    canPurchase: canPurchaseWeek(5),
-
-    price: products.weekly[5].price
+        "Restoring grounded attentional contact."
   },
 
   {
@@ -290,13 +210,7 @@ const weeks = computed(() => [
     title: "Integration",
 
     description:
-        "Stabilising continuity and long-range observation.",
-
-    unlocked: entitlements.canAccessWeek(6),
-
-    canPurchase: canPurchaseWeek(6),
-
-    price: products.weekly[6].price
+        "Stabilising continuity and long-range observation."
   }
 
 ])

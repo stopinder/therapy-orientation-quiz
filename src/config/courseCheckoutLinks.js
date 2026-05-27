@@ -1,28 +1,53 @@
-export const COURSE_CHECKOUT_LINKS = {
+export const COURSE_CHECKOUT = {
+    key: 'mindworksProgramme',
 
-    fullProgramme:
-        "https://gpttherapyassist.lemonsqueezy.com/checkout/buy/71550826-ad84-42da-acda-6fd5e796f6ff",
+    title: 'MindWorks Programme',
 
-    weekly: {
+    description:
+        'Full access to the complete MindWorks programme. The material is designed to be moved through gradually, but all course sections become available immediately after purchase.',
 
-        1:
-            "https://gpttherapyassist.lemonsqueezy.com/checkout/buy/4cc00190-4bf8-4bad-a904-d877c8b9b543",
+    checkoutUrl:
+        'https://gpttherapyassist.lemonsqueezy.com/checkout/buy/3d1439e1-bbba-4fc9-8810-04cdda84ca89',
+}
 
-        2:
-            "https://gpttherapyassist.lemonsqueezy.com/checkout/buy/e9aab155-2833-41ae-a971-5dea04007309",
+export const COURSE_WEEKS = [
+    {
+        key: 'week1',
+        weekNumber: 1,
+        title: 'Recognition & Fragmentation',
+    },
 
-        3:
-            "https://gpttherapyassist.lemonsqueezy.com/checkout/buy/d21b6b4a-8ed7-4bd9-bad1-25f4de7e24fe",
+    {
+        key: 'week2',
+        weekNumber: 2,
+        title: 'Pressure & Avoidance',
+    },
 
-        4:
-            "https://gpttherapyassist.lemonsqueezy.com/checkout/buy/017bc42d-8745-418d-8ded-9b21f1df3c0e",
+    {
+        key: 'week3',
+        weekNumber: 3,
+        title: 'Emotional Interruption',
+    },
 
-        5:
-            "https://gpttherapyassist.lemonsqueezy.com/checkout/buy/fe792848-eca3-4079-a939-11d7ffac0a3a",
+    {
+        key: 'week4',
+        weekNumber: 4,
+        title: 'Reaction & Compensation',
+    },
 
-        6:
-            "https://gpttherapyassist.lemonsqueezy.com/checkout/buy/8a0dba72-8947-4fef-ad34-52a8da3f5117"
+    {
+        key: 'week5',
+        weekNumber: 5,
+        title: 'Embodied Continuity',
+    },
 
-    }
+    {
+        key: 'week6',
+        weekNumber: 6,
+        title: 'Integration',
+    },
+]
 
+export function getCourseCheckoutUrl() {
+    return COURSE_CHECKOUT.checkoutUrl
 }
