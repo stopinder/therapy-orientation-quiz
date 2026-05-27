@@ -8,7 +8,7 @@ import QuizGateway from "../views/QuizGateway.vue"
 import ADHDQuizView from "../views/ADHDQuizView.vue"
 
 import CourseHubView from "../views/CourseHubView.vue"
-import CourseWeekView from "../views/CourseWeekView.vue"
+import CourseWeek1View from "../views/CourseWeek1View.vue"
 import Week1View from "../views/course/Week1View.vue"
 import AccessDeniedView from "../views/AccessDeniedView.vue"
 
@@ -118,7 +118,7 @@ const routes = [
     {
         path: "/course/week-:weekNumber",
         name: "CourseWeek",
-        component: CourseWeekView,
+        component: CourseWeek1View,
         meta: {
             requiresAuth: true,
             requiresCourseAccess: true
