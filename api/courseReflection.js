@@ -1,3 +1,14 @@
+import { createClient } from "@supabase/supabase-js"
+
+const supabase = createClient(
+    process.env.VITE_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+)
+
+export const config = {
+    runtime: "nodejs"
+}
+
 export default async function handler(request, response) {
 
     if (request.method !== "POST") {
@@ -10,12 +21,24 @@ export default async function handler(request, response) {
 
     try {
 
-        const { week, reflection } = request.body || {}
+        const {
+            week,
+            reflection,
+            userId
+        } = request.body || {}
 
         if (!reflection || typeof reflection !== "string") {
 
             return response.status(400).json({
                 error: "Reflection is required"
+            })
+
+        }
+
+        if (!userId) {
+
+            return response.status(400).json({
+                error: "Missing user ID"
             })
 
         }
@@ -102,16 +125,45 @@ ${reflection}
 
         }
 
+        const aiResponse =
+            data.choices?.[0]?.message?.content || ""
+
+        const { error: saveError } = await supabase
+            .from("course_reflections")
+            .insert([
+                {
+                    user_id: userId,
+                    week_number: week,
+                    original_reflection: reflection,
+                    ai_response: aiResponse
+                }
+            ])
+
+        if (saveError) {
+
+            console.error(
+                "SUPABASE SAVE ERROR:",
+                saveError
+            )
+
+            return response.status(500).json({
+                error: "Failed to save reflection"
+            })
+
+        }
+
         return response.status(200).json({
 
-            reflection:
-                data.choices?.[0]?.message?.content || ""
+            reflection: aiResponse
 
         })
 
     } catch (error) {
 
-        console.error("COURSE REFLECTION ERROR:", error)
+        console.error(
+            "COURSE REFLECTION ERROR:",
+            error
+        )
 
         return response.status(500).json({
             error: error.message || "Server error"

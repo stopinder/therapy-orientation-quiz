@@ -184,6 +184,9 @@
 
 <script setup>
 import { computed, ref } from "vue"
+import { useAuthStore } from "../stores/auth"
+
+const auth = useAuthStore()
 
 const reflection = ref("")
 const response = ref("")
@@ -383,6 +386,10 @@ const submitReflection = async () => {
 
   try {
 
+    if (!auth.user?.id) {
+      throw new Error("User not authenticated")
+    }
+
     const result = await fetch(
         "/api/courseReflection",
         {
@@ -394,7 +401,8 @@ const submitReflection = async () => {
 
           body: JSON.stringify({
             week: 1,
-            reflection: reflection.value
+            reflection: reflection.value,
+            userId: auth.user.id
           })
         }
     )
@@ -420,8 +428,7 @@ const submitReflection = async () => {
   } catch (err) {
 
     error.value =
-        err.message ||
-        "Something went wrong."
+        err.message || "Something went wrong."
 
   } finally {
 
