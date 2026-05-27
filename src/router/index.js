@@ -9,6 +9,7 @@ import ADHDQuizView from "../views/ADHDQuizView.vue"
 
 import CourseHubView from "../views/CourseHubView.vue"
 import CourseWeekView from "../views/CourseWeekView.vue"
+import Week1View from "../views/course/Week1View.vue"
 import AccessDeniedView from "../views/AccessDeniedView.vue"
 
 import DeepDiveView from "../views/DeepDiveView.vue"
@@ -21,6 +22,7 @@ import ContactView from "../views/ContactView.vue"
 import AuthDebugView from "../views/AuthDebugView.vue"
 
 import { useAuthStore } from "../stores/auth"
+import { useEntitlementStore } from "../stores/entitlements"
 
 const routes = [
     {
@@ -104,11 +106,22 @@ const routes = [
     },
 
     {
+        path: "/course/week-1",
+        name: "CourseWeek1",
+        component: Week1View,
+        meta: {
+            requiresAuth: true,
+            requiresCourseAccess: true
+        }
+    },
+
+    {
         path: "/course/week-:weekNumber",
         name: "CourseWeek",
         component: CourseWeekView,
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            requiresCourseAccess: true
         }
     },
 
@@ -147,6 +160,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
 
     const auth = useAuthStore()
+    const entitlements = useEntitlementStore()
 
     if (!auth.user && auth.loading) {
         await auth.fetchUser()
@@ -163,6 +177,17 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta.requiresAuth && !auth.user) {
         next("/auth")
         return
+    }
+
+    if (to.meta.requiresCourseAccess) {
+        await entitlements.fetchEntitlements(auth.user.id)
+
+        const weekNumber = Number(to.params.weekNumber || 1)
+
+        if (!entitlements.canAccessWeek(weekNumber)) {
+            next("/access-denied")
+            return
+        }
     }
 
     next()
