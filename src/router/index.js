@@ -9,7 +9,7 @@ import ADHDQuizView from "../views/ADHDQuizView.vue"
 
 import CourseHubView from "../views/CourseHubView.vue"
 import CourseWeek1View from "../views/CourseWeek1View.vue"
-import Week1View from "../views/course/Week1View.vue"
+
 import AccessDeniedView from "../views/AccessDeniedView.vue"
 
 import DeepDiveView from "../views/DeepDiveView.vue"
@@ -108,16 +108,6 @@ const routes = [
     {
         path: "/course/week-1",
         name: "CourseWeek1",
-        component: Week1View,
-        meta: {
-            requiresAuth: true,
-            requiresCourseAccess: true
-        }
-    },
-
-    {
-        path: "/course/week-:weekNumber",
-        name: "CourseWeek",
         component: CourseWeek1View,
         meta: {
             requiresAuth: true,
@@ -180,14 +170,14 @@ router.beforeEach(async (to, from, next) => {
     }
 
     if (to.meta.requiresCourseAccess) {
+
         await entitlements.fetchEntitlements(auth.user.id)
 
-        const weekNumber = Number(to.params.weekNumber || 1)
-
-        if (!entitlements.canAccessWeek(weekNumber)) {
+        if (!entitlements.canAccessWeek(1)) {
             next("/access-denied")
             return
         }
+
     }
 
     next()
