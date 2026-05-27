@@ -66,8 +66,8 @@
         </h2>
 
         <p class="mt-4 text-base leading-7 text-slate-600">
-          Add your Week 1 audio reflection here later. This section is intentionally
-          spacious and minimal to preserve pacing and attention.
+          Add your Week 1 audio reflection here later. This section is
+          intentionally spacious and minimal to preserve pacing and attention.
         </p>
 
         <div class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6">
@@ -106,8 +106,40 @@
 
         <p class="mt-4 text-base leading-7 text-slate-600">
           Describe one moment where continuity weakened without a clear decision
-          to leave the original intention.
+          to leave the original intention. You can type, or speak and let the
+          system transcribe your words first.
         </p>
+
+        <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <p class="mb-4 text-sm font-medium text-slate-700">
+            Speak your reflection
+          </p>
+
+          <div class="flex flex-wrap gap-3">
+            <button
+                v-if="!recording"
+                type="button"
+                :disabled="transcribing || loading"
+                @click="startRecording"
+                class="rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-800 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Start recording
+            </button>
+
+            <button
+                v-if="recording"
+                type="button"
+                @click="stopRecording"
+                class="rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
+            >
+              Stop recording
+            </button>
+          </div>
+
+          <p class="mt-4 text-sm leading-6 text-slate-500">
+            {{ recordingStatus }}
+          </p>
+        </div>
 
         <textarea
             v-model="reflection"
@@ -118,7 +150,7 @@
 
         <button
             type="button"
-            :disabled="loading || !reflection.trim()"
+            :disabled="loading || transcribing || !reflection.trim()"
             @click="submitReflection"
             class="mt-5 rounded-xl bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
         >
@@ -151,12 +183,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { computed, ref } from "vue"
 
 const reflection = ref("")
 const response = ref("")
 const loading = ref(false)
+const transcribing = ref(false)
+const recording = ref(false)
 const error = ref("")
+
+const mediaRecorder = ref(null)
+const audioChunks = ref([])
 
 const exercises = [
   {
@@ -177,6 +214,166 @@ const exercises = [
         "Pay attention to emotional or pressure changes appearing immediately before continuity weakens."
   }
 ]
+
+const recordingStatus = computed(() => {
+
+  if (recording.value) {
+    return "Recording. Speak naturally, then stop when you are finished."
+  }
+
+  if (transcribing.value) {
+    return "Transcribing your reflection."
+  }
+
+  return "Your spoken reflection will appear in the text box before you generate the MindWorks response."
+
+})
+
+const blobToBase64 = (blob) => {
+
+  return new Promise((resolve, reject) => {
+
+    const reader = new FileReader()
+
+    reader.onloadend = () => {
+      resolve(reader.result)
+    }
+
+    reader.onerror = () => {
+      reject(new Error("Audio conversion failed"))
+    }
+
+    reader.readAsDataURL(blob)
+
+  })
+
+}
+
+const startRecording = async () => {
+
+  error.value = ""
+  response.value = ""
+
+  try {
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      throw new Error("Audio recording is not supported in this browser.")
+    }
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true
+    })
+
+    audioChunks.value = []
+
+    const recorder = new MediaRecorder(stream)
+
+    mediaRecorder.value = recorder
+
+    recorder.ondataavailable = (event) => {
+
+      if (event.data.size > 0) {
+        audioChunks.value.push(event.data)
+      }
+
+    }
+
+    recorder.onstop = async () => {
+
+      stream.getTracks().forEach((track) => track.stop())
+
+      const audioBlob = new Blob(
+          audioChunks.value,
+          {
+            type: recorder.mimeType || "audio/webm"
+          }
+      )
+
+      await transcribeAudio(audioBlob)
+
+    }
+
+    recorder.start()
+
+    recording.value = true
+
+  } catch (err) {
+
+    error.value =
+        err.message ||
+        "Could not start audio recording."
+
+  }
+
+}
+
+const stopRecording = () => {
+
+  if (!mediaRecorder.value) {
+    return
+  }
+
+  if (mediaRecorder.value.state === "recording") {
+    recording.value = false
+    transcribing.value = true
+    mediaRecorder.value.stop()
+  }
+
+}
+
+const transcribeAudio = async (audioBlob) => {
+
+  try {
+
+    const audioBase64 = await blobToBase64(audioBlob)
+
+    const result = await fetch(
+        "/api/transcribeAudio",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            audio: audioBase64,
+            mimeType: audioBlob.type
+          })
+        }
+    )
+
+    const text = await result.text()
+
+    let data = {}
+
+    try {
+      data = text ? JSON.parse(text) : {}
+    } catch {
+      throw new Error("Invalid transcription response")
+    }
+
+    if (!result.ok) {
+      throw new Error(
+          data.error || "Transcription failed."
+      )
+    }
+
+    reflection.value = data.transcript || ""
+
+  } catch (err) {
+
+    error.value =
+        err.message ||
+        "Audio transcription failed."
+
+  } finally {
+
+    transcribing.value = false
+
+  }
+
+}
 
 const submitReflection = async () => {
 
@@ -213,11 +410,9 @@ const submitReflection = async () => {
     }
 
     if (!result.ok) {
-
       throw new Error(
           data.error || "Reflection generation failed."
       )
-
     }
 
     response.value = data.reflection || ""
@@ -225,7 +420,8 @@ const submitReflection = async () => {
   } catch (err) {
 
     error.value =
-        err.message || "Something went wrong."
+        err.message ||
+        "Something went wrong."
 
   } finally {
 
