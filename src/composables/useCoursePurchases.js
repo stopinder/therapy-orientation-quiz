@@ -2,7 +2,7 @@ import { computed } from "vue"
 
 import { useEntitlementStore } from "../stores/entitlements"
 
-const CHECKOUT_URL = import.meta.env.VITE_LEMON_CHECKOUT_URL
+import { COURSE_CHECKOUT } from "../config/courseCheckoutLinks"
 
 export function useCoursePurchases() {
 
@@ -10,21 +10,20 @@ export function useCoursePurchases() {
 
     const purchaseProgramme = () => {
 
-        if (!CHECKOUT_URL) {
+        if (!COURSE_CHECKOUT.checkoutUrl) {
             console.error("Missing Lemon checkout URL")
             return
         }
 
-        window.location.href = CHECKOUT_URL
+        window.location.href = COURSE_CHECKOUT.checkoutUrl
 
     }
 
     const hasProgrammeAccess = computed(() => {
 
-        return entitlements.items.some(
-            (item) =>
-                item.entitlement_key === "mindworksProgramme" &&
-                item.status === "active"
+        return (
+            entitlements.entitlement?.full_course === true &&
+            entitlements.entitlement?.active === true
         )
 
     })

@@ -35,7 +35,10 @@ export const useEntitlementStore = defineStore("entitlements", {
 
             if (error) {
                 console.error("ENTITLEMENT ERROR:", error)
+
+                this.entitlement = null
                 this.loading = false
+
                 return
             }
 
