@@ -3,6 +3,13 @@
     <div class="mx-auto max-w-4xl">
 
       <div class="mb-12">
+        <router-link
+            to="/course"
+            class="mb-8 inline-flex items-center text-sm text-slate-500 transition hover:text-slate-900"
+        >
+          ← Back to Course
+        </router-link>
+
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
           Week 1
         </p>
@@ -49,6 +56,23 @@
             Your task this week is simple: notice the disappearance. Not the
             explanation. Not the story. Not the self-criticism afterwards. Just
             the movement from intention into fragmentation.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <h2 class="text-2xl font-semibold text-slate-950">
+          Audio reflection
+        </h2>
+
+        <p class="mt-4 text-base leading-7 text-slate-600">
+          Add your Week 1 audio reflection here later. This section is intentionally
+          spacious and minimal to preserve pacing and attention.
+        </p>
+
+        <div class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6">
+          <p class="text-sm text-slate-500">
+            Audio placeholder
           </p>
         </div>
       </section>
@@ -163,7 +187,7 @@ const submitReflection = async () => {
   try {
 
     const result = await fetch(
-        "/api/capture-email/courseReflection",
+        "/api/courseReflection",
         {
           method: "POST",
 
@@ -178,12 +202,22 @@ const submitReflection = async () => {
         }
     )
 
-    const data = await result.json()
+    const text = await result.text()
+
+    let data = {}
+
+    try {
+      data = text ? JSON.parse(text) : {}
+    } catch {
+      throw new Error("Invalid server response")
+    }
 
     if (!result.ok) {
+
       throw new Error(
           data.error || "Reflection generation failed."
       )
+
     }
 
     response.value = data.reflection || ""
