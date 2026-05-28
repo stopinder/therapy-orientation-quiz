@@ -1,5 +1,3 @@
-import crypto from "crypto"
-
 import { createClient } from "@supabase/supabase-js"
 
 const supabase = createClient(
@@ -23,32 +21,12 @@ export default async function handler(request, response) {
 
     try {
 
-        const rawBody = JSON.stringify(request.body)
+        console.log("LEMON WEBHOOK RECEIVED")
 
-        const signature =
-            request.headers["x-signature"]
+        const eventName =
+            request.body.meta?.event_name
 
-        const secret =
-            process.env.LEMON_WEBHOOK_SECRET
-
-        const digest = crypto
-            .createHmac("sha256", secret)
-            .update(rawBody)
-            .digest("hex")
-
-        if (digest !== signature) {
-
-            console.error(
-                "INVALID LEMON SIGNATURE"
-            )
-
-            return response.status(401).json({
-                error: "Invalid signature"
-            })
-
-        }
-
-        const eventName = request.body.meta?.event_name
+        console.log("EVENT:", eventName)
 
         if (eventName !== "order_created") {
 
@@ -64,6 +42,8 @@ export default async function handler(request, response) {
         const email =
             attributes.user_email
 
+        console.log("CUSTOMER EMAIL:", email)
+
         if (!email) {
 
             return response.status(400).json({
@@ -75,15 +55,25 @@ export default async function handler(request, response) {
         const { data: existingUser } =
             await supabase
                 .from("course_entitlements")
-                .select("id")
-                .eq("email", email)
+                .select("uuid")
+                .eq("user_id", email)
                 .maybeSingle()
 
         if (!existingUser) {
 
             const {
-                data: authUsers
+                data: authUsers,
+                error: authError
             } = await supabase.auth.admin.listUsers()
+
+            if (authError) {
+
+                console.error(
+                    "AUTH USER LOAD ERROR:",
+                    authError
+                )
+
+            }
 
             const matchedUser =
                 authUsers?.users?.find(
@@ -92,20 +82,44 @@ export default async function handler(request, response) {
                         email.toLowerCase()
                 )
 
-            await supabase
+            console.log(
+                "MATCHED USER:",
+                matchedUser?.id
+            )
+
+            const {
+                data: insertData,
+                error: insertError
+            } = await supabase
                 .from("course_entitlements")
                 .insert([
                     {
                         user_id:
                             matchedUser?.id || null,
 
-                        email,
-
                         full_course_bool: true,
 
                         active_bool: true
                     }
                 ])
+
+            if (insertError) {
+
+                console.error(
+                    "ENTITLEMENT INSERT ERROR:",
+                    insertError
+                )
+
+                return response.status(500).json({
+                    error: "Failed entitlement insert"
+                })
+
+            }
+
+            console.log(
+                "ENTITLEMENT CREATED:",
+                insertData
+            )
 
         }
 
