@@ -116,6 +116,31 @@ const routes = [
     },
 
     {
+        path: "/course/week-2",
+        redirect: "/course/week-1"
+    },
+
+    {
+        path: "/course/week-3",
+        redirect: "/course/week-1"
+    },
+
+    {
+        path: "/course/week-4",
+        redirect: "/course/week-1"
+    },
+
+    {
+        path: "/course/week-5",
+        redirect: "/course/week-1"
+    },
+
+    {
+        path: "/course/week-6",
+        redirect: "/course/week-1"
+    },
+
+    {
         path: "/access-denied",
         name: "AccessDenied",
         component: AccessDeniedView
