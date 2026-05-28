@@ -11,19 +11,25 @@ export function useCoursePurchases() {
     const purchaseProgramme = () => {
 
         if (!COURSE_CHECKOUT.checkoutUrl) {
-            console.error("Missing Lemon checkout URL")
+
+            console.error(
+                "Missing Lemon checkout URL"
+            )
+
             return
+
         }
 
-        window.location.href = COURSE_CHECKOUT.checkoutUrl
+        window.location.href =
+            COURSE_CHECKOUT.checkoutUrl
 
     }
 
     const hasProgrammeAccess = computed(() => {
 
         return (
-            entitlements.entitlement?.full_course === true &&
-            entitlements.entitlement?.active === true
+            entitlements.entitlement?.full_course_bool === true &&
+            entitlements.entitlement?.active_bool === true
         )
 
     })
