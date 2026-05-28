@@ -1,3 +1,4 @@
+```js
 import { createRouter, createWebHistory } from "vue-router"
 
 import AuthView from "../views/AuthView.vue"
@@ -9,6 +10,7 @@ import ADHDQuizView from "../views/ADHDQuizView.vue"
 
 import CourseHubView from "../views/CourseHubView.vue"
 import CourseWeekView from "../views/CourseWeekView.vue"
+import ReflectionHistoryView from "../views/ReflectionHistoryView.vue"
 
 import AccessDeniedView from "../views/AccessDeniedView.vue"
 
@@ -110,6 +112,16 @@ const routes = [
         path: "/course",
         name: "CourseHub",
         component: CourseHubView,
+
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+    {
+        path: "/reflections",
+        name: "ReflectionHistory",
+        component: ReflectionHistoryView,
 
         meta: {
             requiresAuth: true
@@ -227,3 +239,4 @@ router.beforeEach((to, from, next) => {
 })
 
 export default router
+```
