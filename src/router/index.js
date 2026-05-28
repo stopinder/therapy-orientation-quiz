@@ -24,6 +24,13 @@ import AuthDebugView from "../views/AuthDebugView.vue"
 import { useAuthStore } from "../stores/auth"
 import { useEntitlementStore } from "../stores/entitlements"
 
+import { courseWeeks } from "../data/courseWeeks"
+
+const validWeekNumbers =
+    courseWeeks.map(
+        (week) => week.number
+    )
+
 const routes = [
 
     {
@@ -190,6 +197,28 @@ router.beforeEach((to, from, next) => {
 
         next("/access-denied")
         return
+
+    }
+
+    if (
+        to.name === "CourseWeek"
+    ) {
+
+        const weekNumber =
+            Number(
+                to.params.weekNumber
+            )
+
+        if (
+            !validWeekNumbers.includes(
+                weekNumber
+            )
+        ) {
+
+            next("/course")
+            return
+
+        }
 
     }
 
