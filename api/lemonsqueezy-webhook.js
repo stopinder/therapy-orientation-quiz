@@ -9,7 +9,10 @@ export const config = {
     runtime: "nodejs"
 }
 
-export default async function handler(request, response) {
+export default async function handler(
+    request,
+    response
+) {
 
     if (request.method !== "POST") {
 
@@ -21,12 +24,17 @@ export default async function handler(request, response) {
 
     try {
 
-        console.log("LEMON WEBHOOK RECEIVED")
+        console.log(
+            "LEMON WEBHOOK RECEIVED"
+        )
 
         const eventName =
             request.body.meta?.event_name
 
-        console.log("EVENT:", eventName)
+        console.log(
+            "EVENT:",
+            eventName
+        )
 
         if (eventName !== "order_created") {
 
@@ -42,7 +50,10 @@ export default async function handler(request, response) {
         const email =
             attributes.user_email
 
-        console.log("CUSTOMER EMAIL:", email)
+        console.log(
+            "CUSTOMER EMAIL:",
+            email
+        )
 
         if (!email) {
 
@@ -52,54 +63,69 @@ export default async function handler(request, response) {
 
         }
 
-        const { data: existingUser } =
-            await supabase
-                .from("course_entitlements")
-                .select("uuid")
-                .eq("user_id", email)
-                .maybeSingle()
+        const {
+            data: authUsers,
+            error: authError
+        } = await supabase
+            .auth
+            .admin
+            .listUsers()
 
-        if (!existingUser) {
+        if (authError) {
 
-            const {
-                data: authUsers,
-                error: authError
-            } = await supabase.auth.admin.listUsers()
-
-            if (authError) {
-
-                console.error(
-                    "AUTH USER LOAD ERROR:",
-                    authError
-                )
-
-            }
-
-            const matchedUser =
-                authUsers?.users?.find(
-                    (user) =>
-                        user.email?.toLowerCase() ===
-                        email.toLowerCase()
-                )
-
-            console.log(
-                "MATCHED USER:",
-                matchedUser?.id
+            console.error(
+                "AUTH USER LOAD ERROR:",
+                authError
             )
 
+            return response.status(500).json({
+                error: "Failed auth lookup"
+            })
+
+        }
+
+        const matchedUser =
+            authUsers?.users?.find(
+                (user) =>
+                    user.email?.toLowerCase() ===
+                    email.toLowerCase()
+            )
+
+        if (!matchedUser) {
+
+            return response.status(404).json({
+                error: "User not found"
+            })
+
+        }
+
+        console.log(
+            "MATCHED USER:",
+            matchedUser.id
+        )
+
+        const {
+            data: existingEntitlement
+        } = await supabase
+            .from("course_entitlements")
+            .select("id")
+            .eq("user_id", matchedUser.id)
+            .maybeSingle()
+
+        if (!existingEntitlement) {
+
             const {
-                data: insertData,
                 error: insertError
             } = await supabase
                 .from("course_entitlements")
                 .insert([
                     {
                         user_id:
-                            matchedUser?.id || null,
+                        matchedUser.id,
 
-                        full_course_bool: true,
+                        full_course: true,
 
-                        active_bool: true
+                        active: true
                     }
                 ])
 
@@ -111,14 +137,14 @@ export default async function handler(request, response) {
                 )
 
                 return response.status(500).json({
-                    error: "Failed entitlement insert"
+                    error:
+                        "Failed entitlement insert"
                 })
 
             }
 
             console.log(
-                "ENTITLEMENT CREATED:",
-                insertData
+                "ENTITLEMENT CREATED"
             )
 
         }
@@ -135,7 +161,9 @@ export default async function handler(request, response) {
         )
 
         return response.status(500).json({
-            error: error.message || "Server error"
+            error:
+                error.message ||
+                "Server error"
         })
 
     }

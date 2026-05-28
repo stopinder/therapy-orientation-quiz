@@ -1,71 +1,103 @@
 import { defineStore } from "pinia"
+
 import { supabase } from "../lib/supabase"
 
-export const useEntitlementStore = defineStore("entitlements", {
+export const useEntitlementStore = defineStore(
+    "entitlements",
+    {
 
-    state: () => ({
-        entitlement: null,
-        loading: false
-    }),
+        state: () => ({
 
-    getters: {
+            entitlement: null,
 
-        hasFullCourse: (state) =>
-            state.entitlement?.full_course === true,
+            loading: false
 
-        unlockedWeeks: (state) =>
-            state.entitlement?.unlocked_weeks || [],
+        }),
 
-        isActive: (state) =>
-            state.entitlement?.active === true
+        getters: {
 
-    },
+            hasFullCourse: (state) =>
 
-    actions: {
+                state.entitlement?.full_course === true,
 
-        async fetchEntitlements(userId) {
+            unlockedWeeks: (state) =>
 
-            this.loading = true
+                state.entitlement?.unlocked_weeks || [],
 
-            const { data, error } = await supabase
-                .from("course_entitlements")
-                .select("*")
-                .eq("user_id", userId)
-                .maybeSingle()
+            isActive: (state) =>
 
-            if (error) {
-                console.error("ENTITLEMENT ERROR:", error)
-
-                this.entitlement = null
-                this.loading = false
-
-                return
-            }
-
-            this.entitlement = data || null
-
-            this.loading = false
+                state.entitlement?.active === true
 
         },
 
-        canAccessWeek(weekNumber) {
+        actions: {
 
-            if (!this.entitlement) {
-                return false
+            async fetchEntitlements(userId) {
+
+                this.loading = true
+
+                const {
+                    data,
+                    error
+                } = await supabase
+                    .from("course_entitlements")
+                    .select("*")
+                    .eq("user_id", userId)
+                    .maybeSingle()
+
+                if (error) {
+
+                    console.error(
+                        "ENTITLEMENT ERROR:",
+                        error
+                    )
+
+                    this.entitlement = null
+
+                    this.loading = false
+
+                    return
+
+                }
+
+                this.entitlement =
+                    data || null
+
+                this.loading = false
+
+            },
+
+            canAccessWeek(weekNumber) {
+
+                if (!this.entitlement) {
+
+                    return false
+
+                }
+
+                if (!this.isActive) {
+
+                    return false
+
+                }
+
+                // Full programme unlocks everything
+
+                if (this.hasFullCourse) {
+
+                    return true
+
+                }
+
+                // Legacy support
+
+                return this.unlockedWeeks.includes(
+                    Number(weekNumber)
+                )
+
             }
-
-            if (!this.isActive) {
-                return false
-            }
-
-            if (this.hasFullCourse) {
-                return true
-            }
-
-            return this.unlockedWeeks.includes(Number(weekNumber))
 
         }
 
     }
-
-})
+)

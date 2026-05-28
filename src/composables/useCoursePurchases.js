@@ -6,7 +6,8 @@ import { COURSE_CHECKOUT } from "../config/courseCheckoutLinks"
 
 export function useCoursePurchases() {
 
-    const entitlements = useEntitlementStore()
+    const entitlements =
+        useEntitlementStore()
 
     const purchaseProgramme = () => {
 
@@ -25,18 +26,22 @@ export function useCoursePurchases() {
 
     }
 
-    const hasProgrammeAccess = computed(() => {
+    const hasProgrammeAccess =
+        computed(() => {
 
-        return (
-            entitlements.entitlement?.full_course_bool === true &&
-            entitlements.entitlement?.active_bool === true
-        )
+            return (
+                entitlements.entitlement?.full_course === true &&
+                entitlements.entitlement?.active === true
+            )
 
-    })
+        })
 
     return {
+
         purchaseProgramme,
+
         hasProgrammeAccess
+
     }
 
 }
