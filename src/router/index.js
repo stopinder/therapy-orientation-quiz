@@ -8,7 +8,7 @@ import QuizGateway from "../views/QuizGateway.vue"
 import ADHDQuizView from "../views/ADHDQuizView.vue"
 
 import CourseHubView from "../views/CourseHubView.vue"
-import CourseWeek1View from "../views/CourseWeek1View.vue"
+import CourseWeekView from "../views/CourseWeekView.vue"
 
 import AccessDeniedView from "../views/AccessDeniedView.vue"
 
@@ -25,6 +25,7 @@ import { useAuthStore } from "../stores/auth"
 import { useEntitlementStore } from "../stores/entitlements"
 
 const routes = [
+
     {
         path: "/",
         redirect: "/about"
@@ -76,6 +77,7 @@ const routes = [
         path: "/adhd-quiz",
         name: "ADHDQuiz",
         component: ADHDQuizView,
+
         meta: {
             requiresGateway: true
         }
@@ -85,6 +87,7 @@ const routes = [
         path: "/deep-dive",
         name: "DeepDive",
         component: DeepDiveView,
+
         meta: {
             requiresGateway: true
         }
@@ -100,44 +103,21 @@ const routes = [
         path: "/course",
         name: "CourseHub",
         component: CourseHubView,
+
         meta: {
             requiresAuth: true
         }
     },
 
     {
-        path: "/course/week-1",
-        name: "CourseWeek1",
-        component: CourseWeek1View,
+        path: "/course/:weekNumber",
+        name: "CourseWeek",
+        component: CourseWeekView,
+
         meta: {
             requiresAuth: true,
             requiresCourseAccess: true
         }
-    },
-
-    {
-        path: "/course/week-2",
-        redirect: "/course/week-1"
-    },
-
-    {
-        path: "/course/week-3",
-        redirect: "/course/week-1"
-    },
-
-    {
-        path: "/course/week-4",
-        redirect: "/course/week-1"
-    },
-
-    {
-        path: "/course/week-5",
-        redirect: "/course/week-1"
-    },
-
-    {
-        path: "/course/week-6",
-        redirect: "/course/week-1"
     },
 
     {
@@ -151,9 +131,11 @@ const routes = [
         name: "AuthDebug",
         component: AuthDebugView
     }
+
 ]
 
 const router = createRouter({
+
     history: createWebHistory(),
 
     routes,
@@ -170,32 +152,45 @@ const router = createRouter({
         }
 
     }
+
 })
 
 router.beforeEach((to, from, next) => {
 
-    const auth = useAuthStore()
-    const entitlements = useEntitlementStore()
+    const auth =
+        useAuthStore()
+
+    const entitlements =
+        useEntitlementStore()
 
     if (
         to.meta.requiresGateway &&
         !sessionStorage.getItem("passedGateway")
     ) {
+
         next("/gateway")
         return
+
     }
 
-    if (to.meta.requiresAuth && !auth.user) {
+    if (
+        to.meta.requiresAuth &&
+        !auth.user
+    ) {
+
         next("/auth")
         return
+
     }
 
     if (
         to.meta.requiresCourseAccess &&
         !entitlements.canAccessWeek(1)
     ) {
+
         next("/access-denied")
         return
+
     }
 
     next()
