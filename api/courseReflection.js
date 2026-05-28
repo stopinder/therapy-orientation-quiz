@@ -43,6 +43,28 @@ export default async function handler(request, response) {
 
         }
 
+        // Get authenticated user
+
+        const {
+            data: authUser,
+            error: authError
+        } = await supabase.auth.admin.getUserById(userId)
+
+        if (authError || !authUser?.user) {
+
+            console.error(
+                "SUPABASE AUTH ERROR:",
+                authError
+            )
+
+            return response.status(401).json({
+                error: "Unable to load user"
+            })
+
+        }
+
+        const user = authUser.user
+
         const openAIResponse = await fetch(
             "https://api.openai.com/v1/chat/completions",
             {
@@ -133,8 +155,13 @@ ${reflection}
             .insert([
                 {
                     user_id: userId,
+
+                    email_optins: user.email,
+
                     week_number: week,
+
                     original_reflection: reflection,
+
                     ai_response: aiResponse
                 }
             ])
