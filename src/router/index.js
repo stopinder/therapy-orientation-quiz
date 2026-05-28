@@ -147,14 +147,10 @@ const router = createRouter({
     }
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
 
     const auth = useAuthStore()
     const entitlements = useEntitlementStore()
-
-    if (!auth.user && auth.loading) {
-        await auth.fetchUser()
-    }
 
     if (
         to.meta.requiresGateway &&
@@ -169,15 +165,12 @@ router.beforeEach(async (to, from, next) => {
         return
     }
 
-    if (to.meta.requiresCourseAccess) {
-
-        await entitlements.fetchEntitlements(auth.user.id)
-
-        if (!entitlements.canAccessWeek(1)) {
-            next("/access-denied")
-            return
-        }
-
+    if (
+        to.meta.requiresCourseAccess &&
+        !entitlements.canAccessWeek(1)
+    ) {
+        next("/access-denied")
+        return
     }
 
     next()

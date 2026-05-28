@@ -5,6 +5,13 @@
 
     <div class="mb-14">
 
+      <div
+          v-if="hasProgrammeAccess && lastActiveWeek"
+          class="mb-6 inline-flex items-center rounded-full bg-slate-100 px-4 py-2 text-xs font-medium text-slate-600"
+      >
+        Last active: Week {{ lastActiveWeek }}
+      </div>
+
       <h1 class="text-4xl font-semibold tracking-tight">
         Your Programme
       </h1>
@@ -61,10 +68,10 @@
     <!-- Loading -->
 
     <div
-        v-if="entitlements.loading"
+        v-if="entitlements.loading || courseProgress.loading"
         class="text-slate-500"
     >
-      Loading access...
+      Restoring your progress...
     </div>
 
     <!-- Weeks -->
@@ -96,13 +103,9 @@
 
           <div
               class="rounded-full px-3 py-1 text-xs font-medium"
-              :class="
-              hasProgrammeAccess
-                ? 'bg-emerald-100 text-emerald-700'
-                : 'bg-slate-200 text-slate-600'
-            "
+              :class="statusClass(week.number)"
           >
-            {{ hasProgrammeAccess ? 'Unlocked' : 'Locked' }}
+            {{ statusLabel(week.number) }}
           </div>
 
         </div>
@@ -118,7 +121,7 @@
             :to="`/course/week-${week.number}`"
             class="inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm text-white transition hover:bg-slate-700"
         >
-          Continue
+          {{ buttonLabel(week.number) }}
         </router-link>
 
         <!-- Locked -->
@@ -139,29 +142,28 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue"
+import { computed } from "vue"
 
-import { useAuthStore } from "../stores/auth"
 import { useEntitlementStore } from "../stores/entitlements"
+import { useCourseProgressStore } from "../stores/courseProgress"
 
 import { useCoursePurchases } from "../composables/useCoursePurchases"
 
-const auth = useAuthStore()
+const entitlements =
+    useEntitlementStore()
 
-const entitlements = useEntitlementStore()
+const courseProgress =
+    useCourseProgressStore()
 
 const {
   purchaseProgramme,
   hasProgrammeAccess
 } = useCoursePurchases()
 
-onMounted(async () => {
-
-  if (auth.user) {
-    await entitlements.fetchEntitlements(auth.user.id)
-  }
-
-})
+const lastActiveWeek =
+    computed(() =>
+        courseProgress.lastActiveWeek
+    )
 
 const weeks = computed(() => [
 
@@ -214,4 +216,72 @@ const weeks = computed(() => [
   }
 
 ])
+
+const statusLabel = (weekNumber) => {
+
+  if (!hasProgrammeAccess.value) {
+    return "Locked"
+  }
+
+  if (
+      courseProgress.isWeekCompleted(
+          weekNumber
+      )
+  ) {
+    return "Completed"
+  }
+
+  if (
+      weekNumber === lastActiveWeek.value
+  ) {
+    return "In Progress"
+  }
+
+  return "Available"
+
+}
+
+const statusClass = (weekNumber) => {
+
+  if (!hasProgrammeAccess.value) {
+    return "bg-slate-200 text-slate-600"
+  }
+
+  if (
+      courseProgress.isWeekCompleted(
+          weekNumber
+      )
+  ) {
+    return "bg-emerald-100 text-emerald-700"
+  }
+
+  if (
+      weekNumber === lastActiveWeek.value
+  ) {
+    return "bg-amber-100 text-amber-700"
+  }
+
+  return "bg-slate-100 text-slate-700"
+
+}
+
+const buttonLabel = (weekNumber) => {
+
+  if (
+      courseProgress.isWeekCompleted(
+          weekNumber
+      )
+  ) {
+    return "Revisit"
+  }
+
+  if (
+      weekNumber === lastActiveWeek.value
+  ) {
+    return "Continue"
+  }
+
+  return "Open Week"
+
+}
 </script>

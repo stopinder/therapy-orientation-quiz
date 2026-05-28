@@ -18,13 +18,15 @@ export const useAuthStore = defineStore("auth", {
 
             this.loading = true
 
-            const { data, error } = await supabase.auth.getUser()
+            const { data, error } =
+                await supabase.auth.getUser()
 
             if (error) {
                 console.error(error)
             }
 
-            this.user = data?.user || null
+            this.user =
+                data?.user || null
 
             this.loading = false
 
@@ -40,11 +42,14 @@ export const useAuthStore = defineStore("auth", {
 
         listenForAuthChanges() {
 
-            supabase.auth.onAuthStateChange((event, session) => {
+            supabase.auth.onAuthStateChange(
+                (event, session) => {
 
-                this.user = session?.user || null
+                    this.user =
+                        session?.user || null
 
-            })
+                }
+            )
 
         }
 
