@@ -152,6 +152,8 @@
 <script setup>
 import { computed } from "vue"
 
+import { courseWeeks } from "../data/courseWeeks"
+
 import { useEntitlementStore } from "../stores/entitlements"
 import { useCourseProgressStore } from "../stores/courseProgress"
 
@@ -174,60 +176,11 @@ const {
   continuityLabel,
   shouldForegroundWeek,
   isWeekCompleted,
-  isWeekActive
+  isWeekActive,
+  nextRecommendedWeek
 } = useContinuity()
 
-const weeks = computed(() => [
-
-  {
-    number: 1,
-    title: "Recognition & Fragmentation",
-
-    description:
-        "Observing continuity breakdown and attentional drift."
-  },
-
-  {
-    number: 2,
-    title: "Pressure & Avoidance",
-
-    description:
-        "Understanding internal pressure accumulation."
-  },
-
-  {
-    number: 3,
-    title: "Emotional Interruption",
-
-    description:
-        "Tracking disruption and behavioural collapse."
-  },
-
-  {
-    number: 4,
-    title: "Reaction & Compensation",
-
-    description:
-        "Studying automatic compensatory behaviours."
-  },
-
-  {
-    number: 5,
-    title: "Embodied Continuity",
-
-    description:
-        "Restoring grounded attentional contact."
-  },
-
-  {
-    number: 6,
-    title: "Integration",
-
-    description:
-        "Stabilising continuity and long-range observation."
-  }
-
-])
+const weeks = computed(() => courseWeeks)
 
 const statusClass = (weekNumber) => {
 
@@ -292,4 +245,37 @@ const buttonLabel = (weekNumber) => {
   return "Open Week"
 
 }
-</script>
+
+const cardClass = (weekNumber) => {
+
+  if (!hasProgrammeAccess.value) {
+    return "border-slate-200"
+  }
+
+  if (
+      shouldForegroundWeek(
+          weekNumber
+      )
+  ) {
+    return "border-amber-300 ring-1 ring-amber-200"
+  }
+
+  if (
+      isWeekCompleted(
+          weekNumber
+      )
+  ) {
+    return "border-emerald-200"
+  }
+
+  if (
+      weekNumber >
+      nextRecommendedWeek.value
+  ) {
+    return "border-slate-100 opacity-60"
+  }
+
+  return "border-slate-200"
+
+}
+</script>script>
