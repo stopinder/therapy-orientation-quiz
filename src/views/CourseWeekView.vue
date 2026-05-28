@@ -34,6 +34,15 @@
           {{ week.intro }}
         </p>
 
+        <div
+            v-if="showContinuityBoundary"
+            class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-800"
+        >
+          Earlier continuity work still appears active. You can continue here,
+          but returning to the earlier progression may strengthen continuity
+          and recognition.
+        </div>
+
       </div>
 
       <!-- Opening Reflection -->
@@ -172,7 +181,8 @@ import {
   ref
 } from "vue"
 
-import { useRoute } from "vue-router"
+import { useRoute }
+  from "vue-router"
 
 import { courseWeeks }
   from "../data/courseWeeks"
@@ -183,12 +193,20 @@ import { useAuthStore }
 import { useCourseProgressStore }
   from "../stores/courseProgress"
 
+import { useContinuity }
+  from "../composables/useContinuity"
+
 const route = useRoute()
 
 const auth = useAuthStore()
 
 const courseProgress =
     useCourseProgressStore()
+
+const {
+  nextRecommendedWeek,
+  isFutureBoundary
+} = useContinuity()
 
 const reflection = ref("")
 const response = ref("")
@@ -213,6 +231,15 @@ const weekCompleted =
             weekNumber.value
         )
     )
+
+const showContinuityBoundary =
+    computed(() => {
+
+      return isFutureBoundary(
+          weekNumber.value
+      )
+
+    })
 
 onMounted(async () => {
 
@@ -240,9 +267,11 @@ const submitReflection = async () => {
   try {
 
     if (!auth.user?.id) {
+
       throw new Error(
           "User not authenticated"
       )
+
     }
 
     const result = await fetch(

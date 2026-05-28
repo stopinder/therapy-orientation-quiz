@@ -1,6 +1,7 @@
 import { computed } from "vue"
 
-import { useCourseProgressStore } from "../stores/courseProgress"
+import { useCourseProgressStore }
+    from "../stores/courseProgress"
 
 export function useContinuity() {
 
@@ -20,9 +21,10 @@ export function useContinuity() {
     const isWeekCompleted =
         (weekNumber) => {
 
-            return courseProgress.isWeekCompleted(
-                weekNumber
-            )
+            return courseProgress
+                .isWeekCompleted(
+                    weekNumber
+                )
 
         }
 
@@ -103,6 +105,16 @@ export function useContinuity() {
 
         }
 
+    const isFutureBoundary =
+        (weekNumber) => {
+
+            return (
+                weekNumber >
+                nextRecommendedWeek.value + 1
+            )
+
+        }
+
     return {
 
         lastActiveWeek,
@@ -117,7 +129,9 @@ export function useContinuity() {
 
         shouldForegroundWeek,
 
-        continuityLabel
+        continuityLabel,
+
+        isFutureBoundary
 
     }
 
