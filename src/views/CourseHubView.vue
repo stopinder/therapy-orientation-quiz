@@ -84,7 +84,8 @@
       <div
           v-for="week in weeks"
           :key="week.number"
-          class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md"
+          class="rounded-2xl border bg-white p-6 shadow-sm transition duration-300 hover:shadow-md"
+          :class="cardClass(week.number)"
       >
 
         <div class="mb-5 flex items-start justify-between">
