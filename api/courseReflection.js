@@ -24,7 +24,8 @@ export default async function handler(request, response) {
         const {
             week,
             reflection,
-            userId
+            userId,
+            email
         } = request.body || {}
 
         if (!reflection || typeof reflection !== "string") {
@@ -42,28 +43,6 @@ export default async function handler(request, response) {
             })
 
         }
-
-        // Get authenticated user
-
-        const {
-            data: authUser,
-            error: authError
-        } = await supabase.auth.admin.getUserById(userId)
-
-        if (authError || !authUser?.user) {
-
-            console.error(
-                "SUPABASE AUTH ERROR:",
-                authError
-            )
-
-            return response.status(401).json({
-                error: "Unable to load user"
-            })
-
-        }
-
-        const user = authUser.user
 
         const openAIResponse = await fetch(
             "https://api.openai.com/v1/chat/completions",
@@ -156,7 +135,7 @@ ${reflection}
                 {
                     user_id: userId,
 
-                    email_optins: user.email,
+                    email_optins: email,
 
                     week_number: week,
 
