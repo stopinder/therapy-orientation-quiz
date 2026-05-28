@@ -105,7 +105,7 @@
               class="rounded-full px-3 py-1 text-xs font-medium"
               :class="statusClass(week.number)"
           >
-            {{ statusLabel(week.number) }}
+            {{ continuityLabel(week.number) }}
           </div>
 
         </div>
@@ -113,6 +113,13 @@
         <p class="mb-6 text-sm leading-relaxed text-slate-600">
           {{ week.description }}
         </p>
+
+        <div
+            v-if="shouldForegroundWeek(week.number)"
+            class="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800"
+        >
+          This appears to be the next active area of continuity.
+        </div>
 
         <!-- Access -->
 
@@ -148,6 +155,7 @@ import { useEntitlementStore } from "../stores/entitlements"
 import { useCourseProgressStore } from "../stores/courseProgress"
 
 import { useCoursePurchases } from "../composables/useCoursePurchases"
+import { useContinuity } from "../composables/useContinuity"
 
 const entitlements =
     useEntitlementStore()
@@ -160,10 +168,13 @@ const {
   hasProgrammeAccess
 } = useCoursePurchases()
 
-const lastActiveWeek =
-    computed(() =>
-        courseProgress.lastActiveWeek
-    )
+const {
+  lastActiveWeek,
+  continuityLabel,
+  shouldForegroundWeek,
+  isWeekCompleted,
+  isWeekActive
+} = useContinuity()
 
 const weeks = computed(() => [
 
@@ -217,30 +228,6 @@ const weeks = computed(() => [
 
 ])
 
-const statusLabel = (weekNumber) => {
-
-  if (!hasProgrammeAccess.value) {
-    return "Locked"
-  }
-
-  if (
-      courseProgress.isWeekCompleted(
-          weekNumber
-      )
-  ) {
-    return "Completed"
-  }
-
-  if (
-      weekNumber === lastActiveWeek.value
-  ) {
-    return "In Progress"
-  }
-
-  return "Available"
-
-}
-
 const statusClass = (weekNumber) => {
 
   if (!hasProgrammeAccess.value) {
@@ -248,7 +235,7 @@ const statusClass = (weekNumber) => {
   }
 
   if (
-      courseProgress.isWeekCompleted(
+      isWeekCompleted(
           weekNumber
       )
   ) {
@@ -256,9 +243,19 @@ const statusClass = (weekNumber) => {
   }
 
   if (
-      weekNumber === lastActiveWeek.value
+      isWeekActive(
+          weekNumber
+      )
   ) {
     return "bg-amber-100 text-amber-700"
+  }
+
+  if (
+      shouldForegroundWeek(
+          weekNumber
+      )
+  ) {
+    return "bg-blue-100 text-blue-700"
   }
 
   return "bg-slate-100 text-slate-700"
@@ -268,7 +265,7 @@ const statusClass = (weekNumber) => {
 const buttonLabel = (weekNumber) => {
 
   if (
-      courseProgress.isWeekCompleted(
+      isWeekCompleted(
           weekNumber
       )
   ) {
@@ -276,9 +273,19 @@ const buttonLabel = (weekNumber) => {
   }
 
   if (
-      weekNumber === lastActiveWeek.value
+      isWeekActive(
+          weekNumber
+      )
   ) {
     return "Continue"
+  }
+
+  if (
+      shouldForegroundWeek(
+          weekNumber
+      )
+  ) {
+    return "Continue Forward"
   }
 
   return "Open Week"
