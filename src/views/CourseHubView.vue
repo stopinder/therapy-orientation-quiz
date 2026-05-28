@@ -126,7 +126,7 @@
 
         <router-link
             v-if="hasProgrammeAccess"
-            :to="`/course/week-${week.number}`"
+            :to="`/course/${week.number}`"
             class="inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm text-white transition hover:bg-slate-700"
         >
           {{ buttonLabel(week.number) }}
