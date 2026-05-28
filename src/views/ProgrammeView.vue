@@ -3,7 +3,9 @@
     <div class="max-w-4xl mx-auto space-y-24">
 
       <!-- HERO -->
+
       <section class="pt-8 max-w-3xl space-y-5">
+
         <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
           Six-Week Guided Programme
         </p>
@@ -14,6 +16,7 @@
         </h1>
 
         <div class="space-y-4 text-[1.03rem] leading-[1.85] text-slate-700 max-w-2xl">
+
           <p>
             Structured weekly practices combining psychological reflection,
             embodied attention, and grounded self-observation.
@@ -24,27 +27,35 @@
             It is an attempt to understand how continuity repeatedly breaks down,
             particularly under emotional pressure, fragmentation, and overload.
           </p>
+
         </div>
 
         <div class="flex flex-wrap gap-3 pt-2">
+
           <button
+              @click="enterProgramme"
               class="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
           >
-            Programme access opening shortly
+            Enter Full Programme
           </button>
 
           <router-link
               to="/adhd-quiz"
               class="inline-flex items-center rounded-xl px-5 py-3 text-sm text-slate-600 transition hover:text-slate-900"
           >
-            Begin the free reflection
+            Begin Free Orientation Reflection
           </router-link>
+
         </div>
+
       </section>
 
       <!-- THE PATTERN -->
+
       <section class="max-w-3xl space-y-8">
+
         <div class="space-y-3">
+
           <p class="section-label">
             The pattern
           </p>
@@ -53,9 +64,11 @@
             You may understand yourself afterwards,
             but lose contact in the moment.
           </h2>
+
         </div>
 
         <div class="grid gap-4 md:grid-cols-2">
+
           <div class="problem-card">
             <p>
               Starting with clarity and losing continuity halfway through.
@@ -91,12 +104,17 @@
               Recognising patterns intellectually while still being emotionally organised by them.
             </p>
           </div>
+
         </div>
+
       </section>
 
       <!-- STRUCTURE -->
+
       <section class="space-y-8">
+
         <div class="space-y-3 max-w-3xl">
+
           <p class="section-label">
             Weekly structure
           </p>
@@ -105,19 +123,23 @@
             A gradual movement from recognition
             toward greater continuity.
           </h2>
+
         </div>
 
         <div class="grid gap-3">
+
           <div
               v-for="week in weeks"
               :key="week.title"
               class="week-card"
           >
+
             <div class="week-number">
               {{ week.week }}
             </div>
 
             <div class="space-y-2">
+
               <h3 class="text-[1.08rem] font-medium text-slate-900">
                 {{ week.title }}
               </h3>
@@ -125,14 +147,21 @@
               <p class="text-[0.98rem] leading-[1.8] text-slate-600">
                 {{ week.description }}
               </p>
+
             </div>
+
           </div>
+
         </div>
+
       </section>
 
       <!-- METHOD -->
+
       <section class="max-w-3xl space-y-6">
+
         <div class="space-y-3">
+
           <p class="section-label">
             The method
           </p>
@@ -140,9 +169,11 @@
           <h2 class="section-title">
             Practical self-observation rather than self-improvement performance.
           </h2>
+
         </div>
 
         <div class="body-copy">
+
           <p>
             The programme combines psychological reflection with embodied attention practices:
             learning to remain partially connected to bodily sensation while observing emotional,
@@ -159,12 +190,17 @@
             but on recognising when awareness narrows, disappears,
             or becomes organised around automatic reactions.
           </p>
+
         </div>
+
       </section>
 
       <!-- WHO THIS IS FOR -->
+
       <section class="max-w-3xl space-y-6">
+
         <div class="space-y-3">
+
           <p class="section-label">
             Who this is for
           </p>
@@ -172,9 +208,11 @@
           <h2 class="section-title">
             Reflective people who are tired of simplistic explanations.
           </h2>
+
         </div>
 
         <div class="grid gap-4 md:grid-cols-2">
+
           <div class="audience-card">
             Emotionally intelligent people who still feel internally divided.
           </div>
@@ -198,12 +236,17 @@
           <div class="audience-card">
             Those wanting practical psychological work without performance culture.
           </div>
+
         </div>
+
       </section>
 
       <!-- WHAT CHANGES -->
+
       <section class="max-w-3xl space-y-6">
+
         <div class="space-y-3">
+
           <p class="section-label">
             What changes
           </p>
@@ -212,9 +255,11 @@
             Not transformation.
             Greater recognition.
           </h2>
+
         </div>
 
         <div class="body-copy">
+
           <p>
             Over time, many people begin recognising interruption earlier:
             the moment attention narrows,
@@ -231,11 +276,15 @@
           <p>
             For many people, that alone changes the quality of everyday experience substantially.
           </p>
+
         </div>
+
       </section>
 
-      <!-- FUTURE CHECKOUT -->
+      <!-- CTA -->
+
       <section class="rounded-2xl border border-slate-200 bg-white/60 px-8 py-10">
+
         <div class="max-w-2xl mx-auto text-center space-y-6">
 
           <p class="text-[1.02rem] leading-[1.85] text-slate-700">
@@ -244,25 +293,25 @@
           </p>
 
           <div class="flex justify-center flex-wrap gap-3">
+
             <button
+                @click="enterProgramme"
                 class="inline-flex items-center rounded-xl border border-slate-300 px-6 py-3 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
             >
-              Programme access opening shortly
+              Enter Full Programme
             </button>
 
             <router-link
                 to="/adhd-quiz"
                 class="inline-flex items-center rounded-xl px-6 py-3 text-sm text-slate-600 transition hover:text-slate-900"
             >
-              Begin the free reflection
+              Begin Free Orientation Reflection
             </router-link>
+
           </div>
 
-          <p class="text-xs tracking-[0.04em] text-slate-500">
-            Guided access and structured continuation will be released shortly.
-          </p>
-
         </div>
+
       </section>
 
     </div>
@@ -270,6 +319,13 @@
 </template>
 
 <script setup>
+const enterProgramme = () => {
+
+  window.location.href =
+      import.meta.env.VITE_LEMON_CHECKOUT_URL
+
+}
+
 const weeks = [
   {
     week: "Week 1",
