@@ -135,7 +135,7 @@ ${reflection}
                 {
                     user_id: userId,
 
-                    email_optins: email,
+
 
                     week_number: week,
 
