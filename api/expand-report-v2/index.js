@@ -670,7 +670,8 @@ export default async function handler(
 
         const {
             profile,
-            userId
+            userId,
+            email
         } = req.body || {}
         console.log("QUIZ USER ID:", userId)
 
@@ -721,23 +722,36 @@ export default async function handler(
 
         ])
 
-        if (userId) {
+        if (email) {
+
+            const normalisedEmail =
+                String(email)
+                    .trim()
+                    .toLowerCase()
 
             const { error } = await supabase
-                .from("user_pattern_profiles")
-                .insert([
+                .from("quiz_submissions")
+                .upsert(
                     {
-                        user_id: userId,
-                        quiz_profile_summary: "TEST PROFILE"
+                        email: normalisedEmail,
+                        profile_data: parsedProfile,
+                        user_id: userId || null
+                    },
+                    {
+                        onConflict: "email"
                     }
-                ])
+                )
 
             if (error) {
 
                 console.error(
-                    "PROFILE SAVE ERROR:",
+                    "QUIZ SUBMISSION SAVE ERROR:",
                     error
                 )
+
+                return res.status(500).json({
+                    error: "Failed to save quiz submission"
+                })
 
             }
 

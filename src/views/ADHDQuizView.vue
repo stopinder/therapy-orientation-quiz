@@ -376,7 +376,8 @@ const fetchReport = async () => {
 
         body: JSON.stringify({
           profile: behaviourProfile.value,
-          userId: auth.user?.id
+          userId: auth.user?.id,
+          email
         })
       }
   )
