@@ -399,6 +399,8 @@ const submitReflection = async () => {
     response.value =
         data.reflection || ""
 
+    reflection.value = ""
+
     await courseProgress
         .markWeekCompleted(
             auth.user.id,
