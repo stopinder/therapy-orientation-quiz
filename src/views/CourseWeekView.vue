@@ -284,9 +284,9 @@ const restorePreviousReflection =
             data?.reflection
         ) {
 
-          reflection.value =
-              data.reflection
-                  .original_reflection || ""
+          // reflection.value =
+          //     data.reflection
+          //         .original_reflection || ""
 
           response.value =
               data.reflection
