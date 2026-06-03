@@ -36,12 +36,20 @@ export default async function handler(req, res) {
 
         console.log("PROFILE RECEIVED:", profile)
 
+        const quizProfileSummary = `
+Primary pattern: ${profile?.dominantPattern || "unknown"}.
+
+Top traits:
+${profile?.topTraits?.slice(0, 3).map(t => t.name).join(", ") || "none"}.
+`.trim()
+
         const { error } = await supabase
             .from("quiz_submissions")
             .upsert(
                 {
                     email: normalisedEmail,
-                    profile_data: profile || null
+                    profile_data: profile || null,
+                    quiz_profile_summary: quizProfileSummary
                 },
                 {
                     onConflict: "email"
