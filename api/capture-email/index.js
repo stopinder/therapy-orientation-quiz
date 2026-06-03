@@ -34,6 +34,8 @@ export default async function handler(req, res) {
                 .trim()
                 .toLowerCase()
 
+        console.log("PROFILE RECEIVED:", profile)
+
         const { error } = await supabase
             .from("quiz_submissions")
             .upsert(
@@ -45,6 +47,8 @@ export default async function handler(req, res) {
                     onConflict: "email"
                 }
             )
+
+        console.log("SUPABASE ERROR:", error)
 
         if (error) {
 
