@@ -125,6 +125,18 @@
           Previous continuity reflection restored.
         </p>
 
+        <div
+            v-if="quizProfileSummary"
+            class="mb-8 rounded-2xl border border-slate-200 bg-slate-50 p-6"
+        >
+          <h3 class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+            Emerging Pattern
+          </h3>
+          <p class="text-base leading-7 text-slate-700 whitespace-pre-line">
+            {{ quizProfileSummary }}
+          </p>
+        </div>
+
         <p class="mt-4 text-base leading-7 text-slate-600">
           Describe a moment related to this week's continuity theme.
         </p>
@@ -199,6 +211,9 @@ import { useCourseProgressStore }
 import { useContinuity }
   from "../composables/useContinuity"
 
+import { supabase }
+  from "../lib/supabase"
+
 const route = useRoute()
 
 const auth = useAuthStore()
@@ -217,6 +232,29 @@ const error = ref("")
 
 const restoredReflection =
     ref(false)
+
+const quizProfileSummary =
+    ref("")
+
+const fetchQuizProfile =
+    async () => {
+
+      if (!auth.user?.email) {
+        return
+      }
+
+      const { data } = await supabase
+          .from("quiz_submissions")
+          .select("quiz_profile_summary")
+          .eq("email", auth.user.email)
+          .maybeSingle()
+
+      if (data) {
+        quizProfileSummary.value =
+            data.quiz_profile_summary
+      }
+
+    }
 
 const weekNumber = computed(() =>
     Number(route.params.weekNumber)
@@ -320,6 +358,8 @@ onMounted(async () => {
         weekNumber.value,
         "week-entry"
     )
+
+    await fetchQuizProfile()
 
     await restorePreviousReflection()
 
