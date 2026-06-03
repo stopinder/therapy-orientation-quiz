@@ -722,12 +722,16 @@ export default async function handler(
 
         ])
 
+        console.log("EMAIL RECEIVED:", email)
+
         if (email) {
 
             const normalisedEmail =
                 String(email)
                     .trim()
                     .toLowerCase()
+
+            console.log("NORMALISED EMAIL:", normalisedEmail)
 
             const { error } = await supabase
                 .from("quiz_submissions")
@@ -741,6 +745,8 @@ export default async function handler(
                         onConflict: "email"
                     }
                 )
+
+            console.log("UPSERT ERROR:", error)
 
             if (error) {
 
