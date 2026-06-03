@@ -1,4 +1,9 @@
+import { createClient } from "@supabase/supabase-js"
 
+const supabase = createClient(
+    process.env.VITE_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+)
 export const config = {
     runtime: "nodejs"
 }
@@ -715,6 +720,28 @@ export default async function handler(
             )
 
         ])
+
+        if (userId) {
+
+            const { error } = await supabase
+                .from("user_pattern_profiles")
+                .insert([
+                    {
+                        user_id: userId,
+                        quiz_profile_summary: "TEST PROFILE"
+                    }
+                ])
+
+            if (error) {
+
+                console.error(
+                    "PROFILE SAVE ERROR:",
+                    error
+                )
+
+            }
+
+        }
 
         return res.status(200).json({
 
