@@ -493,9 +493,10 @@ const unlockReport = async () => {
             "Content-Type": "application/json"
           },
 
-          body: JSON.stringify({
-            email: email.value
-          })
+           body: JSON.stringify({
+             email: email.value,
+             profile: behaviourProfile.value
+           })
         }
     )
 
