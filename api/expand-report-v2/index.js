@@ -663,8 +663,11 @@ export default async function handler(
 
         }
 
-        const { profile } =
-        req.body || {}
+        const {
+            profile,
+            userId
+        } = req.body || {}
+        console.log("QUIZ USER ID:", userId)
 
         if (!profile) {
 

@@ -235,6 +235,7 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "../stores/auth"
 import { computed, nextTick, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 
@@ -242,7 +243,7 @@ import { adhdQuestions } from "../quiz/adhd/questions.js"
 import { buildBehaviourProfile } from "../quiz/adhd/buildBehaviourProfile.js"
 
 const router = useRouter()
-
+const auth = useAuthStore()
 onMounted(() => {
   window.scrollTo({
     top: 0,
@@ -374,7 +375,8 @@ const fetchReport = async () => {
         },
 
         body: JSON.stringify({
-          profile: behaviourProfile.value
+          profile: behaviourProfile.value,
+          userId: auth.user?.id
         })
       }
   )
