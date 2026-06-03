@@ -44,6 +44,16 @@ export default async function handler(request, response) {
 
         }
 
+        const { data: submissionData } = await supabase
+            .from("quiz_submissions")
+            .select("quiz_profile_summary")
+            .eq("email", email)
+            .single()
+
+        const quizProfileSummary = submissionData?.quiz_profile_summary || ""
+
+        console.log("QUIZ PROFILE SUMMARY:", quizProfileSummary)
+
         const openAIResponse = await fetch(
             "https://api.openai.com/v1/chat/completions",
             {
