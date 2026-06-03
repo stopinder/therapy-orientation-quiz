@@ -54,6 +54,28 @@ export default async function handler(request, response) {
 
         console.log("QUIZ PROFILE SUMMARY:", quizProfileSummary)
 
+        const { data: reflectionsData } = await supabase
+            .from("course_reflections")
+            .select("original_reflection, ai_response")
+            .eq("user_id", userId)
+            .order("created_at", { ascending: false })
+            .limit(3)
+
+        const recentReflections = reflectionsData
+            ?.map(r => `User: ${r.original_reflection}\nAI: ${r.ai_response}`)
+            .join("\n\n") || "None"
+
+        const weekPrompts = {
+            1: "...",
+            2: "...",
+            3: "...",
+            4: "...",
+            5: "...",
+            6: "..."
+        }
+
+        const currentWeekPrompt = weekPrompts[week] || ""
+
         const openAIResponse = await fetch(
             "https://api.openai.com/v1/chat/completions",
             {
@@ -108,6 +130,15 @@ Return 3 grounded paragraphs.
                             role: "user",
 
                             content: `
+QUIZ PROFILE SUMMARY:
+${quizProfileSummary}
+
+RECENT REFLECTION HISTORY:
+${recentReflections}
+
+CURRENT WEEK FOCUS:
+${currentWeekPrompt}
+
 Week: ${week}
 
 Reflection:
