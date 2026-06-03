@@ -1,3 +1,10 @@
+import { createClient } from "@supabase/supabase-js"
+
+const supabase = createClient(
+    process.env.VITE_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+)
+
 export const config = {
     runtime: "nodejs"
 }
@@ -12,7 +19,7 @@ export default async function handler(req, res) {
 
     try {
 
-        const { email } = req.body || {}
+        const { email, profile } = req.body || {}
 
         if (!email || !email.includes("@")) {
 
@@ -22,7 +29,37 @@ export default async function handler(req, res) {
 
         }
 
-        console.log("Captured email:", email)
+        const normalisedEmail =
+            String(email)
+                .trim()
+                .toLowerCase()
+
+        const { error } = await supabase
+            .from("quiz_submissions")
+            .upsert(
+                {
+                    email: normalisedEmail,
+                    profile_data: profile || null
+                },
+                {
+                    onConflict: "email"
+                }
+            )
+
+        if (error) {
+
+            console.error(
+                "QUIZ SUBMISSION SAVE ERROR:",
+                error
+            )
+
+            return res.status(500).json({
+                error: "Failed to save quiz submission"
+            })
+
+        }
+
+        console.log("Quiz submission saved:", normalisedEmail)
 
         return res.status(200).json({
             success: true
