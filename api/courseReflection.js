@@ -66,7 +66,18 @@ export default async function handler(request, response) {
             .join("\n\n") || "None"
 
         const weekPrompts = {
-            1: "...",
+            1: `
+Many people assume that the difficulty lies in motivation.
+They tell themselves they need more discipline, more commitment, more focus, or a better system.
+Yet if they look carefully, they often find that intention was present at the beginning.
+Something else happened. Attention shifted. A thought appeared. A feeling emerged. The task became heavier.
+Something more immediate offered relief. The movement happened so quickly that the transition itself was barely noticed.
+The moment of change is usually missing.
+This week is about becoming interested in the moment where continuity changes.
+Recognize small moments where you begin in one direction and end somewhere else.
+Do not try to stop or improve the movement. Simply become more familiar with it.
+The task is recognition.
+            `.trim(),
             2: "...",
             3: "...",
             4: "...",
