@@ -46,9 +46,9 @@
 
       </div>
 
-      <!-- Emerging Pattern Card (Week 1 Only) -->
+      <!-- Emerging Pattern Card -->
       <section
-          v-if="week.number === 1 && quizProfileSummary"
+          v-if="quizProfileSummary"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -148,17 +148,6 @@
           </div>
         </div>
 
-        <div
-            v-if="quizProfileSummary"
-            class="mb-8 rounded-2xl border border-slate-200 bg-slate-50 p-6"
-        >
-          <h3 class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Emerging Pattern
-          </h3>
-          <p class="text-base leading-7 text-slate-700 whitespace-pre-line">
-            {{ quizProfileSummary }}
-          </p>
-        </div>
 
         <div
             v-if="week.number === 1"
