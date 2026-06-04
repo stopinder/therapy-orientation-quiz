@@ -137,6 +137,20 @@
           </p>
         </div>
 
+        <div
+            v-if="week.number === 1"
+            class="mb-10 rounded-2xl border border-blue-100 bg-blue-50/50 p-6"
+        >
+          <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-blue-900">
+            Week 1 Arrival
+          </h3>
+          <p class="text-base leading-7 text-blue-800">
+            This week, we are becoming interested in the moment where continuity changes.
+            Before you begin your reflection, take a moment to settle.
+            Notice the transition from whatever you were doing before to this moment here.
+          </p>
+        </div>
+
         <p class="mt-4 text-base leading-7 text-slate-600">
           Describe a moment related to this week's continuity theme.
         </p>
@@ -147,6 +161,21 @@
             class="mt-6 w-full rounded-2xl border border-slate-300 bg-white p-4 text-base leading-7 text-slate-800 outline-none transition focus:border-slate-900"
             placeholder="Describe what happened..."
         />
+
+        <div class="mt-8">
+          <p class="text-base font-medium text-slate-900">
+            Body Observation
+          </p>
+          <p class="mt-1 text-sm text-slate-500">
+            What do you notice in your body as you recall this moment?
+          </p>
+          <textarea
+              v-model="bodyObservation"
+              rows="4"
+              class="mt-4 w-full rounded-2xl border border-slate-300 bg-white p-4 text-base leading-7 text-slate-800 outline-none transition focus:border-slate-900"
+              placeholder="What do you notice in your body as you recall this moment?"
+          />
+        </div>
 
         <button
             type="button"
@@ -226,6 +255,7 @@ const {
 } = useContinuity()
 
 const reflection = ref("")
+const bodyObservation = ref("")
 const response = ref("")
 const loading = ref(false)
 const error = ref("")
