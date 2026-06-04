@@ -225,6 +225,24 @@
                 </button>
               </div>
             </div>
+
+            <!-- New CTA Section -->
+            <div class="mt-24 rounded-3xl border border-slate-200 bg-slate-50 p-10 text-center">
+              <h2 class="mb-4 text-2xl font-semibold tracking-tight text-slate-950">
+                Ready to Go Deeper?
+              </h2>
+
+              <p class="mx-auto mb-8 max-w-xl text-lg leading-relaxed text-slate-600">
+                The quiz identifies patterns. The 6-week programme helps you work with those patterns over time through guided reflection and continuity tracking.
+              </p>
+
+              <a
+                  href="https://gpttherapyassist.lemonsqueezy.com/checkout/buy/3d1439e1-bbba-4fc9-8810-04cdda84ca89"
+                  class="inline-block rounded-xl bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
+              >
+                Start the 6-Week Programme
+              </a>
+            </div>
           </div>
         </div>
 
