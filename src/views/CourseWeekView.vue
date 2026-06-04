@@ -449,6 +449,17 @@ onMounted(async () => {
 const submitReflection = async () => {
 
   error.value = ""
+
+  // Quality Gate
+  const content = reflection.value.trim().toLowerCase()
+  const gibberish = ['asdf', 'sdfadg', 'qwerty', 'zxcv', 'jkl;']
+  const hasGibberish = gibberish.some(pattern => content.includes(pattern))
+
+  if (content.length < 20 || !content.includes(' ') || hasGibberish) {
+    error.value = "Please describe the experience in a little more detail before generating a reflection."
+    return
+  }
+
   response.value = ""
   loading.value = true
 
