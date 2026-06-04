@@ -212,6 +212,42 @@
 
       </section>
 
+      <!-- Previous Reflections -->
+      <section
+          v-if="reflectionsHistory.length > 0"
+          class="mt-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+      >
+        <h2 class="mb-6 text-2xl font-semibold text-slate-950">
+          Previous Reflections
+        </h2>
+
+        <div class="space-y-6">
+          <div
+              v-for="item in reflectionsHistory"
+              :key="item.id"
+              class="rounded-2xl border border-slate-100 bg-slate-50/50 p-6"
+          >
+            <div class="mb-4 flex items-center justify-between">
+              <span class="text-xs font-medium uppercase tracking-wider text-slate-400">
+                {{ new Date(item.created_at).toLocaleDateString() }}
+              </span>
+            </div>
+
+            <div class="space-y-4">
+              <div>
+                <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-500">Your Reflection</h4>
+                <p class="mt-2 text-sm leading-relaxed text-slate-700 whitespace-pre-line">{{ item.original_reflection }}</p>
+              </div>
+
+              <div v-if="item.ai_response">
+                <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-500">MindWorks Response</h4>
+                <p class="mt-2 text-sm leading-relaxed text-slate-700 whitespace-pre-line">{{ item.ai_response }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
     ```
 
@@ -265,6 +301,30 @@ const restoredReflection =
 
 const quizProfileSummary =
     ref("")
+
+const reflectionsHistory = ref([])
+
+const fetchReflectionsHistory = async () => {
+  try {
+    if (!auth.user?.id) return
+
+    const result = await fetch("/api/getReflectionHistory", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: auth.user.id })
+    })
+
+    const data = await result.json()
+    if (data?.reflections) {
+      // Filter for current week
+      reflectionsHistory.value = data.reflections.filter(
+          r => r.week_number === weekNumber.value
+      )
+    }
+  } catch (err) {
+    console.error("HISTORY ERROR:", err)
+  }
+}
 
 const fetchQuizProfile =
     async () => {
@@ -393,6 +453,8 @@ onMounted(async () => {
 
     await restorePreviousReflection()
 
+    await fetchReflectionsHistory()
+
   }
 
 })
@@ -470,12 +532,15 @@ const submitReflection = async () => {
         data.reflection || ""
 
     reflection.value = ""
+    bodyObservation.value = ""
 
     await courseProgress
         .markWeekCompleted(
             auth.user.id,
             weekNumber.value
         )
+
+    await fetchReflectionsHistory()
 
   } catch (err) {
 
