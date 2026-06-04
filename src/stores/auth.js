@@ -22,7 +22,9 @@ export const useAuthStore = defineStore("auth", {
                 await supabase.auth.getUser()
 
             if (error) {
-                console.error(error)
+                if (error.name !== "AuthSessionMissingError") {
+                    console.error("Auth user fetch error:", error)
+                }
             }
 
             this.user =
