@@ -148,24 +148,6 @@
 
         </div>
 
-        <div v-if="reflectionsHistory.length > 0" class="mb-10 space-y-6">
-          <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500">Recent Reflections</h3>
-          <div v-for="item in reflectionsHistory.slice(0, 3)" :key="item.id" class="rounded-2xl border border-slate-100 bg-slate-50/50 p-6">
-            <div class="mb-2 text-xs font-medium text-slate-400">
-              {{ new Date(item.created_at).toLocaleDateString() }}
-            </div>
-            <div class="space-y-4">
-              <div>
-                <p class="text-sm leading-relaxed text-slate-700 whitespace-pre-line">{{ item.original_reflection }}</p>
-              </div>
-              <div v-if="item.ai_response" class="border-t border-slate-100 pt-4">
-                <p class="text-sm italic leading-relaxed text-slate-600 whitespace-pre-line">{{ item.ai_response }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
         <div
             v-if="week.number === 1"
             class="mb-10 rounded-2xl border border-blue-100 bg-blue-50/50 p-6"
@@ -237,6 +219,26 @@
             {{ response }}
           </div>
 
+        </div>
+
+        <div v-if="reflectionsHistory.length > 0" class="mt-12 border-t border-slate-100 pt-10">
+          <h3 class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">
+            Recent Reflections
+          </h3>
+          <div class="space-y-6">
+            <div
+                v-for="item in reflectionsHistory.slice(0, 3)"
+                :key="item.id"
+                class="rounded-2xl border border-slate-100 bg-slate-50/50 p-6"
+            >
+              <div class="mb-2 text-xs font-medium text-slate-400">
+                {{ new Date(item.created_at).toLocaleDateString() }}
+              </div>
+              <p class="text-sm leading-relaxed text-slate-700 whitespace-pre-line">
+                {{ item.original_reflection }}
+              </p>
+            </div>
+          </div>
         </div>
 
       </section>
