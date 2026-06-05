@@ -497,8 +497,14 @@ const submitReflection = async () => {
             reflection:
             reflection.value,
 
+            bodyObservation:
+            bodyObservation.value,
+
             userId:
-            auth.user.id
+            auth.user.id,
+
+            email:
+            auth.user.email
 
           })
         }
