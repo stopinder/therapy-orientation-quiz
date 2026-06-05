@@ -320,10 +320,10 @@ const quizProfileSummary =
 const reflectionsHistory = ref([])
 
 const BEHAVIORAL_MAP = {
-  'Preparation Before Action': ['preparation', 'organising', 'planning', 'research', 'tidying'],
-  'Substitute Activities': ['email', 'scrolling', 'tea', 'coffee'],
-  'Delay Before Beginning': ['delay', 'avoidance', 'hesitation'],
-  'Repeated Checking': ['checking']
+  'Preparation Before Action': ['preparation', 'organising', 'organizing', 'planning', 'research', 'tidying'],
+  'Substitute Activities': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee'],
+  'Delay Before Beginning': ['delay', 'delayed', 'hesitation', 'hesitant', 'postponed', 'postponing'],
+  'Repeated Checking': ['checking', 'checked', 'rechecked', 'monitoring']
 }
 
 const recentThemes = computed(() => {
