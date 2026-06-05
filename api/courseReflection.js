@@ -108,7 +108,25 @@ The task is recognition.
             6: "..."
         }
 
+        const weekLenses = {
+            1: `
+Use these lenses for your observation:
+* departures
+* substitutions
+* fragmentation
+* weakening continuity
+`.trim(),
+            2: `
+Use these lenses for your observation:
+* pressure
+* activation
+* hesitation
+* movements away from pressure
+`.trim()
+        }
+
         const currentWeekPrompt = weekPrompts[week] || ""
+        const currentWeekLens = weekLenses[week] || ""
 
         const continuityObserverPrompt = `
 Identity:
@@ -401,6 +419,9 @@ ${recentReflections}
 
 CURRENT WEEK FOCUS:
 ${currentWeekPrompt}
+
+WEEK LENS:
+${currentWeekLens}
 
 Week:
 ${week}
