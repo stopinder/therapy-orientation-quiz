@@ -425,7 +425,7 @@ USER REFLECTION:
 ${reflection}
 
 BODY OBSERVATION:
-${bodyObservation || "None provided"}
+${bodyObservation}
                             `.trim()
                         }
                     ]

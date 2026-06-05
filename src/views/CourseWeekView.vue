@@ -196,13 +196,13 @@
             Body Observation
           </p>
           <p class="mt-1 text-sm text-slate-500">
-            What do you notice in your body as you recall this moment?
+            As you recall this moment, what do you notice in your body?
           </p>
           <textarea
               v-model="bodyObservation"
               rows="4"
               class="mt-4 w-full rounded-2xl border border-slate-300 bg-white p-4 text-base leading-7 text-slate-800 outline-none transition focus:border-slate-900"
-              placeholder="What do you notice in your body as you recall this moment?"
+              placeholder="Tightness...&#10;Restlessness...&#10;Heaviness...&#10;Nothing noticeable..."
           />
         </div>
 
