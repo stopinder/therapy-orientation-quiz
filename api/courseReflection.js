@@ -61,32 +61,47 @@ export default async function handler(request, response) {
 
         const weekPrompts = {
             1: `
-Many people assume that the difficulty lies in motivation.
-They tell themselves they need more discipline, more commitment, more focus, or a better system.
+This week is about the anatomy of departure.
 
-Yet if they look carefully, they often find that intention was present at the beginning.
+Look for the moment where continuity breaks. Observe how one movement is substituted for another.
 
-Something else happened.
+Pay attention to:
 
-Attention shifted.
-A thought appeared.
-A feeling emerged.
-The task became heavier.
-Something more immediate offered relief.
+* Continuity: Where was the intention holding steady?
+* Departure: The exact moment the original movement stopped or veered.
+* Fragmentation: How the task or attention broke into smaller or disconnected movements.
+* Substitution: What appeared in place of the original movement?
 
-The movement happened so quickly that the transition itself was barely noticed.
+The task is recognition.
 
-This week is about becoming interested in the moment where continuity changes.
+Do not explain.
 
-Recognise small moments where you begin in one direction and end somewhere else.
+Do not correct.
 
-Do not try to stop or improve the movement.
+Simply observe the departure.
+            `.trim(),
+            2: `
+This week is about pressure and activation.
 
-Simply become more familiar with it.
+Look for what appears before a movement away.
+
+Observe moments where pressure becomes noticeable, and what appears next in the sequence.
+
+Pay attention to:
+
+* Pressure: Moments where a task begins to feel heavier, more urgent, or more present.
+* Activation: The impulse to move, act, prepare, check, organise, or do something.
+* Avoidance: Movements that occur instead of entering the original task.
+* Relief-seeking: Activities that appear immediately after pressure becomes noticeable.
+
+Do not assume these events are connected.
+
+Do not assume one caused the other.
+
+Simply observe where they appear in the sequence.
 
 The task is recognition.
             `.trim(),
-            2: "...",
             3: "...",
             4: "...",
             5: "...",
