@@ -59,6 +59,26 @@
         </div>
       </section>
 
+      <!-- Patterns Appearing Recently -->
+      <section
+          v-if="recentThemes.length > 0"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+      >
+        <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
+          Patterns Appearing Recently
+        </p>
+        <ul class="space-y-3">
+          <li
+              v-for="theme in recentThemes"
+              :key="theme"
+              class="flex items-start text-base leading-7 text-slate-700"
+          >
+            <span class="mr-3 mt-1 text-slate-400">•</span>
+            {{ theme }}
+          </li>
+        </ul>
+      </section>
+
       <section
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
@@ -298,6 +318,41 @@ const quizProfileSummary =
     ref("")
 
 const reflectionsHistory = ref([])
+
+const BEHAVIORAL_MAP = {
+  'Preparation Before Action': ['preparation', 'organising', 'planning', 'research', 'tidying'],
+  'Substitute Activities': ['email', 'scrolling', 'tea', 'coffee'],
+  'Delay Before Beginning': ['delay', 'avoidance', 'hesitation'],
+  'Repeated Checking': ['checking']
+}
+
+const recentThemes = computed(() => {
+  if (!reflectionsHistory.value || reflectionsHistory.value.length === 0) return []
+
+  const latestThree = reflectionsHistory.value.slice(0, 3)
+  const categoryCounts = {}
+
+  latestThree.forEach(item => {
+    const text = (item.original_reflection || '').toLowerCase()
+    const seenInThisReflection = new Set()
+
+    Object.entries(BEHAVIORAL_MAP).forEach(([category, keywords]) => {
+      keywords.forEach(keyword => {
+        if (text.includes(keyword.toLowerCase())) {
+          seenInThisReflection.add(category)
+        }
+      })
+    })
+
+    seenInThisReflection.forEach(category => {
+      categoryCounts[category] = (categoryCounts[category] || 0) + 1
+    })
+  })
+
+  return Object.entries(categoryCounts)
+      .filter(([_, count]) => count >= 2)
+      .map(([category, _]) => category)
+})
 
 const fetchReflectionsHistory = async () => {
   try {
