@@ -86,29 +86,30 @@ The task is recognition.
         }
 
         const currentWeekPrompt = weekPrompts[week] || ""
+        const isWeekOne = parseInt(week) === 1
 
-        const openAIResponse = await fetch(
-            "https://api.openai.com/v1/chat/completions",
-            {
-                method: "POST",
+        const systemContent = isWeekOne
+            ? `
+You are the MindWorks reflection engine.
 
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
-                },
+You write calm, psychologically precise behavioural reflections.
 
-                body: JSON.stringify({
+For Week 1, you must use exactly these four headings:
+1. What seems to have happened
+2. Where continuity shifted
+3. The loop that may be forming
+4. One observation to carry forward
 
-                    model: "gpt-4o-mini",
-
-                    temperature: 0.7,
-
-                    messages: [
-
-                        {
-                            role: "system",
-
-                            content: `
+Constraints:
+- Each section must be 2–4 sentences maximum.
+- Do not over-explain, diagnose, reassure, or coach.
+- Do not produce long analytical paragraphs.
+- Do not give advice.
+- Do not use therapy jargon.
+- Do not mention ADHD.
+- Do not sound cheerful.
+`.trim()
+            : `
 You are the MindWorks reflection engine.
 
 You write calm, psychologically precise behavioural reflections.
@@ -134,7 +135,30 @@ Do not mention ADHD.
 Do not sound cheerful.
 
 Return 3 grounded paragraphs.
-                            `.trim()
+`.trim()
+
+        const openAIResponse = await fetch(
+            "https://api.openai.com/v1/chat/completions",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
+                },
+
+                body: JSON.stringify({
+
+                    model: "gpt-4o-mini",
+
+                    temperature: 0.7,
+
+                    messages: [
+
+                        {
+                            role: "system",
+
+                            content: systemContent
                         },
 
                         {
