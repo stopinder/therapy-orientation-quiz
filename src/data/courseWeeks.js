@@ -22,6 +22,11 @@ export const courseWeeks = [
             "Your task this week is simple: notice the disappearance. Not the explanation. Not the story. Not the self-criticism afterwards. Just the movement from intention into fragmentation."
         ],
 
+        bodyFocus: [
+            "Observation is not only mental. When continuity changes, there is often a physical shift—a tightening, a holding of breath, or a move toward comfort.",
+            "This week, start to notice what happens in the body at the moment of departure."
+        ],
+
         exercises: [
 
             {

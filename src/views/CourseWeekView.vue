@@ -83,6 +83,23 @@
       </section>
 
       <section
+          v-if="week.bodyFocus"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+      >
+        <h2 class="text-2xl font-semibold text-slate-950">
+          Including the Body
+        </h2>
+        <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+          <p
+              v-for="paragraph in week.bodyFocus"
+              :key="paragraph"
+          >
+            {{ paragraph }}
+          </p>
+        </div>
+      </section>
+
+      <section
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
 
