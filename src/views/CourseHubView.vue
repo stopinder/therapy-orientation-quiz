@@ -12,9 +12,18 @@
         Last active: Week {{ lastActiveWeek }}
       </div>
 
-      <h1 class="text-4xl font-semibold tracking-tight">
-        Your Programme
-      </h1>
+      <div class="flex items-center justify-between">
+        <h1 class="text-4xl font-semibold tracking-tight">
+          Your Programme
+        </h1>
+
+        <router-link
+            to="/continuity"
+            class="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 shadow-sm"
+        >
+          View Continuity History
+        </router-link>
+      </div>
 
       <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
         A structured six-week process exploring continuity,

@@ -14,6 +14,7 @@ import AccessDeniedView from "../views/AccessDeniedView.vue"
 
 import DeepDiveView from "../views/DeepDiveView.vue"
 import ProgrammeView from "../views/ProgrammeView.vue"
+import ReflectionHistoryView from "../views/ReflectionHistoryView.vue"
 
 import TermsView from "../views/TermsView.vue"
 import PrivacyView from "../views/PrivacyView.vue"
@@ -124,6 +125,16 @@ const routes = [
         meta: {
             requiresAuth: true,
             requiresCourseAccess: true
+        }
+    },
+
+    {
+        path: "/continuity",
+        name: "Continuity",
+        component: ReflectionHistoryView,
+
+        meta: {
+            requiresAuth: true
         }
     },
 
