@@ -24,6 +24,63 @@
 
       </div>
 
+      <!-- Phase 2 Continuity Surface — Pattern + Frequency -->
+
+      <section class="mb-16">
+
+        <div class="overflow-hidden rounded-[2.5rem] border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl">
+
+          <div class="max-w-3xl">
+
+            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+              Analysis Surface
+            </p>
+
+            <h2 class="text-3xl font-semibold tracking-tight">
+              What Keeps Reappearing
+            </h2>
+
+            <p class="mt-4 text-lg text-slate-300">
+              Patterns that have appeared across recent reflections.
+            </p>
+
+            <div class="mt-10 grid gap-4 md:grid-cols-3">
+
+              <div class="rounded-3xl bg-white/10 p-6 backdrop-blur-sm border border-white/10">
+                <p class="text-xl font-semibold text-slate-100">
+                  Checking before beginning
+                </p>
+                <p class="mt-1 text-sm text-slate-400">
+                  Appeared in 4 reflections
+                </p>
+              </div>
+
+              <div class="rounded-3xl bg-white/10 p-6 backdrop-blur-sm border border-white/10">
+                <p class="text-xl font-semibold text-slate-100">
+                  Delay before entry
+                </p>
+                <p class="mt-1 text-sm text-slate-400">
+                  Appeared in 3 reflections
+                </p>
+              </div>
+
+              <div class="rounded-3xl bg-white/10 p-6 backdrop-blur-sm border border-white/10">
+                <p class="text-xl font-semibold text-slate-100">
+                  Preparation before action
+                </p>
+                <p class="mt-1 text-sm text-slate-400">
+                  Appeared in 5 reflections
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
       <!-- Loading -->
 
       <div
