@@ -1,4 +1,3 @@
-```js id="mr9l0w"
 import { createClient }
     from "@supabase/supabase-js"
 
@@ -100,4 +99,3 @@ export default async function handler(
     }
 
 }
-```
