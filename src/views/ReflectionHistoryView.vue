@@ -81,6 +81,114 @@
 
       </section>
 
+      <!-- Phase 3 Continuity Surface — Sequence Prototype -->
+
+      <section class="mb-16">
+
+        <div class="overflow-hidden rounded-[2.5rem] border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl">
+
+          <div class="max-w-3xl">
+
+            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+              Primary Insight
+            </p>
+
+            <h2 class="text-3xl font-semibold tracking-tight">
+              Most Common Sequence
+            </h2>
+
+            <p class="mt-4 text-lg text-slate-300">
+              A sequence that has appeared repeatedly across recent reflections.
+            </p>
+
+            <div class="mt-10 inline-flex flex-col items-start gap-4">
+
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-48 items-center justify-center rounded-2xl bg-white/10 px-6 py-3 border border-white/10">
+                  <span class="text-lg font-medium text-slate-100">Intention</span>
+                </div>
+              </div>
+
+              <div class="flex w-48 justify-center py-1">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="text-slate-500"
+                >
+                  <path d="M12 5v14" />
+                  <path d="m19 12-7 7-7-7" />
+                </svg>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-48 items-center justify-center rounded-2xl bg-white/10 px-6 py-3 border border-white/10">
+                  <span class="text-lg font-medium text-slate-100">Checking</span>
+                </div>
+              </div>
+
+              <div class="flex w-48 justify-center py-1">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="text-slate-500"
+                >
+                  <path d="M12 5v14" />
+                  <path d="m19 12-7 7-7-7" />
+                </svg>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-48 items-center justify-center rounded-2xl bg-white/10 px-6 py-3 border border-white/10">
+                  <span class="text-lg font-medium text-slate-100">Delay</span>
+                </div>
+              </div>
+
+              <div class="flex w-48 justify-center py-1">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="text-slate-500"
+                >
+                  <path d="M12 5v14" />
+                  <path d="m19 12-7 7-7-7" />
+                </svg>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-48 items-center justify-center rounded-2xl bg-white/10 px-6 py-3 border border-white/10">
+                  <span class="text-lg font-medium text-slate-100">Recognition</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
       <!-- Loading -->
 
       <div
