@@ -112,17 +112,47 @@ export const courseWeeks = [
     {
         number: 4,
 
-        title: "Reaction & Compensation",
+        title: "Function",
 
         subtitle:
-            "Studying automatic compensatory behaviours.",
+            "Exploring what recurring sequences may be doing.",
 
         intro:
-            "This week examines the behaviours that emerge automatically after interruption or collapse.",
+            "This week introduces the possibility that a recurring sequence is not a random error or a failure of will, but is serving a specific function. Before attempting to change a pattern, we begin by observing what it actually does.",
 
-        openingReflection: [],
+        openingReflection: [
+            "When a sequence appears again and again, it is often because it is doing something useful. This can be difficult to see when we are focused only on the fact that we have drifted away from our intention. We see the interruption as a problem to be solved, rather than as a movement with its own internal logic.",
 
-        exercises: []
+            "This week, we shift our attention toward the function of the sequence. We ask: What changes at the moment the pattern begins? When the intention is interrupted by a familiar delay, or when a task is replaced by a routine of checking, what happens to the internal atmosphere? Often, the movement away from the task coincides with a subtle shift in pressure or a momentary relief from a particular kind of activation.",
+
+            "By observing the sequence as a functional movement, we move away from judgment and toward a more precise recognition. We are not looking for a psychological explanation or a deep-seated cause. We are simply noticing the immediate result of the behaviour. If checking email always happens exactly when a difficult task begins to feel heavy, then the checking is serving a function in relation to that heaviness.",
+
+            "This is not about justifying the behaviour or deciding it is 'good'. It is about seeing the choreography of the event clearly enough to understand how it is organised. When you see the function, the sequence begins to lose its status as an 'accident'. It becomes a recognisable, predictable response to a specific set of conditions.",
+
+            "The goal is not to stop the movement yet, but to become interested in it. What does this sequence buy you? What does it protect? What does it allow you to avoid or postpone? Staying with these questions without rushing to answer them creates a different kind of relationship with the pattern. You are no longer just a victim of the sequence; you are its observer.",
+
+            "Recognition of function is a prerequisite for any meaningful shift in continuity. Once you see what a sequence is doing, you can begin to notice the exact moment it becomes 'necessary'. This week, stay close to the question of function, and observe how that interest changes the way you experience the recurrence."
+        ],
+
+        bodyFocus: [
+            "Function is often felt as a physical transition. Notice the sensation in the body at the moment the sequence begins—is there a release of tension, a softening, or a sudden shift in energy?",
+            "Observe whether the recurring pattern provides a temporary sense of physical ease or a momentary discharge of pressure."
+        ],
+
+        exercises: [
+            {
+                title: "Notice what changes",
+                description: "At the moment a familiar sequence begins, notice what changes in your internal environment. What sensation or pressure is present just before the shift?"
+            },
+            {
+                title: "Notice what is relieved",
+                description: "Observe if the recurring pattern provides a momentary relief from the task or from a specific feeling of activation."
+            },
+            {
+                title: "Stay with the question",
+                description: "Ask yourself: 'What function might this sequence serve?' Do not look for a quick answer; simply stay with the question as you observe the pattern."
+            }
+        ]
 
     },
 

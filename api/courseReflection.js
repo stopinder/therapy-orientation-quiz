@@ -102,8 +102,34 @@ Simply observe where they appear in the sequence.
 
 The task is recognition.
             `.trim(),
-            3: "...",
-            4: "...",
+            3: `
+This week is about recurrence.
+
+Look across multiple reflections to identify what appears repeatedly.
+
+Pay attention to:
+
+* Recurring observations: Movements or sensations that have appeared before.
+* Repeated sequences: The same order of events appearing in different situations.
+* Recurrence without interpretation: Noticing the pattern without explaining why it happens.
+* Recognition before change: Seeing the pattern as it begins to form.
+
+The task is recognition of recurrence.
+            `.trim(),
+            4: `
+This week is about function.
+
+Explore what recurring sequences may be doing.
+
+Pay attention to:
+
+* Change: What shifts in the internal atmosphere at the moment the sequence begins?
+* Relief: Does the movement provide a momentary release from pressure or activation?
+* Utility: What does the sequence 'buy' or 'protect' in that moment?
+* Intentionality: Seeing the sequence as a functional response rather than a random error.
+
+The central question is: What function might this sequence serve?
+            `.trim(),
             5: "...",
             6: "..."
         }
