@@ -172,7 +172,7 @@ export const courseWeeks = [
 
             "When you begin to look more closely at these moments, the sense of suddenness may start to change. A pattern that seemed to appear from nowhere might actually have a beginning that you have not yet observed. There is often a subtle shift in the atmosphere or a quiet change in direction before the visible behavior begins to organize you.",
 
-            "Something is already changing before the visible behaviour begins. It may be a momentary suspension of your current task, a slight drift in your focus, or a small, internal movement away from the present demand. These are the earlier moments—the precursors to the pattern—that often go unnoticed because attention is focused on the interruption itself.",
+            "Something is already changing before the visible behaviour begins. It may be a momentary suspension of your current task, a slight drift in your focus, or a small, internal movement away from the present demand. These are the earlier moments of the pattern that often go unnoticed because attention is focused on the interruption itself.",
 
             "These earlier changes can often be observed. They are not hidden, but they are often brief and understated. By staying with the beginning, you may find that the transition is more gradual than it first appeared. The movement away from continuity is a process that has its own start, its own weight, and its own momentum.",
 
