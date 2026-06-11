@@ -74,17 +74,38 @@ export const courseWeeks = [
     {
         number: 3,
 
-        title: "Emotional Interruption",
+        title: "Recurrence",
 
         subtitle:
-            "Tracking disruption and behavioural collapse.",
+            "Seeing what keeps reappearing across reflections.",
 
         intro:
-            "This week focuses on moments where emotional activation interrupts continuity and reorganises behaviour.",
+            "This week shifts attention from individual events to recurrence. Rather than examining a single interruption, begin looking across several reflections and ask what appears again and again.",
 
-        openingReflection: [],
+        openingReflection: [
+            "When you begin to look at reflections over time, you may notice that the same movements appear repeatedly. A specific sequence of checking, a particular shift in the body, or a familiar delay before starting—these are not isolated events. They are recurring patterns that organise your behaviour across different situations and different days.",
 
-        exercises: []
+            "The goal of this week is to see these repeated sequences as they are, without immediately trying to interpret why they happen or what they mean. Recurrence itself is the information. When you see a sequence appearing for the third or fourth time, it moves from being a random interruption to being a recognisable part of your behavioural landscape.",
+
+            "Observation without interpretation allows you to stay with the facts of the movement. You are not looking for a psychological cause; you are looking for the choreography of the event. By noticing what appears again and again, you begin to see the shape of the pressure that precedes the shift, and the automaticity of the response that follows.",
+
+            "Recognition is the first step toward a different kind of continuity. Before any change can occur, there must be a clear, non-judgmental awareness of the pattern. Seeing the recurrence as it begins to form—rather than only after it has completed—creates a small opening where observation can remain active even as the familiar sequence starts to unfold."
+        ],
+
+        exercises: [
+            {
+                title: "Notice what repeats",
+                description: "Identify one specific movement, sensation, or thought that has appeared in multiple reflections this week."
+            },
+            {
+                title: "Compare three reflections",
+                description: "Review your last three reflections and look for a common sequence of events that occurs in at least two of them."
+            },
+            {
+                title: "Look for the same sequence in different situations",
+                description: "Notice if a familiar pattern of interruption or delay happens in completely different contexts, such as at work and at home."
+            }
+        ]
 
     },
 
