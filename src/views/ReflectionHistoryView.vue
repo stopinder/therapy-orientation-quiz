@@ -214,6 +214,32 @@
           class="space-y-8"
       >
 
+        <!-- Temporary continuity endpoint test -->
+        <section class="mb-8 rounded-3xl border border-dashed border-slate-300 bg-white p-8">
+          <h2 class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500">
+            Continuity Diagnostic
+          </h2>
+          <button
+              @click="testContinuity"
+              :disabled="testingContinuity"
+              class="rounded-xl bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:opacity-50"
+          >
+            {{ testingContinuity ? 'Testing...' : 'Test Continuity' }}
+          </button>
+
+          <div
+              v-if="continuityTestResult"
+              class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6"
+          >
+            <h3 class="mb-3 text-sm font-semibold text-slate-900">
+              Continuity Test Result
+            </h3>
+            <div class="whitespace-pre-line text-sm leading-relaxed text-slate-700">
+              {{ continuityTestResult }}
+            </div>
+          </div>
+        </section>
+
         <!-- Phase 4 Continuity Surface — Archive Collapse -->
         <button
             @click="isArchiveCollapsed = !isArchiveCollapsed"
@@ -340,6 +366,51 @@ const reflections =
 
 const loading =
     ref(true)
+
+const testingContinuity =
+    ref(false)
+
+const continuityTestResult =
+    ref("")
+
+const testContinuity =
+    async () => {
+
+      try {
+
+        if (!auth.user?.id) return
+
+        testingContinuity.value = true
+        continuityTestResult.value = ""
+
+        const result = await fetch(
+            "/api/getContinuitySummary",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                userId: auth.user.id
+              })
+            }
+        )
+
+        const data = await result.json()
+        continuityTestResult.value = data.summary || "No summary returned"
+
+      } catch (err) {
+
+        console.error("CONTINUITY TEST ERROR:", err)
+        continuityTestResult.value = "Error testing continuity endpoint"
+
+      } finally {
+
+        testingContinuity.value = false
+
+      }
+
+    }
 
 const getWeekTitle =
     (weekNumber) => {
