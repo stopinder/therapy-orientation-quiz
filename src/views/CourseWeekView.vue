@@ -59,13 +59,6 @@
         </div>
       </section>
 
-      <!-- DEBUG BLOCK -->
-      <section class="mb-10 rounded-3xl border border-red-200 bg-red-50 p-8 shadow-sm text-xs font-mono">
-        <p class="font-bold mb-2">DEBUG INFO</p>
-        <div>Recent Themes Count: {{ recentThemes.length }}</div>
-        <div>Reflections Count: {{ reflectionsHistory.length }}</div>
-        <div class="mt-2">Recent Themes: {{ recentThemes }}</div>
-      </section>
 
       <!-- Patterns Appearing Recently -->
       <section
