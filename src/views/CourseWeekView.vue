@@ -60,13 +60,16 @@
       </section>
 
 
-      <!-- Patterns Appearing Recently -->
+      <!-- What Keeps Reappearing -->
       <section
           v-if="recentThemes.length > 0"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          Patterns Appearing Recently
+          What Keeps Reappearing
+        </p>
+        <p class="mb-6 text-base text-slate-600">
+          Observations that have appeared across recent reflections.
         </p>
         <ul class="space-y-3">
           <li
@@ -322,9 +325,9 @@ const reflectionsHistory = ref([])
 
 const BEHAVIORAL_MAP = {
   'Preparation Before Action': ['preparation', 'organising', 'organizing', 'planning', 'research', 'tidying'],
-  'Substitute Activities': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee'],
+  'Doing something else before starting': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee'],
   'Delay Before Beginning': ['delay', 'delayed', 'hesitation', 'hesitant', 'postponed', 'postponing'],
-  'Repeated Checking': ['checking', 'checked', 'rechecked', 'monitoring']
+  'Checking before beginning': ['checking', 'checked', 'rechecked', 'monitoring']
 }
 
 const recentThemes = computed(() => {
