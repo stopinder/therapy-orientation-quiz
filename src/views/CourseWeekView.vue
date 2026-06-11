@@ -60,46 +60,37 @@
       </section>
 
 
-      <!-- What Keeps Reappearing -->
-      <!-- Phase 2 Continuity Surface — Pattern Evidence -->
+      <!-- Continuity Observation -->
+      <!-- Phase 4 Continuity Surface — Single Observation -->
       <section
           v-if="recentThemes.length > 0"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          What Keeps Reappearing
+          Continuity Observation
         </p>
         <p class="mb-6 text-base text-slate-600">
-          Observations that have appeared across recent reflections.
+          An observation that has appeared across recent reflections.
         </p>
-        <ul class="space-y-6">
+
+        <div class="mb-4">
+          <p class="text-sm font-semibold text-slate-900">
+            Observed repeatedly:
+          </p>
+        </div>
+
+        <ul class="space-y-4">
           <li
-              v-for="theme in recentThemes"
-              :key="theme.name"
-              class="text-base leading-7 text-slate-700"
+              v-if="uniqueObservations.length > 0"
+              class="flex items-start text-base leading-7 text-slate-700"
           >
-            <div class="flex items-start font-medium">
-              <span class="mr-3 mt-1 text-slate-400">•</span>
-              {{ theme.name }}
-            </div>
-            <div class="mt-2 ml-7">
-              <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
-                Seen in:
-              </p>
-              <ul class="space-y-2">
-                <li
-                    v-for="example in theme.examples"
-                    :key="example"
-                    class="text-sm text-slate-600 italic"
-                >
-                  • {{ example }}
-                </li>
-              </ul>
-            </div>
+            <span class="mr-3 mt-1 text-slate-400">•</span>
+            <span class="italic text-slate-600">"{{ uniqueObservations[0] }}"</span>
           </li>
         </ul>
+
         <p class="mt-8 text-xs text-slate-400 italic">
-          Phase 2 Continuity Surface — Pattern Evidence: The purpose is to connect recurring observations to concrete examples from reflection history.
+          Phase 4 Continuity Surface — Single Observation: The purpose is to focus attention on the most prominent recurring pattern.
         </p>
       </section>
 
@@ -444,6 +435,18 @@ const recentThemes = computed(() => {
         name: category,
         examples: data.examples
       }))
+})
+
+const uniqueObservations = computed(() => {
+  const allExamples = []
+  recentThemes.value.forEach(theme => {
+    theme.examples.forEach(example => {
+      if (!allExamples.includes(example)) {
+        allExamples.push(example)
+      }
+    })
+  })
+  return allExamples
 })
 
 const fetchReflectionsHistory = async () => {
