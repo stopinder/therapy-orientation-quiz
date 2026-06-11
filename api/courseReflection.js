@@ -55,7 +55,7 @@ export default async function handler(request, response) {
 
         const recentReflections = reflectionsData?.length
             ? reflectionsData
-                .map((r) => `User: ${r.original_reflection}\nAI: ${r.ai_response}`)
+                .map((r) => `Reflection:\n${r.original_reflection}`)
                 .join("\n\n")
             : "None"
 
@@ -411,8 +411,14 @@ If the answer is unclear, acknowledge that uncertainty rather than inventing an 
                         {
                             role: "user",
                             content: `
-Diagnostic test:
-Is historical context causing interpretive responses?
+Continuity history should contain observations only.
+Do not include prior AI interpretations.
+
+QUIZ PROFILE SUMMARY:
+${quizProfileSummary}
+
+RECENT REFLECTION HISTORY:
+${recentReflections}
 
 CURRENT WEEK FOCUS:
 ${currentWeekPrompt}
