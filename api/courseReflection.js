@@ -411,11 +411,8 @@ If the answer is unclear, acknowledge that uncertainty rather than inventing an 
                         {
                             role: "user",
                             content: `
-QUIZ PROFILE SUMMARY:
-${quizProfileSummary}
-
-RECENT REFLECTION HISTORY:
-${recentReflections}
+Diagnostic test:
+Is historical context causing interpretive responses?
 
 CURRENT WEEK FOCUS:
 ${currentWeekPrompt}
