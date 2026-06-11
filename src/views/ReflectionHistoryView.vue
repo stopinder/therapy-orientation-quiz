@@ -33,7 +33,7 @@
           <div class="max-w-3xl">
 
             <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
-              Analysis Surface
+              Continuity Surface
             </p>
 
             <h2 class="text-3xl font-semibold tracking-tight">
@@ -214,11 +214,41 @@
           class="space-y-8"
       >
 
-        <section
-            v-for="item in reflections"
-            :key="item.id"
-            class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+        <!-- Phase 4 Continuity Surface — Archive Collapse -->
+        <button
+            @click="isArchiveCollapsed = !isArchiveCollapsed"
+            class="group flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-6 transition-all hover:bg-slate-50 shadow-sm"
         >
+          <span class="text-lg font-semibold text-slate-900">
+            View Reflection Archive ({{ reflections.length }} reflections)
+          </span>
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-slate-400 transition-transform duration-200"
+              :class="{ 'rotate-180': !isArchiveCollapsed }"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+
+        <div
+            v-if="!isArchiveCollapsed"
+            class="space-y-8"
+        >
+
+          <section
+              v-for="item in reflections"
+              :key="item.id"
+              class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          >
 
           <!-- Meta -->
 
@@ -282,7 +312,9 @@
 
     </div>
 
-  </main>
+  </div>
+
+</main>
 </template>
 
 <script setup>
@@ -297,6 +329,8 @@ import { useAuthStore }
 
 import { courseWeeks }
   from "../data/courseWeeks"
+
+const isArchiveCollapsed = ref(true)
 
 const auth =
     useAuthStore()
