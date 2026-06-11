@@ -61,6 +61,7 @@
 
 
       <!-- What Keeps Reappearing -->
+      <!-- Phase 2 Continuity Surface — Pattern Evidence -->
       <section
           v-if="recentThemes.length > 0"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
@@ -71,16 +72,35 @@
         <p class="mb-6 text-base text-slate-600">
           Observations that have appeared across recent reflections.
         </p>
-        <ul class="space-y-3">
+        <ul class="space-y-6">
           <li
               v-for="theme in recentThemes"
-              :key="theme"
-              class="flex items-start text-base leading-7 text-slate-700"
+              :key="theme.name"
+              class="text-base leading-7 text-slate-700"
           >
-            <span class="mr-3 mt-1 text-slate-400">•</span>
-            {{ theme }}
+            <div class="flex items-start font-medium">
+              <span class="mr-3 mt-1 text-slate-400">•</span>
+              {{ theme.name }}
+            </div>
+            <div class="mt-2 ml-7">
+              <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                Seen in:
+              </p>
+              <ul class="space-y-2">
+                <li
+                    v-for="example in theme.examples"
+                    :key="example"
+                    class="text-sm text-slate-600 italic"
+                >
+                  • {{ example }}
+                </li>
+              </ul>
+            </div>
           </li>
         </ul>
+        <p class="mt-8 text-xs text-slate-400 italic">
+          Phase 2 Continuity Surface — Pattern Evidence: The purpose is to connect recurring observations to concrete examples from reflection history.
+        </p>
       </section>
 
       <!-- Phase 1 Sequence Surface Prototype -->
@@ -390,7 +410,7 @@ const recentThemes = computed(() => {
   if (!reflectionsHistory.value || reflectionsHistory.value.length === 0) return []
 
   const latestThree = reflectionsHistory.value.slice(0, 3)
-  const categoryCounts = {}
+  const categoryData = {}
 
   latestThree.forEach(item => {
     const text = (item.original_reflection || '').toLowerCase()
@@ -405,13 +425,25 @@ const recentThemes = computed(() => {
     })
 
     seenInThisReflection.forEach(category => {
-      categoryCounts[category] = (categoryCounts[category] || 0) + 1
+      if (!categoryData[category]) {
+        categoryData[category] = {
+          count: 0,
+          examples: []
+        }
+      }
+      categoryData[category].count += 1
+      if (categoryData[category].examples.length < 2) {
+        categoryData[category].examples.push(item.original_reflection)
+      }
     })
   })
 
-  return Object.entries(categoryCounts)
-      .filter(([_, count]) => count >= 2)
-      .map(([category, _]) => category)
+  return Object.entries(categoryData)
+      .filter(([_, data]) => data.count >= 2)
+      .map(([category, data]) => ({
+        name: category,
+        examples: data.examples
+      }))
 })
 
 const fetchReflectionsHistory = async () => {
