@@ -208,17 +208,51 @@ export const courseWeeks = [
     {
         number: 6,
 
-        title: "Integration",
+        title: "Earlier Recognition",
 
         subtitle:
-            "Stabilising continuity and long-range observation.",
+            "Observing what changes when recurring sequences are recognised sooner.",
 
         intro:
-            "This week integrates the movement of observation, continuity, interruption, and return.",
+            "This week focuses on the shift in experience that occurs when a recurring sequence is noticed in its earlier moments. Recognition itself becomes the meaningful change.",
 
-        openingReflection: [],
+        openingReflection: [
+            "As you continue to observe the earliest moments of a sequence, you may notice that the sequence still occurs. The familiar movement away from continuity, the shift in attention, or the physical tightening may still arrive. Observation does not immediately stop the pattern from unfolding.",
 
-        exercises: []
+            "However, recognition may begin to arrive earlier than it once did. Instead of noticing the sequence only after it has completed, or when you are already deep within it, you may find yourself seeing it as it begins. You are present for its arrival.",
+
+            "Earlier recognition changes the experience of the sequence. When you see a pattern starting, it loses some of its automaticity. It is no longer an invisible force that organises you from behind; it is something that is happening in front of your attention.",
+
+            "The sequence feels different when it is recognised. Even if the behavior continues to its usual conclusion, the fact that it is being watched changes its quality. The sense of being 'swept away' begins to be replaced by the act of seeing.",
+
+            "As recognition moves earlier, a small space may appear between the beginning of the sequence and its completion. This is not necessarily a space where you choose to do something else, but a space where observation remains active. You are watching the sequence happen while it is happening.",
+
+            "Continuity is changing. This change is not found in the disappearance of the sequence, but in the presence of recognition. The sequence is no longer something that simply happens to you; it is something you are beginning to see.",
+
+            "This shift from 'it happens to me' toward 'I am beginning to see it happen' is the core of earlier recognition. Staying with this seeing, without needing to change what is seen, allows for a different relationship with recurring patterns.",
+
+            "Earlier recognition is itself a meaningful change. It marks the moment where the observer becomes as stable as the sequence being observed."
+        ],
+
+        bodyFocus: [
+            "Earlier recognition is often first noticed in the body. Signals that once appeared unnoticed may now become visible as the sequence begins.",
+            "Observe what changes when these signals are recognised. The goal is not to alter them, but to notice their appearance sooner."
+        ],
+
+        exercises: [
+            {
+                title: "Notice it sooner",
+                description: "Observe whether recognition arrives earlier than it once did."
+            },
+            {
+                title: "Notice the space",
+                description: "Observe whether any space appears between recognising the sequence and continuing it."
+            },
+            {
+                title: "Stay with recognition",
+                description: "Rather than rushing to act, remain with the moment of recognition itself."
+            }
+        ]
 
     }
 
