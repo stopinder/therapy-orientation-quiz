@@ -83,6 +83,62 @@
         </ul>
       </section>
 
+      <!-- Phase 1 Sequence Surface Prototype -->
+      <section
+          v-if="recentThemes.length > 0"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+      >
+        <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
+          Most Common Sequence
+        </p>
+        <p class="mb-6 text-base text-slate-600">
+          A sequence appearing across recent reflections.
+        </p>
+
+        <div class="mt-8 inline-flex flex-col items-start gap-3">
+          <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
+            <span class="text-base font-medium text-slate-900">Intention</span>
+          </div>
+
+          <div class="flex w-full justify-center py-0.5 text-slate-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14" />
+              <path d="m19 12-7 7-7-7" />
+            </svg>
+          </div>
+
+          <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
+            <span class="text-base font-medium text-slate-900">Checking / Preparing</span>
+          </div>
+
+          <div class="flex w-full justify-center py-0.5 text-slate-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14" />
+              <path d="m19 12-7 7-7-7" />
+            </svg>
+          </div>
+
+          <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
+            <span class="text-base font-medium text-slate-900">Delay</span>
+          </div>
+
+          <div class="flex w-full justify-center py-0.5 text-slate-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14" />
+              <path d="m19 12-7 7-7-7" />
+            </svg>
+          </div>
+
+          <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
+            <span class="text-base font-medium text-slate-900">Recognition</span>
+          </div>
+        </div>
+
+        <p class="mt-8 text-xs text-slate-400 italic">
+          The purpose is to test whether users respond more strongly to recurring sequences than recurring themes.
+        </p>
+      </section>
+
       <section
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
