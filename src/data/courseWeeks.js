@@ -30,24 +30,24 @@ export const courseWeeks = [
         exercises: [
 
             {
-                title: "Notice the departure",
+                title: "Notice one departure",
 
                 description:
-                    "Notice the moment attention leaves the original intention before you fully realise it has happened."
+                    "Once this week, notice a moment when you intended to do one thing and found yourself doing something else."
             },
 
             {
-                title: "Track the substitute",
+                title: "Notice the substitute",
 
                 description:
-                    "Observe what activity replaces the original movement. Preparation, checking, planning, or tidying may create the feeling of engagement without actual entry."
+                    "When a departure occurs, observe what replaced the original intention."
             },
 
             {
-                title: "Observe the shift",
+                title: "Write one observation",
 
                 description:
-                    "Pay attention to emotional or pressure changes appearing immediately before continuity weakens."
+                    "Record a single example of a departure without explaining it, analysing it, or trying to change it."
             }
 
         ]
