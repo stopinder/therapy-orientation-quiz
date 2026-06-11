@@ -121,7 +121,7 @@ export const courseWeeks = [
             "This week introduces the possibility that a recurring sequence is not a random error or a failure of will, but is serving a specific function. Before attempting to change a pattern, we begin by observing what it actually does.",
 
         openingReflection: [
-            "When a sequence appears again and again, it is often because it is doing something useful. This can be difficult to see when we are focused only on the fact that we have drifted away from our intention. We see the interruption as a problem to be solved, rather than as a movement with its own internal logic.",
+            "When a sequence appears again and again, it is often because it is serving a function. This can be difficult to see when we are focused only on the fact that we have drifted away from our intention. We see the interruption as a problem to be solved, rather than as a movement with its own internal logic.",
 
             "This week, we shift our attention toward the function of the sequence. We ask: What changes at the moment the pattern begins? When the intention is interrupted by a familiar delay, or when a task is replaced by a routine of checking, what happens to the internal atmosphere? Often, the movement away from the task coincides with a subtle shift in pressure or a momentary relief from a particular kind of activation.",
 
@@ -129,9 +129,9 @@ export const courseWeeks = [
 
             "This is not about justifying the behaviour or deciding it is 'good'. It is about seeing the choreography of the event clearly enough to understand how it is organised. When you see the function, the sequence begins to lose its status as an 'accident'. It becomes a recognisable, predictable response to a specific set of conditions.",
 
-            "The goal is not to stop the movement yet, but to become interested in it. What does this sequence buy you? What does it protect? What does it allow you to avoid or postpone? Staying with these questions without rushing to answer them creates a different kind of relationship with the pattern. You are no longer just a victim of the sequence; you are its observer.",
+            "The goal is not to stop the movement yet, but to become interested in it. What changes when the sequence unfolds? What becomes less immediate? What feels reduced, softened, or postponed? Staying with these questions without rushing to answer them creates a different kind of relationship with the pattern. You are no longer just a victim of the sequence; you are its observer.",
 
-            "Recognition of function is a prerequisite for any meaningful shift in continuity. Once you see what a sequence is doing, you can begin to notice the exact moment it becomes 'necessary'. This week, stay close to the question of function, and observe how that interest changes the way you experience the recurrence."
+            "A recurring sequence may not be accidental. Before attempting to change it, become interested in what function it might serve. This week, stay close to that question and observe what becomes visible."
         ],
 
         bodyFocus: [
@@ -159,17 +159,49 @@ export const courseWeeks = [
     {
         number: 5,
 
-        title: "Embodied Continuity",
+        title: "Before the Sequence",
 
         subtitle:
-            "Restoring grounded attentional contact.",
+            "Observing what appears before recurring sequences begin.",
 
         intro:
-            "This week returns attention toward grounded continuity and embodied contact.",
+            "This week turns attention toward the earliest moments of a recurring sequence. What often feels sudden may reveal itself as a gradual shift when observed more closely.",
 
-        openingReflection: [],
+        openingReflection: [
+            "A recurring sequence often feels sudden. You are working, and then you are checking your phone. You are in a conversation, and then you have withdrawn. It can feel as if the behavior simply arrives, fully formed, without warning or preparation.",
 
-        exercises: []
+            "When you begin to look more closely at these moments, the sense of suddenness may start to change. A pattern that seemed to appear from nowhere might actually have a beginning that you have not yet observed. There is often a subtle shift in the atmosphere or a quiet change in direction before the visible behavior begins to organize you.",
+
+            "Something is already changing before the visible behaviour begins. It may be a momentary suspension of your current task, a slight drift in your focus, or a small, internal movement away from the present demand. These are the earlier moments—the precursors to the pattern—that often go unnoticed because attention is focused on the interruption itself.",
+
+            "These earlier changes can often be observed. They are not hidden, but they are often brief and understated. By staying with the beginning, you may find that the transition is more gradual than it first appeared. The movement away from continuity is a process that has its own start, its own weight, and its own momentum.",
+
+            "The earliest moments are usually subtle. They do not announce themselves with the same force as the sequence itself. Instead, they appear as a quiet narrowing of scope, a minor loss of presence, or a soft departure from the original intention.",
+
+            "Attention may narrow, pressure may increase, or the body may begin to shift before the sequence unfolds. A subtle tightening in the shoulders, a momentary holding of the breath, or a sudden urgency to move can all signal the approach of the familiar movement. These shifts occur in the space before the behavior becomes obvious.",
+
+            "The sequence has an arrival."
+        ],
+
+        bodyFocus: [
+            "The body often notices a sequence before the mind does. Observe whether any physical changes appear before the familiar movement begins.",
+            "Rather than looking for dramatic signals, become interested in small shifts: tightening, restlessness, urgency, holding, or changes in attention."
+        ],
+
+        exercises: [
+            {
+                title: "Notice the first shift",
+                description: "Observe the earliest moment where continuity begins to change, before the familiar sequence becomes obvious."
+            },
+            {
+                title: "Notice the body",
+                description: "Observe what appears physically before the sequence unfolds."
+            },
+            {
+                title: "Stay with the beginning",
+                description: "When a recurring sequence appears, become interested in its first moments rather than its outcome."
+            }
+        ]
 
     },
 
