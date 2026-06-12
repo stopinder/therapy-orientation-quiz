@@ -46,6 +46,31 @@
 
       </div>
 
+      <!-- Daily Practice Section -->
+      <section
+          v-if="week.dailyPractice && week.dailyPractice.length > 0"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+      >
+        <h2 class="text-2xl font-semibold text-slate-950">
+          Daily Practice
+        </h2>
+
+        <div class="mt-6 grid gap-4">
+          <div
+              v-for="practice in week.dailyPractice"
+              :key="practice.title"
+              class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+          >
+            <h3 class="font-medium text-slate-950">
+              {{ practice.title }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-slate-600">
+              {{ practice.description }}
+            </p>
+          </div>
+        </div>
+      </section>
+
       <!-- Emerging Pattern Card -->
       <section
           v-if="quizProfileSummary"
