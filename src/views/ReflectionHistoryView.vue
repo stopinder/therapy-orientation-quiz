@@ -24,80 +24,39 @@
 
       </div>
 
-      <!-- Phase 2 Continuity Surface — Pattern + Frequency -->
-
-      <section class="mb-16">
-
-        <div class="overflow-hidden rounded-[2.5rem] border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl">
-
-          <div class="max-w-3xl">
-
-            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
-              Continuity Surface
-            </p>
-
-            <h2 class="text-3xl font-semibold tracking-tight">
-              What Keeps Reappearing
-            </h2>
-
-            <p class="mt-4 text-lg text-slate-300">
-              Patterns that have appeared across recent reflections.
-            </p>
-
-            <div class="mt-10 grid gap-4 md:grid-cols-3">
-
-              <div class="rounded-3xl bg-white/10 p-6 backdrop-blur-sm border border-white/10">
-                <p class="text-xl font-semibold text-slate-100">
-                  Checking before beginning
-                </p>
-                <p class="mt-1 text-sm text-slate-400">
-                  Appeared in 4 reflections
-                </p>
-              </div>
-
-              <div class="rounded-3xl bg-white/10 p-6 backdrop-blur-sm border border-white/10">
-                <p class="text-xl font-semibold text-slate-100">
-                  Delay before entry
-                </p>
-                <p class="mt-1 text-sm text-slate-400">
-                  Appeared in 3 reflections
-                </p>
-              </div>
-
-              <div class="rounded-3xl bg-white/10 p-6 backdrop-blur-sm border border-white/10">
-                <p class="text-xl font-semibold text-slate-100">
-                  Preparation before action
-                </p>
-                <p class="mt-1 text-sm text-slate-400">
-                  Appeared in 5 reflections
-                </p>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- MindWorks Continuity Layer v1 -->
-      <!-- The first continuity observation generated from reflection history. -->
+      <!-- Continuity Observation (Evidence-Based Recurrence) -->
       <section
-          v-if="continuitySummary"
+          v-if="topPattern"
           class="mb-16"
       >
-        <div class="overflow-hidden rounded-[2.5rem] border border-slate-900 bg-white p-10 text-slate-900 shadow-xl">
+        <div class="overflow-hidden rounded-[2.5rem] border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl">
           <div class="max-w-3xl">
-            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
-              Continuity Observation
+            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+              What MindWorks Is Noticing
             </p>
-            <h2 class="text-3xl font-semibold tracking-tight text-slate-950">
-              Primary Continuity Observation
-            </h2>
-            <div class="mt-8 whitespace-pre-line text-lg leading-relaxed text-slate-700">
-              {{ continuitySummary }}
+
+            <p class="mb-4 text-lg text-slate-300">
+              Across recent reflections:
+            </p>
+
+            <ul class="mb-10 space-y-4">
+              <li
+                  v-for="(example, index) in topPattern.examples"
+                  :key="index"
+                  class="flex gap-4 text-lg text-slate-200"
+              >
+                <span class="text-slate-500">•</span>
+                <span>{{ example }}</span>
+              </li>
+            </ul>
+
+            <div class="border-t border-white/10 pt-8">
+              <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-slate-400">
+                Possible Pattern
+              </p>
+              <h2 class="text-3xl font-semibold tracking-tight text-white">
+                {{ topPattern.name }}
+              </h2>
             </div>
           </div>
         </div>
@@ -105,7 +64,10 @@
 
       <!-- Phase 3 Continuity Surface — Sequence Prototype -->
 
-      <section class="mb-16">
+      <section
+          v-if="topPattern"
+          class="mb-16"
+      >
 
         <div class="overflow-hidden rounded-[2.5rem] border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl">
 
@@ -340,9 +302,9 @@
 </main>
 </template>
 
-<script setup>
-
+  <script setup>
 import {
+  computed,
   onMounted,
   ref
 } from "vue"
@@ -352,6 +314,13 @@ import { useAuthStore }
 
 import { courseWeeks }
   from "../data/courseWeeks"
+
+const BEHAVIORAL_MAP = {
+  'Something else repeatedly happens before beginning.': ['preparation', 'organising', 'organizing', 'planning', 'research', 'tidying'],
+  'Attention drifts to digital tools or rituals before starting.': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee'],
+  'Delay occurs immediately after an intention is formed.': ['delay', 'delayed', 'hesitation', 'hesitant', 'postponed', 'postponing'],
+  'A verification ritual repeatedly precedes action.': ['checking', 'checked', 'rechecked', 'monitoring']
+}
 
 const isArchiveCollapsed = ref(true)
 
@@ -364,8 +333,52 @@ const reflections =
 const loading =
     ref(true)
 
-const continuitySummary =
-    ref("")
+const recentThemes = computed(() => {
+  if (!reflections.value || reflections.value.length === 0) return []
+
+  const latestThree = reflections.value.slice(0, 3)
+  const categoryData = {}
+
+  latestThree.forEach(item => {
+    const text = (item.original_reflection || '').toLowerCase()
+    const seenInThisReflection = new Set()
+
+    Object.entries(BEHAVIORAL_MAP).forEach(([category, keywords]) => {
+      keywords.forEach(keyword => {
+        if (text.includes(keyword.toLowerCase())) {
+          seenInThisReflection.add(category)
+        }
+      })
+    })
+
+    seenInThisReflection.forEach(category => {
+      if (!categoryData[category]) {
+        categoryData[category] = {
+          count: 0,
+          examples: []
+        }
+      }
+      categoryData[category].count += 1
+      if (categoryData[category].examples.length < 3) {
+        categoryData[category].examples.push(item.original_reflection)
+      }
+    })
+  })
+
+  return Object.entries(categoryData)
+      .map(([category, data]) => ({
+        name: category,
+        count: data.count,
+        examples: data.examples
+      }))
+      .sort((a, b) => b.count - a.count)
+})
+
+const topPattern = computed(() => {
+  return recentThemes.value.length > 0 && recentThemes.value[0].count >= 2
+      ? recentThemes.value[0]
+      : null
+})
 
 const fetchContinuitySummary =
     async () => {
