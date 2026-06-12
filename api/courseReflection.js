@@ -230,6 +230,7 @@ Avoid phrases such as:
 
 Avoid abstract psychology language whenever possible.
 Use ordinary language.
+Do not use IFS terminology.
 
 Approach:
 
@@ -332,8 +333,13 @@ Delay
 ↓
 Recognition
 
-### What remains unclear
-It is not yet clear whether making tea was the interruption.
+### Questions to stay with
+* What happened just before the heaviness in the chest?
+* Did the switch to making tea feel deliberate or automatic?
+* When else does this pattern of delay appear?
+
+### A recognition
+The goal is not to stop the sequence. The goal is to see it. This reflection suggests the sequence became visible. Seeing it is already different from being completely inside it.
 
 Example 2:
 User reflection:
@@ -359,8 +365,13 @@ Delay
 ↓
 Recognition
 
-### What remains unclear
-The point at which the intention to write was set aside remains unclear.
+### Questions to stay with
+* What made reorganising notes more compelling than the original intention to write?
+* What remains difficult to see in this transition?
+* Did the impulse to reorganise appear suddenly?
+
+### A recognition
+Observation itself is part of the experiment. By noticing the sequence of preparation and delay, you are no longer just reacting to it. Recognition is the first shift.
 
 Output structure:
 
@@ -396,13 +407,18 @@ Event
 
 Do not invent steps.
 
-### What remains unclear
+### Questions to stay with
 
-Identify uncertainties.
+Generate 3–5 open observational questions based on the user's reflection.
+Do not generate interpretations.
+Do not use therapy language.
+Do not provide answers.
 
-Leave them unresolved.
+### A recognition
 
-Do not attempt to complete the meaning of the sequence.
+A short paragraph reminding the user that observation itself is part of the experiment.
+Keep this section brief.
+Do not use IFS terminology.
 
 Final instruction:
 
