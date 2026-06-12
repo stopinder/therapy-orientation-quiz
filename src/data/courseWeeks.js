@@ -27,6 +27,31 @@ export const courseWeeks = [
             "This week, start to notice what happens in the body at the moment of departure."
         ],
 
+        dailyPractice: [
+
+            {
+                title: "Before Beginning",
+
+                description:
+                    "Before opening email, starting work, or beginning a task, sense both feet and ask: \"What am I about to do?\" Then continue normally."
+            },
+
+            {
+                title: "Notice the Departure",
+
+                description:
+                    "Once per day, notice a moment where you intended to do one thing and found yourself doing something else."
+            },
+
+            {
+                title: "Slow One Routine",
+
+                description:
+                    "Choose one ordinary activity and do it slightly more slowly than usual. Notice sensations in the body while doing it."
+            }
+
+        ],
+
         exercises: [
 
             {
