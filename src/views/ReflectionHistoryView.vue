@@ -24,6 +24,46 @@
 
       </div>
 
+      <!-- Discovery Layer v1 — prototype -->
+      <section class="mb-16">
+        <div class="overflow-hidden rounded-[2.5rem] border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl">
+          <div class="max-w-3xl">
+            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+              MindWorks Discovery
+            </p>
+
+            <p class="mb-8 text-lg text-slate-300">
+              Across recent reflections, the same movement appears in different forms.
+            </p>
+
+            <div class="mb-10 flex flex-col items-start gap-3">
+              <div class="text-xl font-medium text-slate-100">Beginning</div>
+              <div class="flex w-full justify-start px-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500">
+                  <path d="M12 5v14" /><path d="m19 12-7 7-7-7" />
+                </svg>
+              </div>
+              <div class="text-xl font-medium text-slate-100">Substitution</div>
+              <div class="flex w-full justify-start px-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500">
+                  <path d="M12 5v14" /><path d="m19 12-7 7-7-7" />
+                </svg>
+              </div>
+              <div class="text-xl font-medium text-slate-100">Delay</div>
+            </div>
+
+            <div class="space-y-1 border-t border-white/10 pt-8">
+              <p class="text-lg text-slate-300">
+                The activity changes.
+              </p>
+              <p class="text-lg text-slate-300 font-medium">
+                The sequence remains similar.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Continuity Observation (Evidence-Based Recurrence) -->
       <section
           v-if="topPattern"
