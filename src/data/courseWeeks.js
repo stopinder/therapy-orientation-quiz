@@ -11,6 +11,19 @@ export const courseWeeks = [
         intro:
             "This week begins with the moment continuity disappears. Not as a failure of discipline, but as something observable: a shift, a loss of contact, a quiet departure from what you meant to stay with.",
 
+        orientation: {
+            title: "Why You're Here",
+            content: [
+                "MindWorks is a programme of self-observation.",
+                "Over the next six weeks, you will begin noticing recurring patterns that appear in your attention, behaviour, and daily life.",
+                "You are not looking for mistakes or failures.",
+                "You are looking for patterns.",
+                "Each week introduces a simple practice, a question to observe, and a reflection.",
+                "The goal is not to change anything immediately.",
+                "The goal is to begin seeing what repeatedly happens."
+            ]
+        },
+
         openingReflection: [
 
             "Continuity often disappears before you notice it has gone. You may begin with a clear intention, a task, a message, a decision, or a simple movement toward something important. Then, without a clear moment of choosing, you are elsewhere.",
