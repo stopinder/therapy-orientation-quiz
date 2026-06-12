@@ -28,13 +28,8 @@
         </p>
 
         <h1 class="text-4xl font-semibold tracking-tight text-slate-950">
-          <template v-if="week.number === 1">This Week's Question</template>
-          <template v-else>{{ week.title }}</template>
+          {{ week.title }}
         </h1>
-
-        <p v-if="week.number === 1" class="mt-5 text-2xl italic text-slate-800">
-          "Where did my attention go?"
-        </p>
 
         <p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">
           {{ week.intro }}
@@ -60,6 +55,26 @@
           <p class="max-w-xs text-sm text-slate-500">
             A short introduction from Rob explaining this week's experiment and what to look for.
           </p>
+        </div>
+      </section>
+
+      <!-- This Week's Experiment (Week 1) -->
+      <section
+          v-if="week.number === 1"
+          class="mb-10 rounded-3xl border-2 border-slate-900 bg-white p-8 shadow-md"
+      >
+        <h2 class="text-2xl font-bold text-slate-950">
+          This Week's Experiment
+        </h2>
+        <div class="mt-6 space-y-4 text-xl leading-relaxed text-slate-800">
+          <p>Before opening email, beginning work, or starting a task:</p>
+          <p class="font-semibold text-2xl">Sense both feet.</p>
+          <p>Ask:</p>
+          <p class="font-semibold text-2xl">"What am I about to do?"</p>
+          <p>Then continue normally.</p>
+          <div class="mt-8 pt-6 border-t border-slate-100">
+            <p class="text-base text-slate-600">Do not try to change anything. Simply notice what happens.</p>
+          </div>
         </div>
       </section>
 
