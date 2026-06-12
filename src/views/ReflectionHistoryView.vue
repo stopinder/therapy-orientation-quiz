@@ -173,6 +173,74 @@
 
       </section>
 
+      <!-- Possible Function -->
+      <section
+          v-if="topPattern && possibleFunctionQuestion"
+          class="mb-16"
+      >
+        <div class="rounded-[2.5rem] border border-slate-200 bg-white p-10 shadow-sm">
+          <div class="max-w-3xl">
+            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+              Possible Function
+            </p>
+
+            <h2 class="text-3xl font-semibold tracking-tight text-slate-900 mb-6">
+              {{ possibleFunctionQuestion }}
+            </h2>
+
+            <p class="text-lg text-slate-600">
+              A recurring sequence may be serving a function.
+              Stay with the question rather than looking for an immediate answer.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- What Changed Afterwards? -->
+      <section
+          v-if="topPattern"
+          class="mb-16"
+      >
+        <div class="rounded-[2.5rem] border border-slate-200 bg-white p-10 shadow-sm">
+          <div class="max-w-3xl">
+            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+              What Changed Afterwards?
+            </p>
+
+            <p class="mb-6 text-lg text-slate-600">
+              Looking across these reflections, notice what happened after the sequence unfolded.
+            </p>
+
+            <ul class="mb-8 space-y-4">
+              <li class="flex gap-4 text-lg text-slate-600">
+                <span class="text-slate-400">•</span>
+                <span>Did anything become easier?</span>
+              </li>
+              <li class="flex gap-4 text-lg text-slate-600">
+                <span class="text-slate-400">•</span>
+                <span>Did pressure reduce?</span>
+              </li>
+              <li class="flex gap-4 text-lg text-slate-600">
+                <span class="text-slate-400">•</span>
+                <span>Did uncertainty reduce?</span>
+              </li>
+              <li class="flex gap-4 text-lg text-slate-600">
+                <span class="text-slate-400">•</span>
+                <span>Did something no longer need to be faced?</span>
+              </li>
+              <li class="flex gap-4 text-lg text-slate-600">
+                <span class="text-slate-400">•</span>
+                <span>Did attention move elsewhere?</span>
+              </li>
+            </ul>
+
+            <p class="text-sm font-medium italic text-slate-500">
+              The function of a recurring sequence is often revealed by what changes after it begins.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <!-- Loading -->
 
       <div
@@ -378,6 +446,19 @@ const topPattern = computed(() => {
   return recentThemes.value.length > 0 && recentThemes.value[0].count >= 2
       ? recentThemes.value[0]
       : null
+})
+
+const possibleFunctionQuestion = computed(() => {
+  if (!topPattern.value) return null
+
+  const questions = {
+    'Something else repeatedly happens before beginning.': 'What becomes easier when beginning is postponed?',
+    'Attention drifts to digital tools or rituals before starting.': 'What might this sequence be helping you postpone?',
+    'Delay occurs immediately after an intention is formed.': 'What no longer has to be faced when entry is delayed?',
+    'A verification ritual repeatedly precedes action.': 'What becomes easier once this sequence unfolds?'
+  }
+
+  return questions[topPattern.value.name] || 'What might this sequence be helping you postpone?'
 })
 
 const fetchContinuitySummary =
