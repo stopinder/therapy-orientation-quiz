@@ -28,8 +28,13 @@
         </p>
 
         <h1 class="text-4xl font-semibold tracking-tight text-slate-950">
-          {{ week.title }}
+          <template v-if="week.number === 1">This Week's Question</template>
+          <template v-else>{{ week.title }}</template>
         </h1>
+
+        <p v-if="week.number === 1" class="mt-5 text-2xl italic text-slate-800">
+          "Where did my attention go?"
+        </p>
 
         <p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">
           {{ week.intro }}
@@ -45,6 +50,18 @@
         </div>
 
       </div>
+
+      <!-- Video Introduction Placeholder -->
+      <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <h2 class="text-2xl font-semibold text-slate-950">
+          Video Introduction
+        </h2>
+        <div class="mt-6 flex aspect-video items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-8 text-center">
+          <p class="max-w-xs text-sm text-slate-500">
+            A short introduction from Rob explaining this week's experiment and what to look for.
+          </p>
+        </div>
+      </section>
 
       <!-- Orientation Section -->
       <section
@@ -104,7 +121,6 @@
 
 
       <!-- Continuity Observation -->
-      <!-- Phase 4 Continuity Surface — Single Observation -->
       <section
           v-if="recentThemes.length > 0"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
@@ -131,10 +147,6 @@
             <span class="italic text-slate-600">"{{ uniqueObservations[0] }}"</span>
           </li>
         </ul>
-
-        <p class="mt-8 text-xs text-slate-400 italic">
-          Phase 4 Continuity Surface — Single Observation: The purpose is to focus attention on the most prominent recurring pattern.
-        </p>
       </section>
 
       <!-- Phase 1 Sequence Surface Prototype -->
@@ -187,84 +199,10 @@
             <span class="text-base font-medium text-slate-900">Recognition</span>
           </div>
         </div>
-
-        <p class="mt-8 text-xs text-slate-400 italic">
-          The purpose is to test whether users respond more strongly to recurring sequences than recurring themes.
-        </p>
       </section>
 
       <section
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
-      >
-
-        <h2 class="text-2xl font-semibold text-slate-950">
-          Opening reflection
-        </h2>
-
-        <div
-            class="mt-5 space-y-5 text-base leading-8 text-slate-700"
-        >
-
-          <p
-              v-for="paragraph in week.openingReflection"
-              :key="paragraph"
-          >
-            {{ paragraph }}
-          </p>
-
-        </div>
-
-      </section>
-
-      <section
-          v-if="week.bodyFocus"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
-      >
-        <h2 class="text-2xl font-semibold text-slate-950">
-          Including the Body
-        </h2>
-        <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
-          <p
-              v-for="paragraph in week.bodyFocus"
-              :key="paragraph"
-          >
-            {{ paragraph }}
-          </p>
-        </div>
-      </section>
-
-      <section
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
-      >
-
-        <h2 class="text-2xl font-semibold text-slate-950">
-          Observation exercises
-        </h2>
-
-        <div class="mt-6 grid gap-4">
-
-          <div
-              v-for="exercise in week.exercises"
-              :key="exercise.title"
-              class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
-          >
-
-            <h3 class="font-medium text-slate-950">
-              {{ exercise.title }}
-            </h3>
-
-            <p class="mt-2 text-sm leading-6 text-slate-600">
-              {{ exercise.description }}
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      <section
-          class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
 
         <div class="mb-8 flex items-center justify-between">
@@ -377,6 +315,87 @@
 
       </section>
 
+      <!-- Read More Accordion -->
+      <section class="mb-10">
+        <button
+            @click="showReadMore = !showReadMore"
+            class="flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:bg-slate-50"
+        >
+          <span class="text-xl font-semibold text-slate-950">Why This Matters</span>
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="text-slate-400 transition-transform duration-200"
+              :class="{ 'rotate-180': showReadMore }"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        <div
+            v-if="showReadMore"
+            class="mt-4 space-y-4"
+        >
+          <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <h2 class="text-2xl font-semibold text-slate-950">
+              Opening reflection
+            </h2>
+            <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+              <p
+                  v-for="paragraph in week.openingReflection"
+                  :key="paragraph"
+              >
+                {{ paragraph }}
+              </p>
+            </div>
+          </div>
+
+          <div
+              v-if="week.bodyFocus"
+              class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          >
+            <h2 class="text-2xl font-semibold text-slate-950">
+              Including the Body
+            </h2>
+            <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+              <p
+                  v-for="paragraph in week.bodyFocus"
+                  :key="paragraph"
+              >
+                {{ paragraph }}
+              </p>
+            </div>
+          </div>
+
+          <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <h2 class="text-2xl font-semibold text-slate-950">
+              Observation exercises
+            </h2>
+            <div class="mt-6 grid gap-4">
+              <div
+                  v-for="exercise in week.exercises"
+                  :key="exercise.title"
+                  class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+              >
+                <h3 class="font-medium text-slate-950">
+                  {{ exercise.title }}
+                </h3>
+                <p class="mt-2 text-sm leading-6 text-slate-600">
+                  {{ exercise.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
     ```
 
@@ -430,6 +449,8 @@ const restoredReflection =
 
 const quizProfileSummary =
     ref("")
+
+const showReadMore = ref(false)
 
 const reflectionsHistory = ref([])
 
