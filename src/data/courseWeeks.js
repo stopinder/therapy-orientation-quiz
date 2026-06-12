@@ -14,13 +14,16 @@ export const courseWeeks = [
         orientation: {
             title: "Why You're Here",
             content: [
-                "MindWorks is a programme of self-observation.",
-                "Over the next six weeks, you will begin noticing recurring patterns that appear in your attention, behaviour, and daily life.",
-                "You are not looking for mistakes or failures.",
-                "You are looking for patterns.",
-                "Each week introduces a simple practice, a question to observe, and a reflection.",
-                "The goal is not to change anything immediately.",
-                "The goal is to begin seeing what repeatedly happens."
+                "Most of us repeat the same patterns without noticing.",
+                "We intend to do one thing and end up doing something else.",
+                "We delay.",
+                "We avoid.",
+                "We check.",
+                "We prepare.",
+                "Often the same sequence appears again and again.",
+                "MindWorks helps you notice those patterns.",
+                "This week, you're not trying to change anything.",
+                "You're simply learning to spot one moment when your attention goes somewhere you didn't expect."
             ]
         },
 

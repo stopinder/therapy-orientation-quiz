@@ -27,7 +27,10 @@
           Week {{ week.number }}
         </p>
 
-        <h1 class="text-4xl font-semibold tracking-tight text-slate-950">
+        <h1
+            v-if="week.number !== 1"
+            class="text-4xl font-semibold tracking-tight text-slate-950"
+        >
           {{ week.title }}
         </h1>
 
@@ -58,26 +61,6 @@
         </div>
       </section>
 
-      <!-- This Week's Experiment (Week 1) -->
-      <section
-          v-if="week.number === 1"
-          class="mb-10 rounded-3xl border-2 border-slate-900 bg-white p-8 shadow-md"
-      >
-        <h2 class="text-2xl font-bold text-slate-950">
-          This Week's Experiment
-        </h2>
-        <div class="mt-6 space-y-4 text-xl leading-relaxed text-slate-800">
-          <p>Before opening email, beginning work, or starting a task:</p>
-          <p class="font-semibold text-2xl">Sense both feet.</p>
-          <p>Ask:</p>
-          <p class="font-semibold text-2xl">"What am I about to do?"</p>
-          <p>Then continue normally.</p>
-          <div class="mt-8 pt-6 border-t border-slate-100">
-            <p class="text-base text-slate-600">Do not try to change anything. Simply notice what happens.</p>
-          </div>
-        </div>
-      </section>
-
       <!-- Orientation Section -->
       <section
           v-if="week.orientation"
@@ -96,27 +79,22 @@
         </div>
       </section>
 
-      <!-- Daily Practice Section -->
+      <!-- This Week's Experiment (Week 1) -->
       <section
-          v-if="week.dailyPractice && week.dailyPractice.length > 0"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          v-if="week.number === 1"
+          class="mb-16"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
-          Daily Practice
+          This Week's Experiment
         </h2>
-
-        <div class="mt-6 grid gap-4">
-          <div
-              v-for="practice in week.dailyPractice"
-              :key="practice.title"
-              class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
-          >
-            <h3 class="font-medium text-slate-950">
-              {{ practice.title }}
-            </h3>
-            <p class="mt-2 text-sm leading-6 text-slate-600">
-              {{ practice.description }}
-            </p>
+        <div class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
+          <p>Before opening email, beginning work, or starting a task:</p>
+          <p class="font-medium text-2xl text-slate-950">Sense both feet.</p>
+          <p>Ask:</p>
+          <p class="font-medium text-2xl text-slate-950">"What am I about to do?"</p>
+          <p>Then continue normally.</p>
+          <div class="mt-8 pt-6">
+            <p class="text-base text-slate-600 italic">Do not try to change anything. Simply notice what happens.</p>
           </div>
         </div>
       </section>
@@ -134,14 +112,13 @@
         </div>
       </section>
 
-
       <!-- Continuity Observation -->
       <section
           v-if="recentThemes.length > 0"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          Continuity Observation
+          What MindWorks Is Noticing
         </p>
         <p class="mb-6 text-base text-slate-600">
           An observation that has appeared across recent reflections.
