@@ -112,30 +112,43 @@
         </div>
       </section>
 
-      <!-- Continuity Observation -->
+      <!-- Continuity Observation (Evidence-Based Recurrence) -->
       <section
-          v-if="recentThemes.length > 0"
+          v-if="topPattern && topPattern.examples.length >= 2"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
           What MindWorks Is Noticing
         </p>
 
-        <ul class="space-y-6">
+        <p class="mb-4 text-sm text-slate-500">
+          Across recent reflections:
+        </p>
+
+        <ul class="mb-8 space-y-3">
           <li
-              v-for="theme in recentThemes"
-              :key="theme.name"
-              class="text-base text-slate-700"
+              v-for="(example, index) in topPattern.examples"
+              :key="index"
+              class="text-base text-slate-700 flex gap-3"
           >
-            <p class="font-medium text-slate-900">{{ theme.name }}</p>
-            <p class="mt-1 text-sm text-slate-500">Seen in {{ theme.count }} reflections.</p>
+            <span class="text-slate-400">•</span>
+            <span>{{ example }}</span>
           </li>
         </ul>
+
+        <div class="border-t border-slate-100 pt-6">
+          <p class="mb-2 text-sm font-medium uppercase tracking-wider text-slate-500">
+            Possible Pattern
+          </p>
+          <p class="text-lg font-medium text-slate-900">
+            {{ topPattern.name }}
+          </p>
+        </div>
       </section>
 
       <!-- Phase 1 Sequence Surface Prototype -->
       <section
-          v-if="recentThemes.length > 0"
+          v-if="topPattern && topPattern.examples.length >= 2"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -449,10 +462,10 @@ const showReadMore = ref(false)
 const reflectionsHistory = ref([])
 
 const BEHAVIORAL_MAP = {
-  'Preparation Before Action': ['preparation', 'organising', 'organizing', 'planning', 'research', 'tidying'],
-  'Rechecked email before starting': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee'],
-  'Delay Before Beginning': ['delay', 'delayed', 'hesitation', 'hesitant', 'postponed', 'postponing'],
-  'Checking before beginning': ['checking', 'checked', 'rechecked', 'monitoring']
+  'Something else repeatedly happens before beginning.': ['preparation', 'organising', 'organizing', 'planning', 'research', 'tidying'],
+  'Attention drifts to digital tools or rituals before starting.': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee'],
+  'Delay occurs immediately after an intention is formed.': ['delay', 'delayed', 'hesitation', 'hesitant', 'postponed', 'postponing'],
+  'A verification ritual repeatedly precedes action.': ['checking', 'checked', 'rechecked', 'monitoring']
 }
 
 const recentThemes = computed(() => {
@@ -481,7 +494,7 @@ const recentThemes = computed(() => {
         }
       }
       categoryData[category].count += 1
-      if (categoryData[category].examples.length < 2) {
+      if (categoryData[category].examples.length < 3) {
         categoryData[category].examples.push(item.original_reflection)
       }
     })
@@ -493,6 +506,11 @@ const recentThemes = computed(() => {
         count: data.count,
         examples: data.examples
       }))
+      .sort((a, b) => b.count - a.count)
+})
+
+const topPattern = computed(() => {
+  return recentThemes.value.length > 0 ? recentThemes.value[0] : null
 })
 
 const uniqueObservations = computed(() => {
