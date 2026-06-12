@@ -9,7 +9,7 @@ export const courseWeeks = [
             "Observing continuity breakdown and attentional drift.",
 
         intro:
-            "This week begins with the moment continuity disappears. Not as a failure of discipline, but as something observable: a shift, a loss of contact, a quiet departure from what you meant to stay with.",
+            "This week is about noticing moments when you end up doing something different from what you intended.\n\nMaybe you meant to start work and checked email instead.\n\nMaybe you picked up your phone without thinking about it.\n\nMaybe you began one task and drifted into another.\n\nYou do not need to change anything yet.\n\nJust notice when it happens.",
 
         orientation: {
             title: "Why You're Here",

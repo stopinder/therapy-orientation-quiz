@@ -120,23 +120,15 @@
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
           What MindWorks Is Noticing
         </p>
-        <p class="mb-6 text-base text-slate-600">
-          An observation that has appeared across recent reflections.
-        </p>
 
-        <div class="mb-4">
-          <p class="text-sm font-semibold text-slate-900">
-            Observed repeatedly:
-          </p>
-        </div>
-
-        <ul class="space-y-4">
+        <ul class="space-y-6">
           <li
-              v-if="uniqueObservations.length > 0"
-              class="flex items-start text-base leading-7 text-slate-700"
+              v-for="theme in recentThemes"
+              :key="theme.name"
+              class="text-base text-slate-700"
           >
-            <span class="mr-3 mt-1 text-slate-400">•</span>
-            <span class="italic text-slate-600">"{{ uniqueObservations[0] }}"</span>
+            <p class="font-medium text-slate-900">{{ theme.name }}</p>
+            <p class="mt-1 text-sm text-slate-500">Seen in {{ theme.count }} reflections.</p>
           </li>
         </ul>
       </section>
@@ -226,7 +218,17 @@
           </p>
         </div>
 
-        <p class="mt-4 text-base leading-7 text-slate-600">
+        <p
+            v-if="week.number === 1"
+            class="mt-4 text-base leading-7 text-slate-600"
+        >
+          Describe a moment when you intended to do one thing and ended up doing something else.
+        </p>
+
+        <p
+            v-else
+            class="mt-4 text-base leading-7 text-slate-600"
+        >
           Describe a moment related to this week's continuity theme.
         </p>
 
@@ -448,7 +450,7 @@ const reflectionsHistory = ref([])
 
 const BEHAVIORAL_MAP = {
   'Preparation Before Action': ['preparation', 'organising', 'organizing', 'planning', 'research', 'tidying'],
-  'Doing something else before starting': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee'],
+  'Rechecked email before starting': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee'],
   'Delay Before Beginning': ['delay', 'delayed', 'hesitation', 'hesitant', 'postponed', 'postponing'],
   'Checking before beginning': ['checking', 'checked', 'rechecked', 'monitoring']
 }
@@ -486,9 +488,9 @@ const recentThemes = computed(() => {
   })
 
   return Object.entries(categoryData)
-      .filter(([_, data]) => data.count >= 2)
       .map(([category, data]) => ({
         name: category,
+        count: data.count,
         examples: data.examples
       }))
 })
