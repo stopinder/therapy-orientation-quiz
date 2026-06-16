@@ -30,13 +30,13 @@ export default async function handler(request, response) {
             })
         }
 
-        // Retrieve last 3 rows from course_reflections
+        // Retrieve last 10 rows from course_reflections
         const { data: reflectionsData, error: dbError } = await supabase
             .from("course_reflections")
-            .select("original_reflection")
+            .select("original_reflection, ai_response, week_number, created_at")
             .eq("user_id", userId)
             .order("created_at", { ascending: false })
-            .limit(3)
+            .limit(10)
 
         if (dbError) {
             console.error("DATABASE ERROR:", dbError)
@@ -45,40 +45,47 @@ export default async function handler(request, response) {
             })
         }
 
-        if (!reflectionsData || reflectionsData.length === 0) {
+        if (!reflectionsData || reflectionsData.length < 2) {
             return response.status(200).json({
-                summary: "No reflections found to analyze."
+                summary: "MindWorks is beginning to gather enough observations to notice recurring structures. Continue adding reflections and this section will become more specific."
             })
         }
 
         const recentReflections = reflectionsData
-            .map((r) => `Reflection:\n${r.original_reflection}`)
+            .map((r) => `---
+Week: ${r.week_number}
+Date: ${r.created_at}
+User Observation: ${r.original_reflection}
+MindWorks Reflection: ${r.ai_response}`)
             .join("\n\n")
 
         const systemPrompt = `
 You are a continuity observer.
 
-Look across multiple reflections.
-
-Your task is to identify what appears repeatedly.
+Look across multiple reflections to identify what appears repeatedly.
 
 Do not explain behaviour.
-
 Do not diagnose.
-
 Do not coach.
-
 Do not provide advice.
+Do not interpret motivations.
+Do not suggest solutions.
 
-Do not label patterns.
-
-Remain close to the user's actual words.
+Remain close to the user's actual words and the structured sequences already identified in the MindWorks Reflections.
 
 Output format:
 
 What Keeps Reappearing
 
-[one short continuity observation]
+[one short sentence naming the recurring sequence or movement]
+
+Repeated Sequence
+
+[one short sequence using arrows, e.g., Intention to start → activity → delay]
+
+What Remains Unclear
+
+[one short sentence preserving uncertainty]
 `.trim()
 
         const openAIResponse = await fetch(
