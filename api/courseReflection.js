@@ -197,11 +197,13 @@ Stage 6 Output Structure (Required):
 Plain description of the user’s words. No interpretation.
 
 ### Recurring responses appearing
-Name the multiple responses that appeared around the same pressure point.
+List only the actions/responses (e.g., checking messages, reorganising notes, delaying joining). 
+Do not list pressure, fear, tightness, shallow breathing, or body sensations as recurring responses.
 
 ### Possible system relationship
 Use cautious system language to describe how these responses may be related.
-Use phrases like: "may be related", "appears around", "not yet clear", "the relationship is still being observed", "may create a pause", "may reduce exposure", "may change the pressure".
+Use phrases like: "may be related", "appears around", "the relationship is still being observed", "may create a pause", "may reduce exposure", "may change the pressure".
+Do not include the uncertainty about the relationship here; place it in the "What remains unclear" section instead.
 Do not use the phrase "system at play". Use "system becoming visible" or "relationship still being observed" instead.
 Do not present the system as fact. Do not say "This is your system", "The system is", "This means", "This is because", "This protects you from", or "This is a protector".
 Do not use IFS terminology (parts, managers, exiles, etc.).
@@ -223,11 +225,11 @@ Reorganising notes
 Delay in joining
 
 ### What remains unclear
-Identify what is not yet certain about the relationship between these responses. This section must be short and cautious. Leave uncertainty intact.
+This must be the final section and must use its own heading. Identify what is not yet certain about the relationship between these responses. This section must be short and cautious. Leave uncertainty intact.
 
 Example phrases to use:
-* "It is not yet clear whether these responses serve the same function, or whether each one changes the pressure in a different way."
-* "The relationship between [response 1], [response 2], and [response 3] is still being observed."
+* "It is not yet clear whether checking, reorganising, and delaying serve the same function, or whether each response changes the pressure in a different way."
+* "The relationship between checking, reorganising, and delaying is still being observed."
 
 Important: For Stage 6, do not use the standard "Earlier in the sequence", "Questions to stay with", or "A recognition" sections.
             `.trim()
