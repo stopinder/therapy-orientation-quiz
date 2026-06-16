@@ -313,7 +313,7 @@
             class="group flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-6 transition-all hover:bg-slate-50 shadow-sm"
         >
           <span class="text-lg font-semibold text-slate-900">
-            View Reflection Archive ({{ reflections.length }} reflections)
+            View Recent Reflection Archive ({{ archivePreviewLabel }})
           </span>
           <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -338,7 +338,7 @@
         >
 
           <section
-              v-for="item in reflections"
+              v-for="item in visibleArchiveReflections"
               :key="item.id"
               class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
           >
@@ -432,6 +432,19 @@ const BEHAVIORAL_MAP = {
 }
 
 const isArchiveCollapsed = ref(true)
+
+const visibleArchiveReflections = computed(() => {
+  return reflections.value.slice(0, 10)
+})
+
+const archivePreviewLabel = computed(() => {
+  const total = reflections.value.length
+  const visible = visibleArchiveReflections.value.length
+
+  return total > visible
+    ? `showing ${visible} of ${total} reflections`
+    : `${total} reflections`
+})
 
 const auth =
     useAuthStore()
