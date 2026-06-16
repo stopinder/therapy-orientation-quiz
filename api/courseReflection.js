@@ -223,7 +223,11 @@ Reorganising notes
 Delay in joining
 
 ### What remains unclear
-Identify what is not yet certain about the relationship between these responses. Leave uncertainty intact.
+Identify what is not yet certain about the relationship between these responses. This section must be short and cautious. Leave uncertainty intact.
+
+Example phrases to use:
+* "It is not yet clear whether these responses serve the same function, or whether each one changes the pressure in a different way."
+* "The relationship between [response 1], [response 2], and [response 3] is still being observed."
 
 Important: For Stage 6, do not use the standard "Earlier in the sequence", "Questions to stay with", or "A recognition" sections.
             `.trim()
