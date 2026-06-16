@@ -32,32 +32,18 @@
               MindWorks Discovery
             </p>
 
-            <p class="mb-8 text-lg text-slate-300">
-              Across recent reflections, the same movement appears in different forms.
-            </p>
-
-            <div class="mb-10 flex flex-col items-start gap-3">
-              <div class="text-xl font-medium text-slate-100">Beginning</div>
-              <div class="flex w-full justify-start px-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500">
-                  <path d="M12 5v14" /><path d="m19 12-7 7-7-7" />
-                </svg>
+            <div v-if="continuitySummary">
+              <p class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500">
+                Recent continuity signal
+              </p>
+              <div class="whitespace-pre-line text-lg leading-relaxed text-slate-300">
+                {{ continuitySummary }}
               </div>
-              <div class="text-xl font-medium text-slate-100">Substitution</div>
-              <div class="flex w-full justify-start px-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500">
-                  <path d="M12 5v14" /><path d="m19 12-7 7-7-7" />
-                </svg>
-              </div>
-              <div class="text-xl font-medium text-slate-100">Delay</div>
             </div>
 
-            <div class="space-y-1 border-t border-white/10 pt-8">
-              <p class="text-lg text-slate-300">
-                The activity changes.
-              </p>
-              <p class="text-lg text-slate-300 font-medium">
-                The sequence remains similar.
+            <div v-else>
+              <p class="text-lg leading-relaxed text-slate-300">
+                MindWorks is beginning to gather enough observations to notice recurring structures. Continue adding reflections and this section will become more specific.
               </p>
             </div>
           </div>
@@ -515,12 +501,16 @@ const possibleFunctionQuestion = computed(() => {
   return questions[topPattern.value.name] || 'What might this sequence be helping you postpone?'
 })
 
+const continuitySummary = ref("")
+
 const fetchContinuitySummary =
     async () => {
 
       try {
 
         if (!auth.user?.id) return
+
+        console.log("Fetching continuity summary for:", auth.user.id)
 
         const result = await fetch(
             "/api/getContinuitySummary",
@@ -536,6 +526,7 @@ const fetchContinuitySummary =
         )
 
         const data = await result.json()
+        console.log("Continuity summary received:", data.summary)
         continuitySummary.value = data.summary || ""
 
       } catch (err) {
