@@ -113,23 +113,9 @@
           >
 
           <!-- Metadata row -->
-          <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500">
-            <span class="inline-flex whitespace-nowrap">
-              Week {{ item.week_number }}
-            </span>
-
-            <span class="inline-flex text-slate-300">·</span>
-
-            <span class="inline-flex whitespace-nowrap">
-              {{ getWeekTitle(item.week_number) }}
-            </span>
-
-            <span class="inline-flex text-slate-300">·</span>
-
-            <span class="inline-flex whitespace-nowrap">
-              {{ formatDate(item.created_at) }}
-            </span>
-          </div>
+          <p class="text-sm text-slate-500 leading-relaxed">
+            Week {{ item.week_number }}&nbsp;·&nbsp;{{ getWeekTitle(item.week_number) }}&nbsp;·&nbsp;{{ formatDate(item.created_at) }}
+          </p>
 
           <!-- Original Reflection -->
           <div class="mt-4">
