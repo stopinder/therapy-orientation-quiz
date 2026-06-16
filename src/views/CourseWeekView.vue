@@ -114,15 +114,15 @@
 
       <!-- Continuity Observation (Evidence-Based Recurrence) -->
       <section
-          v-if="week.number >= 3 && topPattern && topPattern.examples.length >= 2"
+          v-if="showPatternBlock"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          What MindWorks Is Noticing
+          {{ patternBlockLabel }}
         </p>
 
         <p class="mb-4 text-sm text-slate-500">
-          Across recent reflections:
+          {{ discoveryWording }}
         </p>
 
         <ul class="mb-8 space-y-3">
@@ -138,7 +138,7 @@
 
         <div class="border-t border-slate-100 pt-6">
           <p class="mb-2 text-sm font-medium uppercase tracking-wider text-slate-500">
-            Possible Pattern
+            {{ patternTypeLabel }}
           </p>
           <p class="text-lg font-medium text-slate-900">
             {{ topPattern.name }}
@@ -148,53 +148,29 @@
 
       <!-- Phase 1 Sequence Surface Prototype -->
       <section
-          v-if="week.number >= 2 && topPattern && topPattern.examples.length >= 2"
+          v-if="showSequenceBlock"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          Most Common Sequence
+          {{ sequenceBlockLabel }}
         </p>
         <p class="mb-6 text-base text-slate-600">
-          A sequence appearing across recent reflections.
+          {{ sequenceBlockWording }}
         </p>
 
         <div class="mt-8 inline-flex flex-col items-start gap-3">
-          <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
-            <span class="text-base font-medium text-slate-900">Intention</span>
-          </div>
+          <template v-for="(step, index) in sequenceSteps" :key="index">
+            <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
+              <span class="text-base font-medium text-slate-900">{{ step }}</span>
+            </div>
 
-          <div class="flex w-full justify-center py-0.5 text-slate-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 5v14" />
-              <path d="m19 12-7 7-7-7" />
-            </svg>
-          </div>
-
-          <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
-            <span class="text-base font-medium text-slate-900">Checking / Preparing</span>
-          </div>
-
-          <div class="flex w-full justify-center py-0.5 text-slate-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 5v14" />
-              <path d="m19 12-7 7-7-7" />
-            </svg>
-          </div>
-
-          <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
-            <span class="text-base font-medium text-slate-900">Delay</span>
-          </div>
-
-          <div class="flex w-full justify-center py-0.5 text-slate-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 5v14" />
-              <path d="m19 12-7 7-7-7" />
-            </svg>
-          </div>
-
-          <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
-            <span class="text-base font-medium text-slate-900">Recognition</span>
-          </div>
+            <div v-if="index < sequenceSteps.length - 1" class="flex w-full justify-center py-0.5 text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14" />
+                <path d="m19 12-7 7-7-7" />
+              </svg>
+            </div>
+          </template>
         </div>
       </section>
 
@@ -523,6 +499,71 @@ const uniqueObservations = computed(() => {
     })
   })
   return allExamples
+})
+
+const showPatternBlock = computed(() => {
+  return weekNumber.value >= 3 && topPattern.value && topPattern.value.examples.length >= 2
+})
+
+const showSequenceBlock = computed(() => {
+  return weekNumber.value >= 2 && topPattern.value && topPattern.value.examples.length >= 2
+})
+
+const patternBlockLabel = computed(() => {
+  const n = weekNumber.value
+  if (n === 3) return "What MindWorks Is Noticing"
+  if (n === 4) return "State Becoming Visible"
+  if (n === 5) return "Possible Function"
+  if (n === 6) return "System Becoming Visible"
+  return "What MindWorks Is Noticing"
+})
+
+const patternTypeLabel = computed(() => {
+  const n = weekNumber.value
+  if (n === 3) return "Possible Pattern"
+  if (n === 4) return "Primary State"
+  if (n === 5) return "Potential Function"
+  if (n === 6) return "Systemic Relationship"
+  return "Possible Pattern"
+})
+
+const discoveryWording = computed(() => {
+  const n = weekNumber.value
+  if (n === 3) return "Across recent reflections, a recurring structure is beginning to appear."
+  if (n === 4) return "MindWorks is noticing the emotional climate and internal conditions that tend to precede this sequence: pressure, uncertainty, body context, or exposure."
+  if (n === 5) return "This recurring sequence appears to accomplish something, though it is not yet clear. It may be providing relief, reducing uncertainty, or protecting continuity by creating a pause."
+  if (n === 6) return "MindWorks is noticing relationships between patterns, specifically recurring protective responses and the states that appear under pressure."
+  return "Across recent reflections:"
+})
+
+const sequenceBlockLabel = computed(() => {
+  const n = weekNumber.value
+  if (n === 2) return "Sequence Becoming Visible"
+  return "Most Common Sequence"
+})
+
+const sequenceBlockWording = computed(() => {
+  const n = weekNumber.value
+  if (n === 2) return "MindWorks is beginning to place events in order."
+  return "A sequence appearing across recent reflections."
+})
+
+const sequenceSteps = computed(() => {
+  const n = weekNumber.value
+  if (n >= 4) {
+    return [
+      "Pressure / Uncertainty",
+      "Checking / Preparing",
+      "Delay",
+      "Recognition"
+    ]
+  }
+  return [
+    "Intention",
+    "Checking / Preparing",
+    "Delay",
+    "Recognition"
+  ]
 })
 
 const fetchReflectionsHistory = async () => {
