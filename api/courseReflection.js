@@ -61,93 +61,164 @@ export default async function handler(request, response) {
 
         const weekPrompts = {
             1: `
-This week is about the anatomy of departure.
+This stage is about observation.
 
-Look for the moment where continuity breaks. Observe how one movement is substituted for another.
+Your role is as an Observer. The question is: What happened? 
+The goal is for the interruption to become visible.
+
+Look for the moment where one movement becomes another. Observe the interruption and the departure from the original intention.
 
 Pay attention to:
 
-* Continuity: Where was the intention holding steady?
-* Departure: The exact moment the original movement stopped or veered.
-* Fragmentation: How the task or attention broke into smaller or disconnected movements.
-* Substitution: What appeared in place of the original movement?
+* Observation: What was actually observed?
+* Interruption: Where did the movement break?
+* Departure: The moment the intention shifted.
+* Substitution: What appeared instead of the original task?
+* Uncertainty: If the transition point is unclear, acknowledge that.
 
-The task is recognition.
-
-Do not explain.
-
-Do not correct.
-
-Simply observe the departure.
+The task is recognition of the interruption.
             `.trim(),
             2: `
-This week is about pressure and activation.
+This stage is about sequence.
 
-Look for what appears before a movement away.
+Your role is as a Sequence Mapper. The question is: What happened first?
+The goal is for the order to become visible.
 
-Observe moments where pressure becomes noticeable, and what appears next in the sequence.
+The focus is on the order of events. Look for what happened first and how one movement led to the next.
 
 Pay attention to:
 
-* Pressure: Moments where a task begins to feel heavier, more urgent, or more present.
-* Activation: The impulse to move, act, prepare, check, organise, or do something.
-* Avoidance: Movements that occur instead of entering the original task.
-* Relief-seeking: Activities that appear immediately after pressure becomes noticeable.
+* Sequence: The chronological order of events.
+* What happened first: Identifying the earliest sign of a shift.
+* Order: Mapping the movement step by step.
+* Transition: The point where one state became another.
+* Preceding event: What occurred immediately before the most visible interruption?
 
-Do not assume these events are connected.
-
-Do not assume one caused the other.
-
-Simply observe where they appear in the sequence.
-
-The task is recognition.
+The task is to map the sequence.
             `.trim(),
             3: `
-This week is about recurrence.
+This stage is about pattern.
 
-Look across multiple reflections to identify what appears repeatedly.
+Your role is as a Pattern Detector. The question is: What keeps repeating?
+The goal is for recurrence to become visible.
+
+The focus is on recurrence. Look for structures and sequences that keep repeating across different observations.
 
 Pay attention to:
 
-* Recurring observations: Movements or sensations that have appeared before.
-* Repeated sequences: The same order of events appearing in different situations.
-* Recurrence without interpretation: Noticing the pattern without explaining why it happens.
-* Recognition before change: Seeing the pattern as it begins to form.
+* Recurrence: What keeps appearing?
+* Repeated sequence: The same order of events appearing again.
+* Repeated structure: A consistent shape to the interruption.
+* Same movement: Noticing the same response in different situations.
 
-The task is recognition of recurrence.
+The task is to recognize the recurring pattern.
             `.trim(),
             4: `
-This week is about function.
+This stage is about state.
 
-Explore what recurring sequences may be doing.
+Your role is as a State Observer. The question is: What conditions tend to precede the pattern?
+The goal is for conditions and internal climate to become visible.
+
+The focus is on the conditions and internal climate that tend to precede a pattern. 
 
 Pay attention to:
 
-* Change: What shifts in the internal atmosphere at the moment the sequence begins?
-* Relief: Does the movement provide a momentary release from pressure or activation?
-* Utility: What does the sequence 'buy' or 'protect' in that moment?
-* Intentionality: Seeing the sequence as a functional response rather than a random error.
+* State: The internal environment before the shift.
+* Conditions: The external or internal factors present.
+* Pressure: Sensations of urgency, weight, or expectation.
+* Uncertainty and Exposure: The feeling of not knowing or being seen.
+* Body context: Physical sensations and emotional climate.
 
-The central question is: What function might this sequence serve?
+The task is to observe the state before the pattern.
             `.trim(),
-            5: "...",
-            6: "..."
+            5: `
+This stage is about function.
+
+Your role is as a Function Finder. The question is: What does this pattern accomplish?
+The goal is for the protective function to become visible.
+
+The focus is on what the recurring pattern might be accomplishing. 
+
+Pay attention to:
+
+* Function: What does this sequence do for the system?
+* Relief and Delay: Does it provide a momentary break or distance?
+* Reducing Exposure: Does it limit the feeling of being seen or evaluated?
+* Reducing Uncertainty: Does it provide a more certain (even if less desired) activity?
+* Protection: Seeing the movement as a functional response.
+
+The task is to find the function without interpretation or judgment.
+            `.trim(),
+            6: `
+This stage is about the system.
+
+Your role is as a Systems Mapper. The question is: What recurring responses appear under particular conditions?
+The goal is for internal relationships to become visible.
+
+The focus is on the internal relationships between recurring responses and recurring conditions.
+
+Pay attention to:
+
+* System: How different responses interact under particular conditions.
+* Recurring response: The consistent movement that appears.
+* Recurring condition: The specific environment that triggers the response.
+* Protective response: A movement that serves to protect the system.
+* Internal relationship: The link between the condition and the response.
+
+The task is to map the system. Map what occurs without imposing theory.
+            `.trim()
         }
 
         const weekLenses = {
             1: `
 Use these lenses for your observation:
-* departures
-* substitutions
-* fragmentation
-* weakening continuity
+* observation
+* interruption
+* departure
+* substitution
+* uncertainty
 `.trim(),
             2: `
 Use these lenses for your observation:
+* sequence
+* order
+* what came first
+* transition
+* preceding event
+`.trim(),
+            3: `
+Use these lenses for your observation:
+* recurrence
+* repeated sequence
+* repeated structure
+* same movement in different situations
+`.trim(),
+            4: `
+Use these lenses for your observation:
+* state
 * pressure
-* activation
-* hesitation
-* movements away from pressure
+* uncertainty
+* emotional climate
+* body context
+* condition before pattern
+`.trim(),
+            5: `
+Use these lenses for your observation:
+* function
+* relief
+* delay
+* reducing exposure
+* reducing uncertainty
+* protection without interpretation
+`.trim(),
+            6: `
+Use these lenses for your observation:
+* system
+* recurring response
+* recurring condition
+* protective response
+* internal relationship
+* pattern across time
 `.trim()
         }
 
