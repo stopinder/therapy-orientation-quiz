@@ -329,61 +329,39 @@
               class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
           >
 
-          <!-- Meta -->
-
-          <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
-
-            <div>
-
-              <p class="text-sm font-medium uppercase tracking-[0.18em] text-slate-500">
-                Week {{ item.week_number }}
-              </p>
-
-              <h2 class="mt-2 text-2xl font-semibold text-slate-950">
-                {{ getWeekTitle(item.week_number) }}
-              </h2>
-
-            </div>
-
-            <div
-                class="rounded-full bg-slate-100 px-4 py-2 text-xs font-medium text-slate-600"
-            >
+          <!-- Metadata row -->
+          <div class="mb-6 flex flex-wrap items-center gap-2 text-sm font-medium uppercase tracking-[0.12em] text-slate-500">
+            <span>Week {{ item.week_number }}</span>
+            <span class="text-slate-300">·</span>
+            <span>{{ getWeekTitle(item.week_number) }}</span>
+            <span class="text-slate-300">·</span>
+            <span class="rounded-full bg-slate-100 px-3 py-0.5 text-[10px] tracking-normal text-slate-600">
               {{ formatDate(item.created_at) }}
-            </div>
-
+            </span>
           </div>
 
           <!-- Original Reflection -->
-
-          <div class="mb-8">
-
-            <h3 class="mb-3 text-sm font-medium uppercase tracking-[0.16em] text-slate-500">
-              Original Reflection
+          <div class="mb-6">
+            <h3 class="mb-2 text-[11px] font-bold uppercase tracking-widest text-slate-400">
+              Original observation
             </h3>
-
-            <div
-                class="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-base leading-8 text-slate-700"
-            >
+            <div class="text-base leading-relaxed text-slate-700">
               {{ item.original_reflection }}
             </div>
-
           </div>
 
-          <!-- AI Reflection -->
-
-          <div>
-
-            <h3 class="mb-3 text-sm font-medium uppercase tracking-[0.16em] text-slate-500">
-              MindWorks Reflection
-            </h3>
-
-            <div
-                class="rounded-2xl border border-slate-200 bg-white p-5 text-base leading-8 text-slate-700 whitespace-pre-line"
-            >
+          <!-- AI Reflection Collapsible -->
+          <details class="group border-t border-slate-100 pt-4">
+            <summary class="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-open:rotate-180">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+              View MindWorks Reflection
+            </summary>
+            <div class="mt-4 rounded-2xl bg-slate-50 p-6 text-base leading-relaxed text-slate-600 whitespace-pre-line">
               {{ item.ai_response }}
             </div>
-
-          </div>
+          </details>
 
         </section>
 
