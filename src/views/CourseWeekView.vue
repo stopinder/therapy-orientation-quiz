@@ -141,7 +141,7 @@
             {{ patternTypeLabel }}
           </p>
           <p class="text-lg font-medium text-slate-900">
-            {{ topPattern.name }}
+            {{ stagePrimaryContent }}
           </p>
         </div>
       </section>
@@ -157,6 +157,12 @@
         <p class="mb-6 text-base text-slate-600">
           {{ sequenceBlockWording }}
         </p>
+
+        <div v-if="weekNumber === 2" class="border-t border-slate-100 pt-6 mt-8">
+          <p class="mb-4 text-sm font-medium uppercase tracking-wider text-slate-500">
+            Current Sequence
+          </p>
+        </div>
 
         <div class="mt-8 inline-flex flex-col items-start gap-3">
           <template v-for="(step, index) in sequenceSteps" :key="index">
@@ -536,6 +542,15 @@ const discoveryWording = computed(() => {
   return "Across recent reflections:"
 })
 
+const stagePrimaryContent = computed(() => {
+  const n = weekNumber.value
+  if (n === 3) return topPattern.value?.name || ""
+  if (n === 4) return "Pressure or uncertainty appears before checking, preparing, or delay."
+  if (n === 5) return "Checking or preparing may create a pause, reduce uncertainty, delay exposure, or provide brief relief."
+  if (n === 6) return "Similar responses appear around moments of pressure, exposure, or beginning: checking, preparing, delaying, and reorganising. The relationship between these responses is still being observed."
+  return topPattern.value?.name || ""
+})
+
 const sequenceBlockLabel = computed(() => {
   const n = weekNumber.value
   if (n === 2) return "Sequence Becoming Visible"
@@ -554,8 +569,7 @@ const sequenceSteps = computed(() => {
     return [
       "Pressure / Uncertainty",
       "Checking / Preparing",
-      "Delay",
-      "Recognition"
+      "Delay"
     ]
   }
   return [
