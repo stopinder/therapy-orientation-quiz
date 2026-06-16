@@ -233,14 +233,14 @@
               </h2>
 
               <p class="mx-auto mb-8 max-w-xl text-lg leading-relaxed text-slate-600">
-                The quiz identifies patterns. The 6-week programme helps you work with those patterns over time through guided reflection and continuity tracking.
+                The quiz identifies patterns. The six-stage visibility path helps you work with those patterns over time through guided reflection and continuity tracking.
               </p>
 
               <a
                   href="https://gpttherapyassist.lemonsqueezy.com/checkout/buy/3d1439e1-bbba-4fc9-8810-04cdda84ca89"
                   class="inline-block rounded-xl bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
               >
-                Start the 6-Week Programme
+                Start the six-stage visibility path
               </a>
             </div>
           </div>
@@ -1038,17 +1038,17 @@ const programmeIntro = computed(() => {
       profile.veryLowSignal ||
       profile.responseStyle === "minimal_endorsement"
   ) {
-    return "The six-week guided programme is designed for people who recognise recurring continuity breaks strongly enough to observe them in real time."
+    return "The six-stage guided path is designed for people who recognise recurring continuity breaks strongly enough to observe them in real time."
   }
 
   if (
       profile.responseStyle ===
       "low_frequency_recognition"
   ) {
-    return "The six-week guided programme continues this work through structured observation of the specific contexts where continuity begins to break."
+    return "The six-stage guided path continues this work through structured observation of the specific contexts where continuity begins to break."
   }
 
-  return "The six-week guided programme continues this work through structured observation, embodied attention practices, and continuity exercises."
+  return "The six-stage guided path continues this work through structured observation, embodied attention practices, and continuity exercises."
 })
 
 const goToProgramme = () => {

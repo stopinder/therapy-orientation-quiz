@@ -264,7 +264,7 @@
             </p>
 
             <p>
-              The six-week guided programme continues this work through:
+              The six-stage guided path continues this work through:
               embodied attention,
               self-observation,
               interruption recognition,

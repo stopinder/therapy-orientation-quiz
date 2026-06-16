@@ -279,7 +279,7 @@
         <div class="body-copy pt-2">
 
           <p>
-            The six-week programme continues this work through:
+            The six-stage visibility path continues this work through:
             reflective exercises,
             embodied attention practices,
             sensing work,
@@ -287,7 +287,7 @@
           </p>
 
           <p>
-            Each week focuses on one layer of the pattern:
+            Each stage reveals one layer of the pattern:
             interruption,
             fragmentation,
             emotional organisation,
@@ -300,32 +300,32 @@
         <div class="mt-6 grid gap-3 text-sm text-slate-700">
 
           <div class="programme-row">
-            <span>Week 1</span>
+            <span>Stage 1 — Observation</span>
             <p>Interrupting automaticity and recovering awareness</p>
           </div>
 
           <div class="programme-row">
-            <span>Week 2</span>
+            <span>Stage 2 — Sequence</span>
             <p>Attention, contradiction, and fragmentation</p>
           </div>
 
           <div class="programme-row">
-            <span>Week 3</span>
+            <span>Stage 3 — Pattern</span>
             <p>Protective organisation and emotional interruption</p>
           </div>
 
           <div class="programme-row">
-            <span>Week 4</span>
+            <span>Stage 4 — State</span>
             <p>Relational pressure and loss of self-contact</p>
           </div>
 
           <div class="programme-row">
-            <span>Week 5</span>
+            <span>Stage 5 — Function</span>
             <p>Embodied stability and grounded sensing</p>
           </div>
 
           <div class="programme-row">
-            <span>Week 6</span>
+            <span>Stage 6 — System</span>
             <p>Continuity and ordinary-life integration</p>
           </div>
 
