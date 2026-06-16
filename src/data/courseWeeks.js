@@ -8,6 +8,9 @@ export const courseWeeks = [
         subtitle:
             "Observing continuity breakdown and attentional drift.",
 
+        reflectionPrompt:
+            "Describe a moment when you intended to do one thing and ended up doing something else.",
+
         intro:
             "This stage is about noticing moments when you end up doing something different from what you intended.\n\nMaybe you meant to start work and checked email instead.\n\nMaybe you picked up your phone without thinking about it.\n\nMaybe you began one task and drifted into another.\n\nYou do not need to change anything yet.\n\nJust notice when it happens.",
 
@@ -103,6 +106,9 @@ export const courseWeeks = [
         subtitle:
             "Understanding internal pressure accumulation.",
 
+        reflectionPrompt:
+            "Describe a moment where one thing happened, then something else followed. Try to include what happened first.",
+
         intro:
             "This stage explores the accumulation of internal pressure before withdrawal, avoidance, or interruption occurs.",
 
@@ -119,6 +125,9 @@ export const courseWeeks = [
 
         subtitle:
             "Seeing what keeps reappearing across reflections.",
+
+        reflectionPrompt:
+            "Describe a recent moment that feels similar to something you have noticed before.",
 
         intro:
             "This stage shifts attention from individual events to recurrence. Rather than examining a single interruption, begin looking across several reflections and ask what appears again and again.",
@@ -157,6 +166,9 @@ export const courseWeeks = [
 
         subtitle:
             "Exploring the internal climate that precedes the pattern.",
+
+        reflectionPrompt:
+            "Describe a moment when a familiar pattern appeared, and include what state, pressure, mood, or body sensation was present beforehand.",
 
         intro:
             "This stage shifts attention to the conditions that tend to appear before a recurring sequence begins. We are looking for the emotional climate, pressure, uncertainty, and body context that set the stage for the familiar movement.",
@@ -203,6 +215,9 @@ export const courseWeeks = [
         subtitle:
             "Observing what the recurring pattern accomplishes.",
 
+        reflectionPrompt:
+            "Describe a moment when a familiar response appeared, and notice what changed immediately afterwards.",
+
         intro:
             "This stage introduces the possibility that a pattern is not a failure, but is serving a protective function—providing relief, reducing exposure, or delaying uncertainty.",
 
@@ -247,6 +262,9 @@ export const courseWeeks = [
 
         subtitle:
             "Mapping recurring responses under recurring conditions.",
+
+        reflectionPrompt:
+            "Describe a moment where more than one familiar response appeared around the same pressure, task, or relationship.",
 
         intro:
             "This stage focuses on the relationships between patterns. We observe how recurring states, sequences, and functions begin to form an internal system of protective responses.",

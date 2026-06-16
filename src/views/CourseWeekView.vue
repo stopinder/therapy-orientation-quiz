@@ -214,17 +214,9 @@
         </div>
 
         <p
-            v-if="week.number === 1"
             class="mt-4 text-base leading-7 text-slate-600"
         >
-          Describe a moment when you intended to do one thing and ended up doing something else.
-        </p>
-
-        <p
-            v-else
-            class="mt-4 text-base leading-7 text-slate-600"
-        >
-          Describe a moment related to this stage's continuity theme.
+          {{ week.reflectionPrompt }}
         </p>
 
         <textarea
