@@ -39,6 +39,9 @@
               <div class="whitespace-pre-line text-lg leading-relaxed text-slate-300">
                 {{ continuitySummary }}
               </div>
+              <p class="mt-5 text-sm leading-relaxed text-slate-500">
+                This is not a conclusion. It is a recurring sequence MindWorks is beginning to notice across recent observations.
+              </p>
             </div>
 
             <div v-else>
