@@ -9,7 +9,7 @@
           v-if="hasProgrammeAccess && lastActiveWeek"
           class="mb-6 inline-flex items-center rounded-full bg-slate-100 px-4 py-2 text-xs font-medium text-slate-600"
       >
-        Last active: Week {{ lastActiveWeek }}
+        Last active: Stage {{ lastActiveWeek }}
       </div>
 
       <div class="flex items-center justify-between">
@@ -26,7 +26,7 @@
       </div>
 
       <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
-        A structured six-week process exploring continuity,
+        A structured six-stage visibility path exploring continuity,
         fragmentation, emotional interruption, and grounded
         behavioural observation.
       </p>
@@ -46,7 +46,7 @@
         </h2>
 
         <p class="mt-4 text-lg leading-relaxed text-slate-300">
-          Full access to the complete six-week programme.
+          Full access to the complete six-stage visibility path.
           The material is designed to be moved through gradually,
           but all sections become available immediately after purchase.
         </p>
@@ -102,7 +102,7 @@
           <div>
 
             <h2 class="text-xl font-semibold">
-              Week {{ week.number }}
+              Stage {{ week.number }}
             </h2>
 
             <p class="mt-1 text-sm text-slate-500">
@@ -251,7 +251,7 @@ const buttonLabel = (weekNumber) => {
     return "Continue Forward"
   }
 
-  return "Open Week"
+  return "Open Stage"
 
 }
 

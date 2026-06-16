@@ -117,7 +117,7 @@
 
           <!-- Metadata row -->
           <p class="text-sm text-slate-500 leading-relaxed">
-            Week {{ item.week_number }}&nbsp;·&nbsp;{{ getWeekTitle(item.week_number) }}&nbsp;·&nbsp;{{ formatDate(item.created_at) }}
+            Stage {{ item.week_number }}&nbsp;·&nbsp;{{ getWeekTitle(item.week_number) }}&nbsp;·&nbsp;{{ formatDate(item.created_at) }}
           </p>
 
           <!-- Original Reflection -->
@@ -307,7 +307,7 @@ const getWeekTitle =
 
       return (
           week?.title ||
-          "Unknown Week"
+          "Unknown Stage"
       )
 
     }

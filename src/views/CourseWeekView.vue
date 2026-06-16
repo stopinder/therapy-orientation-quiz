@@ -6,7 +6,7 @@
         v-if="!week"
         class="mx-auto max-w-4xl text-slate-500"
     >
-      Week not found.
+      Stage not found.
     </div>
 
     <div
@@ -24,7 +24,7 @@
         </router-link>
 
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          Week {{ week.number }}
+          Stage {{ week.number }}
         </p>
 
         <h1
@@ -56,7 +56,7 @@
         </h2>
         <div class="mt-6 flex aspect-video items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-8 text-center">
           <p class="max-w-xs text-sm text-slate-500">
-            A short introduction from Rob explaining this week's experiment and what to look for.
+            A short introduction from Rob explaining this stage's experiment and what to look for.
           </p>
         </div>
       </section>
@@ -79,13 +79,13 @@
         </div>
       </section>
 
-      <!-- This Week's Experiment (Week 1) -->
+      <!-- This Stage's Experiment (Week 1) -->
       <section
           v-if="week.number === 1"
           class="mb-16"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
-          This Week's Experiment
+          This Stage's Experiment
         </h2>
         <div class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
           <p>Before opening email, beginning work, or starting a task:</p>
@@ -222,10 +222,10 @@
             class="mb-10 rounded-2xl border border-blue-100 bg-blue-50/50 p-6"
         >
           <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-blue-900">
-            Week 1 Arrival
+            Stage 1 Arrival
           </h3>
           <p class="text-base leading-7 text-blue-800">
-            This week, we are becoming interested in the moment where continuity changes.
+            This stage, we are becoming interested in the moment where continuity changes.
             Before you begin your reflection, take a moment to settle.
             Notice the transition from whatever you were doing before to this moment here.
           </p>
@@ -242,7 +242,7 @@
             v-else
             class="mt-4 text-base leading-7 text-slate-600"
         >
-          Describe a moment related to this week's continuity theme.
+          Describe a moment related to this stage's continuity theme.
         </p>
 
         <textarea

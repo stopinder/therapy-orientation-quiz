@@ -3,13 +3,13 @@ export const courseWeeks = [
     {
         number: 1,
 
-        title: "Recognition & Fragmentation",
+        title: "Observation",
 
         subtitle:
             "Observing continuity breakdown and attentional drift.",
 
         intro:
-            "This week is about noticing moments when you end up doing something different from what you intended.\n\nMaybe you meant to start work and checked email instead.\n\nMaybe you picked up your phone without thinking about it.\n\nMaybe you began one task and drifted into another.\n\nYou do not need to change anything yet.\n\nJust notice when it happens.",
+            "This stage is about noticing moments when you end up doing something different from what you intended.\n\nMaybe you meant to start work and checked email instead.\n\nMaybe you picked up your phone without thinking about it.\n\nMaybe you began one task and drifted into another.\n\nYou do not need to change anything yet.\n\nJust notice when it happens.",
 
         orientation: {
             title: "Why You're Here",
@@ -22,7 +22,7 @@ export const courseWeeks = [
                 "We prepare.",
                 "Often the same sequence appears again and again.",
                 "MindWorks helps you notice those patterns.",
-                "This week, you're not trying to change anything.",
+                "This stage, you're not trying to change anything.",
                 "You're simply learning to spot one moment when your attention goes somewhere you didn't expect."
             ]
         },
@@ -33,14 +33,14 @@ export const courseWeeks = [
 
             "The movement may look ordinary from the outside. You check something, prepare something, tidy something, think through one more detail, or drift into a different demand. Internally, something has broken contact.",
 
-            "This week is not about correcting that movement. It is about seeing it clearly enough that it becomes recognisable. The important moment is not the collapse afterwards. It is the earlier shift: the instant where contact weakens and another behaviour begins to organise you.",
+            "This stage is not about correcting that movement. It is about seeing it clearly enough that it becomes recognisable. The important moment is not the collapse afterwards. It is the earlier shift: the instant where contact weakens and another behaviour begins to organise you.",
 
-            "Your task this week is simple: notice the disappearance. Not the explanation. Not the story. Not the self-criticism afterwards. Just the movement from intention into fragmentation."
+            "Your task this stage is simple: notice the disappearance. Not the explanation. Not the story. Not the self-criticism afterwards. Just the movement from intention into fragmentation."
         ],
 
         bodyFocus: [
             "Observation is not only mental. When continuity changes, there is often a physical shift—a tightening, a holding of breath, or a move toward comfort.",
-            "This week, start to notice what happens in the body at the moment of departure."
+            "This stage, start to notice what happens in the body at the moment of departure."
         ],
 
         dailyPractice: [
@@ -74,7 +74,7 @@ export const courseWeeks = [
                 title: "Notice one departure",
 
                 description:
-                    "Once this week, notice a moment when you intended to do one thing and found yourself doing something else."
+                    "Once this stage, notice a moment when you intended to do one thing and found yourself doing something else."
             },
 
             {
@@ -98,13 +98,13 @@ export const courseWeeks = [
     {
         number: 2,
 
-        title: "Pressure & Avoidance",
+        title: "Sequence",
 
         subtitle:
             "Understanding internal pressure accumulation.",
 
         intro:
-            "This week explores the accumulation of internal pressure before withdrawal, avoidance, or interruption occurs.",
+            "This stage explores the accumulation of internal pressure before withdrawal, avoidance, or interruption occurs.",
 
         openingReflection: [],
 
@@ -115,18 +115,18 @@ export const courseWeeks = [
     {
         number: 3,
 
-        title: "Recurrence",
+        title: "Pattern",
 
         subtitle:
             "Seeing what keeps reappearing across reflections.",
 
         intro:
-            "This week shifts attention from individual events to recurrence. Rather than examining a single interruption, begin looking across several reflections and ask what appears again and again.",
+            "This stage shifts attention from individual events to recurrence. Rather than examining a single interruption, begin looking across several reflections and ask what appears again and again.",
 
         openingReflection: [
             "When you begin to look at reflections over time, you may notice that the same movements appear repeatedly. A specific sequence of checking, a particular shift in the body, or a familiar delay before starting—these are not isolated events. They are recurring patterns that organise your behaviour across different situations and different days.",
 
-            "The goal of this week is to see these repeated sequences as they are, without immediately trying to interpret why they happen or what they mean. Recurrence itself is the information. When you see a sequence appearing for the third or fourth time, it moves from being a random interruption to being a recognisable part of your behavioural landscape.",
+            "The goal of this stage is to see these repeated sequences as they are, without immediately trying to interpret why they happen or what they mean. Recurrence itself is the information. When you see a sequence appearing for the third or fourth time, it moves from being a random interruption to being a recognisable part of your behavioural landscape.",
 
             "Observation without interpretation allows you to stay with the facts of the movement. You are not looking for a psychological cause; you are looking for the choreography of the event. By noticing what appears again and again, you begin to see the shape of the pressure that precedes the shift, and the automaticity of the response that follows.",
 
@@ -136,7 +136,7 @@ export const courseWeeks = [
         exercises: [
             {
                 title: "Notice what repeats",
-                description: "Identify one specific movement, sensation, or thought that has appeared in multiple reflections this week."
+                description: "Identify one specific movement, sensation, or thought that has appeared in multiple reflections this stage."
             },
             {
                 title: "Compare three reflections",
@@ -153,18 +153,18 @@ export const courseWeeks = [
     {
         number: 4,
 
-        title: "Function",
+        title: "State",
 
         subtitle:
             "Exploring what recurring sequences may be doing.",
 
         intro:
-            "This week introduces the possibility that a recurring sequence is not a random error or a failure of will, but is serving a specific function. Before attempting to change a pattern, we begin by observing what it actually does.",
+            "This stage introduces the possibility that a recurring sequence is not a random error or a failure of will, but is serving a specific function. Before attempting to change a pattern, we begin by observing what it actually does.",
 
         openingReflection: [
             "When a sequence appears again and again, it is often because it is serving a function. This can be difficult to see when we are focused only on the fact that we have drifted away from our intention. We see the interruption as a problem to be solved, rather than as a movement with its own internal logic.",
 
-            "This week, we shift our attention toward the function of the sequence. We ask: What changes at the moment the pattern begins? When the intention is interrupted by a familiar delay, or when a task is replaced by a routine of checking, what happens to the internal atmosphere? Often, the movement away from the task coincides with a subtle shift in pressure or a momentary relief from a particular kind of activation.",
+            "This stage, we shift our attention toward the function of the sequence. We ask: What changes at the moment the pattern begins? When the intention is interrupted by a familiar delay, or when a task is replaced by a routine of checking, what happens to the internal atmosphere? Often, the movement away from the task coincides with a subtle shift in pressure or a momentary relief from a particular kind of activation.",
 
             "By observing the sequence as a functional movement, we move away from judgment and toward a more precise recognition. We are not looking for a psychological explanation or a deep-seated cause. We are simply noticing the immediate result of the behaviour. If checking email always happens exactly when a difficult task begins to feel heavy, then the checking is serving a function in relation to that heaviness.",
 
@@ -172,7 +172,7 @@ export const courseWeeks = [
 
             "The goal is not to stop the movement yet, but to become interested in it. What changes when the sequence unfolds? What becomes less immediate? What feels reduced, softened, or postponed? Staying with these questions without rushing to answer them creates a different kind of relationship with the pattern. You are no longer just a victim of the sequence; you are its observer.",
 
-            "A recurring sequence may not be accidental. Before attempting to change it, become interested in what function it might serve. This week, stay close to that question and observe what becomes visible."
+            "A recurring sequence may not be accidental. Before attempting to change it, become interested in what function it might serve. This stage, stay close to that question and observe what becomes visible."
         ],
 
         bodyFocus: [
@@ -200,13 +200,13 @@ export const courseWeeks = [
     {
         number: 5,
 
-        title: "Before the Sequence",
+        title: "Function",
 
         subtitle:
             "Observing what appears before recurring sequences begin.",
 
         intro:
-            "This week turns attention toward the earliest moments of a recurring sequence. What often feels sudden may reveal itself as a gradual shift when observed more closely.",
+            "This stage turns attention toward the earliest moments of a recurring sequence. What often feels sudden may reveal itself as a gradual shift when observed more closely.",
 
         openingReflection: [
             "A recurring sequence often feels sudden. You are working, and then you are checking your phone. You are in a conversation, and then you have withdrawn. It can feel as if the behavior simply arrives, fully formed, without warning or preparation.",
@@ -249,13 +249,13 @@ export const courseWeeks = [
     {
         number: 6,
 
-        title: "Earlier Recognition",
+        title: "System",
 
         subtitle:
             "Observing what changes when recurring sequences are recognised sooner.",
 
         intro:
-            "This week focuses on the shift in experience that occurs when a recurring sequence is noticed in its earlier moments. Recognition itself becomes the meaningful change.",
+            "This stage focuses on the shift in experience that occurs when a recurring sequence is noticed in its earlier moments. Recognition itself becomes the meaningful change.",
 
         openingReflection: [
             "As you continue to observe the earliest moments of a sequence, you may notice that the sequence still occurs. The familiar movement away from continuity, the shift in attention, or the physical tightening may still arrive. Observation does not immediately stop the pattern from unfolding.",

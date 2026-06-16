@@ -7,7 +7,7 @@
       <section class="pt-8 max-w-3xl space-y-5">
 
         <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
-          Six-Week Guided Programme
+          Six-Stage Visibility Path
         </p>
 
         <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-slate-900">
@@ -18,7 +18,7 @@
         <div class="space-y-4 text-[1.03rem] leading-[1.85] text-slate-700 max-w-2xl">
 
           <p>
-            Structured weekly practices combining psychological reflection,
+            Structured stage-based practices combining psychological reflection,
             embodied attention, and grounded self-observation.
           </p>
 
@@ -116,7 +116,7 @@
         <div class="space-y-3 max-w-3xl">
 
           <p class="section-label">
-            Weekly structure
+            Stage-based structure
           </p>
 
           <h2 class="section-title">
@@ -181,7 +181,7 @@
           </p>
 
           <p>
-            Each week includes preparation exercises, body sensing practices,
+            Each stage includes preparation exercises, body sensing practices,
             reflective prompts, and ordinary-life integration exercises.
           </p>
 
@@ -328,38 +328,38 @@ const enterProgramme = () => {
 
 const weeks = [
   {
-    week: "Week 1",
-    title: "Interrupting Automaticity",
+    week: "Stage 1",
+    title: "Observation",
     description:
         "Recognising how quickly awareness collapses into mechanical functioning and emotional reaction."
   },
   {
-    week: "Week 2",
-    title: "Attention & Fragmentation",
+    week: "Stage 2",
+    title: "Sequence",
     description:
         "Observing contradiction, divided intention, and the instability of sustained attention."
   },
   {
-    week: "Week 3",
-    title: "Protective Organisation",
+    week: "Stage 3",
+    title: "Pattern",
     description:
         "Understanding how emotional avoidance and protective patterns shape behaviour."
   },
   {
-    week: "Week 4",
-    title: "Relationship & Self-Contact",
+    week: "Stage 4",
+    title: "State",
     description:
         "Noticing how relational pressure alters attention, presence, and emotional stability."
   },
   {
-    week: "Week 5",
-    title: "Embodied Stability",
+    week: "Stage 5",
+    title: "Function",
     description:
         "Developing greater grounding through body sensing and ordinary-life awareness practices."
   },
   {
-    week: "Week 6",
-    title: "Continuity",
+    week: "Stage 6",
+    title: "System",
     description:
         "Moving toward a more stable relationship with attention, emotion, and everyday functioning."
   }
