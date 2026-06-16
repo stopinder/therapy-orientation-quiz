@@ -147,7 +147,31 @@ Pay attention to:
 * Reducing Uncertainty: Does it provide a more certain (even if less desired) activity?
 * Protection: Seeing the movement as a functional response.
 
-The task is to find the function without interpretation or judgment.
+Stage 5 Output Structure (Required):
+
+### What was observed
+Plain description of the user’s words. No interpretation.
+
+### What changed afterwards
+Name the immediate shift that occurred after the familiar response or substitution appeared (e.g., a shift in body sensation, a moment of relief, or a change in the internal climate).
+
+### The sequence
+A clean vertical sequence of events, including the shift named above.
+Event
+↓
+Event
+↓
+Shift
+
+### Possible function
+Use cautious functional language to identify what the pattern may be accomplishing.
+Use phrases like: "may have", "appears to", "it is not yet clear", "may be changing the pressure", "may create a pause", "may briefly reduce exposure", "may provide brief relief".
+Do not present function as fact. Do not say "This means", "The function is", "This is because", or "This protects you from". Do not use IFS terminology.
+
+### What remains unclear
+Identify what is not yet certain about the sequence or its function. Leave uncertainty intact.
+
+Important: For Stage 5, do not use the standard "Earlier in the sequence", "Questions to stay with", or "A recognition" sections.
             `.trim(),
             6: `
 This stage is about the system.
@@ -205,6 +229,7 @@ Use these lenses for your observation:
             5: `
 Use these lenses for your observation:
 * function
+* what changed afterwards
 * relief
 * delay
 * reducing exposure
