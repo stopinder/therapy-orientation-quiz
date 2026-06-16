@@ -208,12 +208,19 @@ Do not use IFS terminology (parts, managers, exiles, etc.).
 
 ### The sequence
 A clean vertical sequence of events.
-Include body observations near the pressure point or triggering condition where they appeared, not at the end.
-Event
+Do not append body observations to the end of the sequence by default. 
+If the user gives body observations without specific timing, place them near the emotional/state condition they seem to accompany (such as the pressure point or triggering condition), not at the end.
+
+Example:
+Pressure and fear before meeting
 ↓
-Event
+Tightness in chest / shallow breathing / tense shoulders
 ↓
-Event
+Checking messages
+↓
+Reorganising notes
+↓
+Delay in joining
 
 ### What remains unclear
 Identify what is not yet certain about the relationship between these responses. Leave uncertainty intact.
