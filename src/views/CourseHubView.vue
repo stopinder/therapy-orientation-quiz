@@ -14,7 +14,7 @@
 
       <div class="flex items-center justify-between">
         <h1 class="text-4xl font-semibold tracking-tight">
-          Your Programme
+          Your Visibility Path
         </h1>
 
         <router-link
@@ -26,9 +26,8 @@
       </div>
 
       <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
-        A structured six-stage visibility path exploring continuity,
-        fragmentation, emotional interruption, and grounded
-        behavioural observation.
+        A six-stage path for seeing interruptions, sequences, patterns,
+        states, functions, and systems more clearly over time.
       </p>
 
     </div>
@@ -42,7 +41,7 @@
       <div class="max-w-3xl">
 
         <h2 class="text-3xl font-semibold">
-          MindWorks Programme
+          MindWorks Visibility Path
         </h2>
 
         <p class="mt-4 text-lg leading-relaxed text-slate-300">
