@@ -114,7 +114,7 @@
 
       <!-- Continuity Observation (Evidence-Based Recurrence) -->
       <section
-          v-if="topPattern && topPattern.examples.length >= 2"
+          v-if="week.number >= 3 && topPattern && topPattern.examples.length >= 2"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -148,7 +148,7 @@
 
       <!-- Phase 1 Sequence Surface Prototype -->
       <section
-          v-if="topPattern && topPattern.examples.length >= 2"
+          v-if="week.number >= 2 && topPattern && topPattern.examples.length >= 2"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">

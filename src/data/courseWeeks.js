@@ -156,42 +156,40 @@ export const courseWeeks = [
         title: "State",
 
         subtitle:
-            "Exploring what recurring sequences may be doing.",
+            "Exploring the internal climate that precedes the pattern.",
 
         intro:
-            "This stage introduces the possibility that a recurring sequence is not a random error or a failure of will, but is serving a specific function. Before attempting to change a pattern, we begin by observing what it actually does.",
+            "This stage shifts attention to the conditions that tend to appear before a recurring sequence begins. We are looking for the emotional climate, pressure, uncertainty, and body context that set the stage for the familiar movement.",
 
         openingReflection: [
-            "When a sequence appears again and again, it is often because it is serving a function. This can be difficult to see when we are focused only on the fact that we have drifted away from our intention. We see the interruption as a problem to be solved, rather than as a movement with its own internal logic.",
+            "A recurring sequence often feels sudden, but it usually has an arrival. Before the visible behavior—the checking, the delay, or the substitution—something in the internal environment is already shifting.",
 
-            "This stage, we shift our attention toward the function of the sequence. We ask: What changes at the moment the pattern begins? When the intention is interrupted by a familiar delay, or when a task is replaced by a routine of checking, what happens to the internal atmosphere? Often, the movement away from the task coincides with a subtle shift in pressure or a momentary relief from a particular kind of activation.",
+            "This stage is about noticing that preceding state. It may be a sense of pressure, a quiet uncertainty, a feeling of exposure, or a specific body context like a tightening in the chest or a restlessness in the limbs. These are not just random sensations; they are the climate in which the pattern thrives.",
 
-            "By observing the sequence as a functional movement, we move away from judgment and toward a more precise recognition. We are not looking for a psychological explanation or a deep-seated cause. We are simply noticing the immediate result of the behaviour. If checking email always happens exactly when a difficult task begins to feel heavy, then the checking is serving a function in relation to that heaviness.",
+            "By observing the state that precedes the movement, we begin to see the pattern as a response to a set of conditions, rather than as an isolated error. The movement away from continuity is a process that has its own start, its own weight, and its own momentum.",
 
-            "This is not about justifying the behaviour or deciding it is 'good'. It is about seeing the choreography of the event clearly enough to understand how it is organised. When you see the function, the sequence begins to lose its status as an 'accident'. It becomes a recognisable, predictable response to a specific set of conditions.",
+            "These earlier changes are not hidden, but they are often brief and understated. By staying with the beginning, you may find that the transition is more gradual than it first appeared. Attention may narrow, pressure may increase, or the body may begin to shift before the sequence unfolds.",
 
-            "The goal is not to stop the movement yet, but to become interested in it. What changes when the sequence unfolds? What becomes less immediate? What feels reduced, softened, or postponed? Staying with these questions without rushing to answer them creates a different kind of relationship with the pattern. You are no longer just a victim of the sequence; you are its observer.",
-
-            "A recurring sequence may not be accidental. Before attempting to change it, become interested in what function it might serve. This stage, stay close to that question and observe what becomes visible."
+            "The sequence has an arrival."
         ],
 
         bodyFocus: [
-            "Function is often felt as a physical transition. Notice the sensation in the body at the moment the sequence begins—is there a release of tension, a softening, or a sudden shift in energy?",
-            "Observe whether the recurring pattern provides a temporary sense of physical ease or a momentary discharge of pressure."
+            "The body often notices a state before the mind does. Observe whether any physical changes appear before the familiar movement begins.",
+            "Rather than looking for dramatic signals, become interested in small shifts: tightening, restlessness, urgency, or changes in the emotional climate."
         ],
 
         exercises: [
             {
-                title: "Notice what changes",
-                description: "At the moment a familiar sequence begins, notice what changes in your internal environment. What sensation or pressure is present just before the shift?"
+                title: "Notice the first shift",
+                description: "Observe the earliest moment where continuity begins to change, before the familiar sequence becomes obvious."
             },
             {
-                title: "Notice what is relieved",
-                description: "Observe if the recurring pattern provides a momentary relief from the task or from a specific feeling of activation."
+                title: "Notice the body context",
+                description: "Observe what appears physically—pressure, tension, or energy—before the sequence unfolds."
             },
             {
-                title: "Stay with the question",
-                description: "Ask yourself: 'What function might this sequence serve?' Do not look for a quick answer; simply stay with the question as you observe the pattern."
+                title: "Stay with the beginning",
+                description: "When a recurring sequence appears, become interested in the climate that preceded it rather than its outcome."
             }
         ]
 
@@ -203,44 +201,40 @@ export const courseWeeks = [
         title: "Function",
 
         subtitle:
-            "Observing what appears before recurring sequences begin.",
+            "Observing what the recurring pattern accomplishes.",
 
         intro:
-            "This stage turns attention toward the earliest moments of a recurring sequence. What often feels sudden may reveal itself as a gradual shift when observed more closely.",
+            "This stage introduces the possibility that a pattern is not a failure, but is serving a protective function—providing relief, reducing exposure, or delaying uncertainty.",
 
         openingReflection: [
-            "A recurring sequence often feels sudden. You are working, and then you are checking your phone. You are in a conversation, and then you have withdrawn. It can feel as if the behavior simply arrives, fully formed, without warning or preparation.",
+            "When a sequence appears again and again, it is often because it is serving a function. This can be difficult to see when we are focused only on the fact that we have drifted away from our intention. We see the interruption as a problem to be solved, rather than as a movement with its own internal logic.",
 
-            "When you begin to look more closely at these moments, the sense of suddenness may start to change. A pattern that seemed to appear from nowhere might actually have a beginning that you have not yet observed. There is often a subtle shift in the atmosphere or a quiet change in direction before the visible behavior begins to organize you.",
+            "This stage, we shift our attention toward what the pattern accomplishes. When the intention is interrupted by a familiar delay, or when a task is replaced by a routine of checking, what changes? Often, the movement coincides with a momentary relief from a particular kind of activation or a reduction in exposure to uncertainty.",
 
-            "Something is already changing before the visible behaviour begins. It may be a momentary suspension of your current task, a slight drift in your focus, or a small, internal movement away from the present demand. These are the earlier moments of the pattern that often go unnoticed because attention is focused on the interruption itself.",
+            "By observing the sequence as a functional movement, we move away from judgment and toward a more precise recognition. We are simply noticing the immediate result of the behaviour. If checking email always happens exactly when a difficult task begins to feel heavy, then the checking is serving a function in relation to that heaviness.",
 
-            "These earlier changes can often be observed. They are not hidden, but they are often brief and understated. By staying with the beginning, you may find that the transition is more gradual than it first appeared. The movement away from continuity is a process that has its own start, its own weight, and its own momentum.",
+            "This is not about justifying the behaviour. It is about seeing the choreography of the event clearly enough to understand how it is organised. When you see the function, the sequence begins to lose its status as an 'accident'. It becomes a recognisable, predictable, and protective response to a specific set of conditions.",
 
-            "The earliest moments are usually subtle. They do not announce themselves with the same force as the sequence itself. Instead, they appear as a quiet narrowing of scope, a minor loss of presence, or a soft departure from the original intention.",
-
-            "Attention may narrow, pressure may increase, or the body may begin to shift before the sequence unfolds. A subtle tightening in the shoulders, a momentary holding of the breath, or a sudden urgency to move can all signal the approach of the familiar movement. These shifts occur in the space before the behavior becomes obvious.",
-
-            "The sequence has an arrival."
+            "The goal is not to stop the movement yet, but to become interested in what it does. What changes when the sequence unfolds? What feels reduced, softened, or postponed? Recognition of function is the next shift in visibility."
         ],
 
         bodyFocus: [
-            "The body often notices a sequence before the mind does. Observe whether any physical changes appear before the familiar movement begins.",
-            "Rather than looking for dramatic signals, become interested in small shifts: tightening, restlessness, urgency, holding, or changes in attention."
+            "Function is often felt as a physical transition. Notice the sensation in the body at the moment the sequence begins—is there a release of tension, a softening, or a sudden shift in energy?",
+            "Observe whether the recurring pattern provides a temporary sense of physical ease or a momentary discharge of pressure."
         ],
 
         exercises: [
             {
-                title: "Notice the first shift",
-                description: "Observe the earliest moment where continuity begins to change, before the familiar sequence becomes obvious."
+                title: "Notice what changes",
+                description: "At the moment a familiar sequence begins, notice what changes in your internal environment. What sensation or pressure is reduced?"
             },
             {
-                title: "Notice the body",
-                description: "Observe what appears physically before the sequence unfolds."
+                title: "Notice the relief",
+                description: "Observe if the recurring pattern provides a momentary relief from the task or from a specific feeling of activation."
             },
             {
-                title: "Stay with the beginning",
-                description: "When a recurring sequence appears, become interested in its first moments rather than its outcome."
+                title: "Stay with the question",
+                description: "Ask yourself: 'What function might this sequence serve?' Do not look for an explanation; simply observe the result of the movement."
             }
         ]
 
@@ -252,46 +246,42 @@ export const courseWeeks = [
         title: "System",
 
         subtitle:
-            "Observing what changes when recurring sequences are recognised sooner.",
+            "Mapping recurring responses under recurring conditions.",
 
         intro:
-            "This stage focuses on the shift in experience that occurs when a recurring sequence is noticed in its earlier moments. Recognition itself becomes the meaningful change.",
+            "This stage focuses on the relationships between patterns. We observe how recurring states, sequences, and functions begin to form an internal system of protective responses.",
 
         openingReflection: [
-            "As you continue to observe the earliest moments of a sequence, you may notice that the sequence still occurs. The familiar movement away from continuity, the shift in attention, or the physical tightening may still arrive. Observation does not immediately stop the pattern from unfolding.",
+            "As you look across your accumulated observations, you may begin to see that these patterns do not exist in isolation. They form a system.",
 
-            "However, recognition may begin to arrive earlier than it once did. Instead of noticing the sequence only after it has completed, or when you are already deep within it, you may find yourself seeing it as it begins. You are present for its arrival.",
+            "A recurring condition—a specific kind of pressure, uncertainty, or emotional climate—tends to trigger a recurring response. These are not random accidents; they are part of a coordinated internal system that manages exposure and protects continuity in its own way.",
 
-            "Earlier recognition changes the experience of the sequence. When you see a pattern starting, it loses some of its automaticity. It is no longer an invisible force that organises you from behind; it is something that is happening in front of your attention.",
+            "This stage is about mapping those relationships. We are not looking for a psychological theory or an abstract explanation. We are looking for the actual, observable links between the climate you inhabit and the movements you make.",
 
-            "The sequence feels different when it is recognised. Even if the behavior continues to its usual conclusion, the fact that it is being watched changes its quality. The sense of being 'swept away' begins to be replaced by the act of seeing.",
+            "By seeing these recurring protective responses as they appear under particular conditions, the system itself becomes visible. You may notice that one pattern protects against a certain state, while another manages a different kind of pressure.",
 
-            "As recognition moves earlier, a small space may appear between the beginning of the sequence and its completion. This is not necessarily a space where you choose to do something else, but a space where observation remains active. You are watching the sequence happen while it is happening.",
+            "Recognition shifts from seeing a single pattern to seeing the map of how you respond to the world. The sequence is no longer something that simply happens to you; it is a recognisable part of an internal system you are beginning to see.",
 
-            "Continuity is changing. This change is not found in the disappearance of the sequence, but in the presence of recognition. The sequence is no longer something that simply happens to you; it is something you are beginning to see.",
-
-            "This shift from 'it happens to me' toward 'I am beginning to see it happen' is the core of earlier recognition. Staying with this seeing, without needing to change what is seen, allows for a different relationship with recurring patterns.",
-
-            "Earlier recognition is itself a meaningful change. It marks the moment where the observer becomes as stable as the sequence being observed."
+            "This shift from 'it happens to me' toward 'I am beginning to see the system' is the final layer of visibility. Staying with this seeing allows for a different relationship with your recurring responses. Recognition is the first shift in the system."
         ],
 
         bodyFocus: [
-            "Earlier recognition is often first noticed in the body. Signals that once appeared unnoticed may now become visible as the sequence begins.",
-            "Observe what changes when these signals are recognised. The goal is not to alter them, but to notice their appearance sooner."
+            "Systems are often felt as recurring physical responses to recurring conditions. Observe how the body prepares for or responds to specific states.",
+            "The goal is not to alter the system, but to map the relationships between internal conditions and physical responses."
         ],
 
         exercises: [
             {
-                title: "Notice it sooner",
-                description: "Observe whether recognition arrives earlier than it once did."
+                title: "Map the relationship",
+                description: "Identify one recurring condition and the specific protective response that tends to follow it."
             },
             {
-                title: "Notice the space",
-                description: "Observe whether any space appears between recognising the sequence and continuing it."
+                title: "Notice the coordination",
+                description: "Observe how different patterns may work together to manage pressure or uncertainty."
             },
             {
-                title: "Stay with recognition",
-                description: "Rather than rushing to act, remain with the moment of recognition itself."
+                title: "Stay with the system",
+                description: "Rather than trying to change the system, remain with the act of seeing its recurring relationships."
             }
         ]
 
