@@ -414,7 +414,8 @@
 import {
   computed,
   onMounted,
-  ref
+  ref,
+  watch
 } from "vue"
 
 import { useAuthStore }
@@ -568,6 +569,8 @@ const formatDate =
 const loadReflections =
     async () => {
 
+      console.log("ReflectionHistory auth user id:", auth.user?.id)
+
       try {
 
         if (
@@ -575,6 +578,8 @@ const loadReflections =
         ) {
           return
         }
+
+        console.log("Loading reflection history for:", auth.user?.id)
 
         const result = await fetch(
             "/api/getReflectionHistory",
@@ -598,6 +603,8 @@ const loadReflections =
         const data =
             await result.json()
 
+        console.log("Reflections received:", data.reflections?.length || 0)
+
         reflections.value =
             data.reflections || []
 
@@ -617,12 +624,35 @@ const loadReflections =
 
     }
 
+watch(
+  () => auth.user?.id,
+  (userId) => {
+    if (userId && reflections.value.length === 0) {
+      loadReflections()
+    }
+  },
+  { immediate: true }
+)
+
 onMounted(async () => {
 
-  await Promise.all([
-    loadReflections(),
-    fetchContinuitySummary()
-  ])
+  if (auth.user?.id) {
+    await Promise.all([
+      loadReflections(),
+      fetchContinuitySummary()
+    ])
+  } else {
+    // Summary also needs auth.user.id
+    watch(
+      () => auth.user?.id,
+      (userId) => {
+        if (userId) {
+          fetchContinuitySummary()
+        }
+      },
+      { once: true }
+    )
+  }
 
 })
 </script>

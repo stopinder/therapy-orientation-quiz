@@ -536,11 +536,16 @@ const fetchReflectionsHistory = async () => {
     })
 
     const data = await result.json()
+    
+    console.log("REFLECTIONS RECEIVED FROM API:", data?.reflections?.length || 0)
+    
     if (data?.reflections) {
-      // Filter for current week
-      reflectionsHistory.value = data.reflections.filter(
-          r => r.week_number === weekNumber.value
-      )
+      reflectionsHistory.value = Array.isArray(data.reflections)
+          ? data.reflections
+          : []
+          
+      console.log("REFLECTIONS ASSIGNED TO HISTORY:", reflectionsHistory.value.length)
+      console.log("COMPUTED RECENT THEMES:", JSON.stringify(recentThemes.value, null, 2))
     }
   } catch (err) {
     console.error("HISTORY ERROR:", err)
