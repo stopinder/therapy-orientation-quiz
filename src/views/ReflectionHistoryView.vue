@@ -103,13 +103,13 @@
 
         <div
             v-if="!isArchiveCollapsed"
-            class="space-y-8"
+            class="space-y-3"
         >
 
           <section
               v-for="item in visibleArchiveReflections"
               :key="item.id"
-              class="rounded-2xl border border-slate-200 bg-white/80 p-5 shadow-sm"
+              class="rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm"
           >
 
           <!-- Metadata row -->
@@ -118,7 +118,7 @@
           </p>
 
           <!-- Original Reflection -->
-          <div class="mt-4">
+          <div class="mt-3">
             <h3 class="text-xs font-semibold uppercase tracking-wide text-slate-400">
               Original observation
             </h3>
@@ -128,7 +128,7 @@
           </div>
 
           <!-- AI Reflection Collapsible -->
-          <details class="group mt-4">
+          <details class="group mt-3">
             <summary class="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-open:rotate-180">
                 <path d="m6 9 6 6 6-6"/>
