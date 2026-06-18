@@ -10,22 +10,19 @@
         </p>
 
         <h1 class="text-3xl md:text-[2.45rem] font-medium tracking-[-0.025em] text-slate-900 leading-[1.12]">
-          A structured reflection on continuity,
-          emotional load, and interrupted attention.
+          A six-stage reflection path for seeing interruptions,
+          patterns, states, functions, and systems more clearly.
         </h1>
 
         <div class="space-y-4 text-[1.02rem] leading-[1.9] text-slate-700">
 
           <p>
-            MindWorks is designed for people who repeatedly lose continuity:
-            beginning clearly, drifting into automaticity,
-            and returning later with frustration, pressure, or self-criticism.
+            MindWorks is for people who often begin with clear intention,
+            drift into something else, and only notice afterwards that continuity was lost.
           </p>
 
           <p>
-            It combines behavioural reflection,
-            embodied attention,
-            and structured self-observation.
+            It combines behavioural reflection, body awareness, and structured self-observation.
           </p>
 
         </div>
@@ -108,23 +105,15 @@
         <div class="body-copy">
 
           <p>
-            MindWorks is not a diagnostic assessment,
-            productivity system,
-            or self-improvement programme.
+            MindWorks is not a diagnostic assessment, productivity system, or self-improvement programme.
           </p>
 
           <p>
-            It is a structured attempt to observe how interruption,
-            fragmentation,
-            avoidance,
-            emotional overwhelm,
-            and internal contradiction operate in ordinary life.
+            It is a structured reflection environment for observing interruptions, sequences, recurring patterns, internal states, possible functions, and wider systems of response.
           </p>
 
           <p>
-            The emphasis is recognition:
-            becoming more precise about what actually happens internally,
-            rather than reducing experience to labels or identity categories.
+            The emphasis is recognition: seeing more clearly what actually happens, before trying to explain or change it.
           </p>
 
         </div>
@@ -189,11 +178,7 @@
         <div class="body-copy">
 
           <p>
-            The work draws from Internal Family Systems,
-            embodied attention practices,
-            trauma-informed reflection,
-            interpersonal nursing theory,
-            and long-term observation-based approaches to awareness.
+            The work draws from psychotherapy, embodied attention practices, trauma-informed reflection, interpersonal nursing theory, and long-term observation-based approaches to awareness.
           </p>
 
           <p>
@@ -279,21 +264,21 @@
         <div class="body-copy pt-2">
 
           <p>
-            The six-stage visibility path continues this work through:
-            reflective exercises,
-            embodied attention practices,
-            sensing work,
-            and structured observation in ordinary life.
+            The six-stage visibility path moves gradually through observation, sequence, pattern, state, function, and system.
           </p>
 
           <p>
-            Each stage reveals one layer of the pattern:
-            interruption,
-            fragmentation,
-            emotional organisation,
-            protective reactions,
-            and continuity.
+            Each stage asks a different question:
           </p>
+
+          <ul class="space-y-1 list-none">
+            <li>What happened?</li>
+            <li>What happened first?</li>
+            <li>What keeps repeating?</li>
+            <li>What condition came before the pattern?</li>
+            <li>What might the pattern be doing?</li>
+            <li>How do recurring responses relate to one another?</li>
+          </ul>
 
         </div>
 
@@ -301,32 +286,32 @@
 
           <div class="programme-row">
             <span>Stage 1 — Observation</span>
-            <p>Interrupting automaticity and recovering awareness</p>
+            <p>One moment becomes visible.</p>
           </div>
 
           <div class="programme-row">
             <span>Stage 2 — Sequence</span>
-            <p>Attention, contradiction, and fragmentation</p>
+            <p>The order of events becomes visible.</p>
           </div>
 
           <div class="programme-row">
             <span>Stage 3 — Pattern</span>
-            <p>Protective organisation and emotional interruption</p>
+            <p>What keeps repeating becomes visible.</p>
           </div>
 
           <div class="programme-row">
             <span>Stage 4 — State</span>
-            <p>Relational pressure and loss of self-contact</p>
+            <p>The condition before the pattern becomes visible.</p>
           </div>
 
           <div class="programme-row">
             <span>Stage 5 — Function</span>
-            <p>Embodied stability and grounded sensing</p>
+            <p>What the pattern may be doing becomes visible.</p>
           </div>
 
           <div class="programme-row">
             <span>Stage 6 — System</span>
-            <p>Continuity and ordinary-life integration</p>
+            <p>Relationships between recurring responses become visible.</p>
           </div>
 
         </div>
@@ -363,11 +348,7 @@
           </p>
 
           <p>
-            The work combines psychotherapy,
-            embodied attention practice,
-            Internal Family Systems,
-            interpersonal nursing theory,
-            and long-term observation-based approaches to awareness.
+            The work combines psychotherapy, embodied attention practice, interpersonal nursing theory, trauma-informed reflection, and long-term observation-based approaches to awareness.
           </p>
 
           <p>
