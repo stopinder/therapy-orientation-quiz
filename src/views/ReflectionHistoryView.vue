@@ -106,7 +106,7 @@
             v-if="!isArchiveCollapsed"
             class="space-y-3"
         >
-          <p class="px-2 text-sm text-slate-500">
+          <p class="text-xs text-slate-500 mb-4">
             Showing latest 10 observations
           </p>
 
@@ -180,15 +180,6 @@ const isArchiveCollapsed = ref(true)
 
 const visibleArchiveReflections = computed(() => {
   return reflections.value.slice(0, 10)
-})
-
-const archivePreviewLabel = computed(() => {
-  const total = reflections.value.length
-  const visible = visibleArchiveReflections.value.length
-
-  return total > visible
-    ? `showing ${visible} of ${total} reflections`
-    : `${total} reflections`
 })
 
 const auth =
