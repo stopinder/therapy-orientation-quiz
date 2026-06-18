@@ -9,17 +9,15 @@
       <div class="mb-14">
 
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          Continuity History
+          Visibility Path Summary
         </p>
 
         <h1 class="text-4xl font-semibold tracking-tight text-slate-950">
-          Reflection Timeline
+          Accumulated Observations
         </h1>
 
         <p class="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">
-          A longitudinal view of recurring behavioural themes,
-          interruption patterns, continuity shifts, and reflective
-          observations across the programme.
+          MindWorks looks across your reflections to show what is becoming visible over time.
         </p>
 
       </div>
@@ -29,7 +27,7 @@
         <div class="overflow-hidden rounded-[2.5rem] border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl">
           <div class="max-w-3xl">
             <p class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
-              MindWorks Discovery
+              Visibility Summary
             </p>
 
             <div v-if="continuitySummary">
@@ -85,7 +83,7 @@
             class="group flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-6 transition-all hover:bg-slate-50 shadow-sm"
         >
           <span class="text-lg font-semibold text-slate-900">
-            View Recent Reflection Archive ({{ archivePreviewLabel }})
+            View Accumulated Observations ({{ archivePreviewLabel }})
           </span>
           <svg
               xmlns="http://www.w3.org/2000/svg"

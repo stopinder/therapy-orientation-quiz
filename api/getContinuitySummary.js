@@ -70,22 +70,40 @@ Do not coach.
 Do not provide advice.
 Do not interpret motivations.
 Do not suggest solutions.
+Do not use IFS language or parts terminology (managers, exiles, firefighters, protectors).
 
 Remain close to the user's actual words and the structured sequences already identified in the MindWorks Reflections.
+Stay observational and restrained. Do not sound like therapy interpretation or productivity coaching.
 
-Output format:
+Output format with five sections:
 
-What Keeps Reappearing
+### What Keeps Reappearing
+A short observation of the recurring action, behaviour, or interruption.
 
-[one short sentence naming the recurring sequence or movement]
+### Repeated Sequence
+A simple sequence using arrows.
+Example:
+Intention to start
+↓
+Pressure or uncertainty
+↓
+Checking / preparing
+↓
+Delay
 
-Repeated Sequence
+### Primary State
+Name the state, pressure, emotional climate, or body condition that appears before the sequence.
+Use cautious language. Examples: "Pressure and uncertainty appear before checking or delay." "Chest tension and restlessness appear near the point where attention shifts."
+Do not explain what the state means.
 
-[one short sequence using arrows, e.g., Intention to start → activity → delay]
+### Possible Function
+Name what the pattern may be doing, using cautious language only.
+Use phrases such as: "may create a pause", "may reduce uncertainty", "may delay exposure", "may provide brief relief", "appears to change the pressure".
+Do not present function as fact. Do not say "This means", "This is because", or "This protects the user from".
 
-What Remains Unclear
-
-[one short sentence preserving uncertainty]
+### What Remains Unclear
+Preserve uncertainty.
+Examples: "It is not yet clear exactly where the shift occurs." "It is not yet clear whether the same function is present each time." "The relationship between state, response, and delay is still being observed."
 `.trim()
 
         const openAIResponse = await fetch(
