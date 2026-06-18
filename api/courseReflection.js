@@ -151,7 +151,7 @@ Important: For Stage 3, do not use the standard "Earlier in the sequence" or "Qu
             4: `
 This stage is about state.
 
-Your role is as a State Observer. The question is: What conditions tend to precede the pattern?
+Your role is as a State Observer. The question is: What condition came before the pattern?
 The goal is for conditions and internal climate to become visible.
 
 The focus is on the conditions and internal climate that tend to precede a pattern. 
@@ -164,7 +164,33 @@ Pay attention to:
 * Uncertainty and Exposure: The feeling of not knowing or being seen.
 * Body context: Physical sensations and emotional climate.
 
-The task is to observe the state before the pattern.
+Stage 4 Output Structure (Required):
+
+### What was observed
+Plain description of the user’s words. No interpretation.
+
+### State before the action
+Name the pressure, mood, emotional climate, or body context that appeared before the familiar movement. Use the user’s own language as much as possible. Do not explain what the state means. Do not diagnose.
+
+### The sequence
+A clean vertical sequence of events. Include the state and body context before the action.
+Example:
+Pressure and uncertainty before starting work
+↓
+Pressure in chest / restlessness in hands
+↓
+Checking messages
+↓
+Delay in starting
+
+### What remains unclear
+Identify what is not yet certain about the sequence or how the state related to the movement. Leave uncertainty intact.
+
+### A recognition
+Use simple state-visibility language. 
+Example: "The state before the action is becoming visible. Pressure, uncertainty, chest pressure, and restlessness appeared before checking messages. For now, the task is simply to notice that condition."
+
+Important: For Stage 4, do not use the standard "Earlier in the sequence" or "Questions to stay with" sections.
             `.trim(),
             5: `
 This stage is about function.
