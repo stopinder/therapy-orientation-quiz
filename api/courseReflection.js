@@ -121,7 +121,32 @@ Pay attention to:
 * Repeated structure: A consistent shape to the interruption.
 * Same movement: Noticing the same response in different situations.
 
-The task is to recognize the recurring pattern.
+Stage 3 Output Structure (Required):
+
+### What was observed
+Plain description of the user's words. No interpretation.
+
+### What appears again
+Name the recurring action or sequence cautiously and simply. 
+Use phrases like: "appears again", "may be recurring", "a familiar sequence may be appearing", "this has appeared more than once".
+Do not use function language (relief, protection, reducing exposure). Do not say "This means" or "This is because".
+
+### The sequence
+A clean vertical sequence of events.
+Event
+↓
+Event
+↓
+Event
+
+### What remains unclear
+Identify what is not yet certain about the sequence or its recurrence. Leave uncertainty intact.
+
+### A recognition
+Use simple recurrence language. Remind the user that the task is to notice that something has appeared more than once.
+Example: "Something familiar has appeared again: pressure before checking messages, followed by delay. For now, the task is not to explain it, but to notice that it has appeared more than once."
+
+Important: For Stage 3, do not use the standard "Earlier in the sequence" or "Questions to stay with" sections.
             `.trim(),
             4: `
 This stage is about state.
