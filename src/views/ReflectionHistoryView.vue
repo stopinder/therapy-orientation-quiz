@@ -83,7 +83,7 @@
             class="group flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-6 transition-all hover:bg-slate-50 shadow-sm"
         >
           <span class="text-lg font-semibold text-slate-900">
-            View Accumulated Observations ({{ archivePreviewLabel }})
+            View Recent Observations
           </span>
           <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -106,6 +106,9 @@
             v-if="!isArchiveCollapsed"
             class="space-y-3"
         >
+          <p class="px-2 text-sm text-slate-500">
+            Showing latest 10 observations
+          </p>
 
           <section
               v-for="item in visibleArchiveReflections"
