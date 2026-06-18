@@ -32,13 +32,13 @@
 
             <div v-if="continuitySummary">
               <p class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500">
-                Recent continuity signal
+                What is becoming visible
               </p>
               <div class="whitespace-pre-line text-lg leading-relaxed text-slate-300">
                 {{ continuitySummary }}
               </div>
               <p class="mt-5 text-sm leading-relaxed text-slate-500">
-                This is not a conclusion. It is a recurring sequence MindWorks is beginning to notice across recent observations.
+                This is not a conclusion. It is what MindWorks is beginning to notice across recent observations.
               </p>
             </div>
 
