@@ -109,7 +109,7 @@ export const courseWeeks = [
             "Describe a moment where one thing happened, then something else followed. Try to include what happened first.",
 
         intro:
-            "This stage explores the accumulation of internal pressure before withdrawal, avoidance, or interruption occurs.",
+            "This stage is about noticing order. Instead of seeing the interruption as one event, we begin to notice what happened first, what followed, and where the movement changed.",
 
         openingReflection: [],
 

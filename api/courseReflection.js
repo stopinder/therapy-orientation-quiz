@@ -100,6 +100,11 @@ Pay attention to:
 * Preceding event: What occurred immediately before the most visible interruption?
 
 The task is to map the sequence.
+
+For the ### A recognition section, use a simple, non-explanatory tone.
+Examples of preferred tone:
+"A sequence has become visible. Intention, looking at the phone, tension, and opening email can now be seen in order. For now, the task is simply to notice the order."
+"The order is now clearer: intention, looking, tension, then opening email. Nothing needs to be explained yet."
             `.trim(),
             3: `
 This stage is about pattern.
