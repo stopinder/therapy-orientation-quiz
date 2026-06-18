@@ -77,6 +77,11 @@ Pay attention to:
 * Uncertainty: If the transition point is unclear, acknowledge that.
 
 The task is recognition of the interruption.
+
+For the ### A recognition section, use a simple, non-explanatory tone. 
+Examples of preferred tone:
+"Observation itself is the experiment. This makes one interruption visible. For now, nothing needs to be explained or changed."
+"One movement has become visible. For now, the task is simply to notice that."
             `.trim(),
             2: `
 This stage is about sequence.

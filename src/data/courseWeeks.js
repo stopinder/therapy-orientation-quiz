@@ -17,16 +17,15 @@ export const courseWeeks = [
         orientation: {
             title: "Why You're Here",
             content: [
-                "Most of us repeat the same patterns without noticing.",
-                "We intend to do one thing and end up doing something else.",
+                "Most of us move away from an intention without noticing the moment it happens.",
+                "We mean to do one thing and find ourselves doing something else.",
                 "We delay.",
-                "We avoid.",
                 "We check.",
                 "We prepare.",
-                "Often the same sequence appears again and again.",
-                "MindWorks helps you notice those patterns.",
-                "This stage, you're not trying to change anything.",
-                "You're simply learning to spot one moment when your attention goes somewhere you didn't expect."
+                "We drift.",
+                "At this stage, MindWorks is not asking you to explain this or change it.",
+                "It is simply helping you see one moment clearly.",
+                "This stage, you are learning to notice the point where your attention moves somewhere you did not expect."
             ]
         },
 
