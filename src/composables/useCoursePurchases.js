@@ -24,8 +24,13 @@ export function useCoursePurchases() {
 
         }
 
-        window.location.href =
-            COURSE_CHECKOUT.checkoutUrl
+        const successUrl = "https://mindworks.works/payment-success"
+        const checkoutUrl = new URL(COURSE_CHECKOUT.checkoutUrl)
+        
+        // Append redirect_url to Lemon Squeezy checkout
+        checkoutUrl.searchParams.set("redirect_url", successUrl)
+
+        window.location.href = checkoutUrl.toString()
 
     }
 

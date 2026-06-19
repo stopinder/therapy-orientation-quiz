@@ -11,6 +11,7 @@ import CourseHubView from "../views/CourseHubView.vue"
 import CourseWeekView from "../views/CourseWeekView.vue"
 
 import AccessDeniedView from "../views/AccessDeniedView.vue"
+import PaymentSuccessView from "../views/PaymentSuccessView.vue"
 
 import DeepDiveView from "../views/DeepDiveView.vue"
 import ProgrammeView from "../views/ProgrammeView.vue"
@@ -142,6 +143,12 @@ const routes = [
         path: "/access-denied",
         name: "AccessDenied",
         component: AccessDeniedView
+    },
+
+    {
+        path: "/payment-success",
+        name: "PaymentSuccess",
+        component: PaymentSuccessView
     },
 
     {
