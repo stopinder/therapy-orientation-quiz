@@ -36,11 +36,16 @@ export function useCoursePurchases() {
 
         })
 
+    const loading =
+        computed(() => entitlements.loading)
+
     return {
 
         purchaseProgramme,
 
-        hasProgrammeAccess
+        hasProgrammeAccess,
+
+        loading
 
     }
 

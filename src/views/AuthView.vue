@@ -128,8 +128,6 @@ const signUp = async () => {
   message.value =
       "Account created. Check your email if confirmation is enabled."
 
-  await auth.fetchUser()
-
 }
 
 const signIn = async () => {
@@ -145,8 +143,6 @@ const signIn = async () => {
     message.value = error.message
     return
   }
-
-  await auth.fetchUser()
 
   message.value = "Signed in successfully."
 

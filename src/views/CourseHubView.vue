@@ -51,21 +51,30 @@
         </p>
 
         <div class="mt-8 flex flex-wrap gap-4">
-
-          <button
-              v-if="!hasProgrammeAccess"
-              @click="purchaseProgramme"
-              class="rounded-xl bg-white px-6 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-200"
-          >
-            Unlock Full Programme
-          </button>
-
+          
           <div
-              v-else
-              class="rounded-xl bg-emerald-500/20 px-5 py-3 text-sm font-medium text-emerald-200"
+              v-if="loading"
+              class="rounded-xl bg-slate-800/50 px-5 py-3 text-sm font-medium text-slate-400"
           >
-            Full programme access active
+            Checking programme access...
           </div>
+
+          <template v-else>
+            <button
+                v-if="!hasProgrammeAccess"
+                @click="purchaseProgramme"
+                class="rounded-xl bg-white px-6 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-200"
+            >
+              Unlock Full Programme
+            </button>
+
+            <div
+                v-else
+                class="rounded-xl bg-emerald-500/20 px-5 py-3 text-sm font-medium text-emerald-200"
+            >
+              Full programme access active
+            </div>
+          </template>
 
         </div>
 

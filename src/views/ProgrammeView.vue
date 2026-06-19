@@ -319,10 +319,27 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router"
+import { useCoursePurchases } from "../composables/useCoursePurchases"
+
+const router = useRouter()
+const { hasProgrammeAccess, loading, purchaseProgramme } = useCoursePurchases()
+
 const enterProgramme = () => {
 
-  window.location.href =
-      import.meta.env.VITE_LEMON_CHECKOUT_URL
+  if (loading.value) {
+    return
+  }
+
+  if (hasProgrammeAccess.value) {
+
+    router.push("/course")
+
+    return
+
+  }
+
+  purchaseProgramme()
 
 }
 
