@@ -32,18 +32,27 @@ export const useEntitlementStore = defineStore(
 
         actions: {
 
-            async fetchEntitlements(userId) {
+            async fetchEntitlements(userId, email) {
 
                 this.loading = true
+
+                // Try by user_id first, then by email if requested
+                let query = supabase
+                    .from("course_entitlements")
+                    .select("*")
+
+                if (userId && email) {
+                    query = query.or(`user_id.eq.${userId},email.eq.${email}`)
+                } else if (userId) {
+                    query = query.eq("user_id", userId)
+                } else if (email) {
+                    query = query.eq("email", email)
+                }
 
                 const {
                     data,
                     error
-                } = await supabase
-                    .from("course_entitlements")
-                    .select("*")
-                    .eq("user_id", userId)
-                    .maybeSingle()
+                } = await query.maybeSingle()
 
                 if (error) {
 

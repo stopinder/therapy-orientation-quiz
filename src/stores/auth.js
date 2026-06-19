@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import { supabase } from "../lib/supabase"
+import { useEntitlementStore } from "./entitlements"
 
 export const useAuthStore = defineStore("auth", {
 
@@ -44,11 +45,22 @@ export const useAuthStore = defineStore("auth", {
 
         listenForAuthChanges() {
 
+            const entitlements = useEntitlementStore()
+
             supabase.auth.onAuthStateChange(
-                (event, session) => {
+                async (event, session) => {
 
                     this.user =
                         session?.user || null
+
+                    if (this.user) {
+                        await entitlements.fetchEntitlements(
+                            this.user.id,
+                            this.user.email
+                        )
+                    } else {
+                        entitlements.entitlement = null
+                    }
 
                 }
             )

@@ -1,6 +1,7 @@
 import { computed } from "vue"
 
 import { useEntitlementStore } from "../stores/entitlements"
+import { useAuthStore } from "../stores/auth"
 
 import { COURSE_CHECKOUT } from "../config/courseCheckoutLinks"
 
@@ -8,6 +9,8 @@ export function useCoursePurchases() {
 
     const entitlements =
         useEntitlementStore()
+
+    const auth = useAuthStore()
 
     const purchaseProgramme = () => {
 
@@ -29,10 +32,23 @@ export function useCoursePurchases() {
     const hasProgrammeAccess =
         computed(() => {
 
-            return (
+            const hasAccess = (
                 entitlements.entitlement?.full_course === true &&
-                entitlements.entitlement?.active === true
+                entitlements.entitlement?.active === true &&
+                (
+                    entitlements.entitlement?.user_id === auth.user?.id ||
+                    entitlements.entitlement?.email === auth.user?.email
+                )
             )
+
+            console.log("--- Entitlement Diagnostic ---")
+            console.log("Auth User ID:", auth.user?.id)
+            console.log("Auth User Email:", auth.user?.email)
+            console.log("Entitlement Record:", entitlements.entitlement)
+            console.log("Entitlement Loading:", entitlements.loading)
+            console.log("Computed hasProgrammeAccess:", hasAccess)
+
+            return hasAccess
 
         })
 
