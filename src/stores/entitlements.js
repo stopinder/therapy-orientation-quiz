@@ -52,7 +52,7 @@ export const useEntitlementStore = defineStore(
                 const {
                     data,
                     error
-                } = await query.maybeSingle()
+                } = await query.order('created_at', { ascending: false }).limit(1)
 
                 if (error) {
 
@@ -70,7 +70,7 @@ export const useEntitlementStore = defineStore(
                 }
 
                 this.entitlement =
-                    data || null
+                    data?.[0] || null
 
                 this.loading = false
 

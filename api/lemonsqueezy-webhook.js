@@ -112,22 +112,20 @@ export default async function handler(
             .eq("user_id", matchedUser.id)
             .maybeSingle()
 
+        const entitlementData = {
+            user_id: matchedUser.id,
+            email: email.toLowerCase(),
+            full_course: true,
+            active: true
+        }
+
         if (!existingEntitlement) {
 
             const {
                 error: insertError
             } = await supabase
                 .from("course_entitlements")
-                .insert([
-                    {
-                        user_id:
-                        matchedUser.id,
-
-                        full_course: true,
-
-                        active: true
-                    }
-                ])
+                .insert([entitlementData])
 
             if (insertError) {
 
@@ -137,15 +135,36 @@ export default async function handler(
                 )
 
                 return response.status(500).json({
-                    error:
-                        "Failed entitlement insert"
+                    error: "Failed entitlement insert"
                 })
 
             }
 
-            console.log(
-                "ENTITLEMENT CREATED"
-            )
+            console.log("ENTITLEMENT CREATED")
+
+        } else {
+
+            const {
+                error: updateError
+            } = await supabase
+                .from("course_entitlements")
+                .update(entitlementData)
+                .eq("id", existingEntitlement.id)
+
+            if (updateError) {
+
+                console.error(
+                    "ENTITLEMENT UPDATE ERROR:",
+                    updateError
+                )
+
+                return response.status(500).json({
+                    error: "Failed entitlement update"
+                })
+
+            }
+
+            console.log("ENTITLEMENT UPDATED")
 
         }
 
