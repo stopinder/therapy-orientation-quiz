@@ -38,69 +38,47 @@ export const useEntitlementStore = defineStore(
 
                 const normalizedEmail = email?.trim().toLowerCase()
 
-                console.log("ENTITLEMENT CHECK START:", {
-                    userId,
+                console.log("ENTITLEMENT CHECK START (Server-side API):", {
                     email,
                     normalizedEmail
                 })
 
-                // Create the OR query string
-                // We match by user_id OR normalized email
-                const queryParts = []
-                if (userId) queryParts.push(`user_id.eq.${userId}`)
-                if (normalizedEmail) queryParts.push(`email.eq.${normalizedEmail}`)
-
-                const orQuery = queryParts.join(",")
-
-                if (!orQuery) {
+                if (!normalizedEmail) {
                     this.entitlement = null
                     this.loading = false
                     return
                 }
 
-                const {
-                    data,
-                    error
-                } = await supabase
-                    .from("course_entitlements")
-                    .select("*")
-                    .or(orQuery)
-                    .order('created_at', { ascending: false })
-                    .limit(1)
-                    .maybeSingle()
+                try {
+                    const response = await fetch("/api/check-course-access", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email: normalizedEmail })
+                    })
 
-                if (error) {
+                    const data = await response.json()
+                    
+                    console.log("API response:", data)
 
-                    console.error(
-                        "ENTITLEMENT ERROR:",
-                        error
-                    )
+                    const hasAccess = data?.hasAccess === true
+                    
+                    console.log("final hasAccess:", hasAccess)
 
+                    // We set a mock entitlement object that satisfies the getters
+                    this.entitlement = hasAccess ? {
+                        active: true,
+                        full_course: true,
+                        email: normalizedEmail
+                    } : null
+
+                } catch (error) {
+                    console.error("ENTITLEMENT API ERROR:", error)
                     this.entitlement = null
-
+                } finally {
                     this.loading = false
-
-                    return
-
                 }
-
-                const rowFound = !!data
-                const isActive = data?.active === true
-                const isFullCourse = data?.full_course === true
-                const hasAccess = isActive && isFullCourse
-
-                console.log("ENTITLEMENT RESULT:", {
-                    rowFound,
-                    active: isActive,
-                    full_course: isFullCourse,
-                    finalHasAccess: hasAccess
-                })
-
-                this.entitlement =
-                    data || null
-
-                this.loading = false
-
             },
 
             canAccessWeek(weekNumber) {
