@@ -19,7 +19,8 @@ export async function hydrateApp() {
         await Promise.all([
 
             entitlements.fetchEntitlements(
-                auth.user.id
+                auth.user.id,
+                auth.user.email
             ),
 
             courseProgress.fetchProgress(

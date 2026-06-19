@@ -32,9 +32,31 @@ export const useEntitlementStore = defineStore(
 
         actions: {
 
-            async fetchEntitlements(userId) {
+            async fetchEntitlements(userId, email) {
 
                 this.loading = true
+
+                const normalizedEmail = email?.trim().toLowerCase()
+
+                console.log("ENTITLEMENT CHECK START:", {
+                    userId,
+                    email,
+                    normalizedEmail
+                })
+
+                // Create the OR query string
+                // We match by user_id OR normalized email
+                const queryParts = []
+                if (userId) queryParts.push(`user_id.eq.${userId}`)
+                if (normalizedEmail) queryParts.push(`email.eq.${normalizedEmail}`)
+
+                const orQuery = queryParts.join(",")
+
+                if (!orQuery) {
+                    this.entitlement = null
+                    this.loading = false
+                    return
+                }
 
                 const {
                     data,
@@ -42,7 +64,9 @@ export const useEntitlementStore = defineStore(
                 } = await supabase
                     .from("course_entitlements")
                     .select("*")
-                    .eq("user_id", userId)
+                    .or(orQuery)
+                    .order('created_at', { ascending: false })
+                    .limit(1)
                     .maybeSingle()
 
                 if (error) {
@@ -59,6 +83,18 @@ export const useEntitlementStore = defineStore(
                     return
 
                 }
+
+                const rowFound = !!data
+                const isActive = data?.active === true
+                const isFullCourse = data?.full_course === true
+                const hasAccess = isActive && isFullCourse
+
+                console.log("ENTITLEMENT RESULT:", {
+                    rowFound,
+                    active: isActive,
+                    full_course: isFullCourse,
+                    finalHasAccess: hasAccess
+                })
 
                 this.entitlement =
                     data || null

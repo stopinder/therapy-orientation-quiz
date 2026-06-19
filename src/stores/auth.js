@@ -45,10 +45,17 @@ export const useAuthStore = defineStore("auth", {
         listenForAuthChanges() {
 
             supabase.auth.onAuthStateChange(
-                (event, session) => {
+                async (event, session) => {
 
                     this.user =
                         session?.user || null
+
+                    // If user just signed in or state changed, refresh entitlements
+                    if (this.user) {
+                        const { useEntitlementStore } = await import("./entitlements")
+                        const entitlements = useEntitlementStore()
+                        entitlements.fetchEntitlements(this.user.id, this.user.email)
+                    }
 
                 }
             )

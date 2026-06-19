@@ -29,10 +29,12 @@ export function useCoursePurchases() {
     const hasProgrammeAccess =
         computed(() => {
 
-            return (
-                entitlements.entitlement?.full_course === true &&
-                entitlements.entitlement?.active === true
-            )
+            const entitlement = entitlements.entitlement
+            const active = entitlement?.active === true
+            const fullCourse = entitlement?.full_course === true
+            const hasAccess = active && fullCourse
+
+            return hasAccess
 
         })
 
