@@ -26,15 +26,15 @@ export default async function handler(request, response) {
         }
 
         const normalizedEmail = email.trim().toLowerCase()
-        console.log("Checking course access for email:", normalizedEmail)
+        
+        console.log("incoming email:", email)
+        console.log("normalized email:", normalizedEmail)
 
         const { data, error } = await supabase
-            .from("course_entitlements")
-            .select("active, full_course")
+            .from("paid_access")
+            .select("id")
             .eq("email", normalizedEmail)
             .eq("active", true)
-            .eq("full_course", true)
-            .order("created_at", { ascending: false })
             .limit(1)
             .maybeSingle()
 
@@ -45,8 +45,11 @@ export default async function handler(request, response) {
             })
         }
 
-        const hasAccess = !!data
-        console.log("API response for", normalizedEmail, ":", { hasAccess })
+        const rowFound = !!data
+        const hasAccess = rowFound
+        
+        console.log("paid_access row found:", rowFound)
+        console.log("final hasAccess:", hasAccess)
 
         return response.status(200).json({
             hasAccess
