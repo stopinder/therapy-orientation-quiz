@@ -14,30 +14,30 @@ export default async function handler(
     response
 ) {
     if (request.method !== "POST") {
-        console.log("Method not allowed:", request.method)
+        console.log("LEMON WEBHOOK: Method not allowed:", request.method)
         return response.status(405).json({
             error: "Method not allowed"
         })
     }
 
     try {
-        console.log("webhook received")
-        console.log("Request method:", request.method)
+        console.log("LEMON WEBHOOK: webhook received")
+        console.log("LEMON WEBHOOK: Request method:", request.method)
 
         const payload = request.body || {}
-        console.log("Event type:", payload.meta?.event_name)
-        console.log("Raw payload structure (keys):", Object.keys(payload))
+        console.log("LEMON WEBHOOK: Event type:", payload.meta?.event_name)
+        console.log("LEMON WEBHOOK: Raw payload structure (keys):", Object.keys(payload))
         if (payload.data) {
-            console.log("Payload data keys:", Object.keys(payload.data))
-            console.log("Payload data attributes:", payload.data.attributes)
+            console.log("LEMON WEBHOOK: Payload data keys:", Object.keys(payload.data))
+            console.log("LEMON WEBHOOK: Payload data attributes:", payload.data.attributes)
         }
         if (payload.meta) {
-            console.log("Payload meta keys:", Object.keys(payload.meta))
-            console.log("Payload meta custom_data:", payload.meta.custom_data)
+            console.log("LEMON WEBHOOK: Payload meta keys:", Object.keys(payload.meta))
+            console.log("LEMON WEBHOOK: Payload meta custom_data:", payload.meta.custom_data)
         }
 
-        console.log("SUPABASE_URL present:", !!process.env.VITE_SUPABASE_URL)
-        console.log("SUPABASE_SERVICE_ROLE_KEY present:", !!process.env.SUPABASE_SERVICE_ROLE_KEY)
+        console.log("LEMON WEBHOOK: SUPABASE_URL present:", !!process.env.VITE_SUPABASE_URL)
+        console.log("LEMON WEBHOOK: SUPABASE_SERVICE_ROLE_KEY present:", !!process.env.SUPABASE_SERVICE_ROLE_KEY)
 
         const eventType = payload.meta?.event_name
 
@@ -76,18 +76,18 @@ export default async function handler(
             sourceField = "meta.custom_data.email"
         }
 
-        console.log("Raw email:", rawEmail)
-        console.log("Email source field:", sourceField)
+        console.log("LEMON WEBHOOK: Raw email:", rawEmail)
+        console.log("LEMON WEBHOOK: Email source field:", sourceField)
 
         if (!rawEmail) {
             if (payload.meta?.custom_data?.email && isPlaceholder(payload.meta.custom_data.email)) {
-                console.log("Placeholder email detected - not inserting paid_access")
+                console.log("LEMON WEBHOOK: Placeholder email detected - not inserting paid_access")
                 return response.status(400).json({
                     error: "Placeholder email detected - not inserting paid_access"
                 })
             }
 
-            console.error("Missing customer email in payload")
+            console.error("LEMON WEBHOOK: Missing customer email in payload")
             return response.status(400).json({
                 error: "Missing customer email",
                 diagnostics: {
@@ -100,9 +100,9 @@ export default async function handler(
         }
 
         const normalisedEmail = rawEmail.trim().toLowerCase()
-        console.log("normalised email:", normalisedEmail)
+        console.log("LEMON WEBHOOK: normalised email:", normalisedEmail)
 
-        console.log("paid_access upsert attempt")
+        console.log("LEMON WEBHOOK: paid_access upsert attempt")
         const { data: upsertData, error: upsertError } = await supabase
             .from("paid_access")
             .upsert({
@@ -115,14 +115,14 @@ export default async function handler(
             .select()
 
         if (upsertError) {
-            console.error("Supabase error:", upsertError)
+            console.error("LEMON WEBHOOK: Supabase error:", upsertError)
             return response.status(500).json({
                 error: "Supabase upsert failed",
                 details: upsertError
             })
         }
 
-        console.log("Supabase success:", upsertData)
+        console.log("LEMON WEBHOOK: Supabase success:", upsertData)
 
         return response.status(200).json({
             success: true,
