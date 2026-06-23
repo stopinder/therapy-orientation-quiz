@@ -1,16 +1,19 @@
 import { computed } from "vue"
+import { useRouter } from "vue-router"
 import { useAuthStore } from "../stores/auth"
 import { useEntitlementStore } from "../stores/entitlements"
+import { supabase } from "../lib/supabase"
 
 import { COURSE_CHECKOUT } from "../config/courseCheckoutLinks"
 
 export function useCoursePurchases() {
 
+    const router = useRouter()
     const auth = useAuthStore()
     const entitlements =
         useEntitlementStore()
 
-    const purchaseProgramme = () => {
+    const purchaseProgramme = async () => {
 
         if (!COURSE_CHECKOUT.checkoutUrl) {
 
@@ -22,14 +25,22 @@ export function useCoursePurchases() {
 
         }
 
+        const { data: { user } } = await supabase.auth.getUser()
+
+        if (!user?.email) {
+            router.push("/auth")
+            return
+        }
+
+        const email = user.email.trim().toLowerCase()
+        console.log("Checkout user email:", email)
+
         let checkoutUrl = COURSE_CHECKOUT.checkoutUrl
 
-        if (auth.user?.email) {
-            const url = new URL(checkoutUrl)
-            url.searchParams.set('checkout[email]', auth.user.email)
-            url.searchParams.set('custom[email]', auth.user.email)
-            checkoutUrl = url.toString()
-        }
+        const url = new URL(checkoutUrl)
+        url.searchParams.set('checkout[email]', email)
+        url.searchParams.set('custom[email]', email)
+        checkoutUrl = url.toString()
 
         window.location.href = checkoutUrl
 

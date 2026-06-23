@@ -320,22 +320,33 @@
 
 <script setup>
 import { useAuthStore } from "../stores/auth"
+import { useRouter } from "vue-router"
+import { supabase } from "../lib/supabase"
 
+const router = useRouter()
 const auth = useAuthStore()
 
-const enterProgramme = () => {
+const enterProgramme = async () => {
 
   let checkoutUrl = import.meta.env.VITE_LEMON_CHECKOUT_URL
 
-  if (auth.user?.email) {
-    try {
-      const url = new URL(checkoutUrl)
-      url.searchParams.set('checkout[email]', auth.user.email)
-      url.searchParams.set('custom[email]', auth.user.email)
-      checkoutUrl = url.toString()
-    } catch (e) {
-      console.error("Error constructing checkout URL:", e)
-    }
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user?.email) {
+    router.push("/auth")
+    return
+  }
+
+  const email = user.email.trim().toLowerCase()
+  console.log("Checkout user email:", email)
+
+  try {
+    const url = new URL(checkoutUrl)
+    url.searchParams.set('checkout[email]', email)
+    url.searchParams.set('custom[email]', email)
+    checkoutUrl = url.toString()
+  } catch (e) {
+    console.error("Error constructing checkout URL:", e)
   }
 
   window.location.href = checkoutUrl

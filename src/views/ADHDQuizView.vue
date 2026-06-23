@@ -256,6 +256,7 @@
 import { useAuthStore } from "../stores/auth"
 import { computed, nextTick, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
+import { supabase } from "../lib/supabase"
 
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 import { buildBehaviourProfile } from "../quiz/adhd/buildBehaviourProfile.js"
@@ -1055,18 +1056,26 @@ const goToProgramme = () => {
   router.push("/programme")
 }
 
-const enterProgrammeFromQuiz = () => {
+const enterProgrammeFromQuiz = async () => {
   let checkoutUrl = "https://gpttherapyassist.lemonsqueezy.com/checkout/buy/3d1439e1-bbba-4fc9-8810-04cdda84ca89"
 
-  if (auth.user?.email) {
-    try {
-      const url = new URL(checkoutUrl)
-      url.searchParams.set('checkout[email]', auth.user.email)
-      url.searchParams.set('custom[email]', auth.user.email)
-      checkoutUrl = url.toString()
-    } catch (e) {
-      console.error("Error constructing checkout URL:", e)
-    }
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user?.email) {
+    router.push("/auth")
+    return
+  }
+
+  const email = user.email.trim().toLowerCase()
+  console.log("Checkout user email:", email)
+
+  try {
+    const url = new URL(checkoutUrl)
+    url.searchParams.set('checkout[email]', email)
+    url.searchParams.set('custom[email]', email)
+    checkoutUrl = url.toString()
+  } catch (e) {
+    console.error("Error constructing checkout URL:", e)
   }
 
   window.location.href = checkoutUrl
