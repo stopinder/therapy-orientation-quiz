@@ -213,11 +213,14 @@
           </p>
         </div>
 
-        <p
-            class="mt-4 text-base leading-7 text-slate-600"
-        >
-          {{ week.reflectionPrompt }}
-        </p>
+        <div class="mt-6 flex items-center justify-between">
+          <p
+              class="text-base leading-7 text-slate-600"
+          >
+            {{ week.reflectionPrompt }}
+          </p>
+          <VoiceRecorder @transcribed="text => reflection += (reflection ? ' ' : '') + text" />
+        </div>
 
         <textarea
             v-model="reflection"
@@ -407,6 +410,8 @@ import { useContinuity }
 
 import { supabase }
   from "../lib/supabase"
+
+import VoiceRecorder from "../components/VoiceRecorder.vue"
 
 const route = useRoute()
 
