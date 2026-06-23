@@ -1,11 +1,12 @@
 import { computed } from "vue"
-
+import { useAuthStore } from "../stores/auth"
 import { useEntitlementStore } from "../stores/entitlements"
 
 import { COURSE_CHECKOUT } from "../config/courseCheckoutLinks"
 
 export function useCoursePurchases() {
 
+    const auth = useAuthStore()
     const entitlements =
         useEntitlementStore()
 
@@ -21,8 +22,16 @@ export function useCoursePurchases() {
 
         }
 
-        window.location.href =
-            COURSE_CHECKOUT.checkoutUrl
+        let checkoutUrl = COURSE_CHECKOUT.checkoutUrl
+
+        if (auth.user?.email) {
+            const url = new URL(checkoutUrl)
+            url.searchParams.set('checkout[email]', auth.user.email)
+            url.searchParams.set('custom[email]', auth.user.email)
+            checkoutUrl = url.toString()
+        }
+
+        window.location.href = checkoutUrl
 
     }
 

@@ -236,12 +236,12 @@
                 The quiz identifies patterns. The six-stage visibility path helps you work with those patterns over time through guided reflection and continuity tracking.
               </p>
 
-              <a
-                  href="https://gpttherapyassist.lemonsqueezy.com/checkout/buy/3d1439e1-bbba-4fc9-8810-04cdda84ca89"
+              <button
+                  @click="enterProgrammeFromQuiz"
                   class="inline-block rounded-xl bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
               >
                 Start the six-stage visibility path
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -1053,5 +1053,22 @@ const programmeIntro = computed(() => {
 
 const goToProgramme = () => {
   router.push("/programme")
+}
+
+const enterProgrammeFromQuiz = () => {
+  let checkoutUrl = "https://gpttherapyassist.lemonsqueezy.com/checkout/buy/3d1439e1-bbba-4fc9-8810-04cdda84ca89"
+
+  if (auth.user?.email) {
+    try {
+      const url = new URL(checkoutUrl)
+      url.searchParams.set('checkout[email]', auth.user.email)
+      url.searchParams.set('custom[email]', auth.user.email)
+      checkoutUrl = url.toString()
+    } catch (e) {
+      console.error("Error constructing checkout URL:", e)
+    }
+  }
+
+  window.location.href = checkoutUrl
 }
 </script>

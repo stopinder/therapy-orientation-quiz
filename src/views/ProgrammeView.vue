@@ -319,10 +319,26 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "../stores/auth"
+
+const auth = useAuthStore()
+
 const enterProgramme = () => {
 
-  window.location.href =
-      import.meta.env.VITE_LEMON_CHECKOUT_URL
+  let checkoutUrl = import.meta.env.VITE_LEMON_CHECKOUT_URL
+
+  if (auth.user?.email) {
+    try {
+      const url = new URL(checkoutUrl)
+      url.searchParams.set('checkout[email]', auth.user.email)
+      url.searchParams.set('custom[email]', auth.user.email)
+      checkoutUrl = url.toString()
+    } catch (e) {
+      console.error("Error constructing checkout URL:", e)
+    }
+  }
+
+  window.location.href = checkoutUrl
 
 }
 
