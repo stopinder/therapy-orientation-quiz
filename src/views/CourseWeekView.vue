@@ -230,9 +230,12 @@
         />
 
         <div class="mt-8">
-          <p class="text-base font-medium text-slate-900">
-            Body Observation
-          </p>
+          <div class="flex items-center justify-between">
+            <p class="text-base font-medium text-slate-900">
+              Body Observation
+            </p>
+            <VoiceRecorder @transcribed="appendBodyObservationTranscription" />
+          </div>
           <p class="mt-1 text-sm text-slate-500">
             As you recall this moment, what do you notice in your body?
           </p>
@@ -435,6 +438,12 @@ const restoredReflection =
 
 const quizProfileSummary =
     ref("")
+
+const appendBodyObservationTranscription = (text) => {
+  bodyObservation.value = bodyObservation.value
+      ? `${bodyObservation.value}\n\n${text}`
+      : text
+}
 
 const showReadMore = ref(false)
 

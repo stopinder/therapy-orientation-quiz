@@ -5,7 +5,9 @@
       type="button"
       :disabled="state === 'transcribing'"
       class="inline-flex items-center space-x-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium transition hover:bg-slate-50 disabled:opacity-50"
-      :class="{ 'border-red-200 bg-red-50 text-red-600': state === 'recording' }"
+      :class="{ 
+        'border-red-200 bg-red-50 text-red-600 animate-pulse': state === 'recording' 
+      }"
     >
       <!-- Microphone Icon -->
       <svg
@@ -58,7 +60,7 @@ const mediaRecorder = ref(null)
 const audioChunks = ref([])
 
 const buttonLabel = computed(() => {
-  if (state.value === 'recording') return 'Stop'
+  if (state.value === 'recording') return 'Stop recording'
   if (state.value === 'transcribing') return 'Transcribing...'
   return 'Speak'
 })
