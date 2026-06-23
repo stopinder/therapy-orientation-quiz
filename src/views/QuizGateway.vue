@@ -7,31 +7,28 @@
       <header class="space-y-6 max-w-xl">
 
         <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
-          Guided Reflection
+          MindWorks Orientation
         </p>
 
         <h1 class="text-3xl md:text-[2.45rem] font-medium tracking-[-0.025em] text-slate-900 leading-[1.12]">
-          The difficulty is often not knowing what matters.
-          It is remaining in contact long enough to continue.
+          Notice where intention changes before you realise it has changed.
         </h1>
 
         <div class="space-y-4 text-[1.02rem] leading-[1.9] text-slate-700">
 
           <p>
-            Most people already understand what they intend to do.
-            The problem is that attention fragments,
-            emotion intervenes,
-            pressure accumulates,
-            and continuity quietly disappears underneath awareness.
+            MindWorks begins with a short orientation into continuity.
+            The aim is not to improve your behaviour,
+            motivate yourself,
+            or explain why you do what you do.
           </p>
 
           <p>
-            This reflection explores the internal organisation behind that process:
-            interruption,
-            avoidance,
-            emotional overload,
-            contradiction,
-            and unstable continuation.
+            The aim is simpler:
+            to notice the moments where attention drifts,
+            action changes direction,
+            pressure builds,
+            or something else happens before you begin.
           </p>
 
         </div>
@@ -50,7 +47,7 @@
             </p>
 
             <h2 class="section-title">
-              A brief behavioural reflection rather than a test.
+              A brief orientation, not a diagnosis.
             </h2>
 
           </div>
@@ -62,17 +59,20 @@
             </p>
 
             <p>
-              It does not attempt to diagnose you or categorise your identity.
-              The aim is simply to recognise patterns more clearly.
+              It does not label you,
+              score you,
+              or place you into a fixed category.
             </p>
 
             <p>
-              At the end,
-              you will receive a structured written reflection exploring:
-              continuity,
-              emotional load,
-              contradiction,
-              and interruption patterns.
+              It helps MindWorks understand where continuity tends to become interrupted:
+              delay,
+              checking,
+              preparation,
+              drifting,
+              avoidance,
+              emotional pressure,
+              or repeated restarting.
             </p>
 
           </div>
@@ -91,13 +91,8 @@
           </p>
 
           <p>
-            Most people recognise themselves gradually,
-            often in the smaller moments:
-            drifting,
-            postponing,
-            restarting,
-            disappearing under pressure,
-            then returning later with clarity.
+            You are simply giving MindWorks enough initial information
+            to begin observing patterns across your reflections.
           </p>
 
         </div>
@@ -106,7 +101,7 @@
             @click="handleContinue"
             class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
         >
-          Begin the reflection
+          Begin orientation
         </button>
 
       </section>
