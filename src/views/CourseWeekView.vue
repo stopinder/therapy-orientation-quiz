@@ -500,7 +500,7 @@ const uniqueObservations = computed(() => {
 })
 
 const showPatternBlock = computed(() => {
-  return weekNumber.value >= 3 && topPattern.value && topPattern.value.examples.length >= 2
+  return topPattern.value && topPattern.value.examples.length >= 2
 })
 
 const showSequenceBlock = computed(() => {
