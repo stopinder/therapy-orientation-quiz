@@ -170,8 +170,8 @@ import { courseWeeks }
   from "../data/courseWeeks"
 
 const BEHAVIORAL_MAP = {
-  'Something else repeatedly happens before beginning.': ['preparation', 'organising', 'organizing', 'planning', 'research', 'tidying'],
-  'Attention drifts to digital tools or rituals before starting.': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee'],
+  'Something else repeatedly happens before beginning.': ['preparing', 'prepare', 'preparation', 'reorganised', 'reorganized', 'reorganise', 'reorganize', 'desk', 'notes', 'organising', 'organizing', 'planning', 'research', 'tidying'],
+  'Attention drifts to digital tools or rituals before starting.': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee', 'before starting', 'before beginning', 'before making', 'before joining'],
   'Delay occurs immediately after an intention is formed.': ['delay', 'delayed', 'hesitation', 'hesitant', 'postponed', 'postponing'],
   'A verification ritual repeatedly precedes action.': ['checking', 'checked', 'rechecked', 'monitoring']
 }
