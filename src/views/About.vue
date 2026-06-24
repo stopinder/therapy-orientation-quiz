@@ -30,10 +30,10 @@
         <div class="flex flex-wrap gap-3 pt-2">
 
           <router-link
-              to="/gateway"
+              to="/course"
               class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
           >
-            Begin the reflection
+            Enter Full Programme
           </router-link>
 
           <router-link
@@ -317,10 +317,10 @@
         </div>
 
         <router-link
-            to="/programme"
-            class="inline-flex items-center rounded-xl border border-slate-300 mt-7 px-5 py-3 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
+            to="/course"
+            class="inline-flex items-center rounded-xl border border-slate-900 mt-7 px-5 py-3 text-sm font-medium text-white bg-slate-900 transition hover:bg-slate-800"
         >
-          View the programme
+          Enter Full Programme
         </router-link>
 
       </section>

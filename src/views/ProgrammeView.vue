@@ -328,28 +328,14 @@ const auth = useAuthStore()
 
 const enterProgramme = async () => {
 
-  let checkoutUrl = import.meta.env.VITE_LEMON_CHECKOUT_URL
-
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user?.email) {
+  if (!user) {
     router.push("/auth")
     return
   }
 
-  const email = user.email.trim().toLowerCase()
-  console.log("Checkout user email:", email)
-
-  try {
-    const url = new URL(checkoutUrl)
-    url.searchParams.set('checkout[email]', email)
-    url.searchParams.set('custom[email]', email)
-    checkoutUrl = url.toString()
-  } catch (e) {
-    console.error("Error constructing checkout URL:", e)
-  }
-
-  window.location.href = checkoutUrl
+  router.push("/course")
 
 }
 
