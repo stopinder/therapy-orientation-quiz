@@ -252,19 +252,37 @@
         <!-- Reflection Output -->
         <div
             v-if="response && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
-            class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6"
+            class="mt-12 space-y-8"
         >
-
-          <h3 class="mb-4 font-medium text-slate-950">
-            Reflection
-          </h3>
-
           <div
-              class="whitespace-pre-line text-base leading-8 text-slate-700"
+              v-for="(section, idx) in parsedResponse"
+              :key="idx"
+              class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm"
           >
-            {{ response }}
-          </div>
+            <h3 v-if="section.title" class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500">
+              {{ section.title }}
+            </h3>
 
+            <div
+                class="whitespace-pre-line text-lg leading-relaxed text-slate-700"
+            >
+              <template v-if="section.title === 'Questions to stay with'">
+                <ul class="space-y-4">
+                  <li
+                      v-for="(q, qIdx) in section.content.split('\n').filter(l => l.trim())"
+                      :key="qIdx"
+                      class="flex gap-3"
+                  >
+                    <span class="text-slate-400">•</span>
+                    <span>{{ q.replace(/^-\s+/, '') }}</span>
+                  </li>
+                </ul>
+              </template>
+              <template v-else>
+                {{ section.content }}
+              </template>
+            </div>
+          </div>
         </div>
 
       </section>
@@ -291,29 +309,41 @@
           {{ patternBlockLabel }}
         </p>
 
-        <p class="mb-4 text-sm text-slate-500">
-          {{ discoveryWording }}
-        </p>
-
-        <ul class="mb-8 space-y-3">
-          <li
-              v-for="(example, index) in topPattern.examples"
-              :key="index"
-              class="text-base text-slate-700 flex gap-3"
-          >
-            <span class="text-slate-400">•</span>
-            <span>{{ example }}</span>
-          </li>
-        </ul>
-
-        <div class="border-t border-slate-100 pt-6">
-          <p class="mb-2 text-sm font-medium uppercase tracking-wider text-slate-500">
-            {{ patternTypeLabel }}
+        <template v-if="reflectionsHistory.length === 1">
+          <p class="text-base text-slate-600 leading-relaxed">
+            MindWorks is collecting observations. Patterns become visible through repetition.
           </p>
-          <p class="text-lg font-medium text-slate-900">
-            {{ stagePrimaryContent }}
+        </template>
+        <template v-else-if="reflectionsHistory.length === 2">
+          <p class="text-base text-slate-600 leading-relaxed">
+            A sequence may be beginning to emerge.
           </p>
-        </div>
+        </template>
+        <template v-else>
+          <p class="mb-4 text-sm text-slate-500">
+            {{ discoveryWording }}
+          </p>
+
+          <ul class="mb-8 space-y-3">
+            <li
+                v-for="(example, index) in topPattern.examples"
+                :key="index"
+                class="text-base text-slate-700 flex gap-3"
+            >
+              <span class="text-slate-400">•</span>
+              <span>{{ example }}</span>
+            </li>
+          </ul>
+
+          <div class="border-t border-slate-100 pt-6">
+            <p class="mb-2 text-sm font-medium uppercase tracking-wider text-slate-500">
+              {{ patternTypeLabel }}
+            </p>
+            <p class="text-lg font-medium text-slate-900">
+              {{ stagePrimaryContent }}
+            </p>
+          </div>
+        </template>
       </section>
 
       <!-- Recent Reflections -->
@@ -608,6 +638,42 @@ const appendBodyObservationTranscription = (text) => {
 
 const showReadMore = ref(false)
 
+const parsedResponse = computed(() => {
+  if (!response.value) return []
+  
+  const sections = []
+  const lines = response.value.split('\n')
+  let currentSection = null
+
+  lines.forEach(line => {
+    const headingMatch = line.match(/^###\s+(.*)/)
+    if (headingMatch) {
+      if (currentSection) sections.push(currentSection)
+      currentSection = {
+        title: headingMatch[1].trim(),
+        content: []
+      }
+    } else if (line.trim() || (currentSection && currentSection.content.length > 0)) {
+      if (currentSection) {
+        currentSection.content.push(line)
+      } else if (line.trim()) {
+        // Handle cases where there might be text before the first heading
+        currentSection = {
+          title: "",
+          content: [line]
+        }
+      }
+    }
+  })
+
+  if (currentSection) sections.push(currentSection)
+
+  return sections.map(s => ({
+    ...s,
+    content: s.content.join('\n').trim()
+  }))
+})
+
 const reflectionsHistory = ref([])
 
 const BEHAVIORAL_MAP = {
@@ -707,15 +773,6 @@ const patternTypeLabel = computed(() => {
 
 const discoveryWording = computed(() => {
   const n = weekNumber.value
-  const count = reflectionsHistory.value.length
-
-  if (count === 1) {
-    return "MindWorks is collecting observations. Patterns become visible through repetition."
-  }
-  if (count === 2) {
-    return "A sequence may be beginning to emerge."
-  }
-
   if (n === 3) return "Across recent reflections, a recurring structure is beginning to appear."
   if (n === 4) return "MindWorks is noticing the emotional climate and internal conditions that tend to precede this sequence: pressure, uncertainty, body context, or exposure."
   if (n === 5) return "This recurring sequence appears to accomplish something, though it is not yet clear. It may be providing relief, reducing uncertainty, or protecting continuity by creating a pause."
