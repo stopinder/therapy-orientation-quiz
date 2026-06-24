@@ -199,7 +199,7 @@
 
       <!-- Emerging Pattern Card (What MindWorks Is Noticing) -->
       <section
-          v-if="quizProfileSummary && (weekNumber !== 1 || reflectionsHistory.length > 0)"
+          v-if="quizProfileSummary && (weekNumber !== 1 || response)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -212,7 +212,7 @@
 
       <!-- Continuity Observation (What MindWorks Is Noticing) -->
       <section
-          v-if="showPatternBlock && (weekNumber !== 1 || reflectionsHistory.length > 0)"
+          v-if="showPatternBlock && (weekNumber !== 1 || response)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -246,7 +246,7 @@
 
       <!-- Recent Reflections -->
       <section
-          v-if="reflectionsHistory.length > 0"
+          v-if="reflectionsHistory.length > 0 && (weekNumber !== 1 || response)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <h3 class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">

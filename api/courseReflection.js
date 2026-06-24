@@ -79,6 +79,9 @@ Pay attention to:
 The task is recognition of the interruption.
 
 Reduce Stage 1 reflection follow-up questions to a maximum of two.
+Preferred two questions:
+* What do you remember about the moment you shifted from work to checking messages?
+* Did checking messages feel like a choice, or did it happen before you noticed?
 
 For the ### A recognition section, use a simple, non-explanatory tone. 
 Examples of preferred tone:
@@ -394,7 +397,7 @@ Observation before interpretation.
 
 Observation, not insight.
 
-If the response sounds insightful, therapeutic, explanatory, educational, or advisory, simplify it further.
+If the response sounds insightful, therapeutic, explanatory, advisory, or diagnostic, simplify it further.
 
 The strongest response may leave uncertainty intact.
 
@@ -618,6 +621,7 @@ Generate a maximum of two open observational questions based on the user's refle
 Do not generate interpretations.
 Do not use therapy language.
 Do not provide answers.
+Use observational wording (e.g., "Was the pressure in your chest present before the checking began?") and avoid causal wording (e.g., "How did the pressure in your chest influence your next action?").
 
 ### A recognition
 
