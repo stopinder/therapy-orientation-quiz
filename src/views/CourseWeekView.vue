@@ -675,6 +675,10 @@ const uniqueObservations = computed(() => {
 })
 
 const showPatternBlock = computed(() => {
+  const count = reflectionsHistory.value.length
+  if (count < 1) return false
+  if (count === 1) return true // Show message
+  if (count === 2) return true // Show optional message
   return topPattern.value && topPattern.value.examples.length >= 2
 })
 
@@ -703,6 +707,15 @@ const patternTypeLabel = computed(() => {
 
 const discoveryWording = computed(() => {
   const n = weekNumber.value
+  const count = reflectionsHistory.value.length
+
+  if (count === 1) {
+    return "MindWorks is collecting observations. Patterns become visible through repetition."
+  }
+  if (count === 2) {
+    return "A sequence may be beginning to emerge."
+  }
+
   if (n === 3) return "Across recent reflections, a recurring structure is beginning to appear."
   if (n === 4) return "MindWorks is noticing the emotional climate and internal conditions that tend to precede this sequence: pressure, uncertainty, body context, or exposure."
   if (n === 5) return "This recurring sequence appears to accomplish something, though it is not yet clear. It may be providing relief, reducing uncertainty, or protecting continuity by creating a pause."
