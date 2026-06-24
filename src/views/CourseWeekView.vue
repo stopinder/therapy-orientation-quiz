@@ -212,7 +212,7 @@
             v-model="reflection"
             rows="8"
             class="mt-6 w-full rounded-2xl border border-slate-300 bg-white p-4 text-base leading-7 text-slate-800 outline-none transition focus:border-slate-900"
-            placeholder="Describe what happened..."
+            :placeholder="reflectionPlaceholder"
         />
 
         <div class="mt-8">
@@ -229,7 +229,7 @@
               v-model="bodyObservation"
               rows="4"
               class="mt-4 w-full rounded-2xl border border-slate-300 bg-white p-4 text-base leading-7 text-slate-800 outline-none transition focus:border-slate-900"
-              placeholder="Tightness...&#10;Restlessness...&#10;Heaviness...&#10;Nothing noticeable..."
+              :placeholder="bodyObservationPlaceholder"
           />
         </div>
 
@@ -623,6 +623,14 @@ const loading = ref(false)
 const error = ref("")
 
 const hasGeneratedReflectionThisSession = ref(false)
+
+const reflectionPlaceholder = computed(() => {
+  if (weekNumber.value === 1) return "I intended to start work, but I checked messages instead..."
+  if (weekNumber.value === 2) return "I was about to make a call. I looked at the phone, felt tension, then opened email..."
+  return "Describe what happened..."
+})
+
+const bodyObservationPlaceholder = "Tightness in chest, restlessness in hands, heaviness, numbness, or nothing noticeable..."
 
 const restoredReflection =
     ref(false)
