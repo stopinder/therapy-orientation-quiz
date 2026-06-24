@@ -111,9 +111,31 @@ export const courseWeeks = [
         intro:
             "This stage is about noticing order. Instead of seeing the interruption as one event, we begin to notice what happened first, what followed, and where the movement changed.",
 
-        openingReflection: [],
+        openingReflection: [
+            "Sequence means seeing the order in which things happen.",
+            "The important moment is often not the final behaviour, but what appeared just before it.",
+            "This stage helps the user notice the movement from intention, to internal shift, to response."
+        ],
 
-        exercises: []
+        bodyFocus: [
+            "As you recall the sequence, notice whether the body changed before the response.",
+            "Look for tension, urgency, heaviness, pressure, restlessness, or numbness."
+        ],
+
+        exercises: [
+            {
+                title: "Notice what came before",
+                description: "Observe one moment where an action changed direction and write down what happened immediately before."
+            },
+            {
+                title: "Place events in order",
+                description: "Write the sequence as simply as possible: intention, body shift, response."
+            },
+            {
+                title: "Stay with the order",
+                description: "Do not explain the sequence. Just notice the order in which it unfolded."
+            }
+        ]
 
     },
 
