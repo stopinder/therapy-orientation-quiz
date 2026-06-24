@@ -73,15 +73,15 @@
         </div>
       </section>
 
-      <!-- This Stage's Experiment (Week 1) -->
+      <!-- This Stage's Experiment (Week 1 & 2) -->
       <section
-          v-if="week.number === 1"
+          v-if="[1, 2].includes(week.number)"
           class="mb-16"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
           This Stage's Experiment
         </h2>
-        <div class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
+        <div v-if="week.number === 1" class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
           <p>Before opening email, beginning work, or starting a task:</p>
           <p class="font-medium text-2xl text-slate-950">Sense both feet.</p>
           <p>Ask:</p>
@@ -91,7 +91,70 @@
             <p class="text-base text-slate-600 italic">Do not try to change anything. Simply notice what happens.</p>
           </div>
         </div>
+        <div v-if="week.number === 2" class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
+          <p>Continue to sense both feet before starting a task.</p>
+          <p>Add:</p>
+          <p class="font-medium text-2xl text-slate-950">Notice what happened just before.</p>
+          <p>Then continue normally.</p>
+          <div class="mt-8 pt-6">
+            <p class="text-base text-slate-600 italic">We are becoming interested in the sequence.</p>
+          </div>
+        </div>
       </section>
+
+      <!-- Stage 2 Expanded Sections -->
+      <template v-if="weekNumber === 2">
+        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-slate-950">
+            Why This Matters
+          </h2>
+          <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+            <p
+                v-for="paragraph in week.openingReflection"
+                :key="paragraph"
+            >
+              {{ paragraph }}
+            </p>
+          </div>
+        </section>
+
+        <section
+            v-if="week.bodyFocus"
+            class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+        >
+          <h2 class="text-2xl font-semibold text-slate-950">
+            Including the Body
+          </h2>
+          <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+            <p
+                v-for="paragraph in week.bodyFocus"
+                :key="paragraph"
+            >
+              {{ paragraph }}
+            </p>
+          </div>
+        </section>
+
+        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-slate-950">
+            Observation exercises
+          </h2>
+          <div class="mt-6 grid gap-4">
+            <div
+                v-for="exercise in week.exercises"
+                :key="exercise.title"
+                class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+            >
+              <h3 class="font-medium text-slate-950">
+                {{ exercise.title }}
+              </h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600">
+                {{ exercise.description }}
+              </p>
+            </div>
+          </div>
+        </section>
+      </template>
 
       <!-- Reflect with MindWorks -->
       <section
@@ -105,7 +168,7 @@
           </h2>
 
           <div
-              v-if="weekCompleted && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
+              v-if="weekCompleted && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
               class="rounded-full bg-emerald-100 px-4 py-2 text-xs font-medium text-emerald-700"
           >
             Reflection completed
@@ -179,7 +242,7 @@
 
         <!-- Reflection Output -->
         <div
-            v-if="response && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
+            v-if="response && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
             class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6"
         >
 
@@ -199,7 +262,7 @@
 
       <!-- Emerging Pattern Card (What MindWorks Is Noticing) -->
       <section
-          v-if="quizProfileSummary && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
+          v-if="quizProfileSummary && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -212,7 +275,7 @@
 
       <!-- Continuity Observation (What MindWorks Is Noticing) -->
       <section
-          v-if="showPatternBlock && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
+          v-if="showPatternBlock && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -246,7 +309,7 @@
 
       <!-- Recent Reflections -->
       <section
-          v-if="reflectionsHistory.length > 0 && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
+          v-if="reflectionsHistory.length > 0 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <h3 class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">
@@ -302,8 +365,42 @@
         </div>
       </section>
 
+      <!-- Sequence Becoming Visible (Stage 2 Specific) -->
+      <section
+          v-if="weekNumber === 2"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+      >
+        <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
+          Sequence Becoming Visible
+        </p>
+        <p class="mb-6 text-base text-slate-600">
+          As you begin to map the order of events, the movement from intention to response becomes more visible.
+        </p>
+
+        <div class="border-t border-slate-100 pt-6 mt-8">
+          <p class="mb-4 text-sm font-medium uppercase tracking-wider text-slate-500">
+            Current Sequence
+          </p>
+        </div>
+
+        <div class="mt-8 inline-flex flex-col items-start gap-3">
+          <template v-for="(step, index) in ['Intention', 'Internal Shift', 'Response']" :key="index">
+            <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
+              <span class="text-base font-medium text-slate-900">{{ step }}</span>
+            </div>
+
+            <div v-if="index < 2" class="flex w-full justify-center py-0.5 text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14" />
+                <path d="m19 12-7 7-7-7" />
+              </svg>
+            </div>
+          </template>
+        </div>
+      </section>
+
       <!-- Read More Accordion for Stage 1-5 (Why This Matters) -->
-      <section v-if="weekNumber !== 6" class="mb-10">
+      <section v-if="weekNumber !== 6 && weekNumber !== 2" class="mb-10">
         <button
             @click="showReadMore = !showReadMore"
             class="flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:bg-slate-50"
@@ -573,6 +670,7 @@ const showPatternBlock = computed(() => {
 })
 
 const showSequenceBlock = computed(() => {
+  if (weekNumber.value === 2) return hasGeneratedReflectionThisSession.value
   return weekNumber.value >= 2 && topPattern.value && topPattern.value.examples.length >= 2
 })
 

@@ -105,6 +105,12 @@ Pay attention to:
 
 The task is to map the sequence.
 
+For the ### Questions to stay with section, you must use maximum TWO questions and use ONLY observational wording.
+Examples of preferred wording:
+* "Was the tension in the chest present before opening email?"
+* "What did you notice just before the intention to start work?"
+Do NOT use causal wording like "How did the tension in the chest influence the decision to open email?".
+
 For the ### A recognition section, use a simple, non-explanatory tone.
 Examples of preferred tone:
 "A sequence has become visible. Intention, looking at the phone, tension, and opening email can now be seen in order. For now, the task is simply to notice the order."
