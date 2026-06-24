@@ -233,14 +233,29 @@
           />
         </div>
 
-        <button
-            type="button"
-            :disabled="loading || !reflection.trim()"
-            @click="submitReflection"
-            class="mt-5 rounded-xl bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          {{ loading ? "Reflecting..." : "Generate reflection" }}
-        </button>
+        <div class="mt-5 flex items-center gap-4">
+          <button
+              type="button"
+              :disabled="loading || !reflection.trim()"
+              @click="submitReflection"
+              class="rounded-xl bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {{ loading ? "Reflecting..." : "Generate reflection" }}
+          </button>
+
+          <Transition
+              enter-active-class="transition duration-300 ease-out"
+              enter-from-class="opacity-0 translate-x-2"
+              enter-to-class="opacity-100 translate-x-0"
+              leave-active-class="transition duration-200 ease-in"
+              leave-from-class="opacity-100 translate-x-0"
+              leave-to-class="opacity-0 translate-x-2"
+          >
+            <p v-if="loading" class="text-sm font-medium text-slate-500 italic">
+              {{ currentLoadingMessage }}
+            </p>
+          </Transition>
+        </div>
 
         <div
             v-if="error"
@@ -287,9 +302,9 @@
 
       </section>
 
-      <!-- Emerging Pattern Card (What MindWorks Is Noticing) -->
+      <!-- Initial Observation Profile (from Quiz) -->
       <section
-          v-if="quizProfileSummary && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          v-if="quizProfileSummary && reflectionsHistory.length >= 1 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -309,14 +324,9 @@
           {{ patternBlockLabel }}
         </p>
 
-        <template v-if="reflectionsHistory.length === 1">
+        <template v-if="reflectionsHistory.length === 2">
           <p class="text-base text-slate-600 leading-relaxed">
             MindWorks is collecting observations. Patterns become visible through repetition.
-          </p>
-        </template>
-        <template v-else-if="reflectionsHistory.length === 2">
-          <p class="text-base text-slate-600 leading-relaxed">
-            A sequence may be beginning to emerge.
           </p>
         </template>
         <template v-else>
@@ -582,7 +592,9 @@
 import {
   computed,
   onMounted,
-  ref
+  onUnmounted,
+  ref,
+  watch
 } from "vue"
 
 import { useRoute }
@@ -634,6 +646,37 @@ const bodyObservationPlaceholder = "Tightness in chest, restlessness in hands, h
 
 const restoredReflection =
     ref(false)
+
+const loadingMessages = [
+  "Reading the observation...",
+  "Placing events in sequence...",
+  "Looking for what changed...",
+  "Keeping the uncertainty intact...",
+  "Preparing the reflection..."
+]
+
+const currentLoadingMessage = ref(loadingMessages[0])
+let loadingInterval = null
+
+const startLoadingRotation = () => {
+  let index = 0
+  currentLoadingMessage.value = loadingMessages[0]
+  loadingInterval = setInterval(() => {
+    index = (index + 1) % loadingMessages.length
+    currentLoadingMessage.value = loadingMessages[index]
+  }, 3000)
+}
+
+const stopLoadingRotation = () => {
+  if (loadingInterval) {
+    clearInterval(loadingInterval)
+    loadingInterval = null
+  }
+}
+
+onUnmounted(() => {
+  stopLoadingRotation()
+})
 
 const quizProfileSummary =
     ref("")
@@ -751,12 +794,32 @@ const uniqueObservations = computed(() => {
 const showPatternBlock = computed(() => {
   const count = reflectionsHistory.value.length
   if (count < 1) return false
-  if (count === 1) return true // Show message
-  if (count === 2) return true // Show optional message
+  if (count === 1) return false // show nothing for 1 reflection (rule: 1 reflection: show only the reflection output)
+  if (count === 2) return true // Show optional message: "MindWorks is collecting observations. Patterns become visible through repetition."
+  
+  // For 3+ reflections
+  if (weekNumber.value === 1 || weekNumber.value === 2) {
+    // Rules: 3+ reflections: show What MindWorks Is Noticing / continuity pattern sections
+    // Note: showPatternBlock is used for "Continuity Observation (What MindWorks Is Noticing)" section
+    // For Stage 1-2, we already have gating hasGeneratedReflectionThisSession in template
+    return true
+  }
+
   return topPattern.value && topPattern.value.examples.length >= 2
 })
 
 const showSequenceBlock = computed(() => {
+  const count = reflectionsHistory.value.length
+  
+  // Rules say 3+ for What MindWorks Is Noticing / continuity pattern sections
+  // Exception: Stage 2 "Sequence Becoming Visible" was requested previously to show after reflection in current session.
+  // However, the new "Audit and fix pattern visibility trust rules" say:
+  // 1 reflection: show only reflection output, no pattern language.
+  // 2 reflections: show "MindWorks is collecting..."
+  // 3+ reflections: show What MindWorks Is Noticing / continuity pattern sections.
+  
+  if (count < 3) return false
+  
   if (weekNumber.value === 2) return hasGeneratedReflectionThisSession.value
   return weekNumber.value >= 2 && topPattern.value && topPattern.value.examples.length >= 2
 })
@@ -1002,6 +1065,7 @@ const submitReflection = async () => {
 
   response.value = ""
   loading.value = true
+  startLoadingRotation()
 
   try {
 
@@ -1097,8 +1161,8 @@ const submitReflection = async () => {
   } finally {
 
     loading.value = false
+    stopLoadingRotation()
 
   }
-
 }
 </script>

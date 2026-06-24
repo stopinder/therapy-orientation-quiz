@@ -45,9 +45,23 @@ export default async function handler(request, response) {
             })
         }
 
-        if (!reflectionsData || reflectionsData.length < 2) {
+        const count = reflectionsData?.length || 0
+
+        if (count === 0) {
             return response.status(200).json({
-                summary: "MindWorks is beginning to gather enough observations to notice recurring structures. Continue adding reflections and this section will become more specific."
+                summary: ""
+            })
+        }
+
+        if (count === 1) {
+            return response.status(200).json({
+                summary: ""
+            })
+        }
+
+        if (count === 2) {
+            return response.status(200).json({
+                summary: "MindWorks is collecting observations. Patterns become visible through repetition."
             })
         }
 

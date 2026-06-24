@@ -30,7 +30,7 @@
               Visibility Summary
             </p>
 
-            <div v-if="continuitySummary">
+            <div v-if="reflections.length >= 3 && continuitySummary">
               <p class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500">
                 What is becoming visible
               </p>
@@ -41,10 +41,17 @@
                 This is not a conclusion. It is what MindWorks is beginning to notice across recent observations.
               </p>
             </div>
+            
+            <div v-else-if="reflections.length === 2">
+              <p class="text-lg leading-relaxed text-slate-300">
+                MindWorks is collecting observations. Patterns become visible through repetition.
+              </p>
+            </div>
 
             <div v-else>
+              <!-- 0 or 1 reflection: show no personal insight -->
               <p class="text-lg leading-relaxed text-slate-300">
-                MindWorks is beginning to gather enough observations to notice recurring structures. Continue adding reflections and this section will become more specific.
+                MindWorks looks across your reflections to show what is becoming visible over time. Personal insights appear as more reflections are added.
               </p>
             </div>
           </div>
