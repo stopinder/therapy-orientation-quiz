@@ -263,7 +263,7 @@ Do not list pressure, fear, tightness, shallow breathing, or body sensations as 
 
 ### What these responses may have in common
 A short description of how these responses may be related. Use cautious language.
-Example: "All three responses—checking, preparing, and delaying—appeared before entering the meeting. It is not yet clear whether they are serving the same function."
+Example: "All three responses—checking, preparing, and delaying—appeared before entering the meeting. It is not yet clear whether they serve the same function, or whether each changes the pressure in a different way."
 Do not include the uncertainty about the relationship here; place it in the "What remains unclear" section instead.
 Do not use the phrase "system at play", "system becoming visible", "may create a pause", "may reduce exposure", or "may change the pressure". Use "relationship still being observed" instead.
 Do not present the system as fact. Do not say "This is your system", "The system is", "This means", "This is because", "This protects you from", or "This is a protector".

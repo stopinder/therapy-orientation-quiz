@@ -32,6 +32,30 @@
 
     </div>
 
+    <!-- Patterns Across Time / Continuity Entry -->
+
+    <div
+        class="mb-14 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:shadow-md"
+    >
+      <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div class="max-w-2xl">
+          <h2 class="text-2xl font-semibold text-slate-900">
+            Patterns Across Time
+          </h2>
+          <p class="mt-3 text-base leading-relaxed text-slate-600">
+            MindWorks is beginning to notice what keeps reappearing across your reflections:
+            repeated sequences, familiar states, and responses that return under similar conditions.
+          </p>
+        </div>
+        <router-link
+            to="/continuity"
+            class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
+        >
+          View what keeps reappearing
+        </router-link>
+      </div>
+    </div>
+
     <!-- Programme Card -->
 
     <div

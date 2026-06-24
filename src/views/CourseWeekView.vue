@@ -65,6 +65,18 @@
           </div>
         </section>
 
+        <!-- Video Introduction Placeholder -->
+        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-slate-950">
+            Video Introduction
+          </h2>
+          <div class="mt-6 flex aspect-video items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-8 text-center">
+            <p class="max-w-xs text-sm text-slate-500">
+              A short introduction from Rob explaining this stage's experiment and what to look for.
+            </p>
+          </div>
+        </section>
+
         <section
             v-if="week.bodyFocus"
             class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
@@ -103,8 +115,8 @@
         </section>
       </template>
 
-      <!-- Video Introduction Placeholder -->
-      <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+      <!-- Video Introduction Placeholder (for non-Stage 6) -->
+      <section v-if="weekNumber !== 6" class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
         <h2 class="text-2xl font-semibold text-slate-950">
           Video Introduction
         </h2>
