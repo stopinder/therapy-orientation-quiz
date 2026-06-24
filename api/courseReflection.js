@@ -78,8 +78,7 @@ Pay attention to:
 
 The task is recognition of the interruption.
 
-Reduce Stage 1 reflection follow-up questions to a maximum of two.
-Preferred two questions:
+For the ### Questions to stay with section, you must use ONLY these two questions:
 * What do you remember about the moment you shifted from work to checking messages?
 * Did checking messages feel like a choice, or did it happen before you noticed?
 
