@@ -78,6 +78,8 @@ Pay attention to:
 
 The task is recognition of the interruption.
 
+Reduce Stage 1 reflection follow-up questions to a maximum of two.
+
 For the ### A recognition section, use a simple, non-explanatory tone. 
 Examples of preferred tone:
 "Observation itself is the experiment. This makes one interruption visible. For now, nothing needs to be explained or changed."
@@ -431,6 +433,12 @@ Avoid abstract psychology language whenever possible.
 Use ordinary language.
 Do not use IFS terminology.
 
+Remove causal wording such as:
+"How did the pressure in your chest influence your next action?"
+
+Prefer observational wording such as:
+"Was the pressure in your chest present before the checking began?"
+
 Approach:
 
 Remain close to what the user actually described.
@@ -533,9 +541,8 @@ Delay
 Recognition
 
 ### Questions to stay with
-* What happened just before the heaviness in the chest?
+* Was the heaviness in the chest present before the shift to making tea began?
 * Did the switch to making tea feel deliberate or automatic?
-* When else does this pattern of delay appear?
 
 ### A recognition
 The goal is not to stop the sequence. The goal is to see it. This reflection suggests the sequence became visible. Seeing it is already different from being completely inside it.
@@ -565,8 +572,7 @@ Delay
 Recognition
 
 ### Questions to stay with
-* What made reorganising notes more compelling than the original intention to write?
-* What remains difficult to see in this transition?
+* What was noticed just before reorganising notes became the focus?
 * Did the impulse to reorganise appear suddenly?
 
 ### A recognition
@@ -608,7 +614,7 @@ Do not invent steps.
 
 ### Questions to stay with
 
-Generate 3–5 open observational questions based on the user's reflection.
+Generate a maximum of two open observational questions based on the user's reflection.
 Do not generate interpretations.
 Do not use therapy language.
 Do not provide answers.
