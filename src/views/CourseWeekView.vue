@@ -105,7 +105,7 @@
           </h2>
 
           <div
-              v-if="weekCompleted"
+              v-if="weekCompleted && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
               class="rounded-full bg-emerald-100 px-4 py-2 text-xs font-medium text-emerald-700"
           >
             Reflection completed
@@ -179,7 +179,7 @@
 
         <!-- Reflection Output -->
         <div
-            v-if="response"
+            v-if="response && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
             class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6"
         >
 
@@ -199,7 +199,7 @@
 
       <!-- Emerging Pattern Card (What MindWorks Is Noticing) -->
       <section
-          v-if="quizProfileSummary && (weekNumber !== 1 || response)"
+          v-if="quizProfileSummary && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -212,7 +212,7 @@
 
       <!-- Continuity Observation (What MindWorks Is Noticing) -->
       <section
-          v-if="showPatternBlock && (weekNumber !== 1 || response)"
+          v-if="showPatternBlock && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -246,7 +246,7 @@
 
       <!-- Recent Reflections -->
       <section
-          v-if="reflectionsHistory.length > 0 && (weekNumber !== 1 || response)"
+          v-if="reflectionsHistory.length > 0 && (weekNumber !== 1 || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <h3 class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">
@@ -485,6 +485,8 @@ const bodyObservation = ref("")
 const response = ref("")
 const loading = ref(false)
 const error = ref("")
+
+const hasGeneratedReflectionThisSession = ref(false)
 
 const restoredReflection =
     ref(false)
@@ -887,6 +889,8 @@ const submitReflection = async () => {
 
     response.value =
         data.reflection || ""
+
+    hasGeneratedReflectionThisSession.value = true
 
     reflection.value = ""
     bodyObservation.value = ""
