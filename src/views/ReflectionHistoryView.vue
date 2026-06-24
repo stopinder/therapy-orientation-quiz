@@ -31,13 +31,25 @@
             </p>
 
             <div v-if="reflections.length >= 3 && continuitySummary">
-              <p class="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-500">
+              <p class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">
                 What is becoming visible
               </p>
-              <div class="whitespace-pre-line text-lg leading-relaxed text-slate-300">
-                {{ continuitySummary }}
+              
+              <div class="space-y-8">
+                <div 
+                  v-for="(section, idx) in parsedContinuitySummary" 
+                  :key="idx"
+                >
+                  <h4 v-if="section.title" class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                    {{ section.title }}
+                  </h4>
+                  <div class="whitespace-pre-line text-lg leading-relaxed text-slate-300">
+                    {{ section.content }}
+                  </div>
+                </div>
               </div>
-              <p class="mt-5 text-sm leading-relaxed text-slate-500">
+
+              <p class="mt-8 pt-6 border-t border-slate-800 text-sm leading-relaxed text-slate-500">
                 This is not a conclusion. It is what MindWorks is beginning to notice across recent observations.
               </p>
             </div>
@@ -259,6 +271,41 @@ const possibleFunctionQuestion = computed(() => {
 })
 
 const continuitySummary = ref("")
+
+const parsedContinuitySummary = computed(() => {
+  if (!continuitySummary.value) return []
+
+  const sections = []
+  const lines = continuitySummary.value.split('\n')
+  let currentSection = null
+
+  lines.forEach(line => {
+    const headingMatch = line.match(/^###\s+(.*)/)
+    if (headingMatch) {
+      if (currentSection) sections.push(currentSection)
+      currentSection = {
+        title: headingMatch[1].trim(),
+        content: []
+      }
+    } else if (line.trim() || (currentSection && currentSection.content.length > 0)) {
+      if (currentSection) {
+        currentSection.content.push(line)
+      } else if (line.trim()) {
+        currentSection = {
+          title: "",
+          content: [line]
+        }
+      }
+    }
+  })
+
+  if (currentSection) sections.push(currentSection)
+
+  return sections.map(s => ({
+    ...s,
+    content: s.content.join('\n').trim()
+  }))
+})
 
 const fetchContinuitySummary =
     async () => {
