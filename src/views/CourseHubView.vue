@@ -35,9 +35,9 @@
     <!-- Patterns Across Time / Continuity Entry -->
 
     <div
-        class="mb-14 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:shadow-md"
+        class="mb-14 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
     >
-      <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div class="max-w-2xl">
           <h2 class="text-2xl font-semibold text-slate-900">
             Patterns Across Time
@@ -49,9 +49,9 @@
         </div>
         <router-link
             to="/continuity"
-            class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-700"
+            class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-8 py-4 text-base font-semibold text-white transition hover:bg-slate-700 w-full md:w-auto shadow-lg"
         >
-          View what keeps reappearing
+          See My Patterns
         </router-link>
       </div>
     </div>
