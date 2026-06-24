@@ -30,7 +30,7 @@
         <div class="flex flex-wrap gap-3 pt-2">
 
           <router-link
-              to="/adhd-quiz"
+              to="/gateway"
               class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
           >
             Begin the reflection
