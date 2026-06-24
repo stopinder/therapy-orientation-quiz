@@ -526,7 +526,7 @@ const patternBlockLabel = computed(() => {
   if (n === 3) return "What MindWorks Is Noticing"
   if (n === 4) return "State Becoming Visible"
   if (n === 5) return "Possible Function"
-  if (n === 6) return "System Becoming Visible"
+  if (n === 6) return "What Keeps Appearing Around Pressure"
   return "What MindWorks Is Noticing"
 })
 
@@ -535,7 +535,7 @@ const patternTypeLabel = computed(() => {
   if (n === 3) return "Possible Pattern"
   if (n === 4) return "Primary State"
   if (n === 5) return "Potential Function"
-  if (n === 6) return "Systemic Relationship"
+  if (n === 6) return "What These Responses May Have In Common"
   return "Possible Pattern"
 })
 
@@ -544,7 +544,7 @@ const discoveryWording = computed(() => {
   if (n === 3) return "Across recent reflections, a recurring structure is beginning to appear."
   if (n === 4) return "MindWorks is noticing the emotional climate and internal conditions that tend to precede this sequence: pressure, uncertainty, body context, or exposure."
   if (n === 5) return "This recurring sequence appears to accomplish something, though it is not yet clear. It may be providing relief, reducing uncertainty, or protecting continuity by creating a pause."
-  if (n === 6) return "MindWorks is noticing relationships between patterns, specifically recurring protective responses and the states that appear under pressure."
+  if (n === 6) return "MindWorks is beginning to observe whether several different responses gather around similar conditions."
   return "Across recent reflections:"
 })
 
@@ -553,7 +553,7 @@ const stagePrimaryContent = computed(() => {
   if (n === 3) return topPattern.value?.name || ""
   if (n === 4) return "Pressure or uncertainty appears before checking, preparing, or delay."
   if (n === 5) return "Checking or preparing may create a pause, reduce uncertainty, delay exposure, or provide brief relief."
-  if (n === 6) return "Similar responses appear around moments of pressure, exposure, or beginning: checking, preparing, delaying, and reorganising. The relationship between these responses is still being observed."
+  if (n === 6) return "Checking, preparing, delaying, or reorganising may look different on the surface. Yet they appear around the same pressure. It is not yet clear whether they are trying to accomplish something similar."
   return topPattern.value?.name || ""
 })
 
