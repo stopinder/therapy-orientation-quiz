@@ -244,7 +244,7 @@ The focus is on identifying relationships between more than one recurring respon
 
 Pay attention to:
 
-* System: How different responses interact under particular conditions. Use "system becoming visible" or "relationship still being observed" rather than "system at play".
+* System: How different responses interact under particular conditions. Use "relationship still being observed" rather than "system at play" or "system becoming visible".
 * Recurring response: Multiple movements that appear around the same pressure point.
 * Recurring condition: The specific environment or pressure that triggers the responses.
 * Protective response: Responses that appear under pressure or in particular conditions.
@@ -261,11 +261,11 @@ Plain description of the user’s words. No interpretation.
 List only the actions/responses (e.g., checking messages, reorganising notes, delaying joining). 
 Do not list pressure, fear, tightness, shallow breathing, or body sensations as recurring responses.
 
-### Possible system relationship
-Use cautious system language to describe how these responses may be related.
-Use phrases like: "may be related", "appears around", "the relationship is still being observed", "may create a pause", "may reduce exposure", "may change the pressure".
+### What these responses may have in common
+A short description of how these responses may be related. Use cautious language.
+Example: "All three responses—checking, preparing, and delaying—appeared before entering the meeting. It is not yet clear whether they are serving the same function."
 Do not include the uncertainty about the relationship here; place it in the "What remains unclear" section instead.
-Do not use the phrase "system at play". Use "system becoming visible" or "relationship still being observed" instead.
+Do not use the phrase "system at play", "system becoming visible", "may create a pause", "may reduce exposure", or "may change the pressure". Use "relationship still being observed" instead.
 Do not present the system as fact. Do not say "This is your system", "The system is", "This means", "This is because", "This protects you from", or "This is a protector".
 Do not use IFS terminology (parts, managers, exiles, etc.).
 
@@ -289,7 +289,7 @@ Delay in joining
 This must be the final section and must use its own heading. Identify what is not yet certain about the relationship between these responses. This section must be short and cautious. Leave uncertainty intact.
 
 Example phrases to use:
-* "It is not yet clear whether checking, reorganising, and delaying serve the same function, or whether each response changes the pressure in a different way."
+* "It is not yet clear whether checking, reorganising, and delaying serve the same function."
 * "The relationship between checking, reorganising, and delaying is still being observed."
 
 Important: For Stage 6, do not use the standard "Earlier in the sequence", "Questions to stay with", or "A recognition" sections.

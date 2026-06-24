@@ -49,6 +49,60 @@
 
       </div>
 
+      <!-- Stage 6 specific expanded content -->
+      <template v-if="weekNumber === 6">
+        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-slate-950">
+            Why This Matters
+          </h2>
+          <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+            <p
+                v-for="paragraph in week.openingReflection"
+                :key="paragraph"
+            >
+              {{ paragraph }}
+            </p>
+          </div>
+        </section>
+
+        <section
+            v-if="week.bodyFocus"
+            class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+        >
+          <h2 class="text-2xl font-semibold text-slate-950">
+            Including the Body
+          </h2>
+          <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+            <p
+                v-for="paragraph in week.bodyFocus"
+                :key="paragraph"
+            >
+              {{ paragraph }}
+            </p>
+          </div>
+        </section>
+
+        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <h2 class="text-2xl font-semibold text-slate-950">
+            Observation exercises
+          </h2>
+          <div class="mt-6 grid gap-4">
+            <div
+                v-for="exercise in week.exercises"
+                :key="exercise.title"
+                class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+            >
+              <h3 class="font-medium text-slate-950">
+                {{ exercise.title }}
+              </h3>
+              <p class="mt-2 text-sm leading-6 text-slate-600">
+                {{ exercise.description }}
+              </p>
+            </div>
+          </div>
+        </section>
+      </template>
+
       <!-- Video Introduction Placeholder -->
       <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
         <h2 class="text-2xl font-semibold text-slate-950">
@@ -302,86 +356,86 @@
 
       </section>
 
-      <!-- Read More Accordion -->
-      <section class="mb-10">
-        <button
-            @click="showReadMore = !showReadMore"
-            class="flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:bg-slate-50"
-        >
-          <span class="text-xl font-semibold text-slate-950">Why This Matters</span>
-          <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-slate-400 transition-transform duration-200"
-              :class="{ 'rotate-180': showReadMore }"
+        <!-- Read More Accordion for Stage 1-5 -->
+        <section v-if="weekNumber !== 6" class="mb-10">
+          <button
+              @click="showReadMore = !showReadMore"
+              class="flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:bg-slate-50"
           >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </button>
-
-        <div
-            v-if="showReadMore"
-            class="mt-4 space-y-4"
-        >
-          <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-            <h2 class="text-2xl font-semibold text-slate-950">
-              Opening reflection
-            </h2>
-            <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
-              <p
-                  v-for="paragraph in week.openingReflection"
-                  :key="paragraph"
-              >
-                {{ paragraph }}
-              </p>
-            </div>
-          </div>
+            <span class="text-xl font-semibold text-slate-950">Why This Matters</span>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-slate-400 transition-transform duration-200"
+                :class="{ 'rotate-180': showReadMore }"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
 
           <div
-              v-if="week.bodyFocus"
-              class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+              v-if="showReadMore"
+              class="mt-4 space-y-4"
           >
-            <h2 class="text-2xl font-semibold text-slate-950">
-              Including the Body
-            </h2>
-            <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
-              <p
-                  v-for="paragraph in week.bodyFocus"
-                  :key="paragraph"
-              >
-                {{ paragraph }}
-              </p>
-            </div>
-          </div>
-
-          <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-            <h2 class="text-2xl font-semibold text-slate-950">
-              Observation exercises
-            </h2>
-            <div class="mt-6 grid gap-4">
-              <div
-                  v-for="exercise in week.exercises"
-                  :key="exercise.title"
-                  class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
-              >
-                <h3 class="font-medium text-slate-950">
-                  {{ exercise.title }}
-                </h3>
-                <p class="mt-2 text-sm leading-6 text-slate-600">
-                  {{ exercise.description }}
+            <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+              <h2 class="text-2xl font-semibold text-slate-950">
+                Opening reflection
+              </h2>
+              <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+                <p
+                    v-for="paragraph in week.openingReflection"
+                    :key="paragraph"
+                >
+                  {{ paragraph }}
                 </p>
               </div>
             </div>
+
+            <div
+                v-if="week.bodyFocus"
+                class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+            >
+              <h2 class="text-2xl font-semibold text-slate-950">
+                Including the Body
+              </h2>
+              <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+                <p
+                    v-for="paragraph in week.bodyFocus"
+                    :key="paragraph"
+                >
+                  {{ paragraph }}
+                </p>
+              </div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+              <h2 class="text-2xl font-semibold text-slate-950">
+                Observation exercises
+              </h2>
+              <div class="mt-6 grid gap-4">
+                <div
+                    v-for="exercise in week.exercises"
+                    :key="exercise.title"
+                    class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+                >
+                  <h3 class="font-medium text-slate-950">
+                    {{ exercise.title }}
+                  </h3>
+                  <p class="mt-2 text-sm leading-6 text-slate-600">
+                    {{ exercise.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
     </div>
     ```
