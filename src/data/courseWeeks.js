@@ -257,48 +257,71 @@ export const courseWeeks = [
     {
         number: 6,
 
-        title: "System",
+        title: "Different Responses, Same Pressure",
 
         subtitle:
-            "Mapping recurring responses under recurring conditions.",
+            "Noticing when several responses appear around similar conditions.",
 
         reflectionPrompt:
             "Describe a moment where more than one familiar response appeared around the same pressure, task, or relationship.",
 
         intro:
-            "This stage focuses on the relationships between patterns. We observe how recurring states, sequences, and functions begin to form an internal system of protective responses.",
+            "This stage looks at what happens when similar pressure gives rise to different responses. Sometimes the response is checking. Sometimes it is preparing. Sometimes it is delaying, reorganising, or pulling away. On the surface these behaviours may look separate. MindWorks is beginning to notice whether they are related.",
 
         openingReflection: [
-            "As you look across your accumulated observations, you may begin to see that these patterns do not exist in isolation. They form a system.",
+            "By this point, you may have seen repeated sequences, states, and functions across your reflections. Some may seem separate at first: checking, preparing, delaying, reorganising, withdrawing, or overthinking.",
 
-            "A recurring condition—a specific kind of pressure, uncertainty, or emotional climate—tends to trigger a recurring response. These are not random accidents; they are part of a coordinated internal system that manages exposure and protects continuity in its own way.",
+            "Stage 6 looks across these observations. The question is not yet what the system is. The question is whether different responses keep appearing around similar moments of pressure, uncertainty, exposure, or demand.",
 
-            "This stage is about mapping those relationships. We are not looking for a psychological theory or an abstract explanation. We are looking for the actual, observable links between the climate you inhabit and the movements you make.",
+            "A response may look different on the surface, while still appearing in a similar situation. Preparing may appear before one task. Checking may appear before another. Delaying may appear somewhere else. MindWorks is beginning to observe whether these responses gather around similar conditions.",
 
-            "By seeing these recurring protective responses as they appear under particular conditions, the system itself becomes visible. You may notice that one pattern protects against a certain state, while another manages a different kind of pressure.",
+            "No final explanation is needed here. The task is simply to notice the relationship: what appears, when it appears, and whether several different responses seem to arrive around the same kind of pressure.",
 
-            "Recognition shifts from seeing a single pattern to seeing the map of how you respond to the world. The sequence is no longer something that simply happens to you; it is a recognisable part of an internal system you are beginning to see.",
-
-            "This shift from 'it happens to me' toward 'I am beginning to see the system' is the final layer of visibility. Staying with this seeing allows for a different relationship with your recurring responses. Recognition is the first shift in the system."
+            "This is the beginning of seeing a system. Not as a theory, but as a visible relationship between conditions and responses."
         ],
 
         bodyFocus: [
-            "Systems are often felt as recurring physical responses to recurring conditions. Observe how the body prepares for or responds to specific states.",
-            "The goal is not to alter the system, but to map the relationships between internal conditions and physical responses."
+            "When you recall checking, preparing, delaying, or reorganising, notice whether the body carries a similar pressure, tension, urgency, heaviness, or uncertainty.",
+            "Observe whether the body responds similarly across different behaviours, even if the behaviours themselves look different."
+        ],
+
+        dailyPractice: [
+
+            {
+                title: "Notice the shared condition",
+
+                description:
+                    "Identify one pressure, task, or relationship where more than one familiar response appears."
+            },
+
+            {
+                title: "Compare the responses",
+
+                description:
+                    "Notice whether checking, preparing, delaying, reorganising, or withdrawing appear in similar moments."
+            },
+
+            {
+                title: "Stay with the relationship",
+
+                description:
+                    "Do not try to explain the responses. Simply observe whether they seem to gather around the same pressure."
+            }
+
         ],
 
         exercises: [
             {
-                title: "Map the relationship",
-                description: "Identify one recurring condition and the specific protective response that tends to follow it."
+                title: "Notice the shared condition",
+                description: "Identify one pressure, task, or relationship where more than one familiar response appears."
             },
             {
-                title: "Notice the coordination",
-                description: "Observe how different patterns may work together to manage pressure or uncertainty."
+                title: "Compare the responses",
+                description: "Notice whether checking, preparing, delaying, reorganising, or withdrawing appear in similar moments."
             },
             {
-                title: "Stay with the system",
-                description: "Rather than trying to change the system, remain with the act of seeing its recurring relationships."
+                title: "Stay with the relationship",
+                description: "Do not try to explain the responses. Simply observe whether they seem to gather around the same pressure."
             }
         ]
 
