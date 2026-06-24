@@ -289,7 +289,7 @@
                       class="flex gap-3"
                   >
                     <span class="text-slate-400">•</span>
-                    <span>{{ q.replace(/^-\s+/, '') }}</span>
+                    <span>{{ q.replace(/^[-*]\s+/, '') }}</span>
                   </li>
                 </ul>
               </template>
@@ -317,7 +317,7 @@
 
       <!-- Continuity Observation (What MindWorks Is Noticing) -->
       <section
-          v-if="showPatternBlock && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          v-if="showPatternBlock && reflectionsHistory.length >= 2 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -884,8 +884,7 @@ const sequenceSteps = computed(() => {
   return [
     "Intention",
     "Checking / Preparing",
-    "Delay",
-    "Recognition"
+    "Delay"
   ]
 })
 

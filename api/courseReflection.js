@@ -149,6 +149,9 @@ Event
 ↓
 Event
 
+Do not include "Recognition" as a step in the sequence.
+Do not use abstract framework terms. Use only concrete observable events.
+
 ### What remains unclear
 Identify what is not yet certain about the sequence or its recurrence. Leave uncertainty intact.
 
@@ -184,6 +187,8 @@ Name the pressure, mood, emotional climate, or body context that appeared before
 
 ### The sequence
 A clean vertical sequence of events. Include the state and body context before the action.
+Do not include "Recognition" as a step in the sequence.
+Do not use abstract framework terms. Use only concrete observable events.
 Example:
 Pressure and uncertainty before starting work
 ↓
@@ -234,6 +239,9 @@ Event
 ↓
 Shift
 
+Do not include "Recognition" as a step in the sequence.
+Do not use abstract framework terms. Use only concrete observable events.
+
 ### Possible function
 Use cautious functional language to identify what the pattern may be accomplishing.
 Use phrases like: "may have", "appears to", "it is not yet clear", "may be changing the pressure", "may create a pause", "may briefly reduce exposure", "may provide brief relief".
@@ -283,6 +291,8 @@ Do not use IFS terminology (parts, managers, exiles, etc.).
 A clean vertical sequence of events.
 Do not append body observations to the end of the sequence by default. 
 If the user gives body observations without specific timing, place them near the emotional/state condition they seem to accompany (such as the pressure point or triggering condition), not at the end.
+Do not include "Recognition" as a step in the sequence.
+Do not use abstract framework terms. Use only concrete observable events.
 
 Example:
 Pressure and fear before meeting
@@ -545,8 +555,6 @@ Heaviness in chest
 Tea
 ↓
 Delay
-↓
-Recognition
 
 ### Questions to stay with
 * Was the heaviness in the chest present before the shift to making tea began?
@@ -576,8 +584,6 @@ Preparing
 Reorganising notes
 ↓
 Delay
-↓
-Recognition
 
 ### Questions to stay with
 * What was noticed just before reorganising notes became the focus?
@@ -609,6 +615,9 @@ Do not explain.
 ### The sequence
 
 Represent the sequence using only observed events.
+
+Do not include "Recognition" as a step in the sequence.
+Do not use abstract framework terms. Use only concrete observable events.
 
 Prefer:
 
