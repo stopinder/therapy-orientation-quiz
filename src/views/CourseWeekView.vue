@@ -73,8 +73,46 @@
         </div>
       </section>
 
+      <!-- This Stage's Experiment (Week 1 only) -->
+      <section
+          v-if="week.number === 1"
+          class="mb-16"
+      >
+        <h2 class="text-2xl font-semibold text-slate-950">
+          This Stage's Experiment
+        </h2>
+        <div class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
+          <p>Before opening email, beginning work, or starting a task:</p>
+          <p class="font-medium text-2xl text-slate-950">Sense both feet.</p>
+          <p>Ask:</p>
+          <p class="font-medium text-2xl text-slate-950">"What am I about to do?"</p>
+          <p>Then continue normally.</p>
+          <div class="mt-8 pt-6">
+            <p class="text-base text-slate-600 italic">Do not try to change anything. Simply notice what happens.</p>
+          </div>
+        </div>
+      </section>
+
       <!-- Stage 2 Expanded Sections -->
       <template v-if="weekNumber === 2">
+        <section
+            v-if="week.number === 2"
+            class="mb-16"
+        >
+          <h2 class="text-2xl font-semibold text-slate-950">
+            This Stage's Experiment
+          </h2>
+          <div class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
+            <p>Continue to sense both feet before starting a task.</p>
+            <p>Add:</p>
+            <p class="font-medium text-2xl text-slate-950">Notice what happened just before.</p>
+            <p>Then continue normally.</p>
+            <div class="mt-8 pt-6">
+              <p class="text-base text-slate-600 italic">We are becoming interested in the sequence.</p>
+            </div>
+          </div>
+        </section>
+
         <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
           <h2 class="text-2xl font-semibold text-slate-950">
             Why This Matters
@@ -126,35 +164,6 @@
           </div>
         </section>
       </template>
-
-      <!-- This Stage's Experiment (Week 1 & 2) -->
-      <section
-          v-if="[1, 2].includes(week.number)"
-          class="mb-16"
-      >
-        <h2 class="text-2xl font-semibold text-slate-950">
-          This Stage's Experiment
-        </h2>
-        <div v-if="week.number === 1" class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
-          <p>Before opening email, beginning work, or starting a task:</p>
-          <p class="font-medium text-2xl text-slate-950">Sense both feet.</p>
-          <p>Ask:</p>
-          <p class="font-medium text-2xl text-slate-950">"What am I about to do?"</p>
-          <p>Then continue normally.</p>
-          <div class="mt-8 pt-6">
-            <p class="text-base text-slate-600 italic">Do not try to change anything. Simply notice what happens.</p>
-          </div>
-        </div>
-        <div v-if="week.number === 2" class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
-          <p>Continue to sense both feet before starting a task.</p>
-          <p>Add:</p>
-          <p class="font-medium text-2xl text-slate-950">Notice what happened just before.</p>
-          <p>Then continue normally.</p>
-          <div class="mt-8 pt-6">
-            <p class="text-base text-slate-600 italic">We are becoming interested in the sequence.</p>
-          </div>
-        </div>
-      </section>
 
       <!-- Reflect with MindWorks -->
       <section
