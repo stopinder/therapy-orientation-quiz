@@ -284,12 +284,12 @@
               <template v-if="section.title === 'Questions to stay with'">
                 <ul class="space-y-4">
                   <li
-                      v-for="(q, qIdx) in section.content.split('\n').filter(l => l.trim())"
+                      v-for="(q, qIdx) in section.content.split('\n').filter(l => l.trim() && l.replace(/^[-*•]\s+/, '').trim())"
                       :key="qIdx"
                       class="flex gap-3"
                   >
                     <span class="text-slate-400">•</span>
-                    <span>{{ q.replace(/^[-*]\s+/, '') }}</span>
+                    <span>{{ q.replace(/^[-*•]\s+/, '') }}</span>
                   </li>
                 </ul>
               </template>
@@ -329,7 +329,7 @@
             MindWorks is collecting observations. Patterns become visible through repetition.
           </p>
         </template>
-        <template v-else>
+        <template v-else-if="reflectionsHistory.length >= 3 && topPattern">
           <p class="mb-4 text-sm text-slate-500">
             {{ discoveryWording }}
           </p>
@@ -358,7 +358,7 @@
 
       <!-- Recent Reflections -->
       <section
-          v-if="reflectionsHistory.length > 0 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          v-if="reflectionsHistory.length > 0 && (weekNumber === 1 ? reflectionsHistory.length >= 3 : true) && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <h3 class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">
@@ -802,6 +802,12 @@ const showPatternBlock = computed(() => {
     // Rules: 3+ reflections: show What MindWorks Is Noticing / continuity pattern sections
     // Note: showPatternBlock is used for "Continuity Observation (What MindWorks Is Noticing)" section
     // For Stage 1-2, we already have gating hasGeneratedReflectionThisSession in template
+    
+    // REQUIREMENT: For Stage 1, do not show unless recentThemes has a valid pattern
+    if (weekNumber.value === 1) {
+      return !!topPattern.value
+    }
+    
     return true
   }
 
