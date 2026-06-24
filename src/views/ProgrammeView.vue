@@ -11,8 +11,8 @@
         </p>
 
         <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-slate-900">
-          A structured reflection on attention, fragmentation,
-          emotional avoidance, and continuity.
+          A structured visibility process for noticing how intention changes,
+          pressure builds, and familiar responses repeat.
         </h1>
 
         <div class="space-y-4 text-[1.03rem] leading-[1.85] text-slate-700 max-w-2xl">
@@ -358,37 +358,37 @@ const weeks = [
     week: "Stage 1",
     title: "Observation",
     description:
-        "Recognising how quickly awareness collapses into mechanical functioning and emotional reaction."
+        "Noticing moments where intention changes and attention moves somewhere unexpected."
   },
   {
     week: "Stage 2",
     title: "Sequence",
     description:
-        "Observing contradiction, divided intention, and the instability of sustained attention."
+        "Seeing what happens before, during, and after a moment of interruption."
   },
   {
     week: "Stage 3",
     title: "Pattern",
     description:
-        "Understanding how emotional avoidance and protective patterns shape behaviour."
+        "Recognising repeated sequences that return across different reflections."
   },
   {
     week: "Stage 4",
     title: "State",
     description:
-        "Noticing how relational pressure alters attention, presence, and emotional stability."
+        "Noticing the emotional or physical state that tends to appear around a pattern."
   },
   {
     week: "Stage 5",
     title: "Function",
     description:
-        "Developing greater grounding through body sensing and ordinary-life awareness practices."
+        "Beginning to ask what a repeated response may be doing, without rushing to explain it."
   },
   {
     week: "Stage 6",
-    title: "System",
+    title: "Different Responses, Same Pressure",
     description:
-        "Moving toward a more stable relationship with attention, emotion, and everyday functioning."
+        "Seeing whether checking, preparing, delaying, reorganising, or withdrawing appear around similar conditions."
   }
 ]
 </script>
