@@ -54,7 +54,13 @@
             <h4 v-if="section.title && section.title !== 'What is becoming visible'" class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
               {{ section.title }}
             </h4>
-            <div class="whitespace-pre-line text-lg leading-relaxed text-slate-600">
+            <div 
+              v-if="section.title === 'What is becoming visible' || !section.title" 
+              class="text-xl font-medium text-slate-900 leading-relaxed mb-8"
+            >
+              {{ section.content }}
+            </div>
+            <div v-else class="whitespace-pre-line text-lg leading-relaxed text-slate-600">
               {{ section.content }}
             </div>
           </div>

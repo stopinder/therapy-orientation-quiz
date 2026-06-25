@@ -103,7 +103,7 @@ MindWorks Reflection: ${r.ai_response}`)
         const lens = isCourseOverview
             ? {
                 question: "What is becoming visible across everything observed so far?",
-                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Use concise narrative paragraphs. Remain observational, tentative, non-diagnostic. Do not infer motives."
+                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Use concise narrative paragraphs. Remain observational, tentative, non-diagnostic. Do not infer motives. Strictly exclude headings 'Possible Function' and 'Primary State'."
             }
             : (stageLenses[currentStage] || stageLenses[6])
 
@@ -120,7 +120,7 @@ COURSE OVERVIEW PRESENTATION:
 Present your findings as a Course Overview.
 The question to address is: ${lens.question}
 
-Structure your output into these five sections:
+Structure your output into these five EXACT sections:
 
 ### What is becoming visible
 (Introductory paragraph)
@@ -138,11 +138,13 @@ Describe what commonly follows (e.g., lingering tension, unresolved emotion, del
 Describe what cannot yet be concluded. Maintain uncertainty.
 
 Rules:
-1. Use concise narrative paragraphs.
+1. Use ONLY these exact headings: "### What is becoming visible", "### Recurring Movement", "### Before the Shift", "### Afterwards", "### Still Emerging".
 2. Do not use: Possible Function, Primary State, numbered sequences, behavioural-map language, checking/preparing labels, or psychological explanations.
-3. Remain observational and tentative.
-4. Do not diagnose or infer motives.
-5. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across your accumulated observations."
+3. Remove any mention of "serve various functions" or similar causal claims.
+4. Use concise narrative paragraphs.
+5. Remain observational and tentative.
+6. Do not diagnose or infer motives.
+7. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across your accumulated observations."
 
 OUTPUT FORMAT:
 Your output MUST start with a JSON object, then a newline, then the markdown summary.
