@@ -264,6 +264,17 @@ If there is not enough evidence to see a pattern, set status to "insufficient" a
 
         const rawContent = data.choices?.[0]?.message?.content || ""
 
+        // Post-processing fail-safe for Course Overview
+        let processedContent = rawContent
+        if (isCourseOverview) {
+            processedContent = rawContent
+                .replace(/### What Keeps Reappearing/g, "### Recurring Movement")
+                .replace(/### Repeated Sequence/g, "### Recurring Movement")
+                .replace(/### Primary State/g, "### Before the Shift")
+                .replace(/### Possible Function/g, "### Afterwards")
+                .replace(/### What Remains Unclear/g, "### Still Emerging")
+        }
+
         // Extract JSON and Markdown
         let jsonResult = {
             status: "insufficient",
@@ -274,16 +285,16 @@ If there is not enough evidence to see a pattern, set status to "insufficient" a
             variants: [],
             unclear_aspects: ""
         }
-        let markdownSummary = rawContent
+        let markdownSummary = processedContent
 
         try {
-            const jsonMatch = rawContent.match(/\{[\s\S]*?\}/)
+            const jsonMatch = processedContent.match(/\{[\s\S]*?\}/)
             if (jsonMatch) {
                 jsonResult = JSON.parse(jsonMatch[0])
                 // Remove the JSON block and any surrounding whitespace or markdown code block markers
-                markdownSummary = rawContent.replace(/```json\s*[\s\S]*?```/g, "")
-                                            .replace(jsonMatch[0], "")
-                                            .trim()
+                markdownSummary = processedContent.replace(/```json\s*[\s\S]*?```/g, "")
+                                                   .replace(jsonMatch[0], "")
+                                                   .trim()
             }
         } catch (e) {
             console.error("JSON PARSE ERROR:", e)
