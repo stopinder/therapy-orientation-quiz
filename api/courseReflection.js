@@ -236,17 +236,26 @@ Describe the internal condition that appeared. Use tentative and observational l
 List ONLY genuine internal conditions/states that were present before the familiar response. Do not include external context or events here. Use the user’s own language as much as possible.
 
 ### What often followed
-Describe what followed the state, without implying causality.
-Example: "After the pressure in the stomach appeared, the intention to start work shifted to checking messages."
+Describe how the internal state continued, changed, or remained present as events unfolded.
+Preferred observations:
+- The state remained present while...
+- The feeling continued as...
+- The internal condition stayed present during...
+Keep the emphasis on continuity of the state.
 
 ### What is different this time
-Name what differs from earlier observations, if anything. This prevents forcing sameness.
+Compare the characteristics of the state itself rather than interpreting its meaning.
+Examples:
+- This time the state remained present for several hours.
+- This time the state appeared gradually.
+- This time the state emerged before a social situation rather than a work task.
+Avoid interpretations such as: social interaction, anxiety, avoidance, anticipation. Stay descriptive.
 
 ### What remains unclear
 State what cannot yet be concluded about the state or its relationship to the sequence.
 
 ### A recognition
-You are beginning to recognise the conditions in which this familiar sequence tends to emerge.
+You are beginning to recognise that familiar responses often emerge from recognisable conditions.
 
 Rules:
 1. Max TWO questions in "Questions to stay with" (if included by overall logic).
