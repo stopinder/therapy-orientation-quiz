@@ -244,7 +244,7 @@ export const courseWeeks = [
     {
         number: 5,
 
-        title: "Consequence",
+        title: "What happened next",
 
         subtitle:
             "Observing what changed after the familiar pattern appeared.",
@@ -262,9 +262,9 @@ export const courseWeeks = [
 
             "By observing what happens after the response, we move away from judgment and toward a more precise recognition. We are simply noticing the results of the movement. If checking email happens exactly when a task begins to feel heavy, we can observe what happens to that heaviness once the checking begins.",
 
-            "This is not about justifying the behaviour. It is about seeing the choreography of the event clearly enough to understand what it accomplishes in the moment. When you see what changes, the sequence begins to lose its status as an 'accident'. It becomes a recognisable movement with observable results.",
+            "This is not about justifying the behaviour. It is about seeing the choreography of the event clearly enough to understand what changes once the movement has occurred. When you see what changes, the sequence begins to lose its status as an 'accident'. It becomes a recognisable movement with observable results.",
 
-            "The goal is not to stop the movement yet, but to become interested in what follows it. What feels reduced, softened, or postponed? Recognition of these shifts is the next layer of visibility."
+            "The goal is not to stop the movement yet, but to become interested in what follows it. What happened next? Recognition of these shifts is the next layer of visibility."
         ],
 
         bodyFocus: [

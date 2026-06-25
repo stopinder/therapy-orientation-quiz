@@ -288,7 +288,7 @@ Stage 5 Output Structure (Required):
 ### What changed afterwards
 Describe what visibly or internally changed after the familiar response appeared. Use concrete observational language.
 
-### What softened, paused, or remained
+### What happened next
 Describe any observable shift in pressure, tension, attention, contact, movement, delay, or availability. Do not explain why it changed.
 
 ### What was still present

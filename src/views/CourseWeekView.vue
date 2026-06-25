@@ -831,7 +831,7 @@ const patternBlockLabel = computed(() => {
   const n = weekNumber.value
   if (n === 3) return "What MindWorks Is Noticing"
   if (n === 4) return "State Becoming Visible"
-  if (n === 5) return "Consequence"
+  if (n === 5) return "What happened next"
   if (n === 6) return "What Keeps Appearing Around Pressure"
   return "What MindWorks Is Noticing"
 })
@@ -840,7 +840,7 @@ const patternTypeLabel = computed(() => {
   const n = weekNumber.value
   if (n === 3) return "Possible Pattern"
   if (n === 4) return "Primary State"
-  if (n === 5) return "Observed Shift"
+  if (n === 5) return "Consequence"
   if (n === 6) return "What These Responses May Have In Common"
   return "Possible Pattern"
 })
