@@ -74,51 +74,47 @@ MindWorks Reflection: ${r.ai_response}`)
             .join("\n\n")
 
         const systemPrompt = `
-You are a continuity observer.
+You are a Pattern Observer.
 
-Look across multiple reflections to identify what appears repeatedly. Look for the broader relationship across observations before naming specific behaviours. 
+Look across multiple reflections to identify recurring structural patterns. Look for the broader relationship across observations before naming specific behaviours.
+
+Structural patterns to look for:
+Intention -> Pressure / body state -> Movement away from original intention -> Delay / substitute activity / cancellation
 
 Rules:
-1. Identify higher-order patterns (e.g., "There appears to be a recurring pattern in which an intention is followed by pressure or tension, then by a movement away from the original intention").
-2. Do not lock onto the most repeated surface behaviour (like "checking messages") too quickly. Use higher-order language where possible (e.g., "A change in attention appears after a signal, demand, or internal shift" or "The original intention changes after something else appears").
+1. Identify higher-order patterns (e.g., "An intention is followed by pressure or tension, then by a movement away from the original intention").
+2. Do not lock onto the most repeated surface behaviour (like "checking messages") too quickly. Use higher-order language where possible.
 3. Name specific behaviours (checking messages, scrolling, reorganising notes, delaying, cancelling, withdrawing, staying home, or substitute activities) as variants, not as the whole pattern.
-4. Use tentative, observational language.
+4. Use tentative, observational language (e.g., "This may resemble...", "This appears similar...").
 5. Do not diagnose, explain behaviour, coach, advise, or interpret motivations.
 6. Do not suggest solutions.
 7. Do not use IFS language or parts terminology.
 8. Avoid saying behaviours "reduce exposure" unless directly supported.
-9. Avoid causal language like "influences the decision" or "This is because". Prefer observational wording such as "how these emotional or physical states appear before the shift to another activity or delay".
-10. Remain close to the user's actual words. Use "stomach" instead of "tummy" if referring to that body area in any output section.
+9. Avoid causal language. Prefer observational wording such as "how these emotional or physical states appear before the shift to another activity or delay".
+10. Use "stomach" instead of "tummy".
 
-Output format with five sections:
+OUTPUT FORMAT:
+Return a JSON object followed by the markdown summary.
 
+JSON Block:
+{
+  "status": "established" | "collecting" | "insufficient",
+  "structural_pattern": "Short description of the higher-order pattern",
+  "sequence": ["Step 1", "Step 2", "Step 3", "Step 4"],
+  "primary_state": "Description of the state before the shift",
+  "possible_function": "Tentative observation of what the pattern may be doing",
+  "variants": ["variant 1", "variant 2"],
+  "unclear_aspects": "What cannot yet be concluded"
+}
+
+Markdown Summary sections:
 ### What Keeps Reappearing
-A short observation of the recurring action, behaviour, or interruption. Name the broader pattern first, then specific variants.
-Example: "There appears to be a recurring pattern in which an intention is followed by pressure or tension, then by a movement away from the original intention. That movement takes different forms, including checking messages, scrolling, reorganising notes, delaying, or cancelling."
-
 ### Repeated Sequence
-A simple sequence using arrows.
-Example:
-Intention / exposure
-↓
-Pressure or tension
-↓
-Movement away from the original intention
-↓
-Delay, cancellation, or substitute activity
-
 ### Primary State
-Name the state, pressure, emotional climate, or body condition that appears before the sequence.
-Use cautious language. Examples: "Pressure and uncertainty appear before checking or delay." "Chest tension and restlessness appear near the point where attention shifts."
-
 ### Possible Function
-Name what the pattern may be doing, using cautious language only.
-Use phrases such as: "This may be one way a pause appears before the original action continues or disappears. The exact function is still unclear.", "may provide a brief shift in attention", "appears to change the pressure".
-Do not present function as fact. Do not say "This means", "This is because", or "This protects the user from".
-
 ### What Remains Unclear
-Preserve uncertainty.
-Examples: "It is not yet clear exactly where the shift occurs." "It is not yet clear how these emotional or physical states appear before the shift to another activity or delay." "The relationship between state, response, and delay is still being observed."
+
+If there is not enough evidence to see a pattern, set status to "insufficient" and provide a neutral message.
 `.trim()
 
         const openAIResponse = await fetch(
@@ -131,7 +127,7 @@ Examples: "It is not yet clear exactly where the shift occurs." "It is not yet c
                 },
                 body: JSON.stringify({
                     model: "gpt-4o-mini",
-                    temperature: 0.5,
+                    temperature: 0,
                     messages: [
                         {
                             role: "system",
@@ -155,10 +151,34 @@ Examples: "It is not yet clear exactly where the shift occurs." "It is not yet c
             })
         }
 
-        const aiResponse = data.choices?.[0]?.message?.content || ""
+        const rawContent = data.choices?.[0]?.message?.content || ""
+
+        // Extract JSON and Markdown
+        let jsonResult = {
+            status: "insufficient",
+            structural_pattern: "",
+            sequence: [],
+            primary_state: "",
+            possible_function: "",
+            variants: [],
+            unclear_aspects: ""
+        }
+        let markdownSummary = rawContent
+
+        try {
+            const jsonMatch = rawContent.match(/\{[\s\S]*?\}/)
+            if (jsonMatch) {
+                jsonResult = JSON.parse(jsonMatch[0])
+                markdownSummary = rawContent.replace(jsonMatch[0], "").trim()
+            }
+        } catch (e) {
+            console.error("JSON PARSE ERROR:", e)
+        }
 
         return response.status(200).json({
-            summary: aiResponse
+            ...jsonResult,
+            summary: markdownSummary,
+            markdown_summary: markdownSummary
         })
 
     } catch (error) {

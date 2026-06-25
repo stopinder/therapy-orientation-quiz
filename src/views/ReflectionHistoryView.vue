@@ -370,9 +370,8 @@ const fetchContinuitySummary =
         )
 
         const data = await result.json()
-        console.log("Continuity summary received:", data.summary)
-        continuitySummary.value = data.summary || ""
-
+        console.log("Continuity summary received:", data.markdown_summary || data.summary)
+        continuitySummary.value = data.markdown_summary || data.summary || ""
       } catch (err) {
 
         console.error("CONTINUITY SUMMARY ERROR:", err)
