@@ -413,7 +413,8 @@ const fetchContinuitySummary =
 
         if (!auth.user?.id) return
 
-        console.log("Fetching continuity summary for:", auth.user.id)
+        const userStage = reflections.value?.[0]?.week_number || 6
+        console.log("Fetching continuity summary for:", auth.user.id, "at stage:", userStage)
         
         summaryLoading.value = true
         startSummaryLoadingRotation()
@@ -426,7 +427,8 @@ const fetchContinuitySummary =
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                userId: auth.user.id
+                userId: auth.user.id,
+                currentStage: userStage
               })
             }
         )

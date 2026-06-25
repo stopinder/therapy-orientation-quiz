@@ -22,7 +22,7 @@ export default async function handler(request, response) {
     }
 
     try {
-        const { userId } = request.body || {}
+        const { userId, currentStage = 6 } = request.body || {}
 
         if (!userId) {
             return response.status(400).json({
@@ -73,15 +73,50 @@ User Observation: ${r.original_reflection}
 MindWorks Reflection: ${r.ai_response}`)
             .join("\n\n")
 
+        const stageLenses = {
+            1: {
+                question: "What single observation is becoming visible?",
+                emphasis: "first observations, isolated examples, no recurrence yet"
+            },
+            2: {
+                question: "What sequence is becoming visible?",
+                emphasis: "order, transitions, before / after"
+            },
+            3: {
+                question: "What keeps recurring?",
+                emphasis: "repeated structures, recurrence, similarities, differences"
+            },
+            4: {
+                question: "What conditions tend to be present beforehand?",
+                emphasis: "recurring states, body conditions, emotional climate, anticipation, pressure, uncertainty. Do not focus primarily on behaviour."
+            },
+            5: {
+                question: "What tends to change afterwards?",
+                emphasis: "consequences, lingering emotions, unresolved states, partial settling, continued tension, postponed activity, observable shifts. Avoid: 'function', purpose, motive, protection."
+            },
+            6: {
+                question: "How do these observations now fit together?",
+                emphasis: "integration, overall organisation, relationships between observations, what has become visible across the whole journey. Do not diagnose. Do not conclude."
+            }
+        }
+
+        const lens = stageLenses[currentStage] || stageLenses[6]
+
         const systemPrompt = `
 You are a Pattern Observer.
 
+CORE ANALYSIS:
 Look across multiple reflections to identify recurring structural patterns. Look for the broader relationship across observations before naming specific behaviours.
 
 Structural patterns to look for:
 Intention -> Pressure / body state -> Movement away from original intention -> Consequence (What changed afterwards? e.g., delay, substitute activity, lingering irritation, defensiveness remaining active, partial settling, no observable change, or postponed action).
 
-Rules:
+PRESENTATION LENS (Stage ${currentStage}):
+The user is at Stage ${currentStage}. Present your findings through this specific lens:
+- Question to address: ${lens.question}
+- Emphasis: ${lens.emphasis}
+
+General Rules:
 1. Identify higher-order patterns (e.g., "An intention is followed by pressure or tension, then by a movement away from the original intention").
 2. Do not lock onto the most repeated surface behaviour (like "checking messages") too quickly. Use higher-order language where possible.
 3. Name specific behaviours (checking messages, scrolling, reorganising notes, delaying, cancelling, withdrawing, staying home, lingering irritation, defensiveness remaining active, partial settling, no observable change, or substitute activities) as variants, not as the whole pattern.
