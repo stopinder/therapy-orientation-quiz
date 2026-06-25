@@ -30,28 +30,54 @@
               Visibility Summary
             </p>
 
-            <div v-if="reflections.length >= 3 && continuitySummary">
-              <p class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">
-                What is becoming visible
-              </p>
-              
-              <div class="space-y-8">
-                <div 
-                  v-for="(section, idx) in parsedContinuitySummary" 
-                  :key="idx"
-                >
-                  <h4 v-if="section.title" class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-                    {{ section.title }}
-                  </h4>
-                  <div class="whitespace-pre-line text-lg leading-relaxed text-slate-300">
-                    {{ section.content }}
-                  </div>
+            <div v-if="reflections.length >= 3">
+              <div v-if="summaryLoading" class="py-12 flex flex-col items-center justify-center text-center">
+                <div class="mb-6 h-12 w-12 rounded-full border-2 border-slate-700 bg-slate-800 flex items-center justify-center animate-pulse">
+                  <div class="h-6 w-6 rounded-full bg-slate-400 opacity-50"></div>
                 </div>
+                
+                <Transition
+                  mode="out-in"
+                  enter-active-class="transition duration-500 ease-out"
+                  enter-from-class="opacity-0 translate-y-2"
+                  enter-to-class="opacity-100 translate-y-0"
+                  leave-active-class="transition duration-500 ease-in"
+                  leave-from-class="opacity-100 translate-y-0"
+                  leave-to-class="opacity-0 -translate-y-2"
+                >
+                  <p :key="currentSummaryLoadingMessage" class="text-xl font-medium text-slate-200">
+                    {{ currentSummaryLoadingMessage }}
+                  </p>
+                </Transition>
+                
+                <p class="mt-4 text-sm text-slate-500">
+                  This usually takes a few seconds.
+                </p>
               </div>
 
-              <p class="mt-8 pt-6 border-t border-slate-800 text-sm leading-relaxed text-slate-500">
-                This is not a conclusion. It is what MindWorks is beginning to notice across recent observations.
-              </p>
+              <div v-else-if="continuitySummary">
+                <p class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">
+                  What is becoming visible
+                </p>
+                
+                <div class="space-y-8">
+                  <div 
+                    v-for="(section, idx) in parsedContinuitySummary" 
+                    :key="idx"
+                  >
+                    <h4 v-if="section.title" class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                      {{ section.title }}
+                    </h4>
+                    <div class="whitespace-pre-line text-lg leading-relaxed text-slate-300">
+                      {{ section.content }}
+                    </div>
+                  </div>
+                </div>
+
+                <p class="mt-8 pt-6 border-t border-slate-800 text-sm leading-relaxed text-slate-500">
+                  This is not a conclusion. It is what MindWorks is beginning to notice across recent observations.
+                </p>
+              </div>
             </div>
             
             <div v-else-if="reflections.length === 2">
@@ -247,6 +273,35 @@ const reflections =
 const loading =
     ref(true)
 
+const summaryLoading = ref(false)
+
+const summaryLoadingMessages = [
+  "MindWorks is reviewing your recent observations…",
+  "Looking for recurring sequences…",
+  "Comparing moments across time…",
+  "Looking for what repeats—and what changes…",
+  "Building your Visibility Summary…"
+]
+
+const currentSummaryLoadingMessage = ref(summaryLoadingMessages[0])
+let summaryLoadingInterval = null
+
+const startSummaryLoadingRotation = () => {
+  let index = 0
+  currentSummaryLoadingMessage.value = summaryLoadingMessages[0]
+  summaryLoadingInterval = setInterval(() => {
+    index = (index + 1) % summaryLoadingMessages.length
+    currentSummaryLoadingMessage.value = summaryLoadingMessages[index]
+  }, 2000)
+}
+
+const stopSummaryLoadingRotation = () => {
+  if (summaryLoadingInterval) {
+    clearInterval(summaryLoadingInterval)
+    summaryLoadingInterval = null
+  }
+}
+
 const recentThemes = computed(() => {
   if (!reflections.value || reflections.value.length === 0) return []
 
@@ -359,6 +414,9 @@ const fetchContinuitySummary =
         if (!auth.user?.id) return
 
         console.log("Fetching continuity summary for:", auth.user.id)
+        
+        summaryLoading.value = true
+        startSummaryLoadingRotation()
 
         const result = await fetch(
             "/api/getContinuitySummary",
@@ -380,6 +438,9 @@ const fetchContinuitySummary =
 
         console.error("CONTINUITY SUMMARY ERROR:", err)
 
+      } finally {
+        summaryLoading.value = false
+        stopSummaryLoadingRotation()
       }
 
     }
