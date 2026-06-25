@@ -846,6 +846,7 @@ const patternTypeLabel = computed(() => {
 
 const discoveryWording = computed(() => {
   const n = weekNumber.value
+  if (n === 2) return "Across recent Stage 2 observations:"
   if (n === 3) return "Across recent reflections, a recurring structure is beginning to appear."
   if (n === 4) return "MindWorks is noticing the emotional climate and internal conditions that tend to precede this sequence: pressure, uncertainty, body context, or exposure."
   if (n === 5) return "This recurring sequence appears to accomplish something, though it is not yet clear. It may be providing relief, reducing uncertainty, or protecting continuity by creating a pause."
