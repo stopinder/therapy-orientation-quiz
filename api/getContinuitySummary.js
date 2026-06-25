@@ -144,7 +144,7 @@ Rules:
 4. If you were planning to use "Possible Function", rename it to "Afterwards".
 5. If you were planning to use "What Keeps Reappearing", rename it to "Recurring Movement".
 6. Do not use: numbered sequences, behavioural-map language, checking/preparing labels, or psychological explanations.
-7. Remove any mention of "serve various functions" or similar causal claims.
+7. Remove any mention of "serve various functions" or similar causal claims. Instead, use this specific phrasing: "It is not yet clear which shifts reliably follow the familiar response, or whether different consequences appear in different situations."
 8. Use concise narrative paragraphs.
 9. Remain observational and tentative.
 10. Do not diagnose or infer motives.
