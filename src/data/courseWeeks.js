@@ -109,12 +109,25 @@ export const courseWeeks = [
             "Describe a moment where one thing happened, then something else followed. Try to include what happened first.",
 
         intro:
-            "This stage is about noticing order. Instead of seeing the interruption as one event, we begin to notice what happened first, what followed, and where the movement changed.",
+            "In this stage, you are learning to notice order. Instead of seeing the interruption as one event, you begin to notice what happened first, what followed, and where the movement changed.",
+
+        orientation: {
+            title: "Why You're Here",
+            content: [
+                "A response is rarely the beginning of the story.",
+                "Before checking, delaying, cancelling, or moving away, something often appears first.",
+                "It may be a thought.",
+                "It may be pressure.",
+                "It may be a message.",
+                "It may be a change in the body.",
+                "Stage 2 is about seeing what appeared before the response became visible."
+            ]
+        },
 
         openingReflection: [
             "Sequence means seeing the order in which things happen.",
             "The important moment is often not the final behaviour, but what appeared just before it.",
-            "This stage helps the user notice the movement from intention, to internal shift, to response."
+            "This stage helps you notice the movement from intention, to internal shift, to response."
         ],
 
         bodyFocus: [

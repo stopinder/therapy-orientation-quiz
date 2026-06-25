@@ -80,7 +80,7 @@ Look across multiple reflections to identify what appears repeatedly. Look for t
 
 Rules:
 1. Identify higher-order patterns (e.g., "There appears to be a recurring pattern in which an intention is followed by pressure or tension, then by a movement away from the original intention").
-2. Do not lock onto the most repeated surface behaviour (like "checking messages") too quickly. 
+2. Do not lock onto the most repeated surface behaviour (like "checking messages") too quickly. Use higher-order language where possible (e.g., "A change in attention appears after a signal, demand, or internal shift" or "The original intention changes after something else appears").
 3. Name specific behaviours (checking messages, scrolling, reorganising notes, delaying, cancelling, withdrawing, staying home, or substitute activities) as variants, not as the whole pattern.
 4. Use tentative, observational language.
 5. Do not diagnose, explain behaviour, coach, advise, or interpret motivations.
