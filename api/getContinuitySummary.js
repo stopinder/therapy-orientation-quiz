@@ -22,7 +22,7 @@ export default async function handler(request, response) {
     }
 
     try {
-        const { userId, currentStage = 6 } = request.body || {}
+        const { userId, currentStage = 6, isCourseOverview = false } = request.body || {}
 
         if (!userId) {
             return response.status(400).json({
@@ -100,9 +100,64 @@ MindWorks Reflection: ${r.ai_response}`)
             }
         }
 
-        const lens = stageLenses[currentStage] || stageLenses[6]
+        const lens = isCourseOverview
+            ? {
+                question: "What is becoming visible across everything observed so far?",
+                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Use concise narrative paragraphs. Remain observational, tentative, non-diagnostic. Do not infer motives."
+            }
+            : (stageLenses[currentStage] || stageLenses[6])
 
-        const systemPrompt = `
+        let systemPrompt = ""
+
+        if (isCourseOverview) {
+            systemPrompt = `
+You are a Pattern Observer.
+
+CORE ANALYSIS:
+Look across multiple reflections to identify recurring structural patterns. Look for the broader relationship across observations before naming specific behaviours.
+
+COURSE OVERVIEW PRESENTATION:
+Present your findings as a Course Overview.
+The question to address is: ${lens.question}
+
+Structure your output into these five sections:
+
+### What is becoming visible
+(Introductory paragraph)
+
+### Recurring Movement
+Summarise the broad recurring structure emerging across observations. Avoid detailed behavioural examples unless necessary.
+
+### Before the Shift
+Describe any recurring conditions that tend to appear beforehand (e.g., pressure, uncertainty, tension, anticipation). Only include if supported.
+
+### Afterwards
+Describe what commonly follows (e.g., lingering tension, unresolved emotion, delay, substitute activity, partial settling). Only include if supported.
+
+### Still Emerging
+Describe what cannot yet be concluded. Maintain uncertainty.
+
+Rules:
+1. Use concise narrative paragraphs.
+2. Do not use: Possible Function, Primary State, numbered sequences, behavioural-map language, checking/preparing labels, or psychological explanations.
+3. Remain observational and tentative.
+4. Do not diagnose or infer motives.
+5. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across your accumulated observations."
+
+OUTPUT FORMAT:
+Your output MUST start with a JSON object, then a newline, then the markdown summary.
+
+Example output:
+{
+  "status": "established",
+  "is_overview": true
+}
+
+### What is becoming visible
+...
+`.trim()
+        } else {
+            systemPrompt = `
 You are a Pattern Observer.
 
 CORE ANALYSIS:
@@ -164,6 +219,7 @@ Markdown Summary sections:
 
 If there is not enough evidence to see a pattern, set status to "insufficient" and provide a neutral message in the JSON and Markdown.
 `.trim()
+        }
 
         const openAIResponse = await fetch(
             "https://api.openai.com/v1/chat/completions",

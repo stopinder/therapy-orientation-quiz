@@ -37,7 +37,40 @@
     <div
         class="mb-14 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
     >
-      <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+      <div v-if="summaryLoading" class="flex items-center justify-center py-12">
+        <div class="h-8 w-8 animate-spin rounded-full border-2 border-slate-200 border-t-slate-800"></div>
+      </div>
+
+      <div v-else-if="continuitySummary">
+        <h2 class="mb-6 text-2xl font-semibold text-slate-900">
+          What is becoming visible
+        </h2>
+        
+        <div class="space-y-8">
+          <div 
+            v-for="(section, idx) in parsedSummary" 
+            :key="idx"
+          >
+            <h4 v-if="section.title && section.title !== 'What is becoming visible'" class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+              {{ section.title }}
+            </h4>
+            <div class="whitespace-pre-line text-lg leading-relaxed text-slate-600">
+              {{ section.content }}
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 flex justify-end">
+          <router-link
+              to="/continuity"
+              class="text-sm font-medium text-slate-500 hover:text-slate-900 transition underline underline-offset-4"
+          >
+            View Full Continuity History
+          </router-link>
+        </div>
+      </div>
+
+      <div v-else class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div class="max-w-2xl">
           <h2 class="text-2xl font-semibold text-slate-900">
             Patterns Across Time
@@ -182,16 +215,18 @@
 </template>
 
 <script setup>
-import { computed } from "vue"
+import { computed, onMounted, ref } from "vue"
 
 import { courseWeeks } from "../data/courseWeeks"
 
+import { useAuthStore } from "../stores/auth"
 import { useEntitlementStore } from "../stores/entitlements"
 import { useCourseProgressStore } from "../stores/courseProgress"
 
 import { useCoursePurchases } from "../composables/useCoursePurchases"
 import { useContinuity } from "../composables/useContinuity"
 
+const auth = useAuthStore()
 const entitlements =
     useEntitlementStore()
 
@@ -213,6 +248,69 @@ const {
 } = useContinuity()
 
 const weeks = computed(() => courseWeeks)
+
+const continuitySummary = ref("")
+const summaryLoading = ref(false)
+
+const fetchCourseOverview = async () => {
+  if (!auth.user?.id) return
+  
+  summaryLoading.value = true
+  try {
+    const result = await fetch("/api/getContinuitySummary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: auth.user.id,
+        isCourseOverview: true
+      })
+    })
+    const data = await result.json()
+    continuitySummary.value = data.markdown_summary || data.summary || ""
+  } catch (err) {
+    console.error("OVERVIEW ERROR:", err)
+  } finally {
+    summaryLoading.value = false
+  }
+}
+
+const parsedSummary = computed(() => {
+  if (!continuitySummary.value) return []
+  
+  const sections = []
+  let currentSection = null
+  
+  const lines = continuitySummary.value.split('\n')
+  lines.forEach(line => {
+    if (line.startsWith('### ')) {
+      if (currentSection) sections.push(currentSection)
+      currentSection = {
+        title: line.replace('### ', '').trim(),
+        content: []
+      }
+    } else {
+      if (currentSection) {
+        currentSection.content.push(line)
+      } else if (line.trim()) {
+        currentSection = {
+          title: "",
+          content: [line]
+        }
+      }
+    }
+  })
+  
+  if (currentSection) sections.push(currentSection)
+  
+  return sections.map(s => ({
+    ...s,
+    content: s.content.join('\n').trim()
+  }))
+})
+
+onMounted(() => {
+  fetchCourseOverview()
+})
 
 const statusClass = (weekNumber) => {
 
