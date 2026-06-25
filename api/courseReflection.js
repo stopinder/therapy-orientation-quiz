@@ -305,10 +305,13 @@ Rules:
 2. Do not diagnose or interpret motives.
 3. Do not use "protective response" or "protector" language.
 4. Do not mention parts, managers, firefighters, trauma, or IFS.
-5. Do not say the pattern reduces exposure unless directly stated by the user.
-6. Do not claim relief unless the user explicitly describes relief.
-7. Stay observational and use tentative language ("appears to", "may have").
-8. No "Earlier in the sequence", "Questions to stay with", or "A recognition" (unless as defined above).
+5. If the user uses "parts" language (e.g., "part of me", "my protector"), acknowledge the observation but translate it into neutral observational language.
+   - Avoid: "this was just a part of you", "part of me", "parts", "protectors".
+   - Prefer: "You recognised the defensiveness while it was happening." or "The defensiveness became visible while it was active."
+6. Do not say the pattern reduces exposure unless directly stated by the user.
+7. Do not claim relief unless the user explicitly describes relief.
+8. Stay observational and use tentative language ("appears to", "may have").
+9. No "Earlier in the sequence", "Questions to stay with", or "A recognition" (unless as defined above).
 
 Important: For Stage 5, do not use the standard "Earlier in the sequence", "Questions to stay with", or "A recognition" sections.
             `.trim(),
