@@ -126,7 +126,7 @@
             class="space-y-3"
         >
           <p class="text-xs text-slate-500 mb-4">
-            Showing latest 10 observations
+            Showing latest {{ visibleArchiveReflections.length }} observations
           </p>
 
           <section
@@ -165,6 +165,16 @@
 
         </section>
 
+        <!-- Show more button -->
+        <div v-if="hasMoreReflections" class="pt-4 text-center">
+          <button
+            @click="showMore"
+            class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 shadow-sm"
+          >
+            Show more observations
+          </button>
+        </div>
+
       </div>
 
     </div>
@@ -196,10 +206,37 @@ const BEHAVIORAL_MAP = {
 }
 
 const isArchiveCollapsed = ref(true)
+const archiveLimit = ref(5)
+
+const filteredReflections = computed(() => {
+  if (!reflections.value) return []
+  
+  const seen = new Set()
+  return reflections.value.filter(item => {
+    const text = (item.original_reflection || "").trim()
+    
+    // Filter out obvious test/malformed placeholders
+    if (text.toLowerCase().startsWith("int ")) return false
+    
+    // Filter out exact duplicates
+    if (seen.has(text)) return false
+    seen.add(text)
+    
+    return true
+  })
+})
 
 const visibleArchiveReflections = computed(() => {
-  return reflections.value.slice(0, 10)
+  return filteredReflections.value.slice(0, archiveLimit.value)
 })
+
+const hasMoreReflections = computed(() => {
+  return filteredReflections.value.length > archiveLimit.value
+})
+
+const showMore = () => {
+  archiveLimit.value += 5
+}
 
 const auth =
     useAuthStore()
