@@ -100,11 +100,11 @@ Pay attention to:
 
 * Sequence: The chronological order of events.
 * What happened first: Identifying the earliest sign of a shift.
-* Order: Mapping the movement step by step.
+* Order: Mapping the movement step by step. Place body sensations in the sequence exactly where they appeared in relation to other events, rather than automatically at the end.
 * Transition: The point where one state became another.
 * Preceding event: What occurred immediately before the most visible interruption?
 
-Use "stomach" instead of "tummy" when referring to body sensations.
+Use "stomach" instead of "tummy" when referring to body sensations in all output sections.
 
 The task is to map the sequence.
 

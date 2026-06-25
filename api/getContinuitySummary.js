@@ -88,7 +88,7 @@ Rules:
 7. Do not use IFS language or parts terminology.
 8. Avoid saying behaviours "reduce exposure" unless directly supported.
 9. Avoid causal language like "influences the decision" or "This is because".
-10. Remain close to the user's actual words. Use "stomach" instead of "tummy" if referring to that body area.
+10. Remain close to the user's actual words. Use "stomach" instead of "tummy" if referring to that body area in any output section.
 
 Output format with five sections:
 
@@ -113,7 +113,7 @@ Use cautious language. Examples: "Pressure and uncertainty appear before checkin
 
 ### Possible Function
 Name what the pattern may be doing, using cautious language only.
-Use phrases such as: "may create a pause", "may provide a brief shift in attention", "appears to change the pressure".
+Use phrases such as: "This may be one way a pause appears before the original action continues or disappears. The exact function is still unclear.", "may provide a brief shift in attention", "appears to change the pressure".
 Do not present function as fact. Do not say "This means", "This is because", or "This protects the user from".
 
 ### What Remains Unclear
