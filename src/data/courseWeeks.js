@@ -106,7 +106,7 @@ export const courseWeeks = [
             "Understanding internal pressure accumulation.",
 
         reflectionPrompt:
-            "Describe a moment where one thing happened, then something else followed. Try to include what happened first.",
+            "Describe a moment when something changed direction. What happened just before it?",
 
         intro:
             "In this stage, you are learning to notice order. Instead of seeing the interruption as one event, you begin to notice what happened first, what followed, and where the movement changed.",
