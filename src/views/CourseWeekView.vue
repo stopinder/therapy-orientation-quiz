@@ -802,15 +802,15 @@ const uniqueObservations = computed(() => {
 const showPatternBlock = computed(() => {
   const count = currentStageReflections.value.length
   if (count < 1) return false
-  if (count === 1) return false 
-  if (count === 2) return true 
-  
+  if (count === 1) return false
+  if (count === 2) return true
+
   // For 3+ reflections
   if (weekNumber.value === 1 || weekNumber.value === 2) {
     if (weekNumber.value === 1) {
       return !!topPattern.value
     }
-    
+
     return true
   }
 
@@ -819,9 +819,9 @@ const showPatternBlock = computed(() => {
 
 const showSequenceBlock = computed(() => {
   const count = currentStageReflections.value.length
-  
+
   if (count < 3) return false
-  
+
   if (weekNumber.value === 2) return hasGeneratedReflectionThisSession.value
   return weekNumber.value >= 2 && topPattern.value && topPattern.value.examples.length >= 2
 })
@@ -855,6 +855,7 @@ const discoveryWording = computed(() => {
 
 const stagePrimaryContent = computed(() => {
   const n = weekNumber.value
+  if (n === 2) return "An intention is followed by a body signal or pressure, then by a movement away from the original task."
   if (n === 3) return topPattern.value?.name || ""
   if (n === 4) return "Pressure or uncertainty appears before checking, preparing, or delay."
   if (n === 5) return "Checking or preparing may create a pause, reduce uncertainty, delay exposure, or provide brief relief."

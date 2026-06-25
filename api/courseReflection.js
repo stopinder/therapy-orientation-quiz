@@ -104,6 +104,8 @@ Pay attention to:
 * Transition: The point where one state became another.
 * Preceding event: What occurred immediately before the most visible interruption?
 
+Use "stomach" instead of "tummy" when referring to body sensations.
+
 The task is to map the sequence.
 
 For the ### Questions to stay with section, you must use maximum TWO questions and use ONLY observational wording.
