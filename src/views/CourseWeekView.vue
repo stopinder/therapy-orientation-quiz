@@ -222,12 +222,12 @@
         <div class="mt-8">
           <div class="flex items-center justify-between">
             <p class="text-base font-medium text-slate-900">
-              Body Observation
+              Optional body note
             </p>
             <VoiceRecorder @transcribed="appendBodyObservationTranscription" />
           </div>
           <p class="mt-1 text-sm text-slate-500">
-            As you recall this moment, what do you notice in your body?
+            If there was a body sensation, add it here. If not, leave this blank.
           </p>
           <textarea
               v-model="bodyObservation"
@@ -642,11 +642,11 @@ const hasGeneratedReflectionThisSession = ref(false)
 
 const reflectionPlaceholder = computed(() => {
   if (weekNumber.value === 1) return "I intended to start work, but I checked messages instead..."
-  if (weekNumber.value === 2) return "I was about to make a call. I looked at the phone, felt tension, then opened email..."
+  if (weekNumber.value === 2) return "I was about to make a call, but I looked at the phone and then opened email..."
   return "Describe what happened..."
 })
 
-const bodyObservationPlaceholder = "Tightness in chest, restlessness in hands, heaviness, numbness, or nothing noticeable..."
+const bodyObservationPlaceholder = "Tension in chest, pressure, restlessness, heaviness, numbness, or nothing noticeable..."
 
 const restoredReflection =
     ref(false)

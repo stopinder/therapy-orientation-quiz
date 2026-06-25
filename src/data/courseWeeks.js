@@ -202,7 +202,7 @@ export const courseWeeks = [
             "Exploring the internal climate that precedes the pattern.",
 
         reflectionPrompt:
-            "Describe a moment when a familiar pattern appeared, and include what state, pressure, mood, or body sensation was present beforehand.",
+            "Describe a moment when a familiar pattern appeared, and include what happened beforehand.",
 
         intro:
             "This stage shifts attention to the conditions that tend to appear before a recurring sequence begins. We are looking for the emotional climate, pressure, uncertainty, and body context that set the stage for the familiar movement.",
