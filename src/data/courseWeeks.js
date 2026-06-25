@@ -202,19 +202,19 @@ export const courseWeeks = [
             "Exploring the internal climate that precedes the pattern.",
 
         reflectionPrompt:
-            "Describe a moment when a familiar pattern appeared, and include what happened beforehand.",
+            "Describe a moment when you noticed a familiar feeling, atmosphere, or internal condition before something changed.",
 
         intro:
-            "This stage shifts attention to the conditions that tend to appear before a recurring sequence begins. We are looking for the emotional climate, pressure, uncertainty, and body context that set the stage for the familiar movement.",
+            "This stage shifts attention to the condition that tends to precede a familiar pattern. We are looking for the internal atmosphere—pressure, heaviness, uncertainty, or a shift in the body—that is already present before the response appears.",
 
         openingReflection: [
             "A recurring sequence often feels sudden, but it usually has an arrival. Before the visible behavior—the checking, the delay, or the substitution—something in the internal environment is already shifting.",
 
-            "This stage is about noticing that preceding state. It may be a sense of pressure, a quiet uncertainty, a feeling of exposure, or a specific body context like a tightening in the chest or a restlessness in the limbs. These are not just random sensations; they are the climate in which the pattern thrives.",
+            "This stage is about noticing that preceding state. It may be a sense of pressure, a quiet uncertainty, a feeling of exposure, or a specific body context like a tightening in the stomach or a restlessness in the limbs. These are the conditions in which the pattern emerges.",
 
-            "By observing the state that precedes the movement, we begin to see the pattern as a response to a set of conditions, rather than as an isolated error. The movement away from continuity is a process that has its own start, its own weight, and its own momentum.",
+            "By observing the state, we begin to see the pattern as a response to a set of conditions, rather than as an isolated error.",
 
-            "These earlier changes are not hidden, but they are often brief and understated. By staying with the beginning, you may find that the transition is more gradual than it first appeared. Attention may narrow, pressure may increase, or the body may begin to shift before the sequence unfolds.",
+            "These earlier changes are not hidden, but they are often brief. By staying with the beginning, you may find that the transition is more gradual than it first appeared.",
 
             "The sequence has an arrival."
         ],
