@@ -87,7 +87,7 @@ Rules:
 6. Do not suggest solutions.
 7. Do not use IFS language or parts terminology.
 8. Avoid saying behaviours "reduce exposure" unless directly supported.
-9. Avoid causal language like "influences the decision" or "This is because".
+9. Avoid causal language like "influences the decision" or "This is because". Prefer observational wording such as "how these emotional or physical states appear before the shift to another activity or delay".
 10. Remain close to the user's actual words. Use "stomach" instead of "tummy" if referring to that body area in any output section.
 
 Output format with five sections:
@@ -118,7 +118,7 @@ Do not present function as fact. Do not say "This means", "This is because", or 
 
 ### What Remains Unclear
 Preserve uncertainty.
-Examples: "It is not yet clear exactly where the shift occurs." "It is not yet clear whether the same function is present each time." "The relationship between state, response, and delay is still being observed."
+Examples: "It is not yet clear exactly where the shift occurs." "It is not yet clear how these emotional or physical states appear before the shift to another activity or delay." "The relationship between state, response, and delay is still being observed."
 `.trim()
 
         const openAIResponse = await fetch(

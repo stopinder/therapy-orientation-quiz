@@ -312,8 +312,11 @@ const continuitySummary = ref("")
 const parsedContinuitySummary = computed(() => {
   if (!continuitySummary.value) return []
 
+  // Safety cleanup: ensure "stomach" is used instead of "tummy"
+  const cleanSummary = continuitySummary.value.replace(/tummy/gi, 'stomach')
+
   const sections = []
-  const lines = continuitySummary.value.split('\n')
+  const lines = cleanSummary.split('\n')
   let currentSection = null
 
   lines.forEach(line => {
