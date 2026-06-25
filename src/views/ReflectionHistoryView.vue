@@ -373,43 +373,48 @@ const parsedContinuitySummary = computed(() => {
   const cleanSummary = continuitySummary.value
     .replace(/tummy/gi, 'stomach')
     .replace(/```json\s*[\s\S]*?```/g, '')
-    .replace(/###\s+What Keeps Reappearing[:]?/gi, "### Recurring Movement")
-    .replace(/###\s+Repeated Sequence[:]?/gi, "### Recurring Movement")
-    .replace(/###\s+Primary State[:]?/gi, "### Before the Shift")
-    .replace(/###\s+Possible Function[:]?/gi, "### Afterwards")
-    .replace(/###\s+What Remains Unclear[:]?/gi, "### Still Emerging")
     .trim()
 
-  const sections = []
+  const mapping = {
+    'What Keeps Reappearing': 'Recurring Movement',
+    'Repeated Sequence': 'Recurring Movement',
+    'Primary State': 'Before the Shift',
+    'Possible Function': 'Afterwards',
+    'What Remains Unclear': 'Still Emerging'
+  }
+
+  const sectionsMap = new Map()
   const lines = cleanSummary.split('\n')
-  let currentSection = null
+  let currentSectionTitle = null
 
   lines.forEach(line => {
     const headingMatch = line.match(/^###\s+(.*)/)
     if (headingMatch) {
-      if (currentSection) sections.push(currentSection)
-      currentSection = {
-        title: headingMatch[1].trim(),
-        content: []
+      let rawTitle = headingMatch[1].trim().replace(/[:]$/, '')
+      currentSectionTitle = mapping[rawTitle] || rawTitle
+      
+      if (!sectionsMap.has(currentSectionTitle)) {
+        sectionsMap.set(currentSectionTitle, [])
       }
-    } else if (line.trim() || (currentSection && currentSection.content.length > 0)) {
-      if (currentSection) {
-        currentSection.content.push(line)
+    } else if (line.trim() || (currentSectionTitle && sectionsMap.get(currentSectionTitle).length > 0)) {
+      if (currentSectionTitle) {
+        sectionsMap.get(currentSectionTitle).push(line)
       } else if (line.trim()) {
-        currentSection = {
-          title: "",
-          content: [line]
-        }
+        currentSectionTitle = ""
+        sectionsMap.set(currentSectionTitle, [line])
       }
     }
   })
 
-  if (currentSection) sections.push(currentSection)
+  const sections = []
+  sectionsMap.forEach((content, title) => {
+    sections.push({
+      title,
+      content: content.join('\n').trim()
+    })
+  })
 
-  return sections.map(s => ({
-    ...s,
-    content: s.content.join('\n').trim()
-  }))
+  return sections
 })
 
 const fetchContinuitySummary =

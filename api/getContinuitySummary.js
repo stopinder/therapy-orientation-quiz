@@ -267,12 +267,49 @@ If there is not enough evidence to see a pattern, set status to "insufficient" a
         // Post-processing fail-safe for Course Overview
         let processedContent = rawContent
         if (isCourseOverview) {
-            processedContent = rawContent
-                .replace(/###\s+What Keeps Reappearing[:]?/gi, "### Recurring Movement")
-                .replace(/###\s+Repeated Sequence[:]?/gi, "### Recurring Movement")
-                .replace(/###\s+Primary State[:]?/gi, "### Before the Shift")
-                .replace(/###\s+Possible Function[:]?/gi, "### Afterwards")
-                .replace(/###\s+What Remains Unclear[:]?/gi, "### Still Emerging")
+            const mapping = {
+                'What Keeps Reappearing': 'Recurring Movement',
+                'Repeated Sequence': 'Recurring Movement',
+                'Primary State': 'Before the Shift',
+                'Possible Function': 'Afterwards',
+                'What Remains Unclear': 'Still Emerging'
+            }
+
+            const sectionsMap = new Map()
+            const lines = rawContent.split('\n')
+            let currentSectionTitle = null
+
+            lines.forEach(line => {
+                const headingMatch = line.match(/^###\s+(.*)/)
+                if (headingMatch) {
+                    let rawTitle = headingMatch[1].trim().replace(/[:]$/, '')
+                    currentSectionTitle = mapping[rawTitle] || rawTitle
+
+                    if (!sectionsMap.has(currentSectionTitle)) {
+                        sectionsMap.set(currentSectionTitle, [])
+                    }
+                } else if (line.trim() || (currentSectionTitle && sectionsMap.get(currentSectionTitle).length > 0)) {
+                    if (currentSectionTitle) {
+                        sectionsMap.get(currentSectionTitle).push(line)
+                    } else if (line.trim()) {
+                        currentSectionTitle = "Intro"
+                        if (!sectionsMap.has(currentSectionTitle)) {
+                            sectionsMap.set(currentSectionTitle, [])
+                        }
+                        sectionsMap.get(currentSectionTitle).push(line)
+                    }
+                }
+            })
+
+            let rebuiltContent = ""
+            sectionsMap.forEach((content, title) => {
+                if (title === "Intro") {
+                    rebuiltContent += content.join('\n').trim() + "\n\n"
+                } else {
+                    rebuiltContent += `### ${title}\n${content.join('\n').trim()}\n\n`
+                }
+            })
+            processedContent = rebuiltContent.trim()
         }
 
         // Extract JSON and Markdown
