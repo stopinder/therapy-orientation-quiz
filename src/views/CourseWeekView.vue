@@ -284,12 +284,12 @@
               <template v-if="section.title === 'Questions to stay with'">
                 <ul class="space-y-4">
                   <li
-                      v-for="(q, qIdx) in section.content.split('\n').filter(l => l.trim() && l.replace(/^[-*•]\s+/, '').trim())"
+                      v-for="(q, qIdx) in section.content.split('\n').map(l => l.trim()).filter(l => l && !/^[-*•]$/.test(l))"
                       :key="qIdx"
                       class="flex gap-3"
                   >
                     <span class="text-slate-400">•</span>
-                    <span>{{ q.replace(/^[-*•]\s+/, '') }}</span>
+                    <span>{{ q.replace(/^[-*•]\s*/, '') }}</span>
                   </li>
                 </ul>
               </template>
