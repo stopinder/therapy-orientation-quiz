@@ -321,31 +321,31 @@
 
       <!-- Continuity Observation (What MindWorks Is Noticing) -->
       <section
-          v-if="showPatternBlock && currentStageReflections.length >= 2 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          v-if="showPatternBlock && currentStageReflections.length >= 1 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
           {{ patternBlockLabel }}
         </p>
 
-        <template v-if="currentStageReflections.length === 2">
+        <template v-if="currentStageReflections.length < 3">
           <p class="text-base text-slate-600 leading-relaxed">
             MindWorks is collecting observations for this stage. Patterns become visible through repetition.
           </p>
         </template>
-        <template v-else-if="currentStageReflections.length >= 3 && topPattern">
+        <template v-else-if="currentStageReflections.length >= 3">
           <p class="mb-4 text-sm text-slate-500">
             {{ discoveryWording }}
           </p>
 
           <ul class="mb-8 space-y-3">
             <li
-                v-for="(example, index) in topPattern.examples"
-                :key="index"
+                v-for="(item, index) in currentStageReflections.slice(0, 3)"
+                :key="item.id || index"
                 class="text-base text-slate-700 flex gap-3"
             >
               <span class="text-slate-400">•</span>
-              <span>{{ example }}</span>
+              <span>{{ item.original_reflection }}</span>
             </li>
           </ul>
 
@@ -802,16 +802,17 @@ const uniqueObservations = computed(() => {
 const showPatternBlock = computed(() => {
   const count = currentStageReflections.value.length
   if (count < 1) return false
+  
+  // For Stage 2, always show the block if there is at least 1 reflection
+  // (Either shows the "collecting" message or the full pattern)
+  if (weekNumber.value === 2) return true
+
   if (count === 1) return false
   if (count === 2) return true
 
   // For 3+ reflections
-  if (weekNumber.value === 1 || weekNumber.value === 2) {
-    if (weekNumber.value === 1) {
-      return !!topPattern.value
-    }
-
-    return true
+  if (weekNumber.value === 1) {
+    return !!topPattern.value
   }
 
   return topPattern.value && topPattern.value.examples.length >= 2
