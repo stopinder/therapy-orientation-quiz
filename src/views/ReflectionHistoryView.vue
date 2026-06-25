@@ -313,7 +313,11 @@ const parsedContinuitySummary = computed(() => {
   if (!continuitySummary.value) return []
 
   // Safety cleanup: ensure "stomach" is used instead of "tummy"
-  const cleanSummary = continuitySummary.value.replace(/tummy/gi, 'stomach')
+  // Also clean up any stray raw JSON or markdown code blocks
+  const cleanSummary = continuitySummary.value
+    .replace(/tummy/gi, 'stomach')
+    .replace(/```json\s*[\s\S]*?```/g, '')
+    .trim()
 
   const sections = []
   const lines = cleanSummary.split('\n')

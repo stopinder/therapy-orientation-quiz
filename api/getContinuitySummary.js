@@ -94,18 +94,30 @@ Rules:
 10. Use "stomach" instead of "tummy".
 
 OUTPUT FORMAT:
-Return a JSON object followed by the markdown summary.
+Your output MUST start with a JSON object, then a newline, then the markdown summary.
 
-JSON Block:
+Example output:
 {
-  "status": "established" | "collecting" | "insufficient",
-  "structural_pattern": "Short description of the higher-order pattern",
-  "sequence": ["Step 1", "Step 2", "Step 3", "Step 4"],
-  "primary_state": "Description of the state before the shift",
-  "possible_function": "Tentative observation of what the pattern may be doing",
-  "variants": ["variant 1", "variant 2"],
-  "unclear_aspects": "What cannot yet be concluded"
+  "status": "established",
+  "structural_pattern": "...",
+  "sequence": ["...", "..."],
+  "primary_state": "...",
+  "possible_function": "...",
+  "variants": ["...", "..."],
+  "unclear_aspects": "..."
 }
+
+### What Keeps Reappearing
+...
+
+JSON Fields:
+- "status": "established" | "collecting" | "insufficient"
+- "structural_pattern": Short description of the higher-order pattern
+- "sequence": ["Step 1", "Step 2", "Step 3", "Step 4"]
+- "primary_state": Description of the state before the shift
+- "possible_function": Tentative observation of what the pattern may be doing
+- "variants": ["variant 1", "variant 2"]
+- "unclear_aspects": What cannot yet be concluded
 
 Markdown Summary sections:
 ### What Keeps Reappearing
@@ -114,7 +126,7 @@ Markdown Summary sections:
 ### Possible Function
 ### What Remains Unclear
 
-If there is not enough evidence to see a pattern, set status to "insufficient" and provide a neutral message.
+If there is not enough evidence to see a pattern, set status to "insufficient" and provide a neutral message in the JSON and Markdown.
 `.trim()
 
         const openAIResponse = await fetch(
@@ -169,7 +181,10 @@ If there is not enough evidence to see a pattern, set status to "insufficient" a
             const jsonMatch = rawContent.match(/\{[\s\S]*?\}/)
             if (jsonMatch) {
                 jsonResult = JSON.parse(jsonMatch[0])
-                markdownSummary = rawContent.replace(jsonMatch[0], "").trim()
+                // Remove the JSON block and any surrounding whitespace or markdown code block markers
+                markdownSummary = rawContent.replace(/```json\s*[\s\S]*?```/g, "")
+                                            .replace(jsonMatch[0], "")
+                                            .trim()
             }
         } catch (e) {
             console.error("JSON PARSE ERROR:", e)
