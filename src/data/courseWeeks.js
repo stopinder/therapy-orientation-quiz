@@ -244,46 +244,46 @@ export const courseWeeks = [
     {
         number: 5,
 
-        title: "Function",
+        title: "Consequence",
 
         subtitle:
-            "Observing what the recurring pattern accomplishes.",
+            "Observing what changed after the familiar pattern appeared.",
 
         reflectionPrompt:
-            "Describe a moment when a familiar response appeared, and notice what changed immediately afterwards.",
+            "Describe a moment when a familiar response appeared. What changed afterwards?",
 
         intro:
-            "This stage introduces the possibility that a pattern is not a failure, but is serving a protective function—providing relief, reducing exposure, or delaying uncertainty.",
+            "This stage is about noticing what happens immediately after a familiar pattern unfolds. Rather than explaining why the movement happened, we are learning to observe its results.",
 
         openingReflection: [
-            "When a sequence appears again and again, it is often because it is serving a function. This can be difficult to see when we are focused only on the fact that we have drifted away from our intention. We see the interruption as a problem to be solved, rather than as a movement with its own internal logic.",
+            "When a sequence appears again and again, it often results in an immediate shift in the internal or external environment. This can be difficult to see when we are focused only on the fact that we have drifted away from our intention. We see the interruption as an error, rather than as a movement with its own consequences.",
 
-            "This stage, we shift our attention toward what the pattern accomplishes. When the intention is interrupted by a familiar delay, or when a task is replaced by a routine of checking, what changes? Often, the movement coincides with a momentary relief from a particular kind of activation or a reduction in exposure to uncertainty.",
+            "This stage, we shift our attention toward what changed afterwards. When a familiar delay or a routine of checking appears, what happens next? Often, the movement coincides with a shift in pressure, a change in attention, or a postponement of a task.",
 
-            "By observing the sequence as a functional movement, we move away from judgment and toward a more precise recognition. We are simply noticing the immediate result of the behaviour. If checking email always happens exactly when a difficult task begins to feel heavy, then the checking is serving a function in relation to that heaviness.",
+            "By observing what happens after the response, we move away from judgment and toward a more precise recognition. We are simply noticing the results of the movement. If checking email happens exactly when a task begins to feel heavy, we can observe what happens to that heaviness once the checking begins.",
 
-            "This is not about justifying the behaviour. It is about seeing the choreography of the event clearly enough to understand how it is organised. When you see the function, the sequence begins to lose its status as an 'accident'. It becomes a recognisable, predictable, and protective response to a specific set of conditions.",
+            "This is not about justifying the behaviour. It is about seeing the choreography of the event clearly enough to understand what it accomplishes in the moment. When you see what changes, the sequence begins to lose its status as an 'accident'. It becomes a recognisable movement with observable results.",
 
-            "The goal is not to stop the movement yet, but to become interested in what it does. What changes when the sequence unfolds? What feels reduced, softened, or postponed? Recognition of function is the next shift in visibility."
+            "The goal is not to stop the movement yet, but to become interested in what follows it. What feels reduced, softened, or postponed? Recognition of these shifts is the next layer of visibility."
         ],
 
         bodyFocus: [
-            "Function is often felt as a physical transition. Notice the sensation in the body at the moment the sequence begins—is there a release of tension, a softening, or a sudden shift in energy?",
-            "Observe whether the recurring pattern provides a temporary sense of physical ease or a momentary discharge of pressure."
+            "Consequences are often felt as a physical transition. Notice the sensation in the body at the moment the response appears—is there a release of tension, a softening, or a sudden shift in energy?",
+            "Observe whether the recurring pattern coincides with a momentary change in physical pressure or ease."
         ],
 
         exercises: [
             {
                 title: "Notice what changes",
-                description: "At the moment a familiar sequence begins, notice what changes in your internal environment. What sensation or pressure is reduced?"
+                description: "At the moment a familiar response appears, notice what changes in your internal environment. What sensation or pressure is different?"
             },
             {
-                title: "Notice the relief",
-                description: "Observe if the recurring pattern provides a momentary relief from the task or from a specific feeling of activation."
+                title: "Notice the shift",
+                description: "Observe if the recurring pattern coincides with a momentary shift in the task or in a specific feeling of activation."
             },
             {
-                title: "Stay with the question",
-                description: "Ask yourself: 'What function might this sequence serve?' Do not look for an explanation; simply observe the result of the movement."
+                title: "Stay with the result",
+                description: "Ask yourself: 'What changed after this appeared?' Do not look for an explanation; simply observe what followed the movement."
             }
         ]
 

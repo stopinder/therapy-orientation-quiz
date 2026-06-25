@@ -386,7 +386,7 @@
 
       <!-- Phase 1 Sequence Surface Prototype -->
       <section
-          v-if="showSequenceBlock && weekNumber !== 2"
+          v-if="showSequenceBlock && weekNumber !== 2 && weekNumber !== 5"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -831,7 +831,7 @@ const patternBlockLabel = computed(() => {
   const n = weekNumber.value
   if (n === 3) return "What MindWorks Is Noticing"
   if (n === 4) return "State Becoming Visible"
-  if (n === 5) return "Possible Function"
+  if (n === 5) return "Consequence"
   if (n === 6) return "What Keeps Appearing Around Pressure"
   return "What MindWorks Is Noticing"
 })
@@ -840,7 +840,7 @@ const patternTypeLabel = computed(() => {
   const n = weekNumber.value
   if (n === 3) return "Possible Pattern"
   if (n === 4) return "Primary State"
-  if (n === 5) return "Potential Function"
+  if (n === 5) return "Observed Shift"
   if (n === 6) return "What These Responses May Have In Common"
   return "Possible Pattern"
 })
@@ -850,7 +850,7 @@ const discoveryWording = computed(() => {
   if (n === 2) return "Across recent Stage 2 observations:"
   if (n === 3) return "Across recent reflections, a recurring structure is beginning to appear."
   if (n === 4) return "MindWorks is noticing the emotional climate and internal conditions that tend to precede this sequence: pressure, uncertainty, body context, or exposure."
-  if (n === 5) return "This recurring sequence appears to accomplish something, though it is not yet clear. It may be providing relief, reducing uncertainty, or protecting continuity by creating a pause."
+  if (n === 5) return "MindWorks is beginning to notice what changes after a familiar response appears, without needing to explain why."
   if (n === 6) return "MindWorks is beginning to observe whether several different responses gather around similar conditions."
   return "Across recent reflections:"
 })
@@ -860,7 +860,7 @@ const stagePrimaryContent = computed(() => {
   if (n === 2) return "An intention is followed by a body signal or pressure, then by a movement away from the original task."
   if (n === 3) return topPattern.value?.name || ""
   if (n === 4) return "Pressure or uncertainty appears before checking, preparing, or delay."
-  if (n === 5) return "Checking or preparing may create a pause, reduce uncertainty, delay exposure, or provide brief relief."
+  if (n === 5) return "A familiar movement coincides with a shift in internal pressure, a change in attention, or a postponement."
   if (n === 6) return "Checking, preparing, delaying, or reorganising may look different on the surface. Yet they appear around the same pressure. It is not yet clear whether they are trying to accomplish something similar."
   return topPattern.value?.name || ""
 })
