@@ -90,8 +90,9 @@ Rules:
 6. Do not suggest solutions.
 7. Do not use IFS language or parts terminology.
 8. Avoid saying behaviours "reduce exposure" unless directly supported.
-9. Avoid causal language. Prefer observational wording such as "how these emotional or physical states appear before the shift to another activity or delay".
+9. Avoid causal language or explanations (e.g., "avoidance", "distraction", "serve as"). Prefer observational wording such as "how these emotional or physical states appear before the shift to another activity or delay".
 10. Use "stomach" instead of "tummy".
+11. For "Possible Function", prefer wording like: "This may be one way a pause appears before the original action continues or disappears. The exact function is still unclear."
 
 OUTPUT FORMAT:
 Your output MUST start with a JSON object, then a newline, then the markdown summary.
@@ -115,7 +116,7 @@ JSON Fields:
 - "structural_pattern": Short description of the higher-order pattern
 - "sequence": ["Step 1", "Step 2", "Step 3", "Step 4"]
 - "primary_state": Description of the state before the shift
-- "possible_function": Tentative observation of what the pattern may be doing
+- "possible_function": Use tentative wording: "This may be one way a pause appears before the original action continues or disappears. The exact function is still unclear."
 - "variants": ["variant 1", "variant 2"]
 - "unclear_aspects": What cannot yet be concluded
 
