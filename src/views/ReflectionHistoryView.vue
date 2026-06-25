@@ -369,9 +369,15 @@ const parsedContinuitySummary = computed(() => {
 
   // Safety cleanup: ensure "stomach" is used instead of "tummy"
   // Also clean up any stray raw JSON or markdown code blocks
+  // Safety mapping: convert old headings to new ones if they appear
   const cleanSummary = continuitySummary.value
     .replace(/tummy/gi, 'stomach')
     .replace(/```json\s*[\s\S]*?```/g, '')
+    .replace(/###\s+What Keeps Reappearing[:]?/gi, "### Recurring Movement")
+    .replace(/###\s+Repeated Sequence[:]?/gi, "### Recurring Movement")
+    .replace(/###\s+Primary State[:]?/gi, "### Before the Shift")
+    .replace(/###\s+Possible Function[:]?/gi, "### Afterwards")
+    .replace(/###\s+What Remains Unclear[:]?/gi, "### Still Emerging")
     .trim()
 
   const sections = []

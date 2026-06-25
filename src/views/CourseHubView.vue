@@ -283,10 +283,19 @@ const fetchCourseOverview = async () => {
 const parsedSummary = computed(() => {
   if (!continuitySummary.value) return []
   
+  // Safety mapping: convert old headings to new ones if they appear
+  const cleanSummary = continuitySummary.value
+    .replace(/###\s+What Keeps Reappearing[:]?/gi, "### Recurring Movement")
+    .replace(/###\s+Repeated Sequence[:]?/gi, "### Recurring Movement")
+    .replace(/###\s+Primary State[:]?/gi, "### Before the Shift")
+    .replace(/###\s+Possible Function[:]?/gi, "### Afterwards")
+    .replace(/###\s+What Remains Unclear[:]?/gi, "### Still Emerging")
+    .trim()
+
   const sections = []
   let currentSection = null
   
-  const lines = continuitySummary.value.split('\n')
+  const lines = cleanSummary.split('\n')
   lines.forEach(line => {
     if (line.startsWith('### ')) {
       if (currentSection) sections.push(currentSection)

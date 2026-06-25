@@ -103,7 +103,7 @@ MindWorks Reflection: ${r.ai_response}`)
         const lens = isCourseOverview
             ? {
                 question: "What is becoming visible across everything observed so far?",
-                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Use concise narrative paragraphs. Remain observational, tentative, non-diagnostic. Do not infer motives. MANDATORY: You must only use the sections Recurring Movement, Before the Shift, Afterwards, and Still Emerging. Strictly exclude 'Possible Function', 'Primary State', 'What Keeps Reappearing', 'Repeated Sequence', and 'What Remains Unclear'."
+                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Use concise narrative paragraphs. Remain observational, tentative, non-diagnostic. Do not infer motives. MANDATORY: You must only use the sections Recurring Movement, Before the Shift, Afterwards, and Still Emerging. Strictly exclude 'Possible Function', 'Primary State', 'What Keeps Reappearing', 'Repeated Sequence', and 'What Remains Unclear'. Under no circumstances output the old headings."
             }
             : (stageLenses[currentStage] || stageLenses[6])
 
@@ -268,11 +268,11 @@ If there is not enough evidence to see a pattern, set status to "insufficient" a
         let processedContent = rawContent
         if (isCourseOverview) {
             processedContent = rawContent
-                .replace(/### What Keeps Reappearing/g, "### Recurring Movement")
-                .replace(/### Repeated Sequence/g, "### Recurring Movement")
-                .replace(/### Primary State/g, "### Before the Shift")
-                .replace(/### Possible Function/g, "### Afterwards")
-                .replace(/### What Remains Unclear/g, "### Still Emerging")
+                .replace(/###\s+What Keeps Reappearing[:]?/gi, "### Recurring Movement")
+                .replace(/###\s+Repeated Sequence[:]?/gi, "### Recurring Movement")
+                .replace(/###\s+Primary State[:]?/gi, "### Before the Shift")
+                .replace(/###\s+Possible Function[:]?/gi, "### Afterwards")
+                .replace(/###\s+What Remains Unclear[:]?/gi, "### Still Emerging")
         }
 
         // Extract JSON and Markdown
