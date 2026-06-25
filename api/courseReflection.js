@@ -223,15 +223,19 @@ Focus on:
 
 Do not focus primarily on the external event.
 
+Distinguish between Context and State:
+- Context (External): arguments, difficult conversations, work meetings, phone calls, appointments.
+- State (Internal): tension, heaviness, dread, uncertainty, anticipation, pressure, restlessness, numbness, relief, shame, guilt, fear.
+
 Stage 4 Output Structure (Required):
 
 ### The state becoming visible
 Describe the internal condition that appeared. Use tentative and observational language. No interpretation or diagnosis.
 
 ### What was already present
-List the state/body/emotional conditions that were present before the familiar response. Use the user’s own language as much as possible.
+List ONLY genuine internal conditions/states that were present before the familiar response. Do not include external context or events here. Use the user’s own language as much as possible.
 
-### What tended to follow
+### What often followed
 Describe what followed the state, without implying causality.
 Example: "After the pressure in the stomach appeared, the intention to start work shifted to checking messages."
 
@@ -242,7 +246,7 @@ Name what differs from earlier observations, if anything. This prevents forcing 
 State what cannot yet be concluded about the state or its relationship to the sequence.
 
 ### A recognition
-"You are beginning to recognise the conditions in which this familiar sequence tends to emerge."
+You are beginning to recognise the conditions in which this familiar sequence tends to emerge.
 
 Rules:
 1. Max TWO questions in "Questions to stay with" (if included by overall logic).
@@ -250,7 +254,8 @@ Rules:
 3. No causality. Do not say "X caused Y" or "The state led to...".
 4. No diagnosis or coaching.
 5. Use "stomach" instead of "tummy".
-6. If there is not enough evidence, say: "MindWorks cannot yet see a reliable recurring state. More observations are needed."
+6. If there is not enough evidence for a genuine internal state, say: "The internal conditions are not yet clear. More observations may make them easier to recognise."
+7. If there is not enough evidence for a recurring state across history, say: "MindWorks cannot yet see a reliable recurring state. More observations are needed."
 
 Important: For Stage 4, do not use the standard "Earlier in the sequence" or "Questions to stay with" sections unless specifically requested by the structure above.
             `.trim(),
