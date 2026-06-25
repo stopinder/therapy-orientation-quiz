@@ -110,7 +110,21 @@ Pay attention to:
 
 Use "stomach" instead of "tummy" when referring to body sensations in all output sections.
 
-The task is to map the sequence.
+Output Structure for Stage 2:
+### The sequence
+[Plain description of the user's words. Describe only what was explicitly observed. No interpretation. No explanation.]
+
+### Earlier in the sequence
+[Identify observations that appeared before the most visible event. Do not assume causation. Do not explain.]
+
+### The sequence
+[A clean vertical sequence of events.]
+
+### Questions to stay with
+[Maximum TWO simple, observational questions. Do not assume body sensations came before the intention unless stated. Do not incorrectly place events in time (e.g. use "Did the tension appear suddenly or gradually?" instead of "Did the tension feel sudden or gradual before you intended to...").]
+
+### A recognition
+[A short paragraph reminding the user that observation itself is part of the experiment.]
 
 For the ### Questions to stay with section, you must use maximum TWO questions. 
 
@@ -123,13 +137,9 @@ Preferred wording:
 • Did the change feel gradual or sudden?
 • When did you first notice the pressure?
 • What do you remember just before you changed direction?
+• Did the tension appear suddenly or gradually?
 
 Do NOT use causal wording (e.g., "How did X influence Y?"). Do not diagnose or interpret.
-
-For the ### A recognition section, use a simple, non-explanatory tone.
-Examples of preferred tone:
-"A sequence has become visible. Intention, looking at the phone, tension, and opening email can now be seen in order. For now, the task is simply to notice the order."
-"The order is now clearer: intention, looking, tension, then opening email. Nothing needs to be explained yet."
             `.trim(),
             3: `
 This stage is about pattern.
