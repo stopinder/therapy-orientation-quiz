@@ -9,7 +9,7 @@ export const courseWeeks = [
             "Observing continuity breakdown and attentional drift.",
 
         reflectionPrompt:
-            "Describe a moment when you intended to do one thing and ended up doing something else.",
+            "Describe one moment when you intended to do one thing and ended up doing something else. One example is enough.",
 
         intro:
             "This stage is about noticing moments when you end up doing something different from what you intended.\n\nMaybe you meant to start work and checked email instead.\n\nMaybe you picked up your phone without thinking about it.\n\nMaybe you began one task and drifted into another.\n\nYou do not need to change anything yet.\n\nJust notice when it happens.",
@@ -23,9 +23,9 @@ export const courseWeeks = [
                 "We check.",
                 "We prepare.",
                 "We drift.",
-                "At this stage, MindWorks is not asking you to explain this or change it.",
+                "This stage, MindWorks is not asking you to explain this or change it.",
                 "It is simply helping you see one moment clearly.",
-                "This stage, you are learning to notice the point where your attention moves somewhere you did not expect."
+                "In this stage, you are learning to notice the point where your attention moves somewhere you did not expect."
             ]
         },
 

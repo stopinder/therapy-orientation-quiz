@@ -50,7 +50,7 @@
         </h2>
         <div class="mt-6 flex aspect-video items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-8 text-center">
           <p class="max-w-xs text-sm text-slate-500">
-            A short introduction from Rob explaining this stage's experiment and what to look for.
+            Video introduction coming soon.
           </p>
         </div>
       </section>
@@ -76,7 +76,7 @@
       <!-- This Stage's Experiment (Week 1 only) -->
       <section
           v-if="week.number === 1"
-          class="mb-16"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
           This Stage's Experiment
@@ -90,6 +90,24 @@
           <div class="mt-8 pt-6">
             <p class="text-base text-slate-600 italic">Do not try to change anything. Simply notice what happens.</p>
           </div>
+        </div>
+      </section>
+
+      <!-- Why This Matters (openingReflection) -->
+      <section
+          v-if="week.openingReflection && week.openingReflection.length > 0"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+      >
+        <h2 class="text-2xl font-semibold text-slate-950">
+          Why This Matters
+        </h2>
+        <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+          <p
+              v-for="paragraph in week.openingReflection"
+              :key="paragraph"
+          >
+            {{ paragraph }}
+          </p>
         </div>
       </section>
 
@@ -110,20 +128,6 @@
             <div class="mt-8 pt-6">
               <p class="text-base text-slate-600 italic">We are becoming interested in the sequence.</p>
             </div>
-          </div>
-        </section>
-
-        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-slate-950">
-            Why This Matters
-          </h2>
-          <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
-            <p
-                v-for="paragraph in week.openingReflection"
-                :key="paragraph"
-            >
-              {{ paragraph }}
-            </p>
           </div>
         </section>
 
@@ -193,7 +197,7 @@
             Stage 1 Arrival
           </h3>
           <p class="text-base leading-7 text-blue-800">
-            This stage, we are becoming interested in the moment where continuity changes.
+            In this stage, we are becoming interested in the moment where continuity changes.
             Before you begin your reflection, take a moment to settle.
             Notice the transition from whatever you were doing before to this moment here.
           </p>
