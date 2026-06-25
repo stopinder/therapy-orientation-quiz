@@ -82,8 +82,8 @@
             Patterns Across Time
           </h2>
           <p class="mt-3 text-base leading-relaxed text-slate-600">
-            MindWorks is beginning to notice what keeps reappearing across your reflections:
-            repeated sequences, familiar states, and responses that return under similar conditions.
+            MindWorks is beginning to notice what is becoming visible across your reflections:
+            broad recurring structures, the conditions beforehand, and what commonly follows.
           </p>
         </div>
         <router-link

@@ -103,7 +103,7 @@ MindWorks Reflection: ${r.ai_response}`)
         const lens = isCourseOverview
             ? {
                 question: "What is becoming visible across everything observed so far?",
-                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Use concise narrative paragraphs. Remain observational, tentative, non-diagnostic. Do not infer motives. Strictly exclude headings 'Possible Function' and 'Primary State'."
+                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Use concise narrative paragraphs. Remain observational, tentative, non-diagnostic. Do not infer motives. MANDATORY: You must only use the sections Recurring Movement, Before the Shift, Afterwards, and Still Emerging. Strictly exclude 'Possible Function', 'Primary State', 'What Keeps Reappearing', 'Repeated Sequence', and 'What Remains Unclear'."
             }
             : (stageLenses[currentStage] || stageLenses[6])
 
@@ -123,7 +123,7 @@ The question to address is: ${lens.question}
 Structure your output into these five EXACT sections:
 
 ### What is becoming visible
-(Introductory paragraph)
+(Introductory paragraph - start with a direct observation about what is becoming visible across the journey)
 
 ### Recurring Movement
 Summarise the broad recurring structure emerging across observations. Avoid detailed behavioural examples unless necessary.
@@ -139,12 +139,17 @@ Describe what cannot yet be concluded. Maintain uncertainty.
 
 Rules:
 1. Use ONLY these exact headings: "### What is becoming visible", "### Recurring Movement", "### Before the Shift", "### Afterwards", "### Still Emerging".
-2. Do not use: Possible Function, Primary State, numbered sequences, behavioural-map language, checking/preparing labels, or psychological explanations.
-3. Remove any mention of "serve various functions" or similar causal claims.
-4. Use concise narrative paragraphs.
-5. Remain observational and tentative.
-6. Do not diagnose or infer motives.
-7. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across your accumulated observations."
+2. DO NOT USE THESE HEADINGS UNDER ANY CIRCUMSTANCES: "### What Keeps Reappearing", "### Repeated Sequence", "### Primary State", "### Possible Function", "### What Remains Unclear".
+3. If you were planning to use "Primary State", rename it to "Before the Shift". 
+4. If you were planning to use "Possible Function", rename it to "Afterwards".
+5. If you were planning to use "What Keeps Reappearing", rename it to "Recurring Movement".
+6. Do not use: numbered sequences, behavioural-map language, checking/preparing labels, or psychological explanations.
+7. Remove any mention of "serve various functions" or similar causal claims.
+8. Use concise narrative paragraphs.
+9. Remain observational and tentative.
+10. Do not diagnose or infer motives.
+11. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across your accumulated observations."
+12. If evidence for a section (like "Afterwards") is missing, omit that section entirely rather than using old headings.
 
 OUTPUT FORMAT:
 Your output MUST start with a JSON object, then a newline, then the markdown summary.
