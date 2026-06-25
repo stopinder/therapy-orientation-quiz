@@ -48,12 +48,13 @@ export default async function handler(request, response) {
 
         const { data: reflectionsData } = await supabase
             .from("course_reflections")
-            .select("original_reflection, ai_response")
+            .select("original_reflection, ai_response, week_number")
             .eq("user_id", userId)
+            .eq("week_number", week)
             .order("created_at", { ascending: false })
             .limit(3)
 
-        const recentReflections = reflectionsData?.length
+        const recentReflections = reflectionsData?.length >= 3
             ? reflectionsData
                 .map((r) => `Reflection:\n${r.original_reflection}`)
                 .join("\n\n")

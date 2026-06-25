@@ -321,19 +321,19 @@
 
       <!-- Continuity Observation (What MindWorks Is Noticing) -->
       <section
-          v-if="showPatternBlock && reflectionsHistory.length >= 2 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          v-if="showPatternBlock && currentStageReflections.length >= 2 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
           {{ patternBlockLabel }}
         </p>
 
-        <template v-if="reflectionsHistory.length === 2">
+        <template v-if="currentStageReflections.length === 2">
           <p class="text-base text-slate-600 leading-relaxed">
-            MindWorks is collecting observations. Patterns become visible through repetition.
+            MindWorks is collecting observations for this stage. Patterns become visible through repetition.
           </p>
         </template>
-        <template v-else-if="reflectionsHistory.length >= 3 && topPattern">
+        <template v-else-if="currentStageReflections.length >= 3 && topPattern">
           <p class="mb-4 text-sm text-slate-500">
             {{ discoveryWording }}
           </p>
@@ -362,7 +362,7 @@
 
       <!-- Recent Reflections -->
       <section
-          v-if="reflectionsHistory.length > 0 && (weekNumber === 1 ? reflectionsHistory.length >= 3 : true) && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          v-if="currentStageReflections.length > 0 && (weekNumber === 1 ? currentStageReflections.length >= 3 : true) && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <h3 class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">
@@ -370,7 +370,7 @@
         </h3>
         <div class="space-y-6">
           <div
-              v-for="item in reflectionsHistory.slice(0, 3)"
+              v-for="item in currentStageReflections.slice(0, 3)"
               :key="item.id"
               class="rounded-2xl border border-slate-100 bg-slate-50/50 p-6"
           >
@@ -731,6 +731,10 @@ const parsedResponse = computed(() => {
 
 const reflectionsHistory = ref([])
 
+const currentStageReflections = computed(() => {
+  return reflectionsHistory.value.filter(r => r.week_number === weekNumber.value)
+})
+
 const BEHAVIORAL_MAP = {
   'Something else repeatedly happens before beginning.': ['preparing', 'prepare', 'preparation', 'reorganised', 'reorganized', 'reorganise', 'reorganize', 'desk', 'notes', 'organising', 'organizing', 'planning', 'research', 'tidying'],
   'Attention drifts to digital tools or rituals before starting.': ['email', 'messages', 'messaging', 'scrolling', 'tea', 'coffee', 'before starting', 'before beginning', 'before making', 'before joining'],
@@ -739,9 +743,9 @@ const BEHAVIORAL_MAP = {
 }
 
 const recentThemes = computed(() => {
-  if (!reflectionsHistory.value || reflectionsHistory.value.length === 0) return []
+  if (!currentStageReflections.value || currentStageReflections.value.length === 0) return []
 
-  const latestThree = reflectionsHistory.value.slice(0, 3)
+  const latestThree = currentStageReflections.value.slice(0, 3)
   const categoryData = {}
 
   latestThree.forEach(item => {
@@ -796,18 +800,13 @@ const uniqueObservations = computed(() => {
 })
 
 const showPatternBlock = computed(() => {
-  const count = reflectionsHistory.value.length
+  const count = currentStageReflections.value.length
   if (count < 1) return false
-  if (count === 1) return false // show nothing for 1 reflection (rule: 1 reflection: show only the reflection output)
-  if (count === 2) return true // Show optional message: "MindWorks is collecting observations. Patterns become visible through repetition."
+  if (count === 1) return false 
+  if (count === 2) return true 
   
   // For 3+ reflections
   if (weekNumber.value === 1 || weekNumber.value === 2) {
-    // Rules: 3+ reflections: show What MindWorks Is Noticing / continuity pattern sections
-    // Note: showPatternBlock is used for "Continuity Observation (What MindWorks Is Noticing)" section
-    // For Stage 1-2, we already have gating hasGeneratedReflectionThisSession in template
-    
-    // REQUIREMENT: For Stage 1, do not show unless recentThemes has a valid pattern
     if (weekNumber.value === 1) {
       return !!topPattern.value
     }
@@ -819,14 +818,7 @@ const showPatternBlock = computed(() => {
 })
 
 const showSequenceBlock = computed(() => {
-  const count = reflectionsHistory.value.length
-  
-  // Rules say 3+ for What MindWorks Is Noticing / continuity pattern sections
-  // Exception: Stage 2 "Sequence Becoming Visible" was requested previously to show after reflection in current session.
-  // However, the new "Audit and fix pattern visibility trust rules" say:
-  // 1 reflection: show only reflection output, no pattern language.
-  // 2 reflections: show "MindWorks is collecting..."
-  // 3+ reflections: show What MindWorks Is Noticing / continuity pattern sections.
+  const count = currentStageReflections.value.length
   
   if (count < 3) return false
   
