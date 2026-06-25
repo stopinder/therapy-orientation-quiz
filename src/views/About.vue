@@ -517,12 +517,12 @@
               </router-link>
 
               <a
-                  href="https://robormiston.com"
+                  href="https://therapyworks.works"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="footer-link"
               >
-                robormiston.com
+                therapyworks.works
               </a>
 
             </nav>

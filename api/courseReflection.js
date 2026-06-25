@@ -78,9 +78,9 @@ Pay attention to:
 
 The task is recognition of the interruption.
 
-For the ### Questions to stay with section, you must use ONLY these two questions:
-* What do you remember about the moment you shifted from work to checking messages?
-* Did checking messages feel like a choice, or did it happen before you noticed?
+For the ### Questions to stay with section, you must ask exactly two observational questions based on the user's reflection:
+1. Ask about the moment of shift using the user's actual events (e.g., "What do you remember about the moment you shifted from [original intention] to [substitute action]?"). If the substitute action is unclear, use: "What do you remember about the moment the original intention changed?"
+2. Ask whether the substitute action felt chosen or happened before noticing (e.g., "Did [substitute action] feel like a choice, or did it happen before you noticed?"). If unclear, use: "Did the shift feel like a choice, or did it happen before you noticed?"
 
 For the ### A recognition section, use a simple, non-explanatory tone. 
 Examples of preferred tone:
