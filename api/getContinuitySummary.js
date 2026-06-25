@@ -126,16 +126,16 @@ Structure your output into these five EXACT sections:
 (Introductory paragraph - start with a direct observation about what is becoming visible across the journey)
 
 ### Recurring Movement
-Summarise the broad recurring structure emerging across observations. Avoid detailed behavioural examples unless necessary.
+Summarise the broad recurring structure emerging across observations as one concise narrative paragraph. Avoid detailed behavioural examples unless necessary. Do not use numbered sequences.
 
 ### Before the Shift
-Describe any recurring conditions that tend to appear beforehand (e.g., pressure, uncertainty, tension, anticipation). Only include if supported.
+Describe what is repeatedly present beforehand (e.g., pressure, uncertainty, tension, anticipation). Use observational language. Avoid causal wording such as "precursor", "sets the stage", or "leads to".
 
 ### Afterwards
 Describe what commonly follows (e.g., lingering tension, unresolved emotion, delay, substitute activity, partial settling). Only include if supported.
 
 ### Still Emerging
-Describe what cannot yet be concluded. Maintain uncertainty.
+Describe what cannot yet be concluded, ending with uncertainty. Preferred style: "Further observations may make these relationships clearer" or "It is still too early to know whether these observations remain consistent across different situations." Avoid: "further exploration", "requires investigation", or "suggests".
 
 Rules:
 1. Use ONLY these exact headings: "### What is becoming visible", "### Recurring Movement", "### Before the Shift", "### Afterwards", "### Still Emerging".
@@ -146,10 +146,11 @@ Rules:
 6. Do not use: numbered sequences, behavioural-map language, checking/preparing labels, or psychological explanations.
 7. Remove any mention of "serve various functions" or similar causal claims. Instead, use this specific phrasing: "It is not yet clear which shifts reliably follow the familiar response, or whether different consequences appear in different situations."
 8. Use concise narrative paragraphs.
-9. Remain observational and tentative.
-10. Do not diagnose or infer motives.
-11. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across your accumulated observations."
-12. If evidence for a section (like "Afterwards") is missing, omit that section entirely rather than using old headings.
+9. Remain observational, tentative, and calm.
+10. Do not diagnose, explain, or infer motives or functions. Do not coach.
+11. The overview should feel like an executive summary, not a psychological report.
+12. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across your accumulated observations."
+13. If evidence for a section (like "Afterwards") is missing, omit that section entirely rather than using old headings.
 
 OUTPUT FORMAT:
 Your output MUST start with a JSON object, then a newline, then the markdown summary.
