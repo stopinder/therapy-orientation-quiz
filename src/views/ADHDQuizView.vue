@@ -2,14 +2,25 @@
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
     <div class="max-w-3xl mx-auto space-y-16">
 
-      <header class="space-y-4">
+      <header class="space-y-6 max-w-2xl">
         <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
-          System Mapping
+          MindWorks Orientation
         </p>
 
         <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-stone-900">
-          A closer look at how your mind actually operates
+          Some things only become visible across time.
         </h1>
+
+        <div class="space-y-4 text-[1.02rem] leading-[1.9] text-slate-700">
+          <p>
+            The Free Orientation introduces the way MindWorks helps recurring patterns become visible through repeated observation.
+          </p>
+          <p>
+            There are no scores.
+            There are no labels.
+            Just a place to begin.
+          </p>
+        </div>
       </header>
 
       <div
@@ -101,17 +112,17 @@
             <div class="space-y-6">
               <div class="space-y-3">
                 <h3 class="text-[1.7rem] font-medium tracking-[-0.02em] leading-tight text-stone-900">
-                  Continue with the full reflection
+                  Continue with the orientation
                 </h3>
 
                 <div class="max-w-xl space-y-3 text-[1rem] leading-[1.8] text-slate-600">
                   <p>
-                    Receive the complete reflection and downloadable report.
+                    Receive the complete orientation and downloadable summary.
                   </p>
 
                   <p>
-                    The aim is not diagnosis or self-improvement performance.
-                    It is clearer recognition of how continuity breaks down in everyday life.
+                    The aim is not diagnosis or performance.
+                    It is clearer recognition of how patterns begin to appear in everyday life.
                   </p>
                 </div>
               </div>
@@ -134,7 +145,7 @@
                   @click="unlockReport"
                   class="w-full rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
               >
-                Receive full reflection
+                Receive orientation summary
               </button>
             </div>
           </div>
@@ -191,7 +202,7 @@
                   @click="downloadReflection"
                   class="rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
               >
-                Download reflection
+                Download orientation
               </button>
             </div>
 
@@ -199,7 +210,7 @@
                 v-if="downloadComplete"
                 class="mt-4 text-center text-sm text-slate-500"
             >
-              Reflection downloaded.
+              Orientation downloaded.
             </div>
 
             <div
@@ -233,7 +244,7 @@
               </h2>
 
               <p class="mx-auto mb-8 max-w-xl text-lg leading-relaxed text-slate-600">
-                The quiz identifies patterns. The six-stage visibility path helps you work with those patterns over time through guided reflection and continuity tracking.
+                The orientation introduces pattern recognition. The six-stage visibility path helps you work with those patterns over time through guided reflection and continuity tracking.
               </p>
 
               <button
@@ -296,17 +307,17 @@ const views = [
   {
     key: "overview",
     label: "Overview",
-    intro: "How the pattern tends to operate moment to moment."
+    intro: "How the pattern tends to appear moment to moment."
   },
   {
     key: "functioning",
-    label: "Daily functioning",
-    intro: "How the pattern accumulates across ordinary responsibilities."
+    label: "Daily life",
+    intro: "How the pattern gathers across ordinary responsibilities."
   },
   {
     key: "patterns",
-    label: "Patterns & trade-offs",
-    intro: "The contradictions that quietly keep the cycle going."
+    label: "Patterns",
+    intro: "The recurring sequences that keep the cycle going."
   }
 ]
 
@@ -425,7 +436,7 @@ const generateInitialReport = async () => {
   downloadComplete.value = false
 
   loadingStage.value =
-      "Analysing behavioural patterns..."
+      "Noticing behavioural patterns..."
 
   try {
     await new Promise(resolve =>
@@ -433,7 +444,7 @@ const generateInitialReport = async () => {
     )
 
     loadingStage.value =
-        "Mapping interruption loops..."
+        "Mapping familiar sequences..."
 
     await new Promise(resolve =>
         setTimeout(resolve, 700)
@@ -797,10 +808,10 @@ strong {
 
 <body>
 
-<h1>MindWorks Reflection</h1>
+    <h1>MindWorks Orientation</h1>
 
 <p>
-Behavioural continuity, interruption patterns, and attention structure.
+Behavioural patterns, recurring sequences, and emerging continuity.
 </p>
 
 <div class="tldr">
@@ -875,7 +886,7 @@ ${allowBasicFormatting(
 
     link.href = url
     link.download =
-        "mindworks-reflection.html"
+        "mindworks-orientation.html"
 
     document.body.appendChild(link)
 
