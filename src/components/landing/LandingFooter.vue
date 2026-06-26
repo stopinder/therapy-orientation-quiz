@@ -7,6 +7,7 @@
         </div>
         
         <nav class="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-slate-600">
+          <router-link to="/" class="hover:text-slate-900 transition-colors">Home</router-link>
           <router-link to="/about" class="hover:text-slate-900 transition-colors">About</router-link>
           <router-link to="/auth" class="hover:text-slate-900 transition-colors">Sign In</router-link>
           <router-link to="/privacy" class="hover:text-slate-900 transition-colors">Privacy</router-link>

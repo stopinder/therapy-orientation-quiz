@@ -8,7 +8,7 @@
         <!-- Brand -->
 
         <router-link
-            to="/about"
+            to="/"
             class="text-xl font-semibold tracking-tight text-slate-900"
         >
           MindWorks

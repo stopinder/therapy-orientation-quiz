@@ -37,7 +37,13 @@ const routes = [
 
     {
         path: "/",
-        redirect: "/about"
+        name: "Home",
+        component: LandingPageView
+    },
+
+    {
+        path: "/landing",
+        redirect: "/"
     },
 
     {
@@ -64,11 +70,6 @@ const routes = [
         component: ContactView
     },
 
-    {
-        path: "/landing",
-        name: "Landing",
-        component: LandingPageView
-    },
 
     {
         path: "/auth",
