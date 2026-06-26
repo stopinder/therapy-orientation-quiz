@@ -34,8 +34,8 @@ const possibleItems = [
     description: 'You may notice small spaces where a different response becomes possible.'
   },
   {
-    title: 'Readiness for deeper work',
-    description: 'By Stage 6, MindWorks begins to show how different responses may gather around similar pressures.'
+    title: 'Preparedness',
+    description: 'By Stage 6, repeated responses can begin to be seen in relation to one another.'
   }
 ]
 </script>

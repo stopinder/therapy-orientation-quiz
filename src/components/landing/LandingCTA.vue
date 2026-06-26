@@ -5,7 +5,9 @@
         Begin with one observation.
       </h2>
       <p class="mt-6 text-lg text-slate-600">
-        The first step is not to change the pattern. It is to see it clearly enough that something new can begin.
+        The first step is not to change the pattern.
+        <br class="hidden sm:block" />
+        It is to see it clearly enough that the next step can be approached more clearly.
       </p>
       <div class="mt-10 flex items-center justify-center gap-x-6">
         <router-link
