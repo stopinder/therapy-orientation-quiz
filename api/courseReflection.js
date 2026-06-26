@@ -328,21 +328,43 @@ Rules:
 Important: For Stage 5, do not use the standard "Earlier in the sequence", "Questions to stay with", or "A recognition" sections.
             `.trim(),
             6: `
-This stage is about the relationship between different responses.
+This stage is about identifying the relationship between different responses that gather around similar conditions.
 
 The question is: What different responses appear around similar pressure?
 The goal is for internal relationships and recurring responses to become visible.
 
-The focus is on identifying relationships between more than one recurring response appearing around the same pressure, task, or exposure point.
+### DISTINGUISHING STATES FROM RESPONSES
+
+You must distinguish between internal states and behavioral responses:
+
+* STATES (Do NOT treat these as responses):
+  - Emotions: fear, shame, anxiety, compassion, sadness, disappointment, nervousness
+  - Body sensations: heaviness, tension, tightness, shallow breathing
+  - Thoughts: "I can't do this", "They will judge me"
+
+* RESPONSES (Genuinely different behavioral actions):
+  - checking, preparing, delaying, withdrawing, cancelling, avoiding, overthinking, reassuring, pleasing, controlling, becoming defensive, arguing, shutting down
+
+### NEW RULE: OBSERVATIONS WITHOUT MULTIPLE RESPONSES
+
+If the observation contains only emotions, body sensations, or thoughts without different behavioral responses, do NOT force a Stage 6 interpretation.
+
+In this case, you MUST use the following acknowledgement in the "What these responses may have in common" section:
+"This observation may describe several internal experiences rather than different responses. Further observations may make the relationship between conditions and responses clearer."
+
+### WHEN MULTIPLE RESPONSES EXIST
+
+Identify:
+- responses becoming visible
+- what they may have in common
+- the relationship that is still emerging
 
 Pay attention to:
-
 * Recurring response: Multiple movements that appear around the same pressure point.
 * Recurring condition: The specific environment or pressure that seems to be present when responses occur.
 * Relationship: How different responses gather around particular conditions. Use "relationship is still being observed" rather than "system at play" or "system becoming visible".
-* Internal relationship: The link between recurring conditions and multiple responses.
 
-Identify what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.).
+Identify what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.). Avoid "function", "purpose", or "protection".
 
 Stage 6 Output Structure (Required):
 
@@ -350,44 +372,29 @@ Stage 6 Output Structure (Required):
 Plain description of the observations. No interpretation. Avoid "The user..." or referring to a person; keep wording observational.
 
 ### Recurring responses appearing
-List only the actions/responses (e.g., checking messages, reorganising notes, delaying joining). 
-Do not list pressure, fear, tightness, shallow breathing, or body sensations as recurring responses.
+List only the behavioral actions/responses.
+Do not list pressure, fear, tightness, shallow breathing, or body sensations here.
 
 ### What these responses may have in common
-A short description of how these responses may be related. Use cautious language.
+If multiple responses exist: A short description of how these responses may be related. Use cautious language. 
 Example: "All three responses—checking, preparing, and delaying—appeared before entering the meeting. It is not yet clear whether they are related to the same pressure, or whether each changes the condition in a different way."
-Do not include the uncertainty about the relationship here; place it in the "What remains unclear" section instead.
-Do not use the phrase "system at play", "system becoming visible", "may create a pause", "may reduce exposure", or "may change the pressure". Use "relationship is still being observed" instead.
-Do not present the relationships as fact. Do not say "This is your system", "The system is", "This means", "This is because", "This protects you from", or "This is a response to".
-Do not use IFS terminology (parts, managers, exiles, etc.). Avoid "function", "purpose", or "protection".
+
+If only states exist: Use the mandatory acknowledgement: "This observation may describe several internal experiences rather than different responses. Further observations may make the relationship between conditions and responses clearer."
+
+Do not use "system at play", "system becoming visible", "may create a pause", "may reduce exposure", or "may change the pressure". Use "relationship is still being observed" instead.
+Do not present the relationships as fact. Do not say "This is your system", "This means", "This is because", "This protects you from".
 
 ### The sequence
 A clean vertical sequence of events.
 Do not append body observations to the end of the sequence by default. 
-If body observations are given without specific timing, place them near the emotional/state condition they seem to accompany (such as the pressure point or triggering condition), not at the end.
-Do not include "Recognition" as a step in the sequence.
-Do not use abstract framework terms. Use only concrete observable events.
-
-Example:
-Pressure and uncertainty before meeting
-↓
-Tightness in chest / shallow breathing / tense shoulders
-↓
-Checking messages
-↓
-Reorganising notes
-↓
-Delay in joining
+If body observations are given without specific timing, place them near the emotional/state condition they seem to accompany, not at the end.
 
 ### What remains unclear
-This must be the final section and must use its own heading. Identify what is not yet certain about the relationship between these responses. This section must be short and cautious. Leave uncertainty intact.
-
-Example phrases to use:
+Identify what is not yet certain about the relationship between these responses. This section must be short and cautious.
+Example phrases:
 * "It is not yet clear whether checking, reorganising, and delaying are related to the same pressure."
 * "The relationship between checking, reorganising, and delaying is still being observed."
-
-Important: For Stage 6, do not use the standard "Earlier in the sequence", "Questions to stay with", or "A recognition" sections.
-            `.trim()
+`.trim()
         }
 
         const weekLenses = {
