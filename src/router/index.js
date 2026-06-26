@@ -15,6 +15,7 @@ import AccessDeniedView from "../views/AccessDeniedView.vue"
 import DeepDiveView from "../views/DeepDiveView.vue"
 import ProgrammeView from "../views/ProgrammeView.vue"
 import ReflectionHistoryView from "../views/ReflectionHistoryView.vue"
+import LandingPageView from "../views/LandingPageView.vue"
 
 import TermsView from "../views/TermsView.vue"
 import PrivacyView from "../views/PrivacyView.vue"
@@ -61,6 +62,12 @@ const routes = [
         path: "/contact",
         name: "Contact",
         component: ContactView
+    },
+
+    {
+        path: "/landing",
+        name: "Landing",
+        component: LandingPageView
     },
 
     {
