@@ -93,9 +93,9 @@
         </div>
       </section>
 
-      <!-- Why This Matters (openingReflection) - Only Stage 1, 2, 6 -->
+      <!-- Why This Matters (openingReflection) - Only Stage 1, 2 -->
       <section
-          v-if="week.openingReflection && week.openingReflection.length > 0 && [1, 2, 6].includes(weekNumber)"
+          v-if="week.openingReflection && week.openingReflection.length > 0 && [1, 2].includes(weekNumber)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
@@ -912,7 +912,7 @@ const sequenceSteps = computed(() => {
       "Pressure / Uncertainty",
       "Response A",
       "Response B",
-      "Relationship still being observed"
+      "Relationship is still being observed"
     ]
   }
   if (n >= 4) {

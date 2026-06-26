@@ -339,7 +339,7 @@ Pay attention to:
 
 * Recurring response: Multiple movements that appear around the same pressure point.
 * Recurring condition: The specific environment or pressure that seems to be present when responses occur.
-* Relationship: How different responses gather around particular conditions. Use "relationship still being observed" rather than "system at play" or "system becoming visible".
+* Relationship: How different responses gather around particular conditions. Use "relationship is still being observed" rather than "system at play" or "system becoming visible".
 * Internal relationship: The link between recurring conditions and multiple responses.
 
 Identify what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.).
@@ -357,7 +357,7 @@ Do not list pressure, fear, tightness, shallow breathing, or body sensations as 
 A short description of how these responses may be related. Use cautious language.
 Example: "All three responses—checking, preparing, and delaying—appeared before entering the meeting. It is not yet clear whether they are related to the same pressure, or whether each changes the condition in a different way."
 Do not include the uncertainty about the relationship here; place it in the "What remains unclear" section instead.
-Do not use the phrase "system at play", "system becoming visible", "may create a pause", "may reduce exposure", or "may change the pressure". Use "relationship still being observed" instead.
+Do not use the phrase "system at play", "system becoming visible", "may create a pause", "may reduce exposure", or "may change the pressure". Use "relationship is still being observed" instead.
 Do not present the relationships as fact. Do not say "This is your system", "The system is", "This means", "This is because", "This protects you from", or "This is a response to".
 Do not use IFS terminology (parts, managers, exiles, etc.). Avoid "function", "purpose", or "protection".
 
