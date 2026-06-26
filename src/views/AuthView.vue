@@ -115,7 +115,8 @@ const signUp = async () => {
 
   message.value = ""
 
-  const redirectUrl = window.location.hostname === "localhost"
+  const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  const redirectUrl = isLocal
       ? `${window.location.origin}/auth`
       : "https://mindworks.works/auth"
 
@@ -181,7 +182,8 @@ const sendPasswordReset = async () => {
 
   }
 
-  const redirectUrl = window.location.hostname === "localhost"
+  const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  const redirectUrl = isLocal
       ? `${window.location.origin}/reset-password`
       : "https://mindworks.works/reset-password"
 
