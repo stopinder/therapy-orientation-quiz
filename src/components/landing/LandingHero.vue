@@ -18,7 +18,7 @@
           Begin
         </router-link>
         <router-link
-          to="#problem-section"
+          to="#philosophy-section"
           class="text-sm font-semibold text-slate-900 hover:text-slate-600 transition-colors"
           @click.prevent="scrollToLearnMore"
         >
@@ -31,9 +31,16 @@
 
 <script setup>
 const scrollToLearnMore = () => {
-  const element = document.getElementById('problem-section');
+  const element = document.getElementById('philosophy-section');
   if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
+    const headerOffset = 80;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
   }
 }
 </script>
