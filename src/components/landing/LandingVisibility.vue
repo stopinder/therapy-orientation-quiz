@@ -6,7 +6,7 @@
           What becomes visible
         </h2>
         <p class="mt-4 text-lg text-slate-600">
-          Through consistent observation, patterns that were once hidden start to emerge.
+          Small observations begin to show larger patterns.
         </p>
       </div>
 
@@ -26,19 +26,19 @@
 const visibleItems = [
   {
     title: 'Recurring movements',
-    description: 'Recognise the familiar sequences of thoughts and actions that tend to play out in similar situations.'
+    description: 'Familiar sequences that appear again.'
   },
   {
     title: 'Repeated situations',
-    description: 'Identify the specific conditions or pressures that consistently precede a particular response.'
+    description: 'Conditions that keep preceding a shift.'
   },
   {
     title: 'Changing responses',
-    description: 'Observe how your internal states and external behaviours shift as a situation develops.'
+    description: 'Different ways you respond under pressure.'
   },
   {
     title: 'Emerging continuity',
-    description: 'See the thread that connects isolated moments into a recognisable behavioral pattern.'
+    description: 'The thread connecting separate moments.'
   }
 ]
 </script>

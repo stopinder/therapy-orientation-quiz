@@ -14,7 +14,7 @@
             <span class="text-xl font-medium text-slate-900">1</span>
           </div>
           <h3 class="mt-6 text-xl font-semibold text-slate-900">Observe</h3>
-          <p class="mt-2 text-sm text-slate-500 max-w-[200px]">Record a single moment of experience.</p>
+          <p class="mt-2 text-sm text-slate-500 max-w-[200px]">Notice one moment.</p>
         </div>
 
         <div class="h-12 w-px bg-slate-200 my-4 sm:hidden"></div>
@@ -24,7 +24,7 @@
             <span class="text-xl font-medium text-slate-900">2</span>
           </div>
           <h3 class="mt-6 text-xl font-semibold text-slate-900">Accumulate</h3>
-          <p class="mt-2 text-sm text-slate-500 max-w-[200px]">Collect observations over days and weeks.</p>
+          <p class="mt-2 text-sm text-slate-500 max-w-[200px]">Let observations gather.</p>
         </div>
 
         <div class="h-12 w-px bg-slate-200 my-4 sm:hidden"></div>
@@ -34,7 +34,7 @@
             <span class="text-xl font-medium text-white">3</span>
           </div>
           <h3 class="mt-6 text-xl font-semibold text-slate-900">Recognise</h3>
-          <p class="mt-2 text-sm text-slate-500 max-w-[200px]">See the larger patterns that keep returning.</p>
+          <p class="mt-2 text-sm text-slate-500 max-w-[200px]">See what keeps returning.</p>
         </div>
       </div>
     </div>

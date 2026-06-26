@@ -22,8 +22,8 @@
       <LandingVisibility />
 
       <!-- Quote 3 -->
-      <div class="px-6 py-16 text-center sm:py-24 bg-slate-50">
-        <p class="mx-auto max-w-3xl text-2xl font-light italic text-slate-400 sm:text-4xl leading-tight">
+      <div class="px-6 py-20 text-center sm:py-28 bg-slate-50">
+        <p class="mx-auto max-w-3xl text-3xl font-light italic text-slate-400 sm:text-5xl leading-tight">
           "The important question isn't 'Why did this happen?' It's 'What keeps happening?'"
         </p>
       </div>

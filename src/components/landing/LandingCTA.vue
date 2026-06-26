@@ -5,7 +5,7 @@
         The first observation takes about two minutes.
       </h2>
       <p class="mt-6 text-lg text-slate-600">
-        Begin with a single observation. Over time, MindWorks helps the larger picture become visible.
+        Begin with one observation. Let the larger picture emerge over time.
       </p>
       <div class="mt-10 flex items-center justify-center gap-x-6">
         <router-link

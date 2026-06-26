@@ -5,7 +5,7 @@
         Some things only become visible across time.
       </h1>
       <p class="mt-8 text-lg font-medium text-slate-600 sm:text-xl/relaxed">
-        MindWorks helps you recognise recurring patterns across your own experience through repeated observation. Instead of treating each reflection as a separate moment, it gradually reveals what keeps returning.
+        MindWorks helps you recognise what keeps returning through repeated observation.
       </p>
       <div class="mt-10 flex items-center justify-center gap-x-6">
         <router-link

@@ -9,38 +9,38 @@
 
       <div class="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
         <!-- Traditional -->
-        <div class="rounded-2xl border border-slate-100 p-8 sm:p-10 bg-white">
+        <div class="flex flex-col rounded-2xl border border-slate-100 p-8 sm:p-10 bg-white shadow-sm">
           <h3 class="text-xl font-semibold text-slate-400">Traditional reflection</h3>
-          <ul class="mt-8 space-y-5">
-            <li class="flex items-start gap-4">
-              <div class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-slate-300"></div>
+          <ul class="mt-8 space-y-6">
+            <li class="flex items-center gap-4">
+              <div class="h-1.5 w-1.5 flex-none rounded-full bg-slate-200"></div>
               <span class="text-lg text-slate-500">Individual moments</span>
             </li>
-            <li class="flex items-start gap-4">
-              <div class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-slate-300"></div>
+            <li class="flex items-center gap-4">
+              <div class="h-1.5 w-1.5 flex-none rounded-full bg-slate-200"></div>
               <span class="text-lg text-slate-500">Individual insights</span>
             </li>
-            <li class="flex items-start gap-4">
-              <div class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-slate-300"></div>
+            <li class="flex items-center gap-4">
+              <div class="h-1.5 w-1.5 flex-none rounded-full bg-slate-200"></div>
               <span class="text-lg text-slate-500">Separate entries</span>
             </li>
           </ul>
         </div>
 
         <!-- MindWorks -->
-        <div class="rounded-2xl border border-slate-900 p-8 sm:p-10 bg-slate-900">
+        <div class="flex flex-col rounded-2xl border border-slate-900 p-8 sm:p-10 bg-slate-900 shadow-xl shadow-slate-200">
           <h3 class="text-xl font-semibold text-white">MindWorks</h3>
-          <ul class="mt-8 space-y-5">
-            <li class="flex items-start gap-4">
-              <div class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-white/40"></div>
+          <ul class="mt-8 space-y-6">
+            <li class="flex items-center gap-4">
+              <div class="h-1.5 w-1.5 flex-none rounded-full bg-white/40"></div>
               <span class="text-lg text-slate-300">Connected observations</span>
             </li>
-            <li class="flex items-start gap-4">
-              <div class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-white/40"></div>
+            <li class="flex items-center gap-4">
+              <div class="h-1.5 w-1.5 flex-none rounded-full bg-white/40"></div>
               <span class="text-lg text-slate-300">Behavioural continuity</span>
             </li>
-            <li class="flex items-start gap-4">
-              <div class="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-white/40"></div>
+            <li class="flex items-center gap-4">
+              <div class="h-1.5 w-1.5 flex-none rounded-full bg-white/40"></div>
               <span class="text-lg text-slate-300">Recognition across time</span>
             </li>
           </ul>
