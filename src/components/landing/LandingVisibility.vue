@@ -29,16 +29,16 @@ const visibleItems = [
     description: 'Familiar sequences that appear again.'
   },
   {
-    title: 'Repeated situations',
-    description: 'Conditions that keep preceding a shift.'
+    title: 'Repeated pressures',
+    description: 'Situations that keep carrying a similar charge.'
   },
   {
     title: 'Changing responses',
-    description: 'Different ways you respond under pressure.'
+    description: 'Different reactions around similar conditions.'
   },
   {
-    title: 'Emerging continuity',
-    description: 'The thread connecting separate moments.'
+    title: 'Emerging system',
+    description: 'The wider shape that begins to appear over time.'
   }
 ]
 </script>

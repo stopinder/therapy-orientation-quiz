@@ -5,32 +5,25 @@
 
       <!-- Quote 1 -->
       <div class="px-6 py-16 text-center sm:py-24">
-        <p class="mx-auto max-w-2xl text-2xl font-light italic text-slate-400 sm:text-3xl leading-snug">
-          "One reflection tells a story. Many reflections reveal a pattern."
+        <h2 class="mx-auto max-w-2xl text-3xl font-semibold tracking-tight text-slate-900 mb-4">
+          Insight is not enough.
+        </h2>
+        <p class="mx-auto max-w-2xl text-xl font-light text-slate-600 sm:text-2xl leading-snug">
+          A single insight can be useful. But if the same pattern keeps returning, something more than insight may be needed.
         </p>
       </div>
 
       <LandingProblem />
 
-      <!-- Quote 2 -->
-      <div class="px-6 py-16 text-center sm:py-24">
-        <p class="mx-auto max-w-2xl text-2xl font-light italic text-slate-400 sm:text-3xl leading-snug">
-          "Don't collect insights. Collect observations."
-        </p>
-      </div>
+      <LandingPossible />
 
       <LandingVisibility />
-
-      <!-- Quote 3 -->
-      <div class="px-6 py-20 text-center sm:py-28 bg-slate-50">
-        <p class="mx-auto max-w-3xl text-3xl font-light italic text-slate-400 sm:text-5xl leading-tight">
-          "The important question isn't 'Why did this happen?' It's 'What keeps happening?'"
-        </p>
-      </div>
 
       <LandingHowItWorks />
 
       <LandingDifference />
+
+      <LandingBridge />
 
       <LandingCTA />
     </main>
@@ -42,9 +35,11 @@
 <script setup>
 import LandingHero from '../components/landing/LandingHero.vue'
 import LandingProblem from '../components/landing/LandingProblem.vue'
+import LandingPossible from '../components/landing/LandingPossible.vue'
 import LandingVisibility from '../components/landing/LandingVisibility.vue'
 import LandingHowItWorks from '../components/landing/LandingHowItWorks.vue'
 import LandingDifference from '../components/landing/LandingDifference.vue'
+import LandingBridge from '../components/landing/LandingBridge.vue'
 import LandingCTA from '../components/landing/LandingCTA.vue'
 import LandingFooter from '../components/landing/LandingFooter.vue'
 </script>

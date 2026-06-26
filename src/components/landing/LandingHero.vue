@@ -2,10 +2,13 @@
   <section class="relative overflow-hidden bg-white px-6 py-20 sm:py-28 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
       <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-6xl">
-        Some things only become visible across time.
+        You cannot work with what you cannot yet see.
       </h1>
       <p class="mt-8 text-lg font-medium text-slate-600 sm:text-xl/relaxed">
-        MindWorks helps you recognise what keeps returning through repeated observation.
+        MindWorks helps you recognise the repeated responses, pressures, and patterns that usually remain hidden inside everyday life.
+      </p>
+      <p class="mt-4 text-slate-500 font-light italic">
+        Some things only become visible across time.
       </p>
       <div class="mt-10 flex items-center justify-center gap-x-6">
         <router-link
