@@ -115,9 +115,16 @@ const signUp = async () => {
 
   message.value = ""
 
+  const redirectUrl = window.location.hostname === "localhost"
+      ? `${window.location.origin}/auth`
+      : "https://mindworks.works/auth"
+
   const { error } = await supabase.auth.signUp({
     email: email.value,
-    password: password.value
+    password: password.value,
+    options: {
+      emailRedirectTo: redirectUrl
+    }
   })
 
   if (error) {
@@ -174,11 +181,14 @@ const sendPasswordReset = async () => {
 
   }
 
+  const redirectUrl = window.location.hostname === "localhost"
+      ? `${window.location.origin}/reset-password`
+      : "https://mindworks.works/reset-password"
+
   const { error } = await supabase.auth.resetPasswordForEmail(
       email.value,
       {
-        redirectTo:
-            `${window.location.origin}/reset-password`
+        redirectTo: redirectUrl
       }
   )
 
