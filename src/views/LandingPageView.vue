@@ -4,7 +4,7 @@
       <LandingHero />
 
       <!-- Quote 1 -->
-      <div class="px-6 py-16 text-center sm:py-24">
+      <div id="insight-is-not-enough" class="px-6 py-12 text-center sm:py-16 scroll-mt-24">
         <h2 class="mx-auto max-w-2xl text-3xl font-semibold tracking-tight text-slate-900 mb-4">
           Insight is not enough.
         </h2>

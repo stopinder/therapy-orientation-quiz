@@ -1,5 +1,5 @@
 <template>
-  <section class="relative overflow-hidden bg-white px-6 pt-12 pb-20 sm:pt-16 sm:pb-28 lg:px-8">
+  <section class="relative overflow-hidden bg-white px-6 pt-12 pb-12 sm:pt-16 sm:pb-16 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
       <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-6xl">
         You cannot work with what you cannot yet see.
@@ -18,7 +18,7 @@
           Begin
         </router-link>
         <router-link
-          to="#philosophy-section"
+          to="#insight-is-not-enough"
           class="text-sm font-semibold text-slate-900 hover:text-slate-600 transition-colors"
           @click.prevent="scrollToLearnMore"
         >
@@ -31,7 +31,7 @@
 
 <script setup>
 const scrollToLearnMore = () => {
-  const element = document.getElementById('philosophy-section');
+  const element = document.getElementById('insight-is-not-enough');
   if (element) {
     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
