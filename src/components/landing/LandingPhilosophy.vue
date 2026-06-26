@@ -1,5 +1,5 @@
 <template>
-  <section id="philosophy-section" class="bg-white px-6 py-20 sm:py-24 lg:px-8">
+  <section id="philosophy-section" class="bg-white px-6 py-20 sm:py-24 lg:px-8 scroll-mt-24">
     <div class="mx-auto max-w-2xl">
       <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl text-center">
         Why MindWorks was created

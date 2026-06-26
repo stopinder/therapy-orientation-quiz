@@ -1,5 +1,5 @@
 <template>
-  <section class="relative overflow-hidden bg-white px-6 py-20 sm:py-28 lg:px-8">
+  <section class="relative overflow-hidden bg-white px-6 pt-12 pb-20 sm:pt-16 sm:pb-28 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
       <h1 class="text-4xl font-semibold tracking-tight text-slate-900 sm:text-6xl">
         You cannot work with what you cannot yet see.
@@ -33,14 +33,7 @@
 const scrollToLearnMore = () => {
   const element = document.getElementById('philosophy-section');
   if (element) {
-    const headerOffset = 80;
-    const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    });
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 </script>
