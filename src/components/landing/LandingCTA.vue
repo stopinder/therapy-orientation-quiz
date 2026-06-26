@@ -1,10 +1,10 @@
 <template>
-  <section class="bg-slate-50 px-6 py-24 sm:py-32 lg:px-8">
+  <section class="bg-slate-50 px-6 py-20 sm:py-24 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
       <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
         The first observation takes about two minutes.
       </h2>
-      <p class="mt-8 text-lg text-slate-600">
+      <p class="mt-6 text-lg text-slate-600">
         Begin with a single observation. Over time, MindWorks helps the larger picture become visible.
       </p>
       <div class="mt-10 flex items-center justify-center gap-x-6">
