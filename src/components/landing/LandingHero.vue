@@ -17,23 +17,30 @@
         >
           Begin
         </router-link>
-        <router-link
-          to="#insight-is-not-enough"
+        <button
+          type="button"
           class="text-sm font-semibold text-slate-900 hover:text-slate-600 transition-colors"
-          @click.prevent="scrollToLearnMore"
+          @click="scrollToInsight"
         >
           Learn More <span aria-hidden="true">→</span>
-        </router-link>
+        </button>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-const scrollToLearnMore = () => {
-  const element = document.getElementById('insight-is-not-enough');
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+const scrollToInsight = () => {
+  const target = document.getElementById("insight-is-not-enough")
+
+  if (!target) {
+    console.warn("Insight section not found")
+    return
   }
+
+  target.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  })
 }
 </script>
