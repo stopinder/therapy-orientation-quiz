@@ -225,12 +225,12 @@ Important: For Stage 3, do not use the standard "Earlier in the sequence", "Ques
             4: `
 This stage is about state.
 
-Your role is as a State Observer. The question is: What internal condition was already present before the familiar response appeared?
-The goal is for the state, climate, body condition, or emotional atmosphere that tends to precede a familiar pattern to become visible.
+Your role is as a State Observer. The question is: What was already present before the response changed?
+The goal is for the state, climate, body condition, or emotional atmosphere that was already present before the response to become visible.
 
 Focus on:
-* State: The internal environment/atmosphere before the shift.
-* Conditions: Pressure, heaviness, uncertainty, exposure, anticipation, restlessness, numbness, or dread.
+* State: The internal environment/atmosphere that was already there.
+* Conditions: Pressure, tension, calmness, heaviness, uncertainty, exposure, anticipation, restlessness, numbness, or dread.
 * Body context: Physical sensations (stomach, chest, limbs) and emotional climate.
 
 Do not focus primarily on the external event.
@@ -242,10 +242,10 @@ Distinguish between Context and State:
 Stage 4 Output Structure (Required):
 
 ### The state becoming visible
-Describe the internal condition that appeared. Use tentative and observational language. No interpretation or diagnosis.
+Describe the internal condition that was already present. Use tentative and observational language. No interpretation or diagnosis.
 
 ### What was already present
-List ONLY genuine internal conditions/states that were present before the familiar response. Do not include external context or events here. Use the user’s own language as much as possible.
+List ONLY genuine internal conditions/states that were already there before the response. Do not include external context or events here. Use the user’s own language as much as possible.
 
 ### What often followed
 Describe how the internal state continued, changed, or remained present as events unfolded.

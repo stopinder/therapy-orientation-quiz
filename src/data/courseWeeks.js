@@ -202,10 +202,10 @@ export const courseWeeks = [
             "Exploring the internal climate that precedes the pattern.",
 
         reflectionPrompt:
-            "Describe a moment when you noticed a familiar feeling, atmosphere, or internal condition before something changed.",
+            "Describe a moment when you noticed something was already present before your response changed.",
 
         intro:
-            "This stage shifts attention to the condition that tends to precede a familiar pattern. We are looking for the internal atmosphere—pressure, heaviness, uncertainty, or a shift in the body—that is already present before the response appears.",
+            "Sometimes a feeling, sense of pressure, tension, calmness, or another state is already present before we respond. This stage is about noticing what was already there.",
 
         openingReflection: [
             "A recurring sequence often feels sudden, but it usually has an arrival. Before the visible behavior—the checking, the delay, or the substitution—something in the internal environment is already shifting.",
