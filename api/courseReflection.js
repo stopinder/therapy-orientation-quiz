@@ -52,10 +52,22 @@ export default async function handler(request, response) {
             .eq("user_id", userId)
             .eq("week_number", week)
             .order("created_at", { ascending: false })
-            .limit(3)
+            .limit(10)
 
-        const recentReflections = reflectionsData?.length >= 3
-            ? reflectionsData
+        const uniqueReflections = []
+        const seen = new Set()
+        if (reflectionsData) {
+            for (const r of reflectionsData) {
+                const text = r.original_reflection?.trim()
+                if (text && !seen.has(text)) {
+                    seen.add(text)
+                    uniqueReflections.push(r)
+                }
+            }
+        }
+
+        const recentReflections = uniqueReflections.length >= 3
+            ? uniqueReflections.slice(0, 3)
                 .map((r) => `Reflection:\n${r.original_reflection}`)
                 .join("\n\n")
             : "None"
@@ -316,27 +328,26 @@ Rules:
 Important: For Stage 5, do not use the standard "Earlier in the sequence", "Questions to stay with", or "A recognition" sections.
             `.trim(),
             6: `
-This stage is about the system.
+This stage is about the relationship between different responses.
 
-Your role is as a Systems Mapper. The question is: What recurring responses appear under particular conditions?
-The goal is for internal relationships and recurring protective responses to become visible.
+The question is: What different responses appear around similar pressure?
+The goal is for internal relationships and recurring responses to become visible.
 
 The focus is on identifying relationships between more than one recurring response appearing around the same pressure, task, or exposure point.
 
 Pay attention to:
 
-* System: How different responses interact under particular conditions. Use "relationship still being observed" rather than "system at play" or "system becoming visible".
 * Recurring response: Multiple movements that appear around the same pressure point.
-* Recurring condition: The specific environment or pressure that triggers the responses.
-* Protective response: Responses that appear under pressure or in particular conditions.
+* Recurring condition: The specific environment or pressure that seems to be present when responses occur.
+* Relationship: How different responses gather around particular conditions. Use "relationship still being observed" rather than "system at play" or "system becoming visible".
 * Internal relationship: The link between recurring conditions and multiple responses.
 
-The task is to map the system. Map what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.).
+Identify what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.).
 
 Stage 6 Output Structure (Required):
 
 ### The responses
-Plain description of the user’s words. No interpretation.
+Plain description of the observations. No interpretation. Avoid "The user..." or referring to a person; keep wording observational.
 
 ### Recurring responses appearing
 List only the actions/responses (e.g., checking messages, reorganising notes, delaying joining). 
@@ -344,21 +355,21 @@ Do not list pressure, fear, tightness, shallow breathing, or body sensations as 
 
 ### What these responses may have in common
 A short description of how these responses may be related. Use cautious language.
-Example: "All three responses—checking, preparing, and delaying—appeared before entering the meeting. It is not yet clear whether they serve the same function, or whether each changes the pressure in a different way."
+Example: "All three responses—checking, preparing, and delaying—appeared before entering the meeting. It is not yet clear whether they are related to the same pressure, or whether each changes the condition in a different way."
 Do not include the uncertainty about the relationship here; place it in the "What remains unclear" section instead.
 Do not use the phrase "system at play", "system becoming visible", "may create a pause", "may reduce exposure", or "may change the pressure". Use "relationship still being observed" instead.
-Do not present the system as fact. Do not say "This is your system", "The system is", "This means", "This is because", "This protects you from", or "This is a protector".
-Do not use IFS terminology (parts, managers, exiles, etc.).
+Do not present the relationships as fact. Do not say "This is your system", "The system is", "This means", "This is because", "This protects you from", or "This is a response to".
+Do not use IFS terminology (parts, managers, exiles, etc.). Avoid "function", "purpose", or "protection".
 
 ### The sequence
 A clean vertical sequence of events.
 Do not append body observations to the end of the sequence by default. 
-If the user gives body observations without specific timing, place them near the emotional/state condition they seem to accompany (such as the pressure point or triggering condition), not at the end.
+If body observations are given without specific timing, place them near the emotional/state condition they seem to accompany (such as the pressure point or triggering condition), not at the end.
 Do not include "Recognition" as a step in the sequence.
 Do not use abstract framework terms. Use only concrete observable events.
 
 Example:
-Pressure and fear before meeting
+Pressure and uncertainty before meeting
 ↓
 Tightness in chest / shallow breathing / tense shoulders
 ↓
@@ -372,7 +383,7 @@ Delay in joining
 This must be the final section and must use its own heading. Identify what is not yet certain about the relationship between these responses. This section must be short and cautious. Leave uncertainty intact.
 
 Example phrases to use:
-* "It is not yet clear whether checking, reorganising, and delaying serve the same function."
+* "It is not yet clear whether checking, reorganising, and delaying are related to the same pressure."
 * "The relationship between checking, reorganising, and delaying is still being observed."
 
 Important: For Stage 6, do not use the standard "Earlier in the sequence", "Questions to stay with", or "A recognition" sections.
@@ -424,10 +435,9 @@ Use these lenses for your observation:
 `.trim(),
             6: `
 Use these lenses for your observation:
-* system
+* relationship
 * recurring response
 * recurring condition
-* protective response
 * internal relationship
 * pattern across time
 `.trim()

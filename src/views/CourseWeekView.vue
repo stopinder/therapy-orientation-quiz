@@ -93,9 +93,9 @@
         </div>
       </section>
 
-      <!-- Why This Matters (openingReflection) -->
+      <!-- Why This Matters (openingReflection) - Only Stage 1, 2, 6 -->
       <section
-          v-if="week.openingReflection && week.openingReflection.length > 0"
+          v-if="week.openingReflection && week.openingReflection.length > 0 && [1, 2, 6].includes(weekNumber)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
@@ -907,6 +907,14 @@ const sequenceBlockWording = computed(() => {
 
 const sequenceSteps = computed(() => {
   const n = weekNumber.value
+  if (n === 6) {
+    return [
+      "Pressure / Uncertainty",
+      "Response A",
+      "Response B",
+      "Relationship still being observed"
+    ]
+  }
   if (n >= 4) {
     return [
       "Pressure / Uncertainty",

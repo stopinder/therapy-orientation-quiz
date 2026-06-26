@@ -304,15 +304,15 @@ export const courseWeeks = [
             "This stage looks at what happens when similar pressure gives rise to different responses. Sometimes the response is checking. Sometimes it is preparing. Sometimes it is delaying, reorganising, or pulling away. On the surface these behaviours may look separate. MindWorks is beginning to notice whether they are related.",
 
         openingReflection: [
-            "By this point, you may have seen repeated sequences, states, and functions across your reflections. Some may seem separate at first: checking, preparing, delaying, reorganising, withdrawing, or overthinking.",
+            "By this point, you may have seen repeated sequences and states across your reflections. Some may seem separate at first: checking, preparing, delaying, reorganising, withdrawing, or overthinking.",
 
-            "Stage 6 looks across these observations. The question is not yet what the system is. The question is whether different responses keep appearing around similar moments of pressure, uncertainty, exposure, or demand.",
+            "Stage 6 looks across these observations. The question is not yet what the relationship is. The question is whether different responses keep appearing around similar moments of pressure, uncertainty, exposure, or demand.",
 
             "A response may look different on the surface, while still appearing in a similar situation. Preparing may appear before one task. Checking may appear before another. Delaying may appear somewhere else. MindWorks is beginning to observe whether these responses gather around similar conditions.",
 
             "No final explanation is needed here. The task is simply to notice the relationship: what appears, when it appears, and whether several different responses seem to arrive around the same kind of pressure.",
 
-            "This is the beginning of seeing a system. Not as a theory, but as a visible relationship between conditions and responses."
+            "This is the beginning of seeing a relationship. Not as a theory, but as a visible connection between conditions and responses."
         ],
 
         bodyFocus: [

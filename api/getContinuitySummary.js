@@ -103,7 +103,7 @@ MindWorks Reflection: ${r.ai_response}`)
         const lens = isCourseOverview
             ? {
                 question: "What is becoming visible across everything observed so far?",
-                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Use concise narrative paragraphs. Remain observational, tentative, non-diagnostic. Do not infer motives. MANDATORY: You must only use the sections Recurring Movement, Before the Shift, Afterwards, and Still Emerging. Strictly exclude 'Possible Function', 'Primary State', 'What Keeps Reappearing', 'Repeated Sequence', and 'What Remains Unclear'. Under no circumstances output the old headings."
+                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Use concise narrative paragraphs. Remain observational, tentative, non-diagnostic. Do not infer motives. MANDATORY: You must only use the sections Recurring Movement, Before the Shift, Afterwards, and Still Emerging. Strictly exclude 'Possible Function', 'Primary State', 'What Keeps Reappearing', 'Repeated Sequence', and 'What Remains Unclear'. Under no circumstances output the old headings. Avoid certainty; use 'you' or observational wording only."
             }
             : (stageLenses[currentStage] || stageLenses[6])
 
@@ -114,7 +114,7 @@ MindWorks Reflection: ${r.ai_response}`)
 You are a Pattern Observer.
 
 CORE ANALYSIS:
-Look across multiple reflections to identify recurring structural patterns. Look for the broader relationship across observations before naming specific behaviours.
+Look across multiple reflections to identify recurring structural patterns. Look for the broader relationship across observations before naming specific behaviours. Avoid phrases such as "a consistent narrative unfolds", "this demonstrates", "this shows", or "this indicates". Prefer tentative language: "Across recent observations...", "A similar movement is beginning to appear...", "These observations may belong together...", "It is becoming easier to recognise...". Do not use impersonal language (individuals, people, participants); write directly to the user ("you") or keep it observational.
 
 COURSE OVERVIEW PRESENTATION:
 Present your findings as a Course Overview.
@@ -123,19 +123,19 @@ The question to address is: ${lens.question}
 Structure your output into these five EXACT sections:
 
 ### What is becoming visible
-(Introductory paragraph - start with a direct observation about what is becoming visible across the journey)
+(Introductory paragraph - start with a direct observation about what is becoming visible across the journey. Keep it concise.)
 
 ### Recurring Movement
-Summarise the broad recurring structure emerging across observations as one concise narrative paragraph. Avoid detailed behavioural examples unless necessary. Do not use numbered sequences.
+Summarise the broad recurring structure emerging across observations as one concise narrative paragraph. Avoid detailed behavioural examples unless necessary. Do not use numbered sequences. Keep paragraphs short and avoid repeating ideas.
 
 ### Before the Shift
-Describe what is repeatedly present beforehand (e.g., pressure, uncertainty, tension, anticipation). Use observational language. Avoid causal wording such as "precursor", "sets the stage", or "leads to".
+Describe what is repeatedly present beforehand (e.g., pressure, uncertainty, tension, anticipation). Use observational language. Avoid causal wording such as "precursor", "sets the stage", or "leads to". Keep it concise.
 
 ### Afterwards
-Describe what commonly follows (e.g., lingering tension, unresolved emotion, delay, substitute activity, partial settling). Only include if supported.
+Describe what commonly follows (e.g., lingering tension, unresolved emotion, delay, substitute activity, partial settling). Only include if supported. Keep it concise.
 
 ### Still Emerging
-Describe what cannot yet be concluded, ending with uncertainty. Preferred style: "Further observations may make these relationships clearer" or "It is still too early to know whether these observations remain consistent across different situations." Avoid: "further exploration", "requires investigation", or "suggests".
+Describe what cannot yet be concluded, ending with uncertainty. Preferred style: "Further observations may make these relationships clearer" or "It is still too early to know whether these observations remain consistent across different situations." Avoid: "further exploration", "requires investigation", or "suggests". Keep it concise.
 
 Rules:
 1. Use ONLY these exact headings: "### What is becoming visible", "### Recurring Movement", "### Before the Shift", "### Afterwards", "### Still Emerging".
@@ -169,7 +169,7 @@ Example output:
 You are a Pattern Observer.
 
 CORE ANALYSIS:
-Look across multiple reflections to identify recurring structural patterns. Look for the broader relationship across observations before naming specific behaviours.
+Look across multiple reflections to identify recurring structural patterns. Look for the broader relationship across observations before naming specific behaviours. Avoid phrases such as "a consistent narrative unfolds", "this demonstrates", "this shows", or "this indicates". Prefer tentative language: "Across recent observations...", "A similar movement is beginning to appear...", "These observations may belong together...", "It is becoming easier to recognise...". Do not use impersonal language (individuals, people, participants); write directly to the user ("you") or keep it observational.
 
 Structural patterns to look for:
 Intention -> Pressure / body state -> Movement away from original intention -> Consequence (What changed afterwards? e.g., delay, substitute activity, lingering irritation, defensiveness remaining active, partial settling, no observable change, or postponed action).

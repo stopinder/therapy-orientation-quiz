@@ -21,13 +21,13 @@
             to="/continuity"
             class="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 shadow-sm"
         >
-          View Continuity History
+          View Continuity
         </router-link>
       </div>
 
       <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
-        A six-stage path for seeing interruptions, sequences, patterns,
-        states, functions, and systems more clearly over time.
+        A six-stage path for recognising interruptions, sequences, recurring
+        patterns, internal states, consequences, and connected responses over time.
       </p>
 
     </div>
@@ -55,7 +55,7 @@
 
       <div v-else-if="continuitySummary">
         <h2 class="mb-6 text-2xl font-semibold text-slate-900">
-          What is becoming visible
+          Becoming visible
         </h2>
         
         <div class="space-y-8">
@@ -63,11 +63,11 @@
             v-for="(section, idx) in parsedSummary" 
             :key="idx"
           >
-            <h4 v-if="section.title && section.title !== 'What is becoming visible'" class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+            <h4 v-if="section.title && !['What is becoming visible', 'Becoming visible'].includes(section.title)" class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
               {{ section.title }}
             </h4>
             <div 
-              v-if="section.title === 'What is becoming visible' || !section.title" 
+              v-if="['What is becoming visible', 'Becoming visible'].includes(section.title) || !section.title" 
               class="text-xl font-medium text-slate-900 leading-relaxed mb-8"
             >
               {{ section.content }}
@@ -83,7 +83,7 @@
               to="/continuity"
               class="text-sm font-medium text-slate-500 hover:text-slate-900 transition underline underline-offset-4"
           >
-            View Full Continuity History
+            View Full Continuity
           </router-link>
         </div>
       </div>
@@ -95,7 +95,7 @@
           </h2>
           <p class="mt-3 text-base leading-relaxed text-slate-600">
             MindWorks is beginning to notice what is becoming visible across your reflections:
-            broad recurring structures, the conditions beforehand, and what commonly follows.
+            recurring structures, the conditions beforehand, and what follows.
           </p>
         </div>
         <router-link
@@ -120,9 +120,8 @@
         </h2>
 
         <p class="mt-4 text-lg leading-relaxed text-slate-300">
-          Full access to the complete six-stage visibility path.
-          The material is designed to be moved through gradually,
-          but all sections become available immediately after purchase.
+          The material is designed to be moved through gradually.
+          All sections become available immediately after purchase.
         </p>
 
         <div class="mt-8 flex flex-wrap gap-4">
@@ -202,7 +201,7 @@
             v-if="shouldForegroundWeek(week.number)"
             class="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800"
         >
-          This appears to be the next active area of continuity.
+          This appears to be the next area of continuity.
         </div>
 
         <!-- Access -->
