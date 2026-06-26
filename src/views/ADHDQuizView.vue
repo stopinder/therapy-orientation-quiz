@@ -259,6 +259,7 @@
 
       </section>
 
+      <BackToTopButton />
     </div>
   </main>
 </template>
@@ -268,6 +269,7 @@ import { useAuthStore } from "../stores/auth"
 import { computed, nextTick, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import { supabase } from "../lib/supabase"
+import BackToTopButton from "../components/BackToTopButton.vue"
 
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 import { buildBehaviourProfile } from "../quiz/adhd/buildBehaviourProfile.js"
