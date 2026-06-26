@@ -298,10 +298,10 @@ export const courseWeeks = [
             "Noticing when several responses appear around similar conditions.",
 
         reflectionPrompt:
-            "Describe a moment where more than one familiar response appeared around the same pressure, task, or relationship.",
+            "Describe a situation where you noticed yourself responding in more than one way.",
 
         intro:
-            "This stage looks at what happens when similar pressure gives rise to different responses. Sometimes the response is checking. Sometimes it is preparing. Sometimes it is delaying, reorganising, or pulling away. On the surface these behaviours may look separate. MindWorks is beginning to notice whether they are related.",
+            "Sometimes the same situation brings out different responses. You might prepare, avoid, overthink, withdraw, reassure yourself, become defensive, or respond in another way.\n\nThis stage is about noticing the different responses that appeared, without trying to explain them.",
 
         openingReflection: [
             "By this point, you may have seen repeated sequences and states across your reflections. Some may seem separate at first: checking, preparing, delaying, reorganising, withdrawing, or overthinking.",
@@ -326,7 +326,7 @@ export const courseWeeks = [
                 title: "Notice the shared condition",
 
                 description:
-                    "Identify one pressure, task, or relationship where more than one familiar response appears."
+                    "Identify one situation where more than one response appears."
             },
 
             {
@@ -348,7 +348,7 @@ export const courseWeeks = [
         exercises: [
             {
                 title: "Notice the shared condition",
-                description: "Identify one pressure, task, or relationship where more than one familiar response appears."
+                description: "Identify one situation where more than one response appears."
             },
             {
                 title: "Compare the responses",
