@@ -1,6 +1,25 @@
 <template>
   <main class="min-h-screen bg-slate-50 px-6 py-16">
 
+    <!-- Sticky Stage Title -->
+    <transition
+        enter-active-class="transition ease-out duration-200"
+        enter-from-class="opacity-0 -translate-y-2"
+        enter-to-class="opacity-100 translate-y-0"
+        leave-active-class="transition ease-in duration-150"
+        leave-from-class="opacity-100 translate-y-0"
+        leave-to-class="opacity-0 -translate-y-2"
+    >
+      <div
+          v-if="showStickyHeader && week"
+          class="fixed inset-x-0 top-14 z-50 flex justify-center px-6 py-4 pointer-events-none"
+      >
+        <div class="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-600 shadow-sm backdrop-blur-md pointer-events-auto">
+          Stage {{ week.number }} &middot; {{ week.title }}
+        </div>
+      </div>
+    </transition>
+
     <div
         v-if="!week"
         class="mx-auto max-w-4xl text-slate-500"
@@ -707,6 +726,7 @@ const stopLoadingRotation = () => {
 }
 
 onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
   stopLoadingRotation()
 })
 
@@ -1066,7 +1086,15 @@ const restorePreviousReflection =
 
     }
 
+const showStickyHeader = ref(false)
+
+const handleScroll = () => {
+  showStickyHeader.value = window.scrollY > 150
+}
+
 onMounted(async () => {
+
+  window.addEventListener('scroll', handleScroll)
 
   if (
       auth.user?.id &&
