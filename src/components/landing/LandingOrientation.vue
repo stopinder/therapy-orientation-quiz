@@ -6,13 +6,13 @@
       </h2>
       <div class="mt-6 space-y-4 text-lg text-slate-600 leading-relaxed">
         <p>
-          Before beginning the observation journey, you can explore MindWorks through a short guided orientation.
+          Begin with a short guided orientation.
         </p>
         <p>
-          It introduces the way MindWorks approaches repeated patterns, observation and continuity.
+          There are no scores. There are no labels.
         </p>
         <p>
-          There are no scores. There are no labels. It is simply a place to begin.
+          You will only be asked for your email before receiving your personalised report.
         </p>
       </div>
       <div class="mt-10 flex flex-col items-center gap-4">
