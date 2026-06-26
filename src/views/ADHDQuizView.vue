@@ -151,19 +151,25 @@
           </div>
 
           <div v-if="emailSubmitted">
-            <div class="sticky top-16 z-30 mb-8 border-y border-stone-200 bg-stone-50/95 py-4 backdrop-blur">
-              <div class="flex flex-wrap justify-center gap-2">
-                <button
-                    v-for="view in views"
-                    :key="view.key"
-                    @click="selectView(view.key)"
-                    class="rounded-full border px-4 py-1.5 text-sm transition"
-                    :class="activeView === view.key
-                    ? 'border-slate-900 bg-slate-900 text-white'
-                    : 'border-stone-300 bg-white text-slate-700 hover:bg-stone-50'"
-                >
-                  {{ view.label }}
-                </button>
+            <div class="sticky top-16 z-30 mb-8 border-y border-stone-200 bg-stone-50/95 py-6 backdrop-blur">
+              <div class="mx-auto max-w-2xl text-center mb-6">
+                <h3 class="text-sm font-medium text-slate-900 mb-1">Explore your report</h3>
+                <p class="text-xs text-slate-500">Your report is organised into three sections. Select a section to explore different perspectives.</p>
+              </div>
+              <div class="flex justify-center">
+                <div class="inline-flex p-1 bg-stone-100 rounded-full border border-stone-200">
+                  <button
+                      v-for="view in views"
+                      :key="view.key"
+                      @click="selectView(view.key)"
+                      class="rounded-full px-6 py-2 text-sm font-medium transition-all duration-200"
+                      :class="activeView === view.key
+                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-black/5'
+                      : 'text-slate-500 hover:text-slate-700'"
+                  >
+                    {{ view.label }}
+                  </button>
+                </div>
               </div>
             </div>
 
