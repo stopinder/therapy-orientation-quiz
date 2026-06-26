@@ -10,19 +10,21 @@
         </p>
 
         <h1 class="text-3xl md:text-[2.45rem] font-medium tracking-[-0.025em] text-slate-900 leading-[1.12]">
-          A six-stage reflection path for seeing interruptions,
-          patterns, states, functions, and systems more clearly.
+          MindWorks was created to help repeated patterns become visible over time.
         </h1>
 
         <div class="space-y-4 text-[1.02rem] leading-[1.9] text-slate-700">
 
           <p>
-            MindWorks is for people who often begin with clear intention,
-            drift into something else, and only notice afterwards that continuity was lost.
+            Many people understand themselves intellectually, yet still find themselves returning to familiar reactions, pressures and situations.
           </p>
 
           <p>
-            It combines behavioural reflection, body awareness, and structured self-observation.
+            MindWorks was built for that gap.
+          </p>
+
+          <p>
+            It offers a structured way to observe what keeps appearing, before trying to explain or change it.
           </p>
 
         </div>
@@ -33,14 +35,14 @@
               to="/course"
               class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
           >
-            Enter Full Programme
+            Begin
           </router-link>
 
           <router-link
-              to="/programme"
+              to="/gateway"
               class="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
           >
-            Explore the programme
+            Start Free Orientation
           </router-link>
 
         </div>
@@ -57,8 +59,7 @@
           </p>
 
           <h2 class="section-title">
-            The difficulty is often not beginning.
-            It is remaining in contact once effort has already started.
+            Insight is not always enough.
           </h2>
 
         </div>
@@ -66,21 +67,15 @@
         <div class="body-copy">
 
           <p>
-            You may begin with intention and still disappear halfway through.
-            Not because you stopped caring,
-            but because continuity quietly breaks underneath awareness.
+            Insight can be useful.
           </p>
 
           <p>
-            Attention narrows.
-            Emotion reorganises behaviour.
-            Pressure temporarily restores movement,
-            but not stability.
+            But insight often fades when pressure, urgency, conflict or fatigue returns.
           </p>
 
           <p>
-            Afterwards,
-            the pattern becomes visible again.
+            MindWorks helps observations accumulate across time, so recurring patterns can become easier to recognise as they appear.
           </p>
 
         </div>
@@ -97,7 +92,7 @@
           </p>
 
           <h2 class="section-title">
-            A psychologically informed reflection environment.
+            A structured observation environment.
           </h2>
 
         </div>
@@ -105,15 +100,15 @@
         <div class="body-copy">
 
           <p>
-            MindWorks is not a diagnostic assessment, productivity system, or self-improvement programme.
+            MindWorks is not a diagnostic assessment, therapy replacement, productivity system or self-improvement programme.
           </p>
 
           <p>
-            It is a structured reflection environment for observing interruptions, sequences, recurring patterns, internal states, possible functions, and wider systems of response.
+            It is a guided environment for noticing interruptions, sequences, patterns, states, consequences and recurring responses.
           </p>
 
           <p>
-            The emphasis is recognition: seeing more clearly what actually happens, before trying to explain or change it.
+            The emphasis is recognition: seeing more clearly what actually happens before trying to explain it.
           </p>
 
         </div>
@@ -126,11 +121,11 @@
         <div class="space-y-3">
 
           <p class="section-label">
-            Why it exists
+            Why MindWorks was created
           </p>
 
           <h2 class="section-title">
-            Many people already understand themselves intellectually.
+            Why MindWorks was created.
           </h2>
 
         </div>
@@ -138,22 +133,23 @@
         <div class="body-copy">
 
           <p>
-            The problem is often not lack of insight.
-            It is unstable continuation.
+            After many years working as a psychotherapist, I kept noticing something.
           </p>
 
           <p>
-            People repeatedly recognise the pattern afterwards,
-            while still losing contact during pressure,
-            urgency,
-            conflict,
-            fatigue,
-            or emotional activation.
+            People often described the same recurring struggles. They understood what was happening, yet still found themselves returning to familiar reactions, situations and patterns.
           </p>
 
           <p>
-            MindWorks exists for that territory:
-            the unstable space between intention and continuity.
+            Insight mattered, but it was not always enough on its own.
+          </p>
+
+          <p>
+            I wanted to create something that stayed with the process for longer.
+          </p>
+
+          <p>
+            MindWorks was built to help recurring patterns become visible through observation across time, before attempting to explain or change them.
           </p>
 
         </div>
@@ -178,23 +174,39 @@
         <div class="body-copy">
 
           <p>
-            The work draws from psychotherapy, embodied attention practices, trauma-informed reflection, interpersonal nursing theory, and long-term observation-based approaches to awareness.
+            MindWorks begins with simple observation.
           </p>
 
           <p>
-            Particular emphasis is placed on:
-            body sensing,
-            emotional organisation,
-            automaticity,
-            interruption,
-            and the loss of self-contact under pressure.
+            What happened?
           </p>
 
           <p>
-            The aim is not to analyse yourself endlessly.
-            It is to recognise more clearly when awareness narrows,
-            fragments,
-            or disappears.
+            What happened just before?
+          </p>
+
+          <p>
+            What keeps appearing?
+          </p>
+
+          <p>
+            What was already there?
+          </p>
+
+          <p>
+            What happened next?
+          </p>
+
+          <p>
+            What different responses gather around similar pressure?
+          </p>
+
+          <p>
+            The aim is not endless self-analysis.
+          </p>
+
+          <p>
+            The aim is to build enough visibility that the next step can be approached more clearly.
           </p>
 
         </div>
@@ -211,7 +223,7 @@
           </p>
 
           <h2 class="section-title">
-            Reflective people exhausted by inconsistency.
+            For people who keep meeting the same pattern.
           </h2>
 
         </div>
@@ -219,23 +231,23 @@
         <ul class="space-y-3 pl-5 text-[1rem] leading-[1.85] text-slate-700 list-disc">
 
           <li>
-            People who repeatedly restart rather than continue
+            People who understand themselves but still repeat familiar responses
           </li>
 
           <li>
-            People who lose awareness during emotional activation
+            People who notice patterns only after they have already happened
           </li>
 
           <li>
-            People who function externally while internally fragmenting
+            People who lose contact with themselves under pressure
           </li>
 
           <li>
-            People seeking psychological precision rather than labels
+            People who want psychological clarity without labels
           </li>
 
           <li>
-            People tired of productivity culture and oversimplified explanations
+            People who are tired of simplistic explanations
           </li>
 
         </ul>
@@ -264,7 +276,7 @@
         <div class="body-copy pt-2">
 
           <p>
-            The six-stage visibility path moves gradually through observation, sequence, pattern, state, function, and system.
+            The six-stage visibility path moves gradually through observation, sequence, pattern, state, consequences and recurring responses.
           </p>
 
           <p>
@@ -273,11 +285,11 @@
 
           <ul class="space-y-1 list-none">
             <li>What happened?</li>
-            <li>What happened first?</li>
-            <li>What keeps repeating?</li>
-            <li>What condition came before the pattern?</li>
-            <li>What might the pattern be doing?</li>
-            <li>How do recurring responses relate to one another?</li>
+            <li>What happened just before?</li>
+            <li>What keeps appearing?</li>
+            <li>What was already there?</li>
+            <li>What happened next?</li>
+            <li>What different responses gather around similar pressure?</li>
           </ul>
 
         </div>
@@ -296,22 +308,22 @@
 
           <div class="programme-row">
             <span>Stage 3 — Pattern</span>
-            <p>What keeps repeating becomes visible.</p>
+            <p>What keeps appearing becomes visible.</p>
           </div>
 
           <div class="programme-row">
             <span>Stage 4 — State</span>
-            <p>The condition before the pattern becomes visible.</p>
+            <p>The conditions already present become visible.</p>
           </div>
 
           <div class="programme-row">
-            <span>Stage 5 — Function</span>
-            <p>What the pattern may be doing becomes visible.</p>
+            <span>Stage 5 — What happened next</span>
+            <p>The consequences of the response become visible.</p>
           </div>
 
           <div class="programme-row">
-            <span>Stage 6 — System</span>
-            <p>Relationships between recurring responses become visible.</p>
+            <span>Stage 6 — Different Responses, Same Pressure</span>
+            <p>Relationships between responses and pressure become visible.</p>
           </div>
 
         </div>
@@ -320,7 +332,7 @@
             to="/course"
             class="inline-flex items-center rounded-xl border border-slate-900 mt-7 px-5 py-3 text-sm font-medium text-white bg-slate-900 transition hover:bg-slate-800"
         >
-          Enter Full Programme
+          Begin
         </router-link>
 
       </section>
@@ -335,7 +347,7 @@
           </p>
 
           <h2 class="section-title !text-[1.7rem] md:!text-[2rem]">
-            Clinical and reflective foundations.
+            Created by Robert Ormiston
           </h2>
 
         </div>
@@ -343,20 +355,22 @@
         <div class="body-copy pt-2">
 
           <p>
-            MindWorks was developed by <strong>Robert Ormiston</strong>,
-            a UK-trained psychotherapist and registered mental health nurse.
+            MindWorks was created by Robert Ormiston, a psychotherapist in private practice with more than 25 years of experience in mental health.
           </p>
 
           <p>
-            The work combines psychotherapy, embodied attention practice, interpersonal nursing theory, trauma-informed reflection, and long-term observation-based approaches to awareness.
+            Robert is a member of the British Association for Counselling and Psychotherapy (BACP) and a UK-trained registered mental health nurse.
           </p>
 
           <p>
-            The emphasis remains practical:
-            how people lose continuity,
-            become emotionally organised,
-            and return to awareness in ordinary life.
+            His work is informed by psychotherapy, embodied attention, trauma-informed reflection and long-term observation of how recurring patterns become clearer over time.
           </p>
+
+          <div class="pt-4">
+            <a href="https://therapyworks.works" target="_blank" rel="noopener" class="inline-flex items-center text-sm font-medium text-slate-900 hover:text-slate-700 transition underline underline-offset-4">
+              TherapyWorks
+            </a>
+          </div>
 
         </div>
 
@@ -380,13 +394,11 @@
         <details class="faq-item">
 
           <summary>
-            Is this a diagnostic assessment?
+            Is MindWorks therapy?
           </summary>
 
           <p>
-            No.
-            MindWorks is deliberately non-diagnostic.
-            It offers psychological reflection rather than clinical conclusions.
+            No. MindWorks is a guided observation environment. It does not replace therapy, diagnosis, crisis support or medical care.
           </p>
 
         </details>
@@ -394,14 +406,11 @@
         <details class="faq-item">
 
           <summary>
-            What will I receive from the free reflection?
+            Is this a test or assessment?
           </summary>
 
           <p>
-            A written behavioural reflection describing interruption patterns,
-            emotional organisation,
-            trade-offs,
-            and continuity breakdowns.
+            No. The Free Orientation is not a test. There are no scores, labels or diagnostic conclusions. It is simply a way to begin observing.
           </p>
 
         </details>
@@ -409,135 +418,37 @@
         <details class="faq-item">
 
           <summary>
-            Is this therapy?
+            What happens after I begin?
           </summary>
 
           <p>
-            No.
-            It is a guided reflection and self-observation environment.
-            It does not replace therapy,
-            diagnosis,
-            or medical care.
+            You move through a six-stage observation path. Each stage helps you notice a different aspect of recurring experience: what happened, what came before, what keeps appearing, what was already present, what happened next, and how different responses may gather around similar pressure.
+          </p>
+
+        </details>
+
+        <details class="faq-item">
+
+          <summary>
+            Do I need to understand psychology?
+          </summary>
+
+          <p>
+            No. MindWorks uses ordinary language and begins with simple observation.
           </p>
 
         </details>
 
       </section>
 
-      <!-- FOOTER -->
-      <footer class="mt-20 border-t border-slate-200 pt-10 text-sm text-slate-600">
-
-        <div class="space-y-8">
-
-          <div class="space-y-1">
-
-            <p class="font-medium text-slate-800">
-              MindWorks
-            </p>
-
-            <p>
-              A non-diagnostic reflection environment exploring continuity,
-              attention, interruption, and emotional organisation.
-            </p>
-
-          </div>
-
-          <div class="space-y-1">
-
-            <p class="font-medium text-slate-700">
-              Professional standing
-            </p>
-
-            <ul class="space-y-0.5">
-
-              <li>
-                <a
-                    href="https://www.bacp.co.uk/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="footer-link"
-                >
-                  British Association for Counselling and Psychotherapy (MBACP)
-                </a>
-              </li>
-
-              <li>
-                <a
-                    href="https://www.nmc.org.uk/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="footer-link"
-                >
-                  UK Nursing and Midwifery Council (NMC)
-                </a>
-              </li>
-
-            </ul>
-
-          </div>
-
-          <div class="space-y-1">
-
-            <p class="font-medium text-slate-700">
-              Scope &amp; limits
-            </p>
-
-            <p class="leading-relaxed">
-              MindWorks provides psychological reflection for self-understanding only.
-              It does not provide emergency support,
-              diagnosis,
-              treatment,
-              or medical advice.
-            </p>
-
-            <nav class="flex flex-wrap gap-x-4 gap-y-1 pt-1">
-
-              <router-link to="/terms" class="footer-link">
-                Terms of Use
-              </router-link>
-
-              <router-link to="/privacy" class="footer-link">
-                Privacy Policy
-              </router-link>
-
-            </nav>
-
-          </div>
-
-          <div class="space-y-1">
-
-            <p class="font-medium text-slate-700">
-              Contact
-            </p>
-
-            <nav class="flex flex-wrap gap-x-4 gap-y-1">
-
-              <router-link to="/contact" class="footer-link">
-                Contact / Feedback
-              </router-link>
-
-              <a
-                  href="https://therapyworks.works"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="footer-link"
-              >
-                therapyworks.works
-              </a>
-
-            </nav>
-
-          </div>
-
-        </div>
-
-      </footer>
-
     </div>
+
+    <PublicFooter />
   </main>
 </template>
 
 <script setup>
+import PublicFooter from '../components/PublicFooter.vue'
 // About page — static content only
 </script>
 

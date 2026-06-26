@@ -36,7 +36,7 @@
               to="/gateway"
               class="text-slate-800 transition hover:text-slate-900"
           >
-            Begin
+            Orientation
           </router-link>
 
           <router-link

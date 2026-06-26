@@ -9,18 +9,18 @@
         <br class="hidden sm:block" />
         It is to see it clearly enough that the next step can be approached more clearly.
       </p>
-      <div class="mt-10 flex items-center justify-center gap-x-6">
+      <div class="mt-10 flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
         <router-link
           to="/gateway"
-          class="rounded-full bg-slate-900 px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 transition-all"
+          class="rounded-full bg-slate-900 px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 transition-all"
         >
           Begin
         </router-link>
         <router-link
-          to="/about"
+          to="/gateway"
           class="text-sm font-semibold text-slate-900 hover:text-slate-600 transition-colors"
         >
-          About MindWorks <span aria-hidden="true">→</span>
+          Start Free Orientation <span aria-hidden="true">→</span>
         </router-link>
       </div>
     </div>
