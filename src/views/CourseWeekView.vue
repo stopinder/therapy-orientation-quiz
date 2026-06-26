@@ -667,7 +667,7 @@ const reflectionPlaceholder = computed(() => {
   return "Describe what happened..."
 })
 
-const bodyObservationPlaceholder = "Tension in chest, pressure, restlessness, heaviness, numbness, or nothing noticeable..."
+const bodyObservationPlaceholder = "Tension in chest, tight shoulders, restlessness, heaviness, numbness, or leave blank..."
 
 const restoredReflection =
     ref(false)
