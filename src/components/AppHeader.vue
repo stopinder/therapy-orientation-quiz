@@ -19,6 +19,13 @@
         <nav class="ml-auto flex items-center gap-6 text-base font-medium text-slate-700">
 
           <router-link
+              to="/"
+              class="transition hover:text-slate-900"
+          >
+            Home
+          </router-link>
+
+          <router-link
               to="/about"
               class="transition hover:text-slate-900"
           >
