@@ -6,10 +6,18 @@
     <div class="mb-14">
 
       <div
-          v-if="hasProgrammeAccess && lastActiveWeek"
-          class="mb-6 inline-flex items-center rounded-full bg-slate-100 px-4 py-2 text-xs font-medium text-slate-600"
+          v-if="hasProgrammeAccess"
+          class="mb-6 flex items-center gap-4"
       >
-        Last active: Stage {{ lastActiveWeek }}
+        <div class="inline-flex items-center rounded-full bg-emerald-50 px-4 py-2 text-xs font-medium text-emerald-600 border border-emerald-100">
+          Full programme access active
+        </div>
+        <div
+            v-if="lastActiveWeek"
+            class="inline-flex items-center rounded-full bg-slate-100 px-4 py-2 text-xs font-medium text-slate-600"
+        >
+          Last active: Stage {{ lastActiveWeek }}
+        </div>
       </div>
 
       <div class="flex items-center justify-between">
@@ -18,6 +26,7 @@
         </h1>
 
         <router-link
+            v-if="hasProgrammeAccess"
             to="/continuity"
             class="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 shadow-sm"
         >
@@ -32,9 +41,43 @@
 
     </div>
 
+    <!-- Programme Card (only shown if not paid) -->
+
+    <div
+        v-if="!hasProgrammeAccess"
+        class="relative mb-14 overflow-hidden rounded-3xl border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl"
+    >
+
+      <div class="max-w-3xl">
+
+        <h2 class="text-3xl font-semibold">
+          Unlock the Observation Journey
+        </h2>
+
+        <p class="mt-4 text-lg leading-relaxed text-slate-300">
+          The material is designed to be moved through gradually.
+          All six stages become available immediately after purchase.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+
+          <button
+              @click="purchaseProgramme"
+              class="rounded-xl bg-white px-6 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-200"
+          >
+            Unlock Full Programme
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
     <!-- Patterns Across Time / Continuity Entry -->
 
     <div
+        v-if="hasProgrammeAccess"
         class="mb-14 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
     >
       <div v-if="summaryLoading" class="flex flex-col items-center justify-center py-12 text-center">
@@ -107,46 +150,6 @@
       </div>
     </div>
 
-    <!-- Programme Card -->
-
-    <div
-        class="relative mb-14 overflow-hidden rounded-3xl border border-slate-900 bg-slate-900 p-10 text-white shadow-2xl"
-    >
-
-      <div class="max-w-3xl">
-
-        <h2 class="text-3xl font-semibold">
-          MindWorks Visibility Path
-        </h2>
-
-        <p class="mt-4 text-lg leading-relaxed text-slate-300">
-          The material is designed to be moved through gradually.
-          All sections become available immediately after purchase.
-        </p>
-
-        <div class="mt-8 flex flex-wrap gap-4">
-
-          <button
-              v-if="!hasProgrammeAccess"
-              @click="purchaseProgramme"
-              class="rounded-xl bg-white px-6 py-3 text-sm font-medium text-slate-900 transition hover:bg-slate-200"
-          >
-            Unlock Full Programme
-          </button>
-
-          <div
-              v-else
-              class="rounded-xl bg-emerald-500/20 px-5 py-3 text-sm font-medium text-emerald-200"
-          >
-            Full programme access active
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
     <!-- Loading -->
 
     <div
@@ -185,10 +188,22 @@
           </div>
 
           <div
+              v-if="hasProgrammeAccess"
               class="rounded-full px-3 py-1 text-xs font-medium"
               :class="statusClass(week.number)"
           >
             {{ continuityLabel(week.number) }}
+          </div>
+
+          <!-- Padlock (only if not paid) -->
+          <div
+              v-else
+              class="text-slate-300"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
           </div>
 
         </div>
@@ -198,7 +213,7 @@
         </p>
 
         <div
-            v-if="shouldForegroundWeek(week.number)"
+            v-if="shouldForegroundWeek(week.number) && hasProgrammeAccess"
             class="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800"
         >
           This appears to be the next area of continuity.
@@ -206,23 +221,23 @@
 
         <!-- Access -->
 
-        <router-link
-            v-if="hasProgrammeAccess"
-            :to="`/course/${week.number}`"
-            class="inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm text-white transition hover:bg-slate-700"
-        >
-          {{ buttonLabel(week.number) }}
-        </router-link>
+        <div v-if="hasProgrammeAccess">
+          <router-link
+              :to="`/course/${week.number}`"
+              class="inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm text-white transition hover:bg-slate-700"
+          >
+            {{ buttonLabel(week.number) }}
+          </router-link>
+        </div>
 
-        <!-- Locked -->
+        <!-- Unavailable/Upcoming (only shown if not paid) -->
 
-        <button
+        <div
             v-else
-            @click="purchaseProgramme"
-            class="w-full rounded-xl border border-slate-300 px-5 py-3 text-sm font-medium transition hover:bg-slate-100"
+            class="flex items-center justify-center rounded-xl border border-slate-100 bg-slate-50/50 px-5 py-3 text-sm text-slate-400"
         >
-          Unlock Programme
-        </button>
+          Stage {{ week.number }}
+        </div>
 
       </div>
 
@@ -373,7 +388,7 @@ onMounted(() => {
 const statusClass = (weekNumber) => {
 
   if (!hasProgrammeAccess.value) {
-    return "bg-slate-200 text-slate-600"
+    return "bg-slate-50 text-slate-400"
   }
 
   if (
