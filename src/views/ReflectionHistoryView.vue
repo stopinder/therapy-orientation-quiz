@@ -32,20 +32,16 @@
 
             <div v-if="reflections.length >= 3">
               <div v-if="summaryLoading" class="py-12 flex flex-col items-center justify-center text-center">
-                <div class="mb-6 h-12 w-12 rounded-full border-2 border-slate-700 bg-slate-800 flex items-center justify-center animate-pulse">
-                  <div class="h-6 w-6 rounded-full bg-slate-400 opacity-50"></div>
-                </div>
-                
                 <Transition
                   mode="out-in"
                   enter-active-class="transition duration-500 ease-out"
-                  enter-from-class="opacity-0 translate-y-2"
-                  enter-to-class="opacity-100 translate-y-0"
+                  enter-from-class="opacity-0"
+                  enter-to-class="opacity-100"
                   leave-active-class="transition duration-500 ease-in"
-                  leave-from-class="opacity-100 translate-y-0"
-                  leave-to-class="opacity-0 -translate-y-2"
+                  leave-from-class="opacity-100"
+                  leave-to-class="opacity-0"
                 >
-                  <p :key="currentSummaryLoadingMessage" class="text-xl font-medium text-slate-200">
+                  <p :key="currentSummaryLoadingMessage" class="text-xl font-medium text-slate-200 animate-pulse">
                     {{ currentSummaryLoadingMessage }}
                   </p>
                 </Transition>
@@ -276,11 +272,10 @@ const loading =
 const summaryLoading = ref(false)
 
 const summaryLoadingMessages = [
-  "MindWorks is reviewing your recent observations…",
-  "Looking for recurring sequences…",
-  "Comparing moments across time…",
-  "Looking for what repeats—and what changes…",
-  "Building your Visibility Summary…"
+  "Reviewing your recent observations...",
+  "Looking for what is relevant to this stage...",
+  "Placing observations beside one another...",
+  "Preparing what is becoming visible..."
 ]
 
 const currentSummaryLoadingMessage = ref(summaryLoadingMessages[0])
@@ -292,7 +287,7 @@ const startSummaryLoadingRotation = () => {
   summaryLoadingInterval = setInterval(() => {
     index = (index + 1) % summaryLoadingMessages.length
     currentSummaryLoadingMessage.value = summaryLoadingMessages[index]
-  }, 2000)
+  }, 1500)
 }
 
 const stopSummaryLoadingRotation = () => {

@@ -37,8 +37,20 @@
     <div
         class="mb-14 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
     >
-      <div v-if="summaryLoading" class="flex items-center justify-center py-12">
-        <div class="h-8 w-8 animate-spin rounded-full border-2 border-slate-200 border-t-slate-800"></div>
+      <div v-if="summaryLoading" class="flex flex-col items-center justify-center py-12 text-center">
+        <Transition
+            mode="out-in"
+            enter-active-class="transition duration-500 ease-out"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition duration-500 ease-in"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
+        >
+          <p :key="currentSummaryLoadingMessage" class="text-lg font-medium text-slate-900 animate-pulse">
+            {{ currentSummaryLoadingMessage }}
+          </p>
+        </Transition>
       </div>
 
       <div v-else-if="continuitySummary">
@@ -258,10 +270,37 @@ const weeks = computed(() => courseWeeks)
 const continuitySummary = ref("")
 const summaryLoading = ref(false)
 
+const summaryLoadingMessages = [
+  "Reviewing your recent observations...",
+  "Looking for what is relevant to this stage...",
+  "Placing observations beside one another...",
+  "Preparing what is becoming visible..."
+]
+
+const currentSummaryLoadingMessage = ref(summaryLoadingMessages[0])
+let summaryLoadingInterval = null
+
+const startSummaryLoadingRotation = () => {
+  let index = 0
+  currentSummaryLoadingMessage.value = summaryLoadingMessages[0]
+  summaryLoadingInterval = setInterval(() => {
+    index = (index + 1) % summaryLoadingMessages.length
+    currentSummaryLoadingMessage.value = summaryLoadingMessages[index]
+  }, 1500)
+}
+
+const stopSummaryLoadingRotation = () => {
+  if (summaryLoadingInterval) {
+    clearInterval(summaryLoadingInterval)
+    summaryLoadingInterval = null
+  }
+}
+
 const fetchCourseOverview = async () => {
   if (!auth.user?.id) return
   
   summaryLoading.value = true
+  startSummaryLoadingRotation()
   try {
     const result = await fetch("/api/getContinuitySummary", {
       method: "POST",
@@ -277,6 +316,7 @@ const fetchCourseOverview = async () => {
     console.error("OVERVIEW ERROR:", err)
   } finally {
     summaryLoading.value = false
+    stopSummaryLoadingRotation()
   }
 }
 

@@ -248,14 +248,15 @@
           </button>
 
           <Transition
-              enter-active-class="transition duration-300 ease-out"
-              enter-from-class="opacity-0 translate-x-2"
-              enter-to-class="opacity-100 translate-x-0"
-              leave-active-class="transition duration-200 ease-in"
-              leave-from-class="opacity-100 translate-x-0"
-              leave-to-class="opacity-0 translate-x-2"
+              enter-active-class="transition duration-500 ease-out"
+              enter-from-class="opacity-0"
+              enter-to-class="opacity-100"
+              leave-active-class="transition duration-500 ease-in"
+              leave-from-class="opacity-100"
+              leave-to-class="opacity-0"
+              mode="out-in"
           >
-            <p v-if="loading" class="text-sm font-medium text-slate-500 italic">
+            <p v-if="loading" :key="currentLoadingMessage" class="text-sm font-medium text-slate-500 italic animate-pulse">
               {{ currentLoadingMessage }}
             </p>
           </Transition>
@@ -651,24 +652,51 @@ const bodyObservationPlaceholder = "Tension in chest, pressure, restlessness, he
 const restoredReflection =
     ref(false)
 
-const loadingMessages = [
-  "Reading the observation...",
-  "Placing events in sequence...",
-  "Looking for what changed...",
-  "Keeping the uncertainty intact...",
-  "Preparing the reflection..."
-]
+const loadingMessages = computed(() => {
+  const generic = [
+    "Reviewing your recent observations...",
+    "Looking for what is relevant to this stage...",
+    "Placing observations beside one another...",
+    "Preparing what is becoming visible..."
+  ]
 
-const currentLoadingMessage = ref(loadingMessages[0])
+  const stageMessages = {
+    2: [
+      "Looking for the order of events...",
+      "Noticing what came before the shift..."
+    ],
+    3: [
+      "Comparing this stage with earlier observations...",
+      "Looking for recurrence..."
+    ],
+    4: [
+      "Looking for conditions that appeared beforehand...",
+      "Noticing recurring states..."
+    ],
+    5: [
+      "Looking at what changed afterwards...",
+      "Noticing what remained or shifted..."
+    ],
+    6: [
+      "Looking across the whole pattern...",
+      "Noticing how responses may fit together..."
+    ]
+  }
+
+  return stageMessages[weekNumber.value] || generic
+})
+
+const currentLoadingMessage = ref("")
 let loadingInterval = null
 
 const startLoadingRotation = () => {
   let index = 0
-  currentLoadingMessage.value = loadingMessages[0]
+  const messages = loadingMessages.value
+  currentLoadingMessage.value = messages[0]
   loadingInterval = setInterval(() => {
-    index = (index + 1) % loadingMessages.length
-    currentLoadingMessage.value = loadingMessages[index]
-  }, 3000)
+    index = (index + 1) % messages.length
+    currentLoadingMessage.value = messages[index]
+  }, 1500)
 }
 
 const stopLoadingRotation = () => {
