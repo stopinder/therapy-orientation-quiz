@@ -3,30 +3,61 @@
 
     <div class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
 
-      <h1 class="mb-8 text-3xl font-semibold">
-        Account Access
-      </h1>
-
-      <div
-          v-if="signupSuccess"
-          class="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm"
-      >
-        <p class="font-semibold text-emerald-900">Check your email</p>
-        <p class="mt-1 text-emerald-800">
-          We've sent you a confirmation link. Please confirm your email address, then return here to sign in.
-        </p>
+      <!-- Sign In / Sign Up Tabs -->
+      <div class="mb-6 flex border-b border-slate-100">
+        <button
+            @click="isSignUp = false"
+            :class="[
+              'flex-1 pb-4 text-sm font-medium transition-all',
+              !isSignUp ? 'text-slate-900 border-b-2 border-slate-900' : 'text-slate-400 hover:text-slate-600'
+            ]"
+        >
+          Sign In
+        </button>
+        <button
+            @click="isSignUp = true"
+            :class="[
+              'flex-1 pb-4 text-sm font-medium transition-all',
+              isSignUp ? 'text-slate-900 border-b-2 border-slate-900' : 'text-slate-400 hover:text-slate-600'
+            ]"
+        >
+          Sign Up
+        </button>
       </div>
 
-      <div
-          v-if="message"
-          class="mb-6 rounded-xl bg-slate-100 p-4 text-sm"
-      >
-        {{ message }}
+      <!-- Authentication Status Area -->
+      <div class="mb-8 min-h-[85px]">
+        <div
+            v-if="status"
+            :class="[
+              'rounded-xl p-4 text-sm transition-all duration-200',
+              status.type === 'success' ? 'bg-emerald-50 border border-emerald-100' : 'bg-slate-50 border border-slate-100'
+            ]"
+        >
+          <div class="flex gap-3">
+            <span v-if="status.type === 'success'" class="text-emerald-500 font-bold">✓</span>
+            <span v-else class="text-slate-400 font-bold">✕</span>
+            <div>
+              <p :class="[
+                'font-semibold',
+                status.type === 'success' ? 'text-emerald-900' : 'text-slate-900'
+              ]">
+                {{ status.title }}
+              </p>
+              <p v-if="status.description" :class="[
+                'mt-1 leading-relaxed',
+                status.type === 'success' ? 'text-emerald-800' : 'text-slate-600'
+              ]">
+                {{ status.description }}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <form
           class="space-y-5"
-          @submit.prevent="signIn"
+          @submit.prevent="isSignUp ? signUp() : signIn()"
       >
 
         <div>
@@ -38,6 +69,7 @@
           <input
               v-model="email"
               type="email"
+              placeholder="user@example.com"
               class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-slate-500"
           />
 
@@ -53,9 +85,9 @@
             <button
                 type="button"
                 @click="sendPasswordReset"
-                class="text-xs text-slate-500 transition hover:text-slate-900"
+                class="text-xs text-slate-400 transition hover:text-slate-900"
             >
-              Forgot Password?
+              Forgot password?
             </button>
           </div>
 
@@ -67,24 +99,14 @@
 
         </div>
 
-      <div class="flex flex-col gap-4">
-
-          <div class="flex gap-3">
-            <button
-                type="button"
-                @click="signUp"
-                class="rounded-xl bg-slate-900 px-5 py-3 text-white transition hover:bg-slate-700"
-            >
-              Sign Up
-            </button>
+      <div class="pt-2">
 
             <button
                 type="submit"
-                class="rounded-xl border border-slate-300 px-5 py-3 transition hover:bg-slate-100"
+                class="w-full rounded-xl bg-slate-900 py-3.5 font-medium text-white transition hover:bg-slate-800"
             >
-              Sign In
+              {{ isSignUp ? 'Sign Up' : 'Sign In' }}
             </button>
-          </div>
 
         </div>
 
@@ -112,7 +134,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import { useRouter } from "vue-router"
 
 import { supabase } from "../lib/supabase"
@@ -125,12 +147,20 @@ const auth = useAuthStore()
 
 const email = ref("")
 const password = ref("")
-const message = ref("")
-const signupSuccess = ref(false)
+const status = ref(null)
+const isSignUp = ref(false)
+
+const setStatus = (type, title, description = "") => {
+  status.value = { type, title, description }
+}
+
+// Reset status when switching tabs
+watch(isSignUp, () => {
+  status.value = null
+})
 
 const signUp = async () => {
-
-  message.value = ""
+  status.value = null
 
   const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
   const redirectUrl = isLocal
@@ -146,21 +176,24 @@ const signUp = async () => {
   })
 
   if (error) {
-    message.value = error.message
+    if (error.message === "User already registered") {
+      setStatus("error", "Email already registered.")
+    } else if (error.message === "Signup confirmations disabled") {
+       // Handle specific supabase config if needed, but per rule don't change config
+       setStatus("error", "Unable to sign up.", error.message)
+    } else {
+      setStatus("error", "Unable to sign up.", error.message)
+    }
     return
   }
 
-  signupSuccess.value = true
-  message.value = ""
+  setStatus("success", "Check your email", "We've sent a confirmation link to your email address. Please confirm your email, then return here to sign in.")
 
   await auth.fetchUser()
-
 }
 
 const signIn = async () => {
-
-  message.value = ""
-  signupSuccess.value = false
+  status.value = null
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
@@ -168,13 +201,13 @@ const signIn = async () => {
   })
 
   if (error) {
-    message.value = error.message
+    setStatus("error", error.message === "Invalid login credentials" ? "Incorrect email or password." : "Unable to sign in.")
     return
   }
 
   await auth.fetchUser()
 
-  message.value = "Signed in successfully. Checking access..."
+  setStatus("success", "Signed in successfully", "Checking access...")
 
   // Explicitly fetch entitlements before routing
   const entitlements = useEntitlementStore()
@@ -187,27 +220,18 @@ const signIn = async () => {
   } else {
       await router.push("/access-required")
   }
-
 }
 
 const signOut = async () => {
-
   await auth.signOut()
-
-  message.value = "Signed out."
-
+  setStatus("success", "Signed out.")
   await router.push("/about")
-
 }
 
 const sendPasswordReset = async () => {
-
   if (!email.value) {
-
-    message.value = "Please enter your email address first."
-
+    setStatus("error", "Please enter your email address first.")
     return
-
   }
 
   const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
@@ -223,15 +247,10 @@ const sendPasswordReset = async () => {
   )
 
   if (error) {
-
-    message.value = error.message
-
+    setStatus("error", error.message)
     return
-
   }
 
-  message.value =
-      "Password reset email sent."
-
+  setStatus("success", "Check your email", "We've sent a password reset link.")
 }
 </script>npm run dev
