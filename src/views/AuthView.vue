@@ -17,6 +17,13 @@
         </p>
       </div>
 
+      <div
+          v-if="message"
+          class="mb-6 rounded-xl bg-slate-100 p-4 text-sm"
+      >
+        {{ message }}
+      </div>
+
       <form
           class="space-y-5"
           @submit.prevent="signIn"
@@ -38,9 +45,19 @@
 
         <div>
 
-          <label class="mb-2 block text-sm font-medium">
-            Password
-          </label>
+          <div class="mb-2 flex items-center justify-between">
+            <label class="text-sm font-medium">
+              Password
+            </label>
+
+            <button
+                type="button"
+                @click="sendPasswordReset"
+                class="text-xs text-slate-500 transition hover:text-slate-900"
+            >
+              Forgot Password?
+            </button>
+          </div>
 
           <input
               v-model="password"
@@ -49,13 +66,6 @@
           />
 
         </div>
-
-      <div
-          v-if="message"
-          class="rounded-xl bg-slate-100 p-4 text-sm"
-      >
-        {{ message }}
-      </div>
 
       <div class="flex flex-col gap-4">
 
@@ -75,14 +85,6 @@
               Sign In
             </button>
           </div>
-
-          <button
-              type="button"
-              @click="sendPasswordReset"
-              class="self-start text-sm text-slate-500 transition hover:text-slate-900"
-          >
-            Forgot Password?
-          </button>
 
         </div>
 
