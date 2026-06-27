@@ -162,8 +162,8 @@ const signUp = async () => {
 
   const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
   const redirectUrl = isLocal
-      ? `${window.location.origin}/auth`
-      : "https://mindworks.works/auth"
+      ? `${window.location.origin}/auth/callback`
+      : "https://mindworks.works/auth/callback"
 
   const { data, error } = await supabase.auth.signUp({
     email: email.value,
@@ -177,6 +177,7 @@ const signUp = async () => {
     if (error.message === "User already registered") {
       setStatus("error", "Email already registered.")
     } else {
+      console.error("Sign up error:", error)
       setStatus("error", "Unable to sign up.", error.message)
     }
     return
@@ -196,6 +197,12 @@ const signIn = async () => {
   })
 
   if (error) {
+    console.error("Sign in error:", {
+      message: error.message,
+      status: error.status,
+      name: error.name,
+      email: email.value
+    })
     setStatus("error", "Unable to sign in.", error.message)
     return
   }
@@ -231,8 +238,8 @@ const sendPasswordReset = async () => {
 
   const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
   const redirectUrl = isLocal
-      ? `${window.location.origin}/reset-password`
-      : "https://mindworks.works/reset-password"
+      ? `${window.location.origin}/auth/callback`
+      : "https://mindworks.works/auth/callback"
 
   const { error } = await supabase.auth.resetPasswordForEmail(
       email.value,

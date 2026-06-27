@@ -68,6 +68,7 @@ const updatePassword = async () => {
   })
 
   if (error) {
+    console.error("Password update error:", error)
     message.value = error.message
     return
   }

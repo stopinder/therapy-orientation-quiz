@@ -79,6 +79,27 @@ const routes = [
     },
 
     {
+        path: "/auth/callback",
+        name: "AuthCallback",
+        beforeEnter: async (to, from, next) => {
+            const { supabase } = await import("../lib/supabase")
+            const code = to.query.code
+            const type = to.query.type
+            
+            if (code) {
+                await supabase.auth.exchangeCodeForSession(code)
+            }
+            
+            if (type === 'recovery') {
+                next("/reset-password")
+            } else {
+                next("/auth")
+            }
+        },
+        component: { render: () => null }
+    },
+
+    {
         path: "/reset-password",
         name: "ResetPassword",
         component: ResetPasswordView
