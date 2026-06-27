@@ -1,7 +1,7 @@
 <template>
   <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
 
-    <div class="mx-auto max-w-5xl px-6 py-3">
+    <div class="mx-auto max-w-5xl px-4 md:px-6 py-3">
 
       <div class="flex items-center">
 
@@ -9,14 +9,14 @@
 
         <router-link
             to="/"
-            class="text-xl font-semibold tracking-tight text-slate-900"
+            class="text-lg md:text-xl font-semibold tracking-tight text-slate-900"
         >
           MindWorks
         </router-link>
 
         <!-- Navigation -->
 
-        <nav class="ml-auto flex items-center gap-6 text-base font-medium text-slate-700">
+        <nav class="ml-auto flex items-center gap-3 md:gap-6 text-sm md:text-base font-medium text-slate-700">
 
           <router-link
               to="/"
@@ -54,6 +54,13 @@
           >
             My Course
           </router-link>
+
+          <span
+              v-if="auth.user?.email"
+              class="text-[0.7rem] md:text-xs text-slate-500 font-normal truncate max-w-[80px] md:max-w-none"
+          >
+            {{ auth.user.email }}
+          </span>
 
           <button
               v-if="auth.user"
