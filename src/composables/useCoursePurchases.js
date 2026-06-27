@@ -40,6 +40,13 @@ export function useCoursePurchases() {
         const url = new URL(checkoutUrl)
         url.searchParams.set('checkout[email]', email)
         url.searchParams.set('custom[email]', email)
+        url.searchParams.set('embed', '0') // Ensure full page for redirect
+        url.searchParams.set('enabled', '1') 
+        
+        // Use the current origin for the redirect URL
+        const returnUrl = `${window.location.origin}/payment-success`
+        url.searchParams.set('redirect_url', returnUrl)
+        
         checkoutUrl = url.toString()
 
         window.location.href = checkoutUrl
