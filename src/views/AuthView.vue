@@ -1,7 +1,7 @@
 <template>
-  <div class="mx-auto max-w-md px-6 py-20">
+  <div class="flex min-h-[70vh] flex-col items-center justify-center px-6 py-12 lg:min-h-[60vh]">
 
-    <div class="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+    <div class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
 
       <h1 class="mb-8 text-3xl font-semibold">
         Account Access
