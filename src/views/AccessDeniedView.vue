@@ -12,10 +12,10 @@
       </p>
 
       <router-link
-          to="/course"
+          to="/programme"
           class="inline-flex rounded-xl bg-slate-900 px-6 py-3 text-white transition hover:bg-slate-700"
       >
-        Return to Course Hub
+        View Programme Details
       </router-link>
 
     </div>

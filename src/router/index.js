@@ -121,7 +121,8 @@ const routes = [
         component: CourseHubView,
 
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            requiresCourseAccess: true
         }
     },
 
@@ -142,7 +143,8 @@ const routes = [
         component: ReflectionHistoryView,
 
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            requiresCourseAccess: true
         }
     },
 
@@ -181,7 +183,7 @@ const router = createRouter({
 
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 
     const auth =
         useAuthStore()
@@ -210,13 +212,51 @@ router.beforeEach((to, from, next) => {
     }
 
     if (
-        to.meta.requiresCourseAccess &&
-        !entitlements.canAccessWeek(1)
+        to.meta.requiresCourseAccess
     ) {
 
-        next("/access-denied")
-        return
+        // If we are still loading entitlements, we should wait.
+        // This is important for the first load of the app.
+        if (entitlements.loading) {
+            // We can't really "await" here easily without a promise, 
+            // but we can check if it's already loading and wait for it.
+            // Actually, hydrateApp usually handles the initial fetch.
+            // But if it's still loading (e.g. slow API), we wait.
+            
+            const waitForEntitlements = () => {
+                return new Promise((resolve) => {
+                    const unwatch = entitlements.$subscribe((mutation, state) => {
+                        if (!state.loading) {
+                            unwatch()
+                            resolve()
+                        }
+                    })
+                    // Safety timeout
+                    setTimeout(() => {
+                        unwatch()
+                        resolve()
+                    }, 5000)
+                })
+            }
+            
+            if (entitlements.loading) {
+                await waitForEntitlements()
+            }
+        }
 
+        if (!entitlements.isActive) {
+            next("/access-denied")
+            return
+        }
+
+        // Additional check for specific weeks if needed
+        if (to.name === "CourseWeek") {
+             const weekNumber = Number(to.params.weekNumber)
+             if (!entitlements.canAccessWeek(weekNumber)) {
+                 next("/access-denied")
+                 return
+             }
+        }
     }
 
     if (

@@ -319,12 +319,15 @@
 </template>
 
 <script setup>
+import { useEntitlementStore } from "../stores/entitlements"
 import { useAuthStore } from "../stores/auth"
 import { useRouter } from "vue-router"
 import { supabase } from "../lib/supabase"
 
 const router = useRouter()
 const auth = useAuthStore()
+
+const entitlements = useEntitlementStore()
 
 const enterProgramme = async () => {
 
@@ -335,7 +338,17 @@ const enterProgramme = async () => {
     return
   }
 
-  router.push("/course")
+  // Refresh entitlements to be sure
+  await entitlements.fetchEntitlements(user.id, user.email)
+
+  if (entitlements.isActive) {
+    router.push("/course")
+  } else {
+    // If they click "Enter Full Programme" but don't have access, 
+    // maybe they should be shown a checkout or similar? 
+    // For now, the router will handle the redirect if we go to /course
+    router.push("/course")
+  }
 
 }
 

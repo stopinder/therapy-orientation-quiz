@@ -201,6 +201,7 @@ const signIn = async () => {
 
   message.value = "Signed in successfully."
 
+  // The router guard will handle redirection to /access-denied if they don't have access.
   await router.push("/course")
 
 }
