@@ -165,7 +165,7 @@ const signUp = async () => {
       ? `${window.location.origin}/auth`
       : "https://mindworks.works/auth"
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: email.value,
     password: password.value,
     options: {
@@ -176,9 +176,6 @@ const signUp = async () => {
   if (error) {
     if (error.message === "User already registered") {
       setStatus("error", "Email already registered.")
-    } else if (error.message === "Signup confirmations disabled") {
-       // Handle specific supabase config if needed, but per rule don't change config
-       setStatus("error", "Unable to sign up.", error.message)
     } else {
       setStatus("error", "Unable to sign up.", error.message)
     }
@@ -199,7 +196,7 @@ const signIn = async () => {
   })
 
   if (error) {
-    setStatus("error", error.message === "Invalid login credentials" ? "Incorrect email or password." : "Unable to sign in.")
+    setStatus("error", "Unable to sign in.", error.message)
     return
   }
 
