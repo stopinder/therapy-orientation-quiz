@@ -425,12 +425,16 @@ const fetchContinuitySummary =
         summaryLoading.value = true
         startSummaryLoadingRotation()
 
+        const { data: { session } } = await supabase.auth.getSession()
+        const token = session?.access_token
+
         const result = await fetch(
             "/api/getContinuitySummary",
             {
               method: "POST",
               headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
               },
               body: JSON.stringify({
                 userId: auth.user.id,
@@ -486,10 +490,8 @@ const formatDate =
 
     }
 
-const loadReflections =
+    const loadReflections =
     async () => {
-
-      console.log("ReflectionHistory auth user id:", auth.user?.id)
 
       try {
 
@@ -501,6 +503,9 @@ const loadReflections =
 
         console.log("Loading reflection history for:", auth.user?.id)
 
+        const { data: { session } } = await supabase.auth.getSession()
+        const token = session?.access_token
+
         const result = await fetch(
             "/api/getReflectionHistory",
             {
@@ -508,7 +513,8 @@ const loadReflections =
 
               headers: {
                 "Content-Type":
-                    "application/json"
+                    "application/json",
+                "Authorization": `Bearer ${token}`
               },
 
               body: JSON.stringify({
@@ -522,8 +528,6 @@ const loadReflections =
 
         const data =
             await result.json()
-
-        console.log("Reflections received:", data.reflections?.length || 0)
 
         reflections.value =
             data.reflections || []

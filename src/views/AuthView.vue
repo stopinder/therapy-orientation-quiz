@@ -102,6 +102,7 @@ import { useRouter } from "vue-router"
 
 import { supabase } from "../lib/supabase"
 import { useAuthStore } from "../stores/auth"
+import { useEntitlementStore } from "../stores/entitlements"
 
 const router = useRouter()
 
@@ -144,7 +145,7 @@ const signIn = async () => {
 
   message.value = ""
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
     password: password.value
   })
@@ -156,9 +157,19 @@ const signIn = async () => {
 
   await auth.fetchUser()
 
-  message.value = "Signed in successfully."
+  message.value = "Signed in successfully. Checking access..."
 
-  await router.push("/course")
+  // Explicitly fetch entitlements before routing
+  const entitlements = useEntitlementStore()
+  if (data?.user) {
+      await entitlements.fetchEntitlements(data.user.id, data.user.email)
+  }
+
+  if (entitlements.isActive) {
+      await router.push("/course")
+  } else {
+      await router.push("/access-denied")
+  }
 
 }
 

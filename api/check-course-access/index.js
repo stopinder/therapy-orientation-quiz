@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js"
+import { getAuthenticatedUser } from "../_lib/auth"
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
@@ -17,19 +18,16 @@ export default async function handler(request, response) {
     }
 
     try {
-        const { email } = request.body || {}
-        
-        if (!email) {
-            return response.status(400).json({
-                error: "Email is required"
+        const user = await getAuthenticatedUser(request)
+        if (!user) {
+            return response.status(401).json({
+                error: "Unauthorized"
             })
         }
 
-        const normalizedEmail = email.trim().toLowerCase()
+        const verifiedEmail = user.email
+        const normalizedEmail = verifiedEmail.trim().toLowerCase()
         
-        console.log("incoming email:", email)
-        console.log("normalized email:", normalizedEmail)
-
         const { data, error } = await supabase
             .from("paid_access")
             .select("id")
@@ -48,9 +46,6 @@ export default async function handler(request, response) {
         const rowFound = !!data
         const hasAccess = rowFound
         
-        console.log("paid_access row found:", rowFound)
-        console.log("final hasAccess:", hasAccess)
-
         return response.status(200).json({
             hasAccess
         })

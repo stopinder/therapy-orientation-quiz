@@ -954,23 +954,24 @@ const fetchReflectionsHistory = async () => {
   try {
     if (!auth.user?.id) return
 
+    const { data: { session } } = await supabase.auth.getSession()
+    const token = session?.access_token
+
     const result = await fetch("/api/getReflectionHistory", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
       body: JSON.stringify({ userId: auth.user.id })
     })
 
     const data = await result.json()
     
-    console.log("REFLECTIONS RECEIVED FROM API:", data?.reflections?.length || 0)
-    
     if (data?.reflections) {
       reflectionsHistory.value = Array.isArray(data.reflections)
           ? data.reflections
           : []
-          
-      console.log("REFLECTIONS ASSIGNED TO HISTORY:", reflectionsHistory.value.length)
-      console.log("COMPUTED RECENT THEMES:", JSON.stringify(recentThemes.value, null, 2))
     }
   } catch (err) {
     console.error("HISTORY ERROR:", err)
@@ -1034,6 +1035,9 @@ const restorePreviousReflection =
           return
         }
 
+        const { data: { session } } = await supabase.auth.getSession()
+        const token = session?.access_token
+
         const result = await fetch(
             "/api/getCourseReflection",
             {
@@ -1041,7 +1045,8 @@ const restorePreviousReflection =
 
               headers: {
                 "Content-Type":
-                    "application/json"
+                    "application/json",
+                "Authorization": `Bearer ${token}`
               },
 
               body: JSON.stringify({
@@ -1146,6 +1151,9 @@ const submitReflection = async () => {
 
     }
 
+    const { data: { session } } = await supabase.auth.getSession()
+    const token = session?.access_token
+
     const result = await fetch(
         "/api/courseReflection",
         {
@@ -1153,7 +1161,8 @@ const submitReflection = async () => {
 
           headers: {
             "Content-Type":
-                "application/json"
+                "application/json",
+            "Authorization": `Bearer ${token}`
           },
 
           body: JSON.stringify({

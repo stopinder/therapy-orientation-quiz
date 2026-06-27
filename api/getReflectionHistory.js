@@ -1,5 +1,6 @@
 import { createClient }
     from "@supabase/supabase-js"
+import { getAuthenticatedUser } from "./_lib/auth"
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
@@ -27,20 +28,14 @@ export default async function handler(
 
     try {
 
-        const {
-            userId
-        } = request.body || {}
-
-        if (!userId) {
-
-            return response
-                .status(400)
-                .json({
-                    error:
-                        "Missing user ID"
-                })
-
+        const user = await getAuthenticatedUser(request)
+        if (!user) {
+            return response.status(401).json({
+                error: "Unauthorized"
+            })
         }
+
+        const verifiedUserId = user.id
 
         const {
             data,
@@ -48,7 +43,7 @@ export default async function handler(
         } = await supabase
             .from("course_reflections")
             .select("*")
-            .eq("user_id", userId)
+            .eq("user_id", verifiedUserId)
             .order(
                 "created_at",
                 {

@@ -38,11 +38,6 @@ export const useEntitlementStore = defineStore(
 
                 const normalizedEmail = email?.trim().toLowerCase()
 
-                console.log("ENTITLEMENT CHECK START (Server-side API):", {
-                    email,
-                    normalizedEmail
-                })
-
                 if (!normalizedEmail) {
                     this.entitlement = null
                     this.loading = false
@@ -50,22 +45,22 @@ export const useEntitlementStore = defineStore(
                 }
 
                 try {
+                    const { data: { session } } = await supabase.auth.getSession()
+                    const token = session?.access_token
+
                     const response = await fetch("/api/check-course-access", {
                         method: "POST",
                         headers: {
-                            "Content-Type": "application/json"
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
                         },
                         body: JSON.stringify({ email: normalizedEmail })
                     })
 
                     const data = await response.json()
                     
-                    console.log("API response:", data)
-
                     const hasAccess = data?.hasAccess === true
                     
-                    console.log("final hasAccess:", hasAccess)
-
                     // We set a mock entitlement object that satisfies the getters
                     this.entitlement = hasAccess ? {
                         active: true,

@@ -181,7 +181,7 @@ const router = createRouter({
 
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 
     const auth =
         useAuthStore()
@@ -210,13 +210,39 @@ router.beforeEach((to, from, next) => {
     }
 
     if (
-        to.meta.requiresCourseAccess &&
-        !entitlements.canAccessWeek(1)
+        to.meta.requiresCourseAccess
     ) {
 
-        next("/access-denied")
-        return
+        // Wait for entitlements to load if they are currently loading
+        if (entitlements.loading) {
+            await new Promise(resolve => {
+                const unwatch = entitlements.$subscribe((mutation, state) => {
+                    if (!state.loading) {
+                        unwatch()
+                        resolve()
+                    }
+                })
+                // Safety timeout
+                setTimeout(() => {
+                    unwatch()
+                    resolve()
+                }, 5000)
+            })
+        }
 
+        if (!entitlements.isActive) {
+            next("/access-denied")
+            return
+        }
+
+        // Additional check for specific weeks if needed
+        if (to.name === "CourseWeek") {
+            const weekNumber = Number(to.params.weekNumber)
+            if (!entitlements.canAccessWeek(weekNumber)) {
+                next("/access-denied")
+                return
+            }
+        }
     }
 
     if (

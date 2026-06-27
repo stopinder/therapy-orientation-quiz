@@ -316,9 +316,15 @@ const fetchCourseOverview = async () => {
   summaryLoading.value = true
   startSummaryLoadingRotation()
   try {
+    const { data: { session } } = await supabase.auth.getSession()
+    const token = session?.access_token
+
     const result = await fetch("/api/getContinuitySummary", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
       body: JSON.stringify({
         userId: auth.user.id,
         isCourseOverview: true

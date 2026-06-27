@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js"
+import { getAuthenticatedUser } from "./_lib/auth"
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
@@ -17,12 +18,20 @@ export default async function handler(request, response) {
     }
 
     try {
+        const user = await getAuthenticatedUser(request)
+        if (!user) {
+            return response.status(401).json({
+                error: "Unauthorized"
+            })
+        }
+
+        const verifiedUserId = user.id
+        const verifiedEmail = user.email
+
         const {
             week,
             reflection,
-            bodyObservation,
-            userId,
-            email
+            bodyObservation
         } = request.body || {}
 
         if (!reflection || typeof reflection !== "string") {
@@ -31,16 +40,10 @@ export default async function handler(request, response) {
             })
         }
 
-        if (!userId) {
-            return response.status(400).json({
-                error: "Missing user ID"
-            })
-        }
-
         const { data: submissionData } = await supabase
             .from("quiz_submissions")
             .select("quiz_profile_summary")
-            .eq("email", email)
+            .eq("email", verifiedEmail)
             .single()
 
         const quizProfileSummary =
@@ -49,7 +52,7 @@ export default async function handler(request, response) {
         const { data: reflectionsData } = await supabase
             .from("course_reflections")
             .select("original_reflection, ai_response, week_number")
-            .eq("user_id", userId)
+            .eq("user_id", verifiedUserId)
             .eq("week_number", week)
             .order("created_at", { ascending: false })
             .limit(10)
@@ -819,7 +822,7 @@ ${bodyObservation}
             .from("course_reflections")
             .insert([
                 {
-                    user_id: userId,
+                    user_id: verifiedUserId,
                     week_number: week,
                     original_reflection: reflection,
                     ai_response: aiResponse

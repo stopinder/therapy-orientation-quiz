@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js"
+import { getAuthenticatedUser } from "./_lib/auth"
 
 const supabase = createClient(
     process.env.VITE_SUPABASE_URL,
@@ -22,19 +23,21 @@ export default async function handler(request, response) {
     }
 
     try {
-        const { userId, currentStage = 6, isCourseOverview = false } = request.body || {}
-
-        if (!userId) {
-            return response.status(400).json({
-                error: "Missing user ID"
+        const user = await getAuthenticatedUser(request)
+        if (!user) {
+            return response.status(401).json({
+                error: "Unauthorized"
             })
         }
+
+        const verifiedUserId = user.id
+        const { currentStage = 6, isCourseOverview = false } = request.body || {}
 
         // Retrieve last 10 rows from course_reflections
         const { data: reflectionsData, error: dbError } = await supabase
             .from("course_reflections")
             .select("original_reflection, ai_response, week_number, created_at")
-            .eq("user_id", userId)
+            .eq("user_id", verifiedUserId)
             .order("created_at", { ascending: false })
             .limit(10)
 
