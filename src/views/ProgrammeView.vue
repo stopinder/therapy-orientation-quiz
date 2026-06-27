@@ -322,9 +322,13 @@
 import { useAuthStore } from "../stores/auth"
 import { useRouter } from "vue-router"
 import { supabase } from "../lib/supabase"
+import { useCoursePurchases } from "../composables/useCoursePurchases"
+import { useEntitlementStore } from "../stores/entitlements"
 
 const router = useRouter()
 const auth = useAuthStore()
+const entitlements = useEntitlementStore()
+const { purchaseProgramme } = useCoursePurchases()
 
 const enterProgramme = async () => {
 
@@ -335,10 +339,10 @@ const enterProgramme = async () => {
     return
   }
 
-  if (entitlements.isActive) {
+  if (entitlements.canAccessWeek(1)) {
       router.push("/course")
   } else {
-      router.push("/access-required")
+      await purchaseProgramme()
   }
 
 }

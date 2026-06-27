@@ -258,6 +258,8 @@ import { useCourseProgressStore } from "../stores/courseProgress"
 import { useCoursePurchases } from "../composables/useCoursePurchases"
 import { useContinuity } from "../composables/useContinuity"
 
+import { supabase } from "../lib/supabase"
+
 const auth = useAuthStore()
 const entitlements =
     useEntitlementStore()

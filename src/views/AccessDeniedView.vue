@@ -24,12 +24,12 @@
           Start Free Orientation
         </router-link>
 
-        <router-link
-            to="/programme"
+        <button
+            @click="purchaseProgramme"
             class="w-full max-w-xs rounded-xl border border-slate-300 px-6 py-3 text-slate-700 transition hover:bg-slate-50"
         >
           Unlock Full Programme
-        </router-link>
+        </button>
 
         <router-link
             to="/"
@@ -43,3 +43,9 @@
 
   </div>
 </template>
+
+<script setup>
+import { useCoursePurchases } from "../composables/useCoursePurchases"
+
+const { purchaseProgramme } = useCoursePurchases()
+</script>
