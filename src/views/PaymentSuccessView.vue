@@ -45,7 +45,7 @@
         </p>
         <div class="flex flex-col items-center gap-4">
           <button
-            @click="checkAccess"
+            @click="checkAccess(true)"
             class="w-full max-w-xs rounded-xl bg-slate-900 px-6 py-3 text-white transition hover:bg-slate-700 font-medium"
           >
             Check Again
@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue"
+import { ref, onMounted, onUnmounted, computed } from "vue"
 import { useEntitlementStore } from "../stores/entitlements"
 import { useAuthStore } from "../stores/auth"
 
@@ -73,9 +73,13 @@ const auth = useAuthStore()
 
 const loading = ref(true)
 const hasAccess = computed(() => entitlements.canAccessWeek(1))
+const retryCount = ref(0)
+let retryTimer = null
 
-const checkAccess = async () => {
-  loading.value = true
+const checkAccess = async (isManual = false) => {
+  if (isManual) {
+    loading.value = true
+  }
   
   if (!auth.user) {
     await auth.fetchUser()
@@ -86,9 +90,25 @@ const checkAccess = async () => {
   }
   
   loading.value = false
+
+  // Automatic retry logic if access not found and not a manual click
+  if (!hasAccess.value && !isManual && retryCount.value < 2) {
+    retryCount.value++
+    const delay = retryCount.value === 1 ? 2000 : 5000
+    
+    retryTimer = setTimeout(() => {
+      checkAccess()
+    }, delay)
+  }
 }
 
 onMounted(async () => {
   await checkAccess()
+})
+
+onUnmounted(() => {
+  if (retryTimer) {
+    clearTimeout(retryTimer)
+  }
 })
 </script>
