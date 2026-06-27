@@ -319,6 +319,7 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue"
 import { useAuthStore } from "../stores/auth"
 import { useRouter } from "vue-router"
 import { supabase } from "../lib/supabase"
@@ -329,6 +330,15 @@ const router = useRouter()
 const auth = useAuthStore()
 const entitlements = useEntitlementStore()
 const { purchaseProgramme } = useCoursePurchases()
+
+onMounted(async () => {
+  if (!auth.user) {
+    await auth.fetchUser()
+  }
+  if (auth.user) {
+    await entitlements.fetchEntitlements(auth.user.id, auth.user.email)
+  }
+})
 
 const enterProgramme = async () => {
 
