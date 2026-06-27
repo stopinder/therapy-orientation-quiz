@@ -335,7 +335,11 @@ const enterProgramme = async () => {
     return
   }
 
-  router.push("/course")
+  if (entitlements.isActive) {
+      router.push("/course")
+  } else {
+      router.push("/access-required")
+  }
 
 }
 

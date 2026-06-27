@@ -147,8 +147,8 @@ const routes = [
     },
 
     {
-        path: "/access-denied",
-        name: "AccessDenied",
+        path: "/access-required",
+        name: "AccessRequired",
         component: AccessDeniedView
     },
 
@@ -231,7 +231,7 @@ router.beforeEach(async (to, from, next) => {
         }
 
         if (!entitlements.isActive) {
-            next("/access-denied")
+            next("/access-required")
             return
         }
 
@@ -239,7 +239,7 @@ router.beforeEach(async (to, from, next) => {
         if (to.name === "CourseWeek") {
             const weekNumber = Number(to.params.weekNumber)
             if (!entitlements.canAccessWeek(weekNumber)) {
-                next("/access-denied")
+                next("/access-required")
                 return
             }
         }

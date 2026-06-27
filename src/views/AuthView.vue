@@ -7,6 +7,16 @@
         Account Access
       </h1>
 
+      <div
+          v-if="signupSuccess"
+          class="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm"
+      >
+        <p class="font-semibold text-emerald-900">Check your email</p>
+        <p class="mt-1 text-emerald-800">
+          We've sent you a confirmation link. Please confirm your email address, then return here to sign in.
+        </p>
+      </div>
+
       <form
           class="space-y-5"
           @submit.prevent="signIn"
@@ -111,6 +121,7 @@ const auth = useAuthStore()
 const email = ref("")
 const password = ref("")
 const message = ref("")
+const signupSuccess = ref(false)
 
 const signUp = async () => {
 
@@ -134,8 +145,8 @@ const signUp = async () => {
     return
   }
 
-  message.value =
-      "Account created. Check your email if confirmation is enabled."
+  signupSuccess.value = true
+  message.value = ""
 
   await auth.fetchUser()
 
@@ -144,6 +155,7 @@ const signUp = async () => {
 const signIn = async () => {
 
   message.value = ""
+  signupSuccess.value = false
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email.value,
@@ -168,7 +180,7 @@ const signIn = async () => {
   if (entitlements.isActive) {
       await router.push("/course")
   } else {
-      await router.push("/access-denied")
+      await router.push("/access-required")
   }
 
 }
