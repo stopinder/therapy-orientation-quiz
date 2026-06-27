@@ -247,7 +247,8 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue"
+import { computed, onMounted, ref, watchEffect } from "vue"
+import { useRouter } from "vue-router"
 
 import { courseWeeks } from "../data/courseWeeks"
 
@@ -261,6 +262,7 @@ import { useContinuity } from "../composables/useContinuity"
 import { supabase } from "../lib/supabase"
 
 const auth = useAuthStore()
+const router = useRouter()
 const entitlements =
     useEntitlementStore()
 
@@ -390,6 +392,11 @@ const parsedSummary = computed(() => {
 })
 
 onMounted(() => {
+  watchEffect(() => {
+    if (!entitlements.loading && !entitlements.isActive) {
+      router.push("/access-required")
+    }
+  })
   fetchCourseOverview()
 })
 

@@ -618,10 +618,10 @@ import {
   onMounted,
   onUnmounted,
   ref,
-  watch
+  watchEffect
 } from "vue"
 
-import { useRoute }
+import { useRoute, useRouter }
   from "vue-router"
 
 import { courseWeeks }
@@ -629,6 +629,9 @@ import { courseWeeks }
 
 import { useAuthStore }
   from "../stores/auth"
+
+import { useEntitlementStore }
+  from "../stores/entitlements"
 
 import { useCourseProgressStore }
   from "../stores/courseProgress"
@@ -642,8 +645,11 @@ import { supabase }
 import VoiceRecorder from "../components/VoiceRecorder.vue"
 
 const route = useRoute()
+const router = useRouter()
 
 const auth = useAuthStore()
+
+const entitlements = useEntitlementStore()
 
 const courseProgress =
     useCourseProgressStore()
@@ -1101,6 +1107,12 @@ const handleScroll = () => {
 onMounted(async () => {
 
   window.addEventListener('scroll', handleScroll)
+
+  watchEffect(() => {
+    if (!entitlements.loading && !entitlements.isActive) {
+      router.push("/access-required")
+    }
+  })
 
   if (
       auth.user?.id &&

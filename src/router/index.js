@@ -122,7 +122,8 @@ const routes = [
         component: CourseHubView,
 
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            requiresCourseAccess: true
         }
     },
 
@@ -143,7 +144,8 @@ const routes = [
         component: ReflectionHistoryView,
 
         meta: {
-            requiresAuth: true
+            requiresAuth: true,
+            requiresCourseAccess: true
         }
     },
 
@@ -219,6 +221,11 @@ router.beforeEach(async (to, from, next) => {
     if (
         to.meta.requiresCourseAccess
     ) {
+
+        // If user is authenticated but entitlements haven't been fetched yet
+        if (auth.user && !entitlements.entitlement && !entitlements.loading) {
+            await entitlements.fetchEntitlements(auth.user.id, auth.user.email)
+        }
 
         // Wait for entitlements to load if they are currently loading
         if (entitlements.loading) {
