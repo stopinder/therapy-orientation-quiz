@@ -1,5 +1,5 @@
 <template>
-  <div class="flex min-h-[70vh] flex-col items-center justify-center px-6 py-12 lg:min-h-[60vh]">
+  <div class="flex min-h-screen flex-col items-center overflow-y-auto px-6 pb-20 pt-10">
 
     <div class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
 
@@ -50,33 +50,43 @@
 
         </div>
 
-        <div class="flex gap-3 pt-2">
+      <div
+          v-if="message"
+          class="rounded-xl bg-slate-100 p-4 text-sm"
+      >
+        {{ message }}
+      </div>
+
+      <div class="flex flex-col gap-4">
+
+          <div class="flex gap-3">
+            <button
+                type="button"
+                @click="signUp"
+                class="rounded-xl bg-slate-900 px-5 py-3 text-white transition hover:bg-slate-700"
+            >
+              Sign Up
+            </button>
+
+            <button
+                type="submit"
+                class="rounded-xl border border-slate-300 px-5 py-3 transition hover:bg-slate-100"
+            >
+              Sign In
+            </button>
+          </div>
 
           <button
               type="button"
-              @click="signUp"
-              class="rounded-xl bg-slate-900 px-5 py-3 text-white transition hover:bg-slate-700"
+              @click="sendPasswordReset"
+              class="self-start text-sm text-slate-500 transition hover:text-slate-900"
           >
-            Sign Up
-          </button>
-
-          <button
-              type="submit"
-              class="rounded-xl border border-slate-300 px-5 py-3 transition hover:bg-slate-100"
-          >
-            Sign In
+            Forgot Password?
           </button>
 
         </div>
 
       </form>
-
-      <button
-          @click="sendPasswordReset"
-          class="mt-6 text-sm text-slate-500 transition hover:text-slate-900"
-      >
-        Forgot Password?
-      </button>
 
       <button
           v-if="auth.user"
@@ -85,13 +95,6 @@
       >
         Sign Out
       </button>
-
-      <div
-          v-if="message"
-          class="mt-6 rounded-xl bg-slate-100 p-4 text-sm"
-      >
-        {{ message }}
-      </div>
 
       <div
           v-if="auth.user"
