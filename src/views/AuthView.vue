@@ -26,31 +26,29 @@
       </div>
 
       <!-- Authentication Status Area -->
-      <div class="mb-8 min-h-[85px]">
-        <div
-            v-if="status"
-            :class="[
-              'rounded-xl p-4 text-sm transition-all duration-200',
-              status.type === 'success' ? 'bg-emerald-50 border border-emerald-100' : 'bg-slate-50 border border-slate-100'
-            ]"
-        >
-          <div class="flex gap-3">
-            <span v-if="status.type === 'success'" class="text-emerald-500 font-bold">✓</span>
-            <span v-else class="text-slate-400 font-bold">✕</span>
-            <div>
-              <p :class="[
-                'font-semibold',
-                status.type === 'success' ? 'text-emerald-900' : 'text-slate-900'
-              ]">
-                {{ status.title }}
-              </p>
-              <p v-if="status.description" :class="[
-                'mt-1 leading-relaxed',
-                status.type === 'success' ? 'text-emerald-800' : 'text-slate-600'
-              ]">
-                {{ status.description }}
-              </p>
-            </div>
+      <div
+          v-if="status"
+          :class="[
+            'mb-6 rounded-xl p-4 text-sm transition-all duration-200',
+            status.type === 'success' ? 'bg-emerald-50 border border-emerald-100' : 'bg-slate-50 border border-slate-100'
+          ]"
+      >
+        <div class="flex gap-3">
+          <span v-if="status.type === 'success'" class="text-emerald-500 font-bold">✓</span>
+          <span v-else class="text-slate-400 font-bold">✕</span>
+          <div>
+            <p :class="[
+              'font-semibold',
+              status.type === 'success' ? 'text-emerald-900' : 'text-slate-900'
+            ]">
+              {{ status.title }}
+            </p>
+            <p v-if="status.description" :class="[
+              'mt-1 leading-relaxed',
+              status.type === 'success' ? 'text-emerald-800' : 'text-slate-600'
+            ]">
+              {{ status.description }}
+            </p>
           </div>
         </div>
       </div>
@@ -99,7 +97,7 @@
 
         </div>
 
-      <div class="pt-2">
+      <div class="pt-1">
 
             <button
                 type="submit"
