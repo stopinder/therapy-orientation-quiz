@@ -142,9 +142,10 @@ CORE ANALYSIS:
    - Recency: reflections with lower indices (more recent) carry significantly more weight.
 5. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns. If a new pattern has overtaken a previous one due to recency/frequency, switch to it completely.
 6. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
-7. Generate ONLY ONE pattern statement for the dominant pattern: "You tend to [intention], then [specific behavior]."
+7. Generate ONLY ONE pattern statement for the dominant pattern: "You plan to [intention], then [specific behavior] instead."
 8. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). 
 9. PRIORITIZE concrete user phrasing (e.g., "checking social media" instead of "distraction") over generic terms. 
+10. Replace robotic phrases like "delay occurs" or "felt frustration" with "this leads to delay" or "frustration follows".
 
 Language and Perspective:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
@@ -159,7 +160,7 @@ Return a JSON object ONLY.
   "dominantPattern": {
     "intention": "concrete intention (e.g., engage, start, reply to a message)",
     "shift": "specific behavior/action they did instead (e.g., checking social media, not replying, leaving the task)",
-    "consequence": "specific result (e.g., frustration follows, the other person denies it, delay occurs)",
+    "consequence": "specific result (e.g., this leads to delay, frustration follows)",
     "score": "float - calculated score based on frequency and recency",
     "matchingIndices": [0, 1, 3]
   },
@@ -333,11 +334,11 @@ Rules:
             const consequence = dominantPattern.consequence || "[tension / negative response / delay]"
 
             // Pattern + Consequence sentence
-            markdownSummary = `You ${verbs.tend} ${intention}, then ${shift}. This is ${verbs.often} followed by ${consequence}.`
+            markdownSummary = `You ${verbs.tend} ${intention}, then ${shift} instead. This leads to ${consequence}.`
 
             // State sentence
             if (stateLine) {
-                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present — such as ${stateLine}.`
+                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present — such as ${stateLine}. Frustration follows.`
             }
 
             // Light uncertainty sentence
