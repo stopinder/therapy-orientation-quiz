@@ -139,23 +139,13 @@ OUTPUT FORMAT:
 Return a JSON object ONLY. No markdown, no prose, no conversational text.
 
 {
-  "whatIsBecomingVisible": "1-2 short sentences documenting what is becoming visible.",
-  "recurringMovement": {
-    "summary": "Across multiple observations, this structure is beginning to stand out:",
-    "sequence": ["Intention", "Pressure or tension", "Shift in direction", "After-effect still unclear"],
-    "variants": ["checking", "scrolling", "smoking weed", "delaying", "withdrawing"]
+  "openingLine": {
+    "intention": "[engage/start]",
+    "shift": "[distraction/withdrawal]",
+    "consequence": "[tension / negative response / delay]"
   },
-  "beforeShift": [
-    "Pressure or tension appears before the shift in direction.",
-    "It may be linked to anticipation, exposure, demand, or contact with another person."
-  ],
-  "afterwards": [
-    "What follows the shift in direction is still less clear.",
-    "Some observations include distraction, irritation, defensiveness, anger, or unresolved feeling."
-  ],
-  "stillEmerging": [
-    "The earliest moment between pressure and the shift in direction is still being observed."
-  ]
+  "stateLine": "[anger, pressure, defensiveness, tension]",
+  "consequenceVisible": true
 }
 
 Rules:
@@ -163,7 +153,8 @@ Rules:
 2. Use "stomach" instead of "tummy".
 3. Replace "work or engage in a task" with "engage".
 4. Ensure sentences are short and neutral.
-5. In "afterwards", focus on distraction, irritation, or unresolved feelings.
+5. In "openingLine", identify the concrete intention, the shift (distraction, withdrawal, etc), and the consequence (tension, delay, etc) from the observations.
+6. In "stateLine", only include states explicitly present in reflections. If none, return null.
 `.trim()
         } else {
             const isStage4 = currentStage === 4
@@ -172,7 +163,7 @@ Rules:
 You are a Field Researcher documenting an ongoing investigation.
 
 Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why.
+A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. ${isStage5 ? 'Stage 5 must NOT describe patterns across time. Only describe what is directly observable.' : ''}
 
 Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
@@ -183,13 +174,13 @@ Tone Guidelines:
 - Never diagnose. Never over-interpret. Never sound certain.
 
 Evidence Thresholds (Apply based on count ${count}):
-1–3 observations: Describe only what is visible. No recurrence language.
+${isStage5 ? '1+ observations: Describe only what is directly observable: response → consequence. No recurrence language.' : `1–3 observations: Describe only what is visible. No recurrence language.
 4–6 observations: "Something may be beginning to repeat."
 7–15 observations: "This relationship appears often enough to be worth watching."
-15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."
+15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."`}
 
 CORE ANALYSIS:
-Look across multiple reflections to identify recurring structural patterns. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus on what follows the response and what it leads to.' : 'Identify higher-order patterns (intention appears, shift happens, action changes).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses).
+Look across multiple reflections to identify recurring structural patterns. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify higher-order patterns (intention appears, shift happens, action changes).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses).
 
 OUTPUT FORMAT:
 Return a JSON object ONLY.
@@ -205,7 +196,7 @@ ${isStage4 ? `
 ` : isStage5 ? `
 {
   "status": "established",
-  "whatFollowedResponse": "Describe what followed the response across observations. Max 2 sentences.",
+  "whatFollowedResponse": "Describe what followed the response across observations. Strictly observable: response → consequence. Max 2 sentences.",
   "whatAppearsAgain": ["response: [action]", "consequence: [result]"],
   "whatThisLeadsTo": "One short line describing the consequence pattern."
 }
@@ -223,7 +214,7 @@ ${isStage4 ? `
 
 Rules:
 1. Return JSON ONLY.
-2. ${isStage4 ? 'No interpretation or over-explanation. Only include what the user clearly described.' : isStage5 ? 'Focus strictly on response → consequence. No interpretation or speculation.' : 'Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.'}
+2. ${isStage4 ? 'No interpretation or over-explanation. Only include what the user clearly described.' : isStage5 ? 'Focus strictly on response → consequence. No interpretation, no explanation, no ambiguity. Keep sentences short and concrete. No pattern confirmation language (e.g. "this repeats across reflections"). Keep bullet points only in whatAppearsAgain.' : 'Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.'}
 3. Use "stomach" instead of "tummy".
 4. Replace "work or engage in a task" with "engage".
 `.trim()
@@ -282,48 +273,28 @@ Rules:
 
         if (isCourseOverview) {
             const {
-                whatIsBecomingVisible = "",
-                recurringMovement = {},
-                beforeShift = [],
-                afterwards = [],
-                stillEmerging = []
+                openingLine = {},
+                stateLine = null,
+                consequenceVisible = false
             } = jsonResult
 
-            // Hard Requirement: Enforce the MindWorks sequence
-            const enforcedSequence = [
-                "Engagement / intention",
-                "Pressure or uncertainty",
-                "Attention moves elsewhere",
-                "After-effect still unclear"
-            ];
+            const intention = openingLine.intention || "[engage/start]"
+            const shift = openingLine.shift || "[distraction/withdrawal]"
+            const consequence = openingLine.consequence || "[tension / negative response / delay]"
 
             markdownSummary = `
-${whatIsBecomingVisible}
-
-### Recurring Movement
-
-Across recent observations, this structure is beginning to stand out:
-
-${enforcedSequence.join('\n↓\n')}
-
-Attention moves elsewhere may appear as ${(recurringMovement.variants || []).join(', ')}.
-
-### Before the Shift
-
-${(Array.isArray(beforeShift) ? beforeShift : [beforeShift]).join('\n\n')}
-
-### Afterwards
-
-What follows the attention moving elsewhere is still less clear.
-
-${(Array.isArray(afterwards) ? afterwards : [afterwards]).join('\n\n')}
-
-### Still Emerging
-
-${(Array.isArray(stillEmerging) ? stillEmerging : [stillEmerging]).join('\n\n')}
-
-This is an early pattern. It may become clearer with more observations.
+You tend to begin with an intention to ${intention}, then shift into ${shift}. This is often followed by ${consequence}.
 `.trim()
+
+            if (stateLine) {
+                markdownSummary += `\n\nBefore this shift, there is often a state already present — such as ${stateLine}.`
+            }
+
+            if (consequenceVisible) {
+                markdownSummary += `\n\nWhat follows the response is becoming visible, though it is not yet consistent across situations.`
+            }
+
+            markdownSummary += `\n\nThis is an early pattern. It may become clearer with more observations.`
         } else {
             const isStage3 = currentStage === 3
             const isStage4 = currentStage === 4

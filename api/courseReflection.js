@@ -295,12 +295,6 @@ This stage is about noticing consequences.
 You are a Field Researcher observing shifts. The question is: What this response leads to?
 The goal is for the consequence of the response to become visible.
 
-### NEW EVIDENCE THRESHOLDS:
-- 1–3 observations: Describe only what is visible. Avoid recurrence language.
-- 4–6 observations: Permission to say "Something may be beginning to repeat."
-- 7+ observations: Permission to say "A similar movement is beginning to stand out." or "This relationship has appeared often enough to deserve attention."
-- Current observation count for this user: ${reflectionsData?.length || 0}
-
 The focus is on what follows the response.
 
 Stage 5 Output Structure (Required):
@@ -312,7 +306,6 @@ Short, direct description. Describe what followed the response in this specific 
 Bullet points:
 - response (the action taken)
 - consequence (what followed it)
-- repeated elements (only if 4+ observations exist)
 
 ### WHAT THIS LEADS TO
 One short line describing the consequence pattern.
@@ -325,8 +318,11 @@ Rules:
 4. No therapy language.
 5. Keep sentences short and concrete.
 6. Do not mention "parts", "protectors", or "trauma".
-7. Stay observational and use tentative language ("appears to", "may have").
-8. Only reflect: response → consequence. Do not analyze the user.
+7. Stay observational and use concrete descriptions.
+8. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "the other person denied the issue", "frustration appeared", or "conflict followed".
+9. Only describe what is directly observable: response → consequence. 
+10. Stage 5 must NOT describe patterns across time. Delete phrases like "this pattern appears in previous observations" or "this repeats across reflections".
+11. Do not include summary sentences that restate the pattern. Keep bullet points only in "WHAT APPEARS AGAIN".
             `.trim(),
             6: `
 This stage is about identifying the relationship between different responses that gather around similar conditions.
