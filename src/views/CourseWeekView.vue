@@ -62,22 +62,10 @@
 
       </div>
 
-      <!-- Video Introduction Placeholder (Top level) -->
-      <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-        <h2 class="text-2xl font-semibold text-slate-950">
-          Video Introduction
-        </h2>
-        <div class="mt-6 flex aspect-video items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-8 text-center">
-          <p class="max-w-xs text-sm text-slate-500">
-            Video introduction coming soon.
-          </p>
-        </div>
-      </section>
-
       <!-- Why You're Here (Orientation Section) -->
       <section
           v-if="week.orientation && weekNumber !== 2"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
           {{ week.orientation.title }}
@@ -95,14 +83,27 @@
       <!-- This Stage's Experiment (Week 1 only) -->
       <section
           v-if="week.number === 1"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
           This Stage's Experiment
         </h2>
         <div class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
           <p>Before opening email, beginning work, or starting a task:</p>
-          <p class="font-medium text-2xl text-slate-950">Sense both feet.</p>
+          <div class="flex flex-col gap-2">
+            <p class="font-medium text-2xl text-slate-950">Sense both feet.</p>
+            <details class="group">
+              <summary class="inline-flex cursor-pointer list-none items-center text-sm font-medium text-slate-500 hover:text-slate-900">
+                <span>Why?</span>
+                <svg class="ml-1 h-4 w-4 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div class="mt-2 rounded-xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">
+                <strong>Why the feet?</strong> This is not a relaxation exercise. It simply gives you a stable reference point before you observe what happens next.
+              </div>
+            </details>
+          </div>
           <p>Ask:</p>
           <p class="font-medium text-2xl text-slate-950">"What am I about to do?"</p>
           <p>Then continue normally.</p>
@@ -112,9 +113,9 @@
         </div>
       </section>
 
-      <!-- Why This Matters (openingReflection) - Only Stage 1, 2 -->
+      <!-- Why This Matters (openingReflection) - Only Stage 2 -->
       <section
-          v-if="week.openingReflection && week.openingReflection.length > 0 && [1, 2].includes(weekNumber)"
+          v-if="week.openingReflection && week.openingReflection.length > 0 && [2].includes(weekNumber)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
@@ -190,7 +191,8 @@
 
       <!-- Reflect with MindWorks -->
       <section
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          id="reflect-with-mindworks"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300"
       >
 
         <div class="mb-8 flex items-center justify-between">
@@ -222,12 +224,15 @@
           </p>
         </div>
 
-        <div class="mt-6 flex items-center justify-between">
-          <p
-              class="text-base leading-7 text-slate-600"
-          >
-            {{ week.reflectionPrompt }}
-          </p>
+        <div class="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <p
+                class="text-base leading-7 text-slate-600"
+            >
+              {{ week.reflectionPrompt }}
+            </p>
+            <p v-if="week.number === 1" class="text-sm text-slate-500 font-medium">One example is enough.</p>
+          </div>
           <VoiceRecorder @transcribed="text => reflection += (reflection ? ' ' : '') + text" />
         </div>
 
@@ -246,7 +251,7 @@
             <VoiceRecorder @transcribed="appendBodyObservationTranscription" />
           </div>
           <p class="mt-1 text-sm text-slate-500">
-            If there was a body sensation, add it here. If not, leave this blank.
+            If you noticed a sensation in the body, you can add it here.
           </p>
           <textarea
               v-model="bodyObservation"
@@ -473,7 +478,7 @@
       </section>
 
       <!-- Read More Accordion for Stage 1-5 (Why This Matters) -->
-      <section v-if="weekNumber !== 6 && weekNumber !== 2" class="mb-10">
+      <section v-if="weekNumber !== 6 && weekNumber !== 2 && weekNumber !== 1" class="mb-10">
         <button
             @click="showReadMore = !showReadMore"
             class="flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:bg-slate-50"
@@ -667,7 +672,7 @@ const reflectionPlaceholder = computed(() => {
   return "Describe what happened..."
 })
 
-const bodyObservationPlaceholder = "Tension in chest, tight shoulders, restlessness, heaviness, numbness, or leave blank..."
+const bodyObservationPlaceholder = "Tension, restlessness, heaviness, or leave blank..."
 
 const restoredReflection =
     ref(false)

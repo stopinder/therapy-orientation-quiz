@@ -23,7 +23,7 @@ export const courseWeeks = [
                 "We check.",
                 "We prepare.",
                 "We drift.",
-                "This stage, MindWorks is not asking you to explain this or change it.",
+                "In this stage, MindWorks is not asking you to explain this or change it.",
                 "It is simply helping you see one moment clearly.",
                 "In this stage, you are learning to notice the point where your attention moves somewhere you did not expect."
             ]
@@ -37,7 +37,7 @@ export const courseWeeks = [
 
             "This stage is not about correcting that movement. It is about seeing it clearly enough that it becomes recognisable. The important moment is not the collapse afterwards. It is the earlier shift: the instant where contact weakens and another behaviour begins to organise you.",
 
-            "Your task this stage is simple: notice the disappearance. Not the explanation. Not the story. Not the self-criticism afterwards. Just the movement from intention into fragmentation."
+            "Your task in this stage is simple: notice the disappearance. Not the explanation. Not the story. Not the self-criticism afterwards. Just the movement from intention into fragmentation."
         ],
 
         bodyFocus: [
