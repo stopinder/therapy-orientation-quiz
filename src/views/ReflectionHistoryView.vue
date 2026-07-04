@@ -56,23 +56,9 @@
                   What is becoming visible
                 </p>
                 
-                <div class="space-y-8">
-                  <div 
-                    v-for="(section, idx) in parsedContinuitySummary" 
-                    :key="idx"
-                  >
-                    <h4 v-if="section.title" class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-                      {{ section.title }}
-                    </h4>
-                    <div class="whitespace-pre-line text-lg leading-relaxed text-slate-300">
-                      {{ section.content }}
-                    </div>
-                  </div>
+                <div class="text-xl font-medium text-slate-200 leading-relaxed mb-4 whitespace-pre-line">
+                  {{ continuitySummary }}
                 </div>
-
-                <p class="mt-8 pt-6 border-t border-slate-800 text-sm leading-relaxed text-slate-500">
-                  This is not a conclusion. It is what MindWorks is beginning to notice across recent observations.
-                </p>
               </div>
             </div>
             
@@ -359,58 +345,7 @@ const possibleFunctionQuestion = computed(() => {
 
 const continuitySummary = ref("")
 
-const parsedContinuitySummary = computed(() => {
-  if (!continuitySummary.value) return []
-
-  // Safety cleanup: ensure "stomach" is used instead of "tummy"
-  // Also clean up any stray raw JSON or markdown code blocks
-  // Safety mapping: convert old headings to new ones if they appear
-  const cleanSummary = continuitySummary.value
-    .replace(/tummy/gi, 'stomach')
-    .replace(/```json\s*[\s\S]*?```/g, '')
-    .trim()
-
-  const mapping = {
-    'What Keeps Reappearing': 'Recurring Movement',
-    'Repeated Sequence': 'Recurring Movement',
-    'Primary State': 'Before the Shift',
-    'Possible Function': 'Afterwards',
-    'What Remains Unclear': 'Still Emerging'
-  }
-
-  const sectionsMap = new Map()
-  const lines = cleanSummary.split('\n')
-  let currentSectionTitle = null
-
-  lines.forEach(line => {
-    const headingMatch = line.match(/^###\s+(.*)/)
-    if (headingMatch) {
-      let rawTitle = headingMatch[1].trim().replace(/[:]$/, '')
-      currentSectionTitle = mapping[rawTitle] || rawTitle
-      
-      if (!sectionsMap.has(currentSectionTitle)) {
-        sectionsMap.set(currentSectionTitle, [])
-      }
-    } else if (line.trim() || (currentSectionTitle && sectionsMap.get(currentSectionTitle).length > 0)) {
-      if (currentSectionTitle) {
-        sectionsMap.get(currentSectionTitle).push(line)
-      } else if (line.trim()) {
-        currentSectionTitle = ""
-        sectionsMap.set(currentSectionTitle, [line])
-      }
-    }
-  })
-
-  const sections = []
-  sectionsMap.forEach((content, title) => {
-    sections.push({
-      title,
-      content: content.join('\n').trim()
-    })
-  })
-
-  return sections
-})
+const parsedContinuitySummary = null // Deprecated - summary is now a single string from backend
 
 const fetchContinuitySummary =
     async () => {

@@ -102,7 +102,7 @@ MindWorks Observation: ${r.ai_response}`)
             }
         }
 
-        const lens = isCourseOverview
+        const lens = isCourseOverview || true
             ? {
                 question: "What is becoming visible across everything observed so far?",
                 emphasis: "ONE continuous paragraph, no sections, no bullets, no headings. evidence count: " + count
@@ -111,7 +111,7 @@ MindWorks Observation: ${r.ai_response}`)
 
         let systemPrompt = ""
 
-        if (isCourseOverview) {
+        if (isCourseOverview || true) {
             systemPrompt = `
 You are a Field Researcher documenting a cumulative investigation. 
 
@@ -285,7 +285,7 @@ Rules:
 
         let markdownSummary = ""
 
-        if (isCourseOverview) {
+        if (isCourseOverview || true) {
             const {
                 patternLine = {},
                 stateLine = null,

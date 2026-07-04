@@ -101,24 +101,8 @@
           Becoming visible
         </h2>
         
-        <div class="space-y-8">
-          <div 
-            v-for="(section, idx) in parsedSummary" 
-            :key="idx"
-          >
-            <h4 v-if="section.title && !['What is becoming visible', 'Becoming visible'].includes(section.title)" class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-              {{ section.title }}
-            </h4>
-            <div 
-              v-if="['What is becoming visible', 'Becoming visible'].includes(section.title) || !section.title" 
-              class="text-xl font-medium text-slate-900 leading-relaxed mb-8"
-            >
-              {{ section.content }}
-            </div>
-            <div v-else class="whitespace-pre-line text-lg leading-relaxed text-slate-600">
-              {{ section.content }}
-            </div>
-          </div>
+        <div class="text-xl font-medium text-slate-900 leading-relaxed mb-4 whitespace-pre-line">
+          {{ continuitySummary }}
         </div>
 
         <div class="mt-8 flex justify-end">
@@ -334,52 +318,7 @@ const fetchCourseOverview = async () => {
   }
 }
 
-const parsedSummary = computed(() => {
-  if (!continuitySummary.value) return []
-  
-  // Safety mapping: convert old headings to new ones if they appear
-  const cleanSummary = continuitySummary.value.trim()
-  
-  const mapping = {
-    'What Keeps Reappearing': 'Recurring Movement',
-    'Repeated Sequence': 'Recurring Movement',
-    'Primary State': 'Before the Shift',
-    'Possible Function': 'Afterwards',
-    'What Remains Unclear': 'Still Emerging'
-  }
-
-  const sectionsMap = new Map()
-  const lines = cleanSummary.split('\n')
-  let currentSectionTitle = null
-  
-  lines.forEach(line => {
-    if (line.startsWith('### ')) {
-      let rawTitle = line.replace('### ', '').trim().replace(/[:]$/, '')
-      currentSectionTitle = mapping[rawTitle] || rawTitle
-      
-      if (!sectionsMap.has(currentSectionTitle)) {
-        sectionsMap.set(currentSectionTitle, [])
-      }
-    } else {
-      if (currentSectionTitle !== null) {
-        sectionsMap.get(currentSectionTitle).push(line)
-      } else if (line.trim()) {
-        currentSectionTitle = ""
-        sectionsMap.set(currentSectionTitle, [line])
-      }
-    }
-  })
-  
-  const sections = []
-  sectionsMap.forEach((content, title) => {
-    sections.push({
-      title,
-      content: content.join('\n').trim()
-    })
-  })
-  
-  return sections
-})
+const parsedSummary = null // Deprecated - summary is now a single string from backend
 
 onMounted(() => {
   fetchCourseOverview()
