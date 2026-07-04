@@ -163,7 +163,7 @@ export const courseWeeks = [
             "Describe a recent moment that felt similar to something you have noticed before. What specifically repeated?",
 
         intro:
-            "Different situations can seem unrelated. A task at work. A message you don’t reply to. A conversation you avoid. On the surface, they look different. But sometimes, the same thing happens in each of them. Something starts — and then you respond in a similar way. This stage begins to notice whether that response repeats.",
+            "Different situations can seem unrelated. A task at work. A message you don’t reply to. A conversation you avoid. On the surface, they look different. But sometimes, the same thing happens in each of them. Something begins — and then you respond in a similar way. This stage begins to notice whether that response repeats.",
 
         orientation: {
             title: "Why You're Here",
@@ -174,7 +174,7 @@ export const courseWeeks = [
                 "A conversation you avoid.",
                 "On the surface, they look different.",
                 "But sometimes, the same thing happens in each of them.",
-                "Something starts — and then you respond in a similar way.",
+                "Something begins — and then you respond in a similar way.",
                 "This stage begins to notice whether that response repeats."
             ]
         },

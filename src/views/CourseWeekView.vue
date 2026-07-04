@@ -149,7 +149,7 @@
         </div>
 
         <div v-else-if="week.number === 3" class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
-          <p>Continue to sense both feet.</p>
+          <p>Continue to sense both feet (a simple way to pause and notice what’s happening).</p>
           <p>Then, at any point during your day:</p>
           <p>Notice what happens just before you change direction <br><span class="text-base text-slate-600">(for example: delay, check something, scroll, avoid, or switch tasks).</span></p>
           <p>Then ask:</p>
@@ -709,7 +709,7 @@ const hasGeneratedReflectionThisSession = ref(false)
 const reflectionPlaceholder = computed(() => {
   if (weekNumber.value === 1) return "I intended to start work, but I checked messages instead..."
   if (weekNumber.value === 2) return "I was about to make a call, but I looked at the phone and then opened email..."
-  if (weekNumber.value === 3) return "Describe a recent moment that feels similar to something you have noticed before. What feels familiar?"
+  if (weekNumber.value === 3) return "What specifically repeated?"
   if (weekNumber.value === 6) return "For example: During a difficult conversation, I wanted to leave, then tried to explain myself, and later became quiet."
   return "Describe what happened..."
 })
@@ -970,7 +970,7 @@ const sequenceBlockLabel = computed(() => {
 const sequenceBlockWording = computed(() => {
   const n = weekNumber.value
   if (n === 2) return "MindWorks is beginning to place events in order."
-  return "A possible sequence appearing across recent reflections."
+  return "A possible sequence appearing across your recent reflections."
 })
 
 const sequenceSteps = computed(() => {
