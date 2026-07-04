@@ -273,9 +273,9 @@ Rules:
 
             // Hard Requirement: Enforce the MindWorks sequence
             const enforcedSequence = [
-                "Intention",
-                "Pressure or tension",
-                "Shift in direction",
+                "Engagement / intention",
+                "Pressure or uncertainty",
+                "Attention moves elsewhere",
                 "After-effect still unclear"
             ];
 
@@ -288,7 +288,7 @@ Across recent observations, this structure is beginning to stand out:
 
 ${enforcedSequence.join('\n↓\n')}
 
-A shift in direction may appear as ${(recurringMovement.variants || []).join(', ')}.
+Attention moves elsewhere may appear as ${(recurringMovement.variants || []).join(', ')}.
 
 ### Before the Shift
 
@@ -296,7 +296,7 @@ ${(Array.isArray(beforeShift) ? beforeShift : [beforeShift]).join('\n\n')}
 
 ### Afterwards
 
-What follows the shift in direction is still less clear.
+What follows the attention moving elsewhere is still less clear.
 
 ${(Array.isArray(afterwards) ? afterwards : [afterwards]).join('\n\n')}
 
@@ -304,7 +304,7 @@ ${(Array.isArray(afterwards) ? afterwards : [afterwards]).join('\n\n')}
 
 ${(Array.isArray(stillEmerging) ? stillEmerging : [stillEmerging]).join('\n\n')}
 
-This is not a conclusion. It is what MindWorks is beginning to notice across the accumulated observations.
+This is an early pattern. It may become clearer with more observations.
 `.trim()
         } else {
             const isStage3 = currentStage === 3

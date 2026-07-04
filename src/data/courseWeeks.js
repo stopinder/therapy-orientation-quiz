@@ -157,46 +157,51 @@ export const courseWeeks = [
         title: "Pattern",
 
         subtitle:
-            "Seeing what keeps reappearing across reflections.",
+            "Recognising repetition across different situations.",
 
         reflectionPrompt:
             "Describe a recent moment that felt similar to something you have noticed before. What specifically repeated?",
 
         intro:
-            "Different situations can contain the same pattern.\n\nOne moment may involve work.\nAnother may involve a relationship.\nAnother may involve learning, exposure, or pressure.\n\nOn the surface they may look unrelated.\nMindWorks is beginning to notice whether a similar movement appears across them.",
+            "Different situations can seem unrelated. A task at work. A message you don’t reply to. A conversation you avoid. On the surface, they look different. But sometimes, the same thing happens in each of them. Something starts — and then you respond in a similar way. This stage begins to notice whether that response repeats.",
 
         orientation: {
             title: "Why You're Here",
             content: [
-                "Different situations can feel unrelated.",
-                "But sometimes, the same movement appears in each of them.",
-                "A task, a conversation, a message, a responsibility.",
-                "Something begins… and then something similar happens.",
-                "This stage begins to notice whether that movement repeats."
+                "Different situations can seem unrelated.",
+                "A task at work.",
+                "A message you don’t reply to.",
+                "A conversation you avoid.",
+                "On the surface, they look different.",
+                "But sometimes, the same thing happens in each of them.",
+                "Something starts — and then you respond in a similar way.",
+                "This stage begins to notice whether that response repeats."
             ]
         },
 
         openingReflection: [
             "At first, each moment looks separate.",
-            "By this stage, the focus begins to shift.",
-            "The question is no longer only what happened.",
-            "The question is whether something similar keeps appearing across different moments.",
+            "By this stage, the focus starts to shift.",
+            "The question is no longer only:",
+            "“What happened?”",
+            "The question becomes:",
+            "“Does something similar keep happening across different situations?”",
             "Not why it happens.",
-            "Simply whether it repeats."
+            "Just whether it repeats."
         ],
 
         exercises: [
             {
                 title: "Notice what repeats",
-                description: "Continue to sense both feet and notice what happens just before.\n\nNotice if something similar has happened before.\n\nNot the situation.\nThe movement.\n\nThen continue normally."
+                description: "During the day, see if the same response appears more than once (e.g. delaying, checking, avoiding, switching tasks)."
             },
             {
                 title: "Compare three reflections",
-                description: "Review your last three reflections and look for a common sequence of events that occurs in at least two of them."
+                description: "Look at your last three reflections. Do at least two of them contain a similar sequence?"
             },
             {
-                title: "Look for the same sequence in different situations",
-                description: "Notice if a familiar pattern of interruption or delay happens in completely different contexts, such as at work and at home."
+                title: "Look across different situations",
+                description: "Notice if the same response happens in completely different contexts (for example: work and home)."
             }
         ]
 

@@ -149,13 +149,13 @@
         </div>
 
         <div v-else-if="week.number === 3" class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
-          <p>Continue to sense both feet and notice what happens just before.</p>
-          <p>Add:</p>
-          <p class="font-medium text-2xl text-slate-950">Notice if this feels familiar.</p>
+          <p>Continue to sense both feet.</p>
+          <p>Then, at any point during your day:</p>
+          <p>Notice what happens just before you change direction <br><span class="text-base text-slate-600">(for example: delay, check something, scroll, avoid, or switch tasks).</span></p>
+          <p>Then ask:</p>
+          <p class="font-medium text-2xl text-slate-950">Has this response happened before?</p>
+          <p class="text-base text-slate-600">Not the situation. The response itself.</p>
           <p>Then continue normally.</p>
-          <div class="mt-8 pt-6">
-            <p class="text-base text-slate-600 italic">We are beginning to notice patterns across different moments.</p>
-          </div>
         </div>
       </section>
 
@@ -436,10 +436,14 @@
             </div>
           </template>
         </div>
-        <div v-if="weekNumber === 3" class="mt-6 flex flex-wrap gap-2">
-          <span v-for="variant in ['checking', 'scrolling', 'delaying', 'cancelling', 'withdrawing', 'reorganising']" :key="variant" class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-medium text-slate-500 uppercase tracking-wider">
-            {{ variant }}
-          </span>
+
+        <div v-if="weekNumber === 3" class="mt-4 space-y-4">
+          <p class="text-sm text-slate-600">
+            (for example: checking, scrolling, delaying, cancelling, withdrawing, or reorganising)
+          </p>
+          <p class="text-sm text-slate-500 italic">
+            This is an early pattern. It may become clearer with more observations.
+          </p>
         </div>
       </section>
 
@@ -983,8 +987,7 @@ const sequenceSteps = computed(() => {
     return [
       "Engagement / intention",
       "Pressure or uncertainty",
-      "Attention moves elsewhere",
-      "This is an early pattern. It may become clearer with more observations."
+      "Attention moves elsewhere"
     ]
   }
   if (n >= 4) {

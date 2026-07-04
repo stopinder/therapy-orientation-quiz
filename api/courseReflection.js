@@ -232,6 +232,7 @@ Identify higher-order patterns (e.g., shift in direction, delay, withdrawal, sub
 
 ### What remains unclear
 Identify what is not yet certain about the pattern or its recurrence. Leave uncertainty intact.
+
 This is an early pattern. It may become clearer with more observations.
 
 ### A recognition
