@@ -273,9 +273,6 @@ List as bullet points ONLY what was clearly described. No interpretation.
 - [state 1]
 - [state 2]
 
-### What remains unclear
-It is not yet clear whether this state appears in other situations.
-
 ### A recognition
 The pattern did not begin at the moment of action. It was already there before anything happened.
 
@@ -287,6 +284,8 @@ Rules:
 5. Max TWO questions in "Questions to stay with" (if included by overall logic).
 6. If there is not enough evidence for a genuine internal state, say: "The internal conditions are not yet clear. More observations may make them easier to recognise."
 7. If there is not enough evidence for a recurring state across history, say: "MindWorks cannot yet see a reliable recurring state. More observations are needed."
+8. End the reflection with "### A recognition" section. Do not include any sections after it.
+9. Do not include "What remains unclear". If absolutely necessary to mention future observations, use a minimal line: "This may appear in other situations." but do not create a section for it.
 
 Important: For Stage 4, do not use the standard "Earlier in the sequence" or "Questions to stay with" sections unless specifically requested by the structure above.
             `.trim(),

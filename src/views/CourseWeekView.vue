@@ -489,7 +489,7 @@
       </section>
 
       <!-- Read More Accordion for Stage 1-5 (Why This Matters) -->
-      <section v-if="![6, 2, 1, 3, 5].includes(weekNumber)" class="mb-10">
+      <section v-if="![6, 2, 1, 3, 4, 5].includes(weekNumber)" class="mb-10">
         <button
             @click="showReadMore = !showReadMore"
             class="flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-10 shadow-sm transition hover:bg-slate-50"
