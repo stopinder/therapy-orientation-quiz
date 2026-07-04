@@ -61,7 +61,9 @@ export default async function handler(request, response) {
 
         if (count === 2) {
             return response.status(200).json({
-                summary: "MindWorks is collecting observations. Patterns become visible through repetition."
+                summary: currentStage === 3 
+                    ? "MindWorks is beginning to observe recurrence. Patterns become visible as you compare different moments."
+                    : "MindWorks is collecting observations. Patterns become visible through repetition."
             })
         }
 
@@ -83,8 +85,8 @@ MindWorks Reflection: ${r.ai_response}`)
                 emphasis: "order, transitions, before / after"
             },
             3: {
-                question: "What keeps recurring?",
-                emphasis: "repeated structures, recurrence, similarities, differences"
+                question: "What feels familiar across different moments?",
+                emphasis: "pattern, higher-order patterns, movement away, delay, withdrawal, substitute activity, avoidance of exposure, loss of contact with original intention. Identify higher-order patterns first, then list variants. Avoid diagnosis and explanation. Do not over-explain or force conclusions. Use 'you' and tentative language. Do not use 'Possible Pattern' as a heading."
             },
             4: {
                 question: "What conditions tend to be present beforehand?",
@@ -165,6 +167,7 @@ Example output:
 ...
 `.trim()
         } else {
+            const isStage3 = currentStage === 3
             systemPrompt = `
 You are a Pattern Observer.
 
@@ -206,7 +209,7 @@ Example output:
   "unclear_aspects": "..."
 }
 
-### What Keeps Reappearing
+${isStage3 ? '### What These Moments May Have In Common' : '### What Keeps Reappearing'}
 ...
 
 JSON Fields:
@@ -219,7 +222,7 @@ JSON Fields:
 - "unclear_aspects": What cannot yet be concluded
 
 Markdown Summary sections:
-### What Keeps Reappearing
+${isStage3 ? '### What These Moments May Have In Common' : '### What Keeps Reappearing'}
 ### Repeated Sequence
 ### Primary State
 ### Possible Function

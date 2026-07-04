@@ -80,15 +80,33 @@
         </div>
       </section>
 
-      <!-- This Stage's Experiment (Week 1 only) -->
+      <!-- Why This Matters (openingReflection) - Only Stage 2, 3 -->
       <section
-          v-if="week.number === 1"
+          v-if="week.openingReflection && week.openingReflection.length > 0 && [2, 3].includes(weekNumber)"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
+      >
+        <h2 class="text-2xl font-semibold text-slate-950">
+          Why This Matters
+        </h2>
+        <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+          <p
+              v-for="paragraph in week.openingReflection"
+              :key="paragraph"
+          >
+            {{ paragraph }}
+          </p>
+        </div>
+      </section>
+
+      <!-- This Stage's Experiment (Week 1, 2, 3) -->
+      <section
+          v-if="[1, 2, 3].includes(week.number)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm transition-all duration-300"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
           This Stage's Experiment
         </h2>
-        <div class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
+        <div v-if="week.number === 1" class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
           <p>Before opening email, beginning work, or starting a task:</p>
           <div class="flex flex-col gap-2">
             <p class="font-medium text-2xl text-slate-950">Sense both feet.</p>
@@ -111,19 +129,39 @@
             <p class="text-base text-slate-600 italic">Do not try to change anything. Simply notice what happens.</p>
           </div>
         </div>
+
+        <div v-else-if="week.number === 2" class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
+          <p>Continue to sense both feet before starting a task.</p>
+          <p>Add:</p>
+          <p class="font-medium text-2xl text-slate-950">Notice what happened just before.</p>
+          <p>Then continue normally.</p>
+          <div class="mt-8 pt-6">
+            <p class="text-base text-slate-600 italic">We are becoming interested in the sequence.</p>
+          </div>
+        </div>
+
+        <div v-else-if="week.number === 3" class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
+          <p>Continue to sense both feet and notice what happens just before.</p>
+          <p>Add:</p>
+          <p class="font-medium text-2xl text-slate-950">Notice if this feels familiar.</p>
+          <p>Then continue normally.</p>
+          <div class="mt-8 pt-6">
+            <p class="text-base text-slate-600 italic">We are beginning to notice patterns across different moments.</p>
+          </div>
+        </div>
       </section>
 
-      <!-- Why This Matters (openingReflection) - Only Stage 2 -->
+      <!-- Including the Body (Week 2, 3) -->
       <section
-          v-if="week.openingReflection && week.openingReflection.length > 0 && [2].includes(weekNumber)"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          v-if="[2, 3].includes(weekNumber) && week.bodyFocus"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
-          Why This Matters
+          Including the Body
         </h2>
         <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
           <p
-              v-for="paragraph in week.openingReflection"
+              v-for="paragraph in week.bodyFocus"
               :key="paragraph"
           >
             {{ paragraph }}
@@ -131,63 +169,26 @@
         </div>
       </section>
 
-      <!-- Stage 2 Expanded Sections -->
-      <template v-if="weekNumber === 2">
-        <section
-            v-if="week.number === 2"
-            class="mb-16"
-        >
-          <h2 class="text-2xl font-semibold text-slate-950">
-            This Stage's Experiment
-          </h2>
-          <div class="mt-8 space-y-6 text-xl leading-relaxed text-slate-800">
-            <p>Continue to sense both feet before starting a task.</p>
-            <p>Add:</p>
-            <p class="font-medium text-2xl text-slate-950">Notice what happened just before.</p>
-            <p>Then continue normally.</p>
-            <div class="mt-8 pt-6">
-              <p class="text-base text-slate-600 italic">We are becoming interested in the sequence.</p>
-            </div>
-          </div>
-        </section>
-
-        <section
-            v-if="week.bodyFocus"
-            class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
-        >
-          <h2 class="text-2xl font-semibold text-slate-950">
-            Including the Body
-          </h2>
-          <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
-            <p
-                v-for="paragraph in week.bodyFocus"
-                :key="paragraph"
-            >
-              {{ paragraph }}
+      <!-- Observation exercises (Week 2, 3) -->
+      <section v-if="[2, 3].includes(weekNumber)" class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
+        <h2 class="text-2xl font-semibold text-slate-950">
+          Observation exercises
+        </h2>
+        <div class="mt-6 grid gap-4">
+          <div
+              v-for="exercise in week.exercises"
+              :key="exercise.title"
+              class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+          >
+            <h3 class="font-medium text-slate-950">
+              {{ exercise.title }}
+            </h3>
+            <p class="mt-2 text-sm leading-6 text-slate-600">
+              {{ exercise.description }}
             </p>
           </div>
-        </section>
-
-        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-          <h2 class="text-2xl font-semibold text-slate-950">
-            Observation exercises
-          </h2>
-          <div class="mt-6 grid gap-4">
-            <div
-                v-for="exercise in week.exercises"
-                :key="exercise.title"
-                class="rounded-2xl border border-slate-200 bg-slate-50 p-5"
-            >
-              <h3 class="font-medium text-slate-950">
-                {{ exercise.title }}
-              </h3>
-              <p class="mt-2 text-sm leading-6 text-slate-600">
-                {{ exercise.description }}
-              </p>
-            </div>
-          </div>
-        </section>
-      </template>
+        </div>
+      </section>
 
       <!-- Reflect with MindWorks -->
       <section
@@ -202,7 +203,7 @@
           </h2>
 
           <div
-              v-if="weekCompleted && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+              v-if="weekCompleted && (![1, 2, 3].includes(weekNumber) || hasGeneratedReflectionThisSession)"
               class="rounded-full bg-emerald-100 px-4 py-2 text-xs font-medium text-emerald-700"
           >
             Reflection completed
@@ -294,7 +295,7 @@
 
         <!-- Reflection Output -->
         <div
-            v-if="response && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+            v-if="response && (![1, 2, 3].includes(weekNumber) || hasGeneratedReflectionThisSession)"
             class="mt-12 space-y-8"
         >
           <div
@@ -330,23 +331,10 @@
 
       </section>
 
-      <!-- Initial Observation Profile (from Quiz) -->
+      <!-- What These Moments May Have In Common (Stage 3+) -->
       <section
-          v-if="quizProfileSummary && reflectionsHistory.length >= 1 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
-      >
-        <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          {{ weekNumber === 1 ? 'Initial Observation Profile' : 'Emerging Pattern' }}
-        </p>
-        <div class="text-base leading-8 text-slate-700 whitespace-pre-line">
-          {{ quizProfileSummary }}
-        </div>
-      </section>
-
-      <!-- Continuity Observation (What MindWorks Is Noticing) -->
-      <section
-          v-if="showPatternBlock && currentStageReflections.length >= 1 && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          v-if="showPatternBlock && currentStageReflections.length >= 1 && (![1, 2, 3].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
           {{ patternBlockLabel }}
@@ -384,10 +372,73 @@
         </template>
       </section>
 
+      <!-- Moments Being Compared (Stage 3 only) -->
+      <section
+          v-if="weekNumber === 3 && currentStageReflections.length > 0 && hasGeneratedReflectionThisSession"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
+      >
+        <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
+          Moments Being Compared
+        </p>
+        <div class="mt-6 grid gap-6 md:grid-cols-3">
+          <div
+              v-for="(item, index) in currentStageReflections.slice(0, 3)"
+              :key="item.id || index"
+              class="flex flex-col rounded-2xl border border-slate-100 bg-slate-50/50 p-6"
+          >
+            <div class="mb-4">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Situation</p>
+              <p class="mt-1 text-sm font-medium text-slate-900">{{ inferSituation(item) }}</p>
+            </div>
+            <div class="mb-4">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">What appeared</p>
+              <p class="mt-1 text-sm text-slate-700">{{ inferAppeared(item) }}</p>
+            </div>
+            <div class="mt-auto">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Response / movement</p>
+              <p class="mt-1 text-sm text-slate-700">{{ inferResponse(item) }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Phase 1 Sequence Surface Prototype -->
+      <section
+          v-if="showSequenceBlock && ![2, 5].includes(weekNumber)"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
+      >
+        <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
+          {{ sequenceBlockLabel }}
+        </p>
+        <p class="mb-6 text-base text-slate-600">
+          {{ sequenceBlockWording }}
+        </p>
+
+        <div class="mt-8 inline-flex flex-col items-start gap-3">
+          <template v-for="(step, index) in sequenceSteps" :key="index">
+            <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
+              <span class="text-base font-medium text-slate-900">{{ step }}</span>
+            </div>
+
+            <div v-if="index < sequenceSteps.length - 1" class="flex w-full justify-center py-0.5 text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14" />
+                <path d="m19 12-7 7-7-7" />
+              </svg>
+            </div>
+          </template>
+        </div>
+        <div v-if="weekNumber === 3" class="mt-6 flex flex-wrap gap-2">
+          <span v-for="variant in ['checking', 'scrolling', 'delaying', 'cancelling', 'withdrawing', 'reorganising']" :key="variant" class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-medium text-slate-500 uppercase tracking-wider">
+            {{ variant }}
+          </span>
+        </div>
+      </section>
+
       <!-- Recent Reflections -->
       <section
-          v-if="currentStageReflections.length > 0 && (weekNumber === 1 ? currentStageReflections.length >= 3 : true) && (![1, 2].includes(weekNumber) || hasGeneratedReflectionThisSession)"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          v-if="currentStageReflections.length > 0 && (weekNumber === 1 ? currentStageReflections.length >= 3 : true) && (![1, 2, 3].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
       >
         <h3 class="mb-6 text-sm font-semibold uppercase tracking-wider text-slate-500">
           Recent Reflections
@@ -408,44 +459,10 @@
         </div>
       </section>
 
-      <!-- Phase 1 Sequence Surface Prototype -->
-      <section
-          v-if="showSequenceBlock && weekNumber !== 2 && weekNumber !== 5"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
-      >
-        <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          {{ sequenceBlockLabel }}
-        </p>
-        <p class="mb-6 text-base text-slate-600">
-          {{ sequenceBlockWording }}
-        </p>
-
-        <div v-if="weekNumber === 2" class="border-t border-slate-100 pt-6 mt-8">
-          <p class="mb-4 text-sm font-medium uppercase tracking-wider text-slate-500">
-            Current Sequence
-          </p>
-        </div>
-
-        <div class="mt-8 inline-flex flex-col items-start gap-3">
-          <template v-for="(step, index) in sequenceSteps" :key="index">
-            <div class="flex h-10 items-center justify-center rounded-xl bg-slate-50 px-5 py-2 border border-slate-200">
-              <span class="text-base font-medium text-slate-900">{{ step }}</span>
-            </div>
-
-            <div v-if="index < sequenceSteps.length - 1" class="flex w-full justify-center py-0.5 text-slate-400">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 5v14" />
-                <path d="m19 12-7 7-7-7" />
-              </svg>
-            </div>
-          </template>
-        </div>
-      </section>
-
       <!-- Sequence Becoming Visible (Stage 2 Specific) -->
       <section
           v-if="weekNumber === 2 && hasGeneratedReflectionThisSession"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
           Sequence Becoming Visible
@@ -476,11 +493,24 @@
         </div>
       </section>
 
+      <!-- Initial Observation Profile (from Quiz) -->
+      <section
+          v-if="quizProfileSummary && reflectionsHistory.length >= 1 && (![1, 2, 3].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
+      >
+        <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
+          {{ weekNumber === 1 ? 'Initial Observation Profile' : 'Emerging Pattern' }}
+        </p>
+        <div class="text-base leading-8 text-slate-700 whitespace-pre-line">
+          {{ quizProfileSummary }}
+        </div>
+      </section>
+
       <!-- Read More Accordion for Stage 1-5 (Why This Matters) -->
-      <section v-if="weekNumber !== 6 && weekNumber !== 2 && weekNumber !== 1" class="mb-10">
+      <section v-if="![6, 2, 1, 3, 5].includes(weekNumber)" class="mb-10">
         <button
             @click="showReadMore = !showReadMore"
-            class="flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:bg-slate-50"
+            class="flex w-full items-center justify-between rounded-3xl border border-slate-200 bg-white p-10 shadow-sm transition hover:bg-slate-50"
         >
           <span class="text-xl font-semibold text-slate-950">Why This Matters</span>
           <svg
@@ -504,7 +534,7 @@
             v-if="showReadMore"
             class="mt-4 space-y-4"
         >
-          <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <div class="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
             <h2 class="text-2xl font-semibold text-slate-950">
               Opening reflection
             </h2>
@@ -520,7 +550,7 @@
 
           <div
               v-if="week.bodyFocus"
-              class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+              class="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
           >
             <h2 class="text-2xl font-semibold text-slate-950">
               Including the Body
@@ -535,7 +565,7 @@
             </div>
           </div>
 
-          <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <div class="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
             <h2 class="text-2xl font-semibold text-slate-950">
               Observation exercises
             </h2>
@@ -559,7 +589,7 @@
 
       <!-- Stage 6 specific expanded content (relegated to bottom or kept if preferred) -->
       <template v-if="weekNumber === 6">
-        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
           <h2 class="text-2xl font-semibold text-slate-950">
             Why This Matters
           </h2>
@@ -575,7 +605,7 @@
 
         <section
             v-if="week.bodyFocus"
-            class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm"
+            class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
         >
           <h2 class="text-2xl font-semibold text-slate-950">
             Including the Body
@@ -590,7 +620,7 @@
           </div>
         </section>
 
-        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <section class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
           <h2 class="text-2xl font-semibold text-slate-950">
             Observation exercises
           </h2>
@@ -667,6 +697,7 @@ const hasGeneratedReflectionThisSession = ref(false)
 const reflectionPlaceholder = computed(() => {
   if (weekNumber.value === 1) return "I intended to start work, but I checked messages instead..."
   if (weekNumber.value === 2) return "I was about to make a call, but I looked at the phone and then opened email..."
+  if (weekNumber.value === 3) return "Describe a recent moment that feels similar to something you have noticed before. What feels familiar?"
   if (weekNumber.value === 6) return "For example: During a difficult conversation, I wanted to leave, then tried to explain myself, and later became quiet."
   return "Describe what happened..."
 })
@@ -877,12 +908,12 @@ const showSequenceBlock = computed(() => {
   if (count < 3) return false
 
   if (weekNumber.value === 2) return hasGeneratedReflectionThisSession.value
-  return weekNumber.value >= 2 && topPattern.value && topPattern.value.examples.length >= 2
+  return (weekNumber.value >= 2 && topPattern.value && topPattern.value.examples.length >= 2) || (weekNumber.value === 3 && hasGeneratedReflectionThisSession.value)
 })
 
 const patternBlockLabel = computed(() => {
   const n = weekNumber.value
-  if (n === 3) return "What MindWorks Is Noticing"
+  if (n === 3) return "What These Moments May Have In Common"
   if (n === 4) return "State Becoming Visible"
   if (n === 5) return "What happened next"
   if (n === 6) return "What Keeps Appearing Around Pressure"
@@ -891,7 +922,7 @@ const patternBlockLabel = computed(() => {
 
 const patternTypeLabel = computed(() => {
   const n = weekNumber.value
-  if (n === 3) return "Possible Pattern"
+  if (n === 3) return "Emerging Pattern"
   if (n === 4) return "Primary State"
   if (n === 5) return "Consequence"
   if (n === 6) return "What These Responses May Have In Common"
@@ -911,7 +942,7 @@ const discoveryWording = computed(() => {
 const stagePrimaryContent = computed(() => {
   const n = weekNumber.value
   if (n === 2) return "An intention is followed by a body signal or pressure, then by a movement away from the original task."
-  if (n === 3) return topPattern.value?.name || ""
+  if (n === 3) return "Across these observations, different situations seem to share a similar movement: an intention or point of engagement appears, pressure or uncertainty follows, and then there is movement away."
   if (n === 4) return "Pressure or uncertainty appears before checking, preparing, or delay."
   if (n === 5) return "A familiar movement coincides with a shift in internal pressure, a change in attention, or a postponement."
   if (n === 6) return "Checking, preparing, delaying, or reorganising may look different on the surface. Yet they appear around the same pressure. It is not yet clear whether they are trying to accomplish something similar."
@@ -940,6 +971,13 @@ const sequenceSteps = computed(() => {
       "Relationship is still being observed"
     ]
   }
+  if (n === 3) {
+    return [
+      "Engagement / intention",
+      "Pressure or uncertainty",
+      "Movement away"
+    ]
+  }
   if (n >= 4) {
     return [
       "Pressure / Uncertainty",
@@ -953,6 +991,30 @@ const sequenceSteps = computed(() => {
     "Delay"
   ]
 })
+
+const inferSituation = (item) => {
+  const text = item.original_reflection.toLowerCase()
+  if (text.includes('lesson') || text.includes('teacher') || text.includes('school')) return 'learning / authority'
+  if (text.includes('meeting') || text.includes('work') || text.includes('task')) return 'exposure / pressure'
+  if (text.includes('relationship') || text.includes('conversation') || text.includes('closeness') || text.includes('conflict')) return 'closeness / conflict'
+  return 'Not yet clear'
+}
+
+const inferAppeared = (item) => {
+  const text = item.original_reflection.toLowerCase()
+  if (text.includes('reminded me of school')) return 'reminder of school / difficulty staying engaged'
+  if (text.includes('fear') || text.includes('freezing')) return 'fear of freezing'
+  if (text.includes('leave') && text.includes('closeness')) return 'wanting to leave and wanting closeness'
+  return 'Not yet clear'
+}
+
+const inferResponse = (item) => {
+  const text = item.original_reflection.toLowerCase()
+  if (text.includes('did not go back') || text.includes('did not return')) return 'did not return'
+  if (text.includes('checked messages') || text.includes('reorganised')) return 'checked messages, reorganised notes, delayed joining'
+  if (text.includes('internal pull')) return 'internal pull in opposite directions'
+  return 'Not yet clear'
+}
 
 const fetchReflectionsHistory = async () => {
   try {

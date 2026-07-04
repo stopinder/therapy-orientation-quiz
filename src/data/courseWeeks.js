@@ -161,19 +161,33 @@ export const courseWeeks = [
             "Seeing what keeps reappearing across reflections.",
 
         reflectionPrompt:
-            "Describe a recent moment that feels similar to something you have noticed before.",
+            "Describe a recent moment that feels similar to something you have noticed before. What feels familiar?",
 
         intro:
-            "This stage shifts attention from individual events to recurrence. Rather than examining a single interruption, begin looking across several reflections and ask what appears again and again.",
+            "Different situations can contain the same pattern.\n\nOne moment may involve work.\nAnother may involve a relationship.\nAnother may involve learning, exposure, or pressure.\n\nOn the surface they may look unrelated.\nMindWorks is beginning to notice whether a similar movement appears across them.",
+
+        orientation: {
+            title: "Why You're Here",
+            content: [
+                "Different situations can contain the same pattern.",
+                "One moment may involve work.",
+                "Another may involve a relationship.",
+                "Another may involve learning, exposure, or pressure.",
+                "On the surface they may look unrelated.",
+                "MindWorks is beginning to notice whether a similar movement appears across them."
+            ]
+        },
 
         openingReflection: [
-            "When you begin to look at reflections over time, you may notice that the same movements appear repeatedly. A specific sequence of checking, a particular shift in the body, or a familiar delay before starting—these are not isolated events. They are recurring patterns that organise your behaviour across different situations and different days.",
+            "By this stage, you may have gathered several observations.",
 
-            "The goal of this stage is to see these repeated sequences as they are, without immediately trying to interpret why they happen or what they mean. Recurrence itself is the information. When you see a sequence appearing for the third or fourth time, it moves from being a random interruption to being a recognisable part of your behavioural landscape.",
+            "At first, each moment can look separate:\na task avoided,\na message checked,\na conversation delayed,\na lesson abandoned,\na relationship pulled away from.",
 
-            "Observation without interpretation allows you to stay with the facts of the movement. You are not looking for a psychological cause; you are looking for the choreography of the event. By noticing what appears again and again, you begin to see the shape of the pressure that precedes the shift, and the automaticity of the response that follows.",
+            "Stage 3 looks across these moments.",
 
-            "Recognition is the first step toward a different kind of continuity. Before any change can occur, there must be a clear, non-judgmental awareness of the pattern. Seeing the recurrence as it begins to form—rather than only after it has completed—creates a small opening where observation can remain active even as the familiar sequence starts to unfold."
+            "The question is not yet why they happen.",
+
+            "The question is whether something familiar keeps appearing in different situations."
         ],
 
         exercises: [
