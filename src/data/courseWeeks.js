@@ -160,7 +160,7 @@ export const courseWeeks = [
             "Seeing what keeps reappearing across reflections.",
 
         reflectionPrompt:
-            "Describe a recent moment that feels similar to something you have noticed before. What feels familiar?",
+            "Describe a recent moment that felt similar to something you have noticed before. What specifically repeated?",
 
         intro:
             "Different situations can contain the same pattern.\n\nOne moment may involve work.\nAnother may involve a relationship.\nAnother may involve learning, exposure, or pressure.\n\nOn the surface they may look unrelated.\nMindWorks is beginning to notice whether a similar movement appears across them.",
@@ -168,31 +168,27 @@ export const courseWeeks = [
         orientation: {
             title: "Why You're Here",
             content: [
-                "Different situations can contain the same pattern.",
-                "One moment may involve work.",
-                "Another may involve a relationship.",
-                "Another may involve learning, exposure, or pressure.",
-                "On the surface they may look unrelated.",
-                "MindWorks is beginning to notice whether a similar movement appears across them."
+                "Different situations can feel unrelated.",
+                "But sometimes, the same movement appears in each of them.",
+                "A task, a conversation, a message, a responsibility.",
+                "Something begins… and then something similar happens.",
+                "This stage begins to notice whether that movement repeats."
             ]
         },
 
         openingReflection: [
-            "By this stage, you may have gathered several observations.",
-
-            "At first, each moment can look separate:\na task avoided,\na message checked,\na conversation delayed,\na lesson abandoned,\na relationship pulled away from.",
-
-            "Stage 3 looks across these moments.",
-
-            "The question is not yet why they happen.",
-
-            "The question is whether something familiar keeps appearing in different situations."
+            "At first, each moment looks separate.",
+            "By this stage, the focus begins to shift.",
+            "The question is no longer only what happened.",
+            "The question is whether something similar keeps appearing across different moments.",
+            "Not why it happens.",
+            "Simply whether it repeats."
         ],
 
         exercises: [
             {
                 title: "Notice what repeats",
-                description: "Identify one specific movement, sensation, or thought that has appeared in multiple reflections this stage."
+                description: "Continue to sense both feet and notice what happens just before.\n\nNotice if something similar has happened before.\n\nNot the situation.\nThe movement.\n\nThen continue normally."
             },
             {
                 title: "Compare three reflections",

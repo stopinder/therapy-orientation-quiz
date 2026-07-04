@@ -86,7 +86,7 @@ MindWorks Observation: ${r.ai_response}`)
             },
             3: {
                 question: "What feels familiar across different moments?",
-                emphasis: "pattern, higher-order patterns, movement away, delay, withdrawal, substitute activity, avoidance of exposure, loss of contact with original intention. Identify higher-order patterns first, then list variants. Avoid diagnosis and explanation. Do not over-explain or force conclusions. Use observational language only. Do not use 'Possible Pattern' as a heading. evidence count: " + count
+                emphasis: "pattern, higher-order patterns, shift in direction, delay, withdrawal, substitute activity, avoidance of exposure, loss of contact with original intention. Identify higher-order patterns first, then list variants. Avoid diagnosis and explanation. Do not over-explain or force conclusions. Use observational language only. Do not use 'Possible Pattern' as a heading. evidence count: " + count
             },
             4: {
                 question: "What conditions tend to be present beforehand?",
@@ -142,19 +142,19 @@ Return a JSON object ONLY. No markdown, no prose, no conversational text.
   "whatIsBecomingVisible": "1-2 short sentences documenting what is becoming visible.",
   "recurringMovement": {
     "summary": "Across multiple observations, this structure is beginning to stand out:",
-    "sequence": ["Intention", "Pressure or tension", "Movement away", "After-effect still unclear"],
+    "sequence": ["Intention", "Pressure or tension", "Shift in direction", "After-effect still unclear"],
     "variants": ["checking", "scrolling", "smoking weed", "delaying", "withdrawing"]
   },
   "beforeShift": [
-    "Pressure or tension appears before the movement away.",
+    "Pressure or tension appears before the shift in direction.",
     "It may be linked to anticipation, exposure, demand, or contact with another person."
   ],
   "afterwards": [
-    "What follows the movement away is still less clear.",
+    "What follows the shift in direction is still less clear.",
     "Some observations include distraction, irritation, defensiveness, anger, or unresolved feeling."
   ],
   "stillEmerging": [
-    "The earliest moment between pressure and movement away is still being observed."
+    "The earliest moment between pressure and the shift in direction is still being observed."
   ]
 }
 
@@ -188,7 +188,7 @@ Evidence Thresholds (Apply based on count ${count}):
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."
 
 CORE ANALYSIS:
-Look across multiple reflections to identify recurring structural patterns. Identify higher-order patterns (e.g., "An intention is followed by pressure or tension, then by a movement away from the original intention"). Avoid narrative paragraphs. Use short, sharp, evidence-led observations.
+Look across multiple reflections to identify recurring structural patterns. Identify higher-order patterns (e.g., "An intention is followed by pressure or tension, then by a shift in direction from the original intention"). Avoid narrative paragraphs. Use short, sharp, evidence-led observations.
 
 OUTPUT FORMAT:
 Return a JSON object ONLY.
@@ -275,7 +275,7 @@ Rules:
             const enforcedSequence = [
                 "Intention",
                 "Pressure or tension",
-                "Movement away",
+                "Shift in direction",
                 "After-effect still unclear"
             ];
 
@@ -288,7 +288,7 @@ Across recent observations, this structure is beginning to stand out:
 
 ${enforcedSequence.join('\n↓\n')}
 
-Movement away may appear as ${(recurringMovement.variants || []).join(', ')}.
+A shift in direction may appear as ${(recurringMovement.variants || []).join(', ')}.
 
 ### Before the Shift
 
@@ -296,7 +296,7 @@ ${(Array.isArray(beforeShift) ? beforeShift : [beforeShift]).join('\n\n')}
 
 ### Afterwards
 
-What follows the movement away is still less clear.
+What follows the shift in direction is still less clear.
 
 ${(Array.isArray(afterwards) ? afterwards : [afterwards]).join('\n\n')}
 

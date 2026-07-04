@@ -950,7 +950,7 @@ const discoveryWording = computed(() => {
 const stagePrimaryContent = computed(() => {
   const n = weekNumber.value
   if (n === 2) return "An intention is followed by a body signal or pressure, then by a movement away from the original task."
-  if (n === 3) return "Across these observations, different situations seem to share a similar movement: an intention or point of engagement appears, pressure or uncertainty follows, and then there is movement away."
+  if (n === 3) return "Across these observations, different situations seem to share a similar movement: an intention or point of engagement appears, pressure or uncertainty follows, and then there is a shift in direction."
   if (n === 4) return "Pressure or uncertainty appears before checking, preparing, or delay."
   if (n === 5) return "A familiar movement coincides with a shift in internal pressure, a change in attention, or a postponement."
   if (n === 6) return "Checking, preparing, delaying, or reorganising may look different on the surface. Yet they appear around the same pressure. It is not yet clear whether they are trying to accomplish something similar."
@@ -966,7 +966,7 @@ const sequenceBlockLabel = computed(() => {
 const sequenceBlockWording = computed(() => {
   const n = weekNumber.value
   if (n === 2) return "MindWorks is beginning to place events in order."
-  return "A sequence appearing across recent reflections."
+  return "A possible sequence appearing across recent reflections."
 })
 
 const sequenceSteps = computed(() => {
@@ -983,7 +983,8 @@ const sequenceSteps = computed(() => {
     return [
       "Engagement / intention",
       "Pressure or uncertainty",
-      "Movement away"
+      "Attention moves elsewhere",
+      "This is an early pattern. It may become clearer with more observations."
     ]
   }
   if (n >= 4) {

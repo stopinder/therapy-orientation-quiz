@@ -201,11 +201,11 @@ Avoid matching surface behaviours like:
 checking, email, coffee, phone, exercise, scrolling, opening email, reorganising notes, not going back, cancelling, pulling away.
 
 Instead compare higher-order observable structures such as:
-- movement away from the original intention
+- shift in direction from the original intention
 - pressure before engagement
 - hesitation before exposure
 - withdrawal after uncertainty
-- checking / scrolling / delaying / cancelling as variants of movement away
+- checking / scrolling / delaying / cancelling as variants of a shift in direction
 
 Compare observations for recurring structure rather than identical behaviour. Use tentative language.
 Identify higher-order patterns first, then list variants.
@@ -228,10 +228,11 @@ List only recurring observable features supported by the user's history.
 Describe what is genuinely different about today's reflection to prevent forcing sameness.
 
 ### What these moments may have in common
-Identify higher-order patterns (e.g., movement away, delay, withdrawal, substitute activity, avoidance of exposure, loss of contact with original intention).
+Identify higher-order patterns (e.g., shift in direction, delay, withdrawal, substitute activity, avoidance of exposure, loss of contact with original intention).
 
 ### What remains unclear
 Identify what is not yet certain about the pattern or its recurrence. Leave uncertainty intact.
+This is an early pattern. It may become clearer with more observations.
 
 ### A recognition
 End with a simple recognition of the emerging shape.
