@@ -105,7 +105,7 @@ MindWorks Observation: ${r.ai_response}`)
         const lens = isCourseOverview
             ? {
                 question: "What is becoming visible across everything observed so far?",
-                emphasis: "overview, Recurring Movement, Before the Shift, Afterwards, Still Emerging. Short, evidence-led, restrained. Pattern map, not essay. Avoid long paragraphs. evidence count: " + count
+                emphasis: "ONE continuous paragraph, no sections, no bullets, no headings. evidence count: " + count
             }
             : (stageLenses[currentStage] || stageLenses[6])
 
@@ -133,7 +133,7 @@ Evidence Thresholds (Apply based on count ${count}):
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."
 
 CORE ANALYSIS:
-Identify recurring structural patterns and higher-order relationships (intention appears, shift happens, action changes). Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g., "checking social media") over generic terms (e.g., "distraction") if available in the reflections.
+Identify recurring structural patterns and higher-order relationships (intention appears, shift happens, action changes). NO section headings. NO bullets. ONE continuous paragraph. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g., "checking social media") over generic terms (e.g., "distraction") if available in the reflections.
 
 OUTPUT FORMAT:
 Return a JSON object ONLY. No markdown, no prose, no conversational text.
@@ -157,6 +157,7 @@ Rules:
 5. "patternLine" must combine the recurring intention, shift, and consequence using the user's own specific phrasing where possible.
 6. "stateLine" must only include states explicitly present in reflections. If none, return null.
 7. No hedging in "patternLine" (no "may", "might", "appears").
+8. NO section names (e.g., "Before the Shift") should be returned in any field value.
 `.trim()
         } else {
             const isStage4 = currentStage === 4
@@ -295,19 +296,23 @@ Rules:
             const shift = patternLine.shift || "[shift into distraction/withdrawal]"
             const consequence = patternLine.consequence || "[tension / negative response / delay]"
 
+            // Pattern + Consequence sentence
             markdownSummary = `You ${verbs.tend} ${intention}, then ${shift}. This is ${verbs.often} followed by ${consequence}.`
 
+            // State sentence
             if (stateLine) {
-                markdownSummary += `\n\nBefore this shift, there is ${verbs.often} a state already present — such as ${stateLine}.`
+                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present — such as ${stateLine}.`
             }
 
+            // Light uncertainty sentence
             if (consequenceConsistency.includes("visible")) {
-                markdownSummary += `\n\nWhat follows the response is becoming visible, but is not yet consistent.`
+                markdownSummary += ` What follows the response is becoming visible, but is not yet consistent.`
             } else {
-                markdownSummary += `\n\nWhat follows the response is not yet consistent across situations.`
+                markdownSummary += ` What follows the response is not yet consistent across situations.`
             }
 
-            markdownSummary += `\n\nThis is an early pattern. It may become clearer with more observations.`
+            // Final closing sentence
+            markdownSummary += ` This is an early pattern. It may become clearer with more observations.`
         } else {
             const isStage3 = currentStage === 3
             const isStage4 = currentStage === 4
