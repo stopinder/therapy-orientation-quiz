@@ -142,10 +142,13 @@ CORE ANALYSIS:
    - Recency: reflections with lower indices (more recent) carry significantly more weight.
 5. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns. If a new pattern has overtaken a previous one due to recency/frequency, switch to it completely.
 6. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
-7. Generate ONLY ONE pattern statement for the dominant pattern: "You plan to [intention], then [specific behavior] instead."
+7. Generate ONLY ONE pattern sentence for the dominant pattern: "You [frequency] plan to [intention], then [specific behavior] instead." Use present simple ONLY. No gerunds after "then".
 8. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). 
 9. PRIORITIZE concrete user phrasing (e.g., "checking social media" instead of "distraction") over generic terms. 
 10. Replace robotic phrases like "delay occurs" or "felt frustration" with "this leads to delay" or "frustration follows".
+11. Perspective: Convert ALL first-person to second-person (I -> you, my -> your).
+12. Contrast: The sentence MUST include "instead".
+13. Modal check: Avoid "may" or "might". Use "sometimes", "often", or "tend to".
 
 Language and Perspective:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
@@ -181,10 +184,10 @@ Rules:
 4. Ensure sentences are short and neutral.
 5. "dominantPattern" must be the SINGLE highest-scoring pattern. NO blending. NO "or". Use the user's specific phrasing where possible.
 6. "stateLine" must only include states explicitly present in reflections. If none, return null.
-7. No hedging in "dominantPattern" (no "may", "might", "appears").
-8. NO section names should be returned in any field value.
-9. Strictly follow the Language and Perspective rules.
-10. REUSE specific user phrasing for actions.
+7. NO section names should be returned in any field value.
+8. Strictly follow the Language and Perspective rules.
+9. REUSE specific user phrasing for actions.
+10. No gerunds after "then". Use present simple (e.g., "plan to start, then check" NOT "plan to start, then checking").
 `.trim()
         } else {
             const isStage4 = currentStage === 4
@@ -210,7 +213,7 @@ ${isStage5 ? '1+ observations: Describe only what is directly observable: respon
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."`}
 
 CORE ANALYSIS:
-Extract concrete actions, not concepts. Look across multiple reflections to identify recurring behaviors. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify patterns from action sequences (you plan to [intention], then [actual behavior]).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g. "checking Instagram" instead of "distraction") and reuse it converted to second-person and present tense. If no specific behaviour is clear, use "do something else instead" or "don't follow through".
+Extract concrete actions, not concepts. Look across multiple reflections to identify recurring behaviors. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify patterns from action sequences (you plan to [intention], then [actual behavior]).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g. "checking Instagram" instead of "distraction") and reuse it converted to second-person and present tense. If no specific behaviour is clear, use "do something else instead" or "don't follow through". No gerunds after "then". Use present simple (e.g., "plan to start, then check" NOT "plan to start, then checking"). The sentence MUST include "instead".
 
 Language and Perspective:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
@@ -316,7 +319,7 @@ Rules:
         const isEarly = matchingCount < 3
         
         const verbs = {
-            tend: isEarly ? "may" : (isStrong ? "consistently" : "tend to"),
+            tend: isEarly ? "sometimes" : (isStrong ? "consistently" : "tend to"),
             often: isEarly ? "sometimes" : (isStrong ? "reliably" : "often")
         }
 
@@ -334,11 +337,11 @@ Rules:
             const consequence = dominantPattern.consequence || "[tension / negative response / delay]"
 
             // Pattern + Consequence sentence
-            markdownSummary = `You ${verbs.tend} ${intention}, then ${shift} instead. This leads to ${consequence}.`
+            markdownSummary = `You ${verbs.tend} plan to ${intention}, then ${shift} instead. This leads to ${consequence}.`
 
             // State sentence
             if (stateLine) {
-                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present — such as ${stateLine}. Frustration follows.`
+                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present — such as ${stateLine}.`
             }
 
             // Light uncertainty sentence

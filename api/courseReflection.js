@@ -201,9 +201,12 @@ CORE ANALYSIS:
    - Recency: more recent reflections carry more weight. (Reflections are provided in reverse chronological order).
 4. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns. If a new pattern has overtaken a previous one due to recency/frequency, switch to it completely.
 5. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
-6. Generate ONLY ONE pattern statement for the dominant pattern: "You plan to [intention], then [specific behavior] instead."
-7. Fallback: If no strong pattern exists, use "You plan to do something, then don't follow through."
-8. Replace robotic phrases like "delay occurs" or "felt frustration" with "this leads to delay" or "frustration follows".
+6. Generate ONLY ONE pattern sentence for the dominant pattern: "You [frequency] plan to [intention], then [specific behavior] instead." Use present simple ONLY. No gerunds after "then".
+7. Perspective: Convert ALL first-person to second-person (I -> you, my -> your).
+8. Force Contrast: The sentence MUST include "instead".
+9. Modal check: Avoid "may" or "might". Use "sometimes", "often", or "tend to".
+10. Fallback: If no strong pattern exists, use "You sometimes plan to do something, then don't follow through instead."
+11. Replace robotic phrases like "delay occurs" or "felt frustration" with "this leads to delay" or "frustration follows".
 Look across multiple reflections to identify recurring behaviors. 
 The user is at Stage 3. Stage 3 is about pattern: “What specifically repeated?”
 
@@ -230,7 +233,7 @@ Stage 3 Output Structure (Required):
 
 ### WHAT REPEATED
 The SINGLE DOMINANT action sequence. No blending. No "or".
-Example tone: "You plan to return to work, but delay by checking social media instead. This leads to delay."
+Example tone: "You often plan to return to work, but check social media instead. This leads to delay."
 
 ### WHAT APPEARS AGAIN
 Bullet points of repeated elements, based only on user data.
@@ -243,7 +246,7 @@ No interpretation.
 ### WHAT THESE MOMENTS HAVE IN COMMON
 One short paragraph max. Plain language.
 Example: "In each situation, you begin with an intention, then shift into something else instead before continuing."
-No speculation. No psychological explanation.
+No speculation. No psychological explanation. No gerunds after "then". Use present simple (e.g., "plan to start, then check" NOT "plan to start, then checking").
 
 INSUFFICIENT EVIDENCE:
 If there is not enough recurrence across previous reflections in the RECENT REFLECTION HISTORY, explicitly say so:
@@ -581,6 +584,8 @@ Stay close to the actual observations.
 - REUSE specific user phrasing for actions. Convert "I checked Instagram" to "you check Instagram".
 - Extract concrete actions, not concepts. Identify what the user intended to do vs what they actually did instead. 
 - Replace generic labels (distraction, withdrawal, avoidance) with actual behaviours (checking social media, not replying, leaving the task).
+- Mandatory structure: "You [frequency] plan to [intention], then [behavior] instead." No gerunds after "then". Use present simple (e.g., "plan to start, then check" NOT "plan to start, then checking").
+- Avoid modal weakness: use "sometimes", "often", or "tend to" instead of "may" or "might".
 
 Avoid phrases such as:
 * physical sensation
