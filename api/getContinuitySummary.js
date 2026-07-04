@@ -142,10 +142,12 @@ The question to address is: ${lens.question}
 Structure your output into these EXACT sections:
 
 ### What is becoming visible
-(Introductory sentence - direct observation about what is becoming visible. Keep it to 1-2 sentences.)
+Maximum 1-2 short sentences documenting what is becoming visible. No long introductory paragraphs.
 
 ### Recurring Movement
-Must use this exact visual sequence format (no numbered bullets):
+Must use this exact wording and visual sequence (no numbered lists):
+Across multiple observations, this structure is beginning to stand out:
+
 Intention
 ↓
 Pressure or tension
@@ -155,25 +157,27 @@ Movement away
 Consequence still unclear
 
 After the sequence, add only one short sentence naming variants.
-Example: "Movement away may appear as smoking weed, doing nothing, checking, scrolling, delaying, or withdrawing."
+Example: "Movement away may appear as checking, scrolling, smoking weed, delaying, withdrawing, cancelling, or doing nothing."
 Do not explain the sequence twice in prose.
 
 ### Before the Shift
-Maximum 2 sentences. 
-Keep it concrete. Use "stomach", never "tummy". 
-If evidence of specific triggers exists, name them concretely; otherwise omit mention of triggers.
+Use this structure (maximum 2 sentences):
+"Pressure or tension appears before the movement away. It may be linked to anticipation, exposure, demand, or contact with another person."
+Use concrete language from observations if they exist, but keep it to this short format. Use "stomach", never "tummy".
 
 ### Afterwards
-Maximum 3 short sentences. 
-Avoid "lingering emotional responses". Use "unresolved feeling" or "irritation" only if present in the observations.
+Use this structure (maximum 3 short sentences):
+"What follows is still less clear. Some observations include distraction, irritation, defensiveness, anger, or unresolved feeling. MindWorks does not yet have enough evidence to say which consequence repeats most strongly."
+Only include specific emotions (anger, irritation) if present in evidence.
 
 ### Still Emerging
-Maximum 2 sentences. 
-Use "still being observed". Avoid "further observations may help illuminate."
+Use this structure (maximum 2 sentences):
+"The earliest moment between pressure and movement away is still being observed. This is where future observations may become useful."
+Do NOT use "further observations may help illuminate."
 
 Rules:
 1. Use ONLY these exact headings: "### What is becoming visible", "### Recurring Movement", "### Before the Shift", "### Afterwards", "### Still Emerging".
-2. NO long paragraphs. NO repetitive explanations.
+2. NO numbered lists. NO long paragraphs. NO repetitive explanations.
 3. Replace "work or engage in a task" with "engage".
 4. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across the accumulated observations."
 
