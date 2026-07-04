@@ -125,7 +125,6 @@ Tone Guidelines:
 - Use: beginning to appear, may be, not yet clear, still being observed, not enough evidence yet.
 - Avoid: this means, this indicates, this proves, this shows that, the user is...
 - Never diagnose. Never over-interpret. Never sound certain.
-- Avoid essay style. No long paragraphs. No coaching. No advice.
 
 Evidence Thresholds (Apply based on count ${count}):
 1–3 observations: Describe only what is visible. No recurrence language.
@@ -136,53 +135,35 @@ Evidence Thresholds (Apply based on count ${count}):
 CORE ANALYSIS:
 Identify recurring structural patterns and higher-order relationships. Avoid narrative paragraphs. Use short, sharp, evidence-led observations.
 
-COURSE OVERVIEW PRESENTATION:
-The question to address is: ${lens.question}
+OUTPUT FORMAT:
+Return a JSON object ONLY. No markdown, no prose, no conversational text.
 
-Structure your output into these EXACT sections:
-
-### What is becoming visible
-Maximum 1-2 short sentences documenting what is becoming visible. No long introductory paragraphs.
-
-### Recurring Movement
-Must use this exact wording and visual sequence (no numbered lists):
-Across multiple observations, this structure is beginning to stand out:
-
-Intention
-↓
-Pressure or tension
-↓
-Movement away
-↓
-Consequence still unclear
-
-After the sequence, add only one short sentence naming variants.
-Example: "Movement away may appear as checking, scrolling, smoking weed, delaying, withdrawing, cancelling, or doing nothing."
-Do not explain the sequence twice in prose.
-
-### Before the Shift
-Use this structure (maximum 2 sentences):
-"Pressure or tension appears before the movement away. It may be linked to anticipation, exposure, demand, or contact with another person."
-Use concrete language from observations if they exist, but keep it to this short format. Use "stomach", never "tummy".
-
-### Afterwards
-Use this structure (maximum 3 short sentences):
-"What follows is still less clear. Some observations include distraction, irritation, defensiveness, anger, or unresolved feeling. MindWorks does not yet have enough evidence to say which consequence repeats most strongly."
-Only include specific emotions (anger, irritation) if present in evidence.
-
-### Still Emerging
-Use this structure (maximum 2 sentences):
-"The earliest moment between pressure and movement away is still being observed. This is where future observations may become useful."
-Do NOT use "further observations may help illuminate."
+{
+  "whatIsBecomingVisible": "1-2 short sentences documenting what is becoming visible.",
+  "recurringMovement": {
+    "summary": "Across multiple observations, this structure is beginning to stand out:",
+    "sequence": ["Intention", "Pressure or tension", "Movement away", "Consequence still unclear"],
+    "variants": ["checking", "scrolling", "smoking weed", "delaying", "withdrawing"]
+  },
+  "beforeShift": [
+    "Pressure or tension appears before the movement away.",
+    "It may be linked to anticipation, exposure, demand, or contact with another person."
+  ],
+  "afterwards": [
+    "What follows is still less clear.",
+    "Some observations include distraction, irritation, defensiveness, anger, or unresolved feeling."
+  ],
+  "stillEmerging": [
+    "The earliest moment between pressure and movement away is still being observed.",
+    "This is where future observations may become useful."
+  ]
+}
 
 Rules:
-1. Use ONLY these exact headings: "### What is becoming visible", "### Recurring Movement", "### Before the Shift", "### Afterwards", "### Still Emerging".
-2. NO numbered lists. NO long paragraphs. NO repetitive explanations.
+1. Return JSON only.
+2. Use "stomach" instead of "tummy".
 3. Replace "work or engage in a task" with "engage".
-4. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across the accumulated observations."
-
-OUTPUT FORMAT:
-Your output MUST start with a JSON object, then a newline, then the markdown summary.
+4. Ensure sentences are short and neutral.
 `.trim()
         } else {
             const isStage3 = currentStage === 3
@@ -209,56 +190,24 @@ Evidence Thresholds (Apply based on count ${count}):
 CORE ANALYSIS:
 Look across multiple reflections to identify recurring structural patterns. Identify higher-order patterns (e.g., "An intention is followed by pressure or tension, then by a movement away from the original intention"). Avoid narrative paragraphs. Use short, sharp, evidence-led observations.
 
-Structural patterns to look for:
-Intention -> Pressure / body state -> Movement away from original intention -> Consequence (e.g., delay, substitute activity, lingering irritation, partial settling).
-
-PRESENTATION LENS (Stage ${currentStage}):
-The user is at Stage ${currentStage}. Present your findings through this specific lens:
-- Question to address: ${lens.question}
-- Emphasis: ${lens.emphasis}
-
-General Rules:
-1. Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.
-2. Use tentative, observational language.
-3. Do not diagnose, explain, coach, or advise.
-4. Use "stomach" instead of "tummy".
-5. For "Possible Function", prefer: "It is not yet clear which shifts reliably follow the familiar response, or whether the same consequence appears across different situations."
-6. Replace "work or engage in a task" with "engage".
-
 OUTPUT FORMAT:
-Your output MUST start with a JSON object, then a newline, then the markdown summary.
+Return a JSON object ONLY.
 
-Example output:
 {
   "status": "established",
-  "structural_pattern": "...",
-  "sequence": ["...", "..."],
-  "primary_state": "...",
-  "possible_function": "It is not yet clear which shifts reliably follow the familiar response, or whether the same consequence appears across different situations.",
-  "variants": ["...", "..."],
-  "unclear_aspects": "..."
+  "whatKeepsReappearing": "...",
+  "repeatedSequence": ["Step 1", "Step 2", "Step 3", "Step 4"],
+  "primaryState": "...",
+  "possibleFunction": "It is not yet clear which shifts reliably follow the familiar response, or whether the same consequence appears across different situations.",
+  "variants": ["variant 1", "variant 2"],
+  "unclearAspects": "..."
 }
 
-${isStage3 ? '### What These Moments May Have In Common' : '### What Keeps Reappearing'}
-...
-
-JSON Fields:
-- "status": "established" | "collecting" | "insufficient"
-- "structural_pattern": Short description of the higher-order pattern
-- "sequence": ["Step 1", "Step 2", "Step 3", "Step 4"]
-- "primary_state": Description of the state before the shift
-- "possible_function": "It is not yet clear which shifts reliably follow the familiar response, or whether the same consequence appears across different situations."
-- "variants": ["variant 1", "variant 2"]
-- "unclear_aspects": What cannot yet be concluded
-
-Markdown Summary sections:
-${isStage3 ? '### What These Moments May Have In Common' : '### What Keeps Reappearing'}
-### Repeated Sequence
-### Primary State
-### Possible Function
-### What Remains Unclear
-
-If there is not enough evidence to see a pattern, set status to "insufficient" and provide a neutral message in the JSON and Markdown.
+Rules:
+1. Return JSON ONLY.
+2. Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.
+3. Use "stomach" instead of "tummy".
+4. Replace "work or engage in a task" with "engage".
 `.trim()
         }
 
@@ -273,6 +222,7 @@ If there is not enough evidence to see a pattern, set status to "insufficient" a
                 body: JSON.stringify({
                     model: "gpt-4o-mini",
                     temperature: 0,
+                    response_format: { "type": "json_object" },
                     messages: [
                         {
                             role: "system",
@@ -297,80 +247,75 @@ If there is not enough evidence to see a pattern, set status to "insufficient" a
         }
 
         const rawContent = data.choices?.[0]?.message?.content || ""
-
-        // Post-processing fail-safe for Course Overview
-        let processedContent = rawContent
-        if (isCourseOverview) {
-            const mapping = {
-                'What Keeps Reappearing': 'Recurring Movement',
-                'Repeated Sequence': 'Recurring Movement',
-                'Primary State': 'Before the Shift',
-                'Possible Function': 'Afterwards',
-                'What Remains Unclear': 'Still Emerging'
-            }
-
-            const sectionsMap = new Map()
-            const lines = rawContent.split('\n')
-            let currentSectionTitle = null
-
-            lines.forEach(line => {
-                const headingMatch = line.match(/^###\s+(.*)/)
-                if (headingMatch) {
-                    let rawTitle = headingMatch[1].trim().replace(/[:]$/, '')
-                    currentSectionTitle = mapping[rawTitle] || rawTitle
-
-                    if (!sectionsMap.has(currentSectionTitle)) {
-                        sectionsMap.set(currentSectionTitle, [])
-                    }
-                } else {
-                    // Collect all lines, including empty ones (for visual maps), if in a section
-                    if (currentSectionTitle) {
-                        sectionsMap.get(currentSectionTitle).push(line)
-                    } else if (line.trim()) {
-                        // Handle intro content before any heading
-                        currentSectionTitle = "Intro"
-                        if (!sectionsMap.has(currentSectionTitle)) {
-                            sectionsMap.set(currentSectionTitle, [])
-                        }
-                        sectionsMap.get(currentSectionTitle).push(line)
-                    }
-                }
-            })
-
-            let rebuiltContent = ""
-            sectionsMap.forEach((content, title) => {
-                if (title === "Intro") {
-                    rebuiltContent += content.join('\n').trim() + "\n\n"
-                } else {
-                    rebuiltContent += `### ${title}\n${content.join('\n').trim()}\n\n`
-                }
-            })
-            processedContent = rebuiltContent.trim()
-        }
-
-        // Extract JSON and Markdown
-        let jsonResult = {
-            status: "insufficient",
-            structural_pattern: "",
-            sequence: [],
-            primary_state: "",
-            possible_function: "",
-            variants: [],
-            unclear_aspects: ""
-        }
-        let markdownSummary = processedContent
-
+        let jsonResult = {}
+        
         try {
-            const jsonMatch = processedContent.match(/\{[\s\S]*?\}/)
-            if (jsonMatch) {
-                jsonResult = JSON.parse(jsonMatch[0])
-                // Remove the JSON block and any surrounding whitespace or markdown code block markers
-                markdownSummary = processedContent.replace(/```json\s*[\s\S]*?```/g, "")
-                                                   .replace(jsonMatch[0], "")
-                                                   .trim()
-            }
+            jsonResult = JSON.parse(rawContent)
         } catch (e) {
             console.error("JSON PARSE ERROR:", e)
+            // Fallback for failed JSON
+            return response.status(200).json({
+                summary: "MindWorks is collecting observations. Recurrence may become easier to recognise as more moments are documented.",
+                markdown_summary: "MindWorks is collecting observations. Recurrence may become easier to recognise as more moments are documented."
+            })
+        }
+
+        let markdownSummary = ""
+
+        if (isCourseOverview) {
+            const {
+                whatIsBecomingVisible = "",
+                recurringMovement = {},
+                beforeShift = [],
+                afterwards = [],
+                stillEmerging = []
+            } = jsonResult
+
+            markdownSummary = `
+${whatIsBecomingVisible}
+
+### Recurring Movement
+
+${recurringMovement.summary || "Across multiple observations, this structure is beginning to stand out:"}
+
+${(recurringMovement.sequence || ["Intention", "Pressure or tension", "Movement away", "Consequence still unclear"]).join('\n↓\n')}
+
+Movement away may appear as ${(recurringMovement.variants || []).join(', ')}.
+
+### Before the Shift
+
+${(Array.isArray(beforeShift) ? beforeShift : [beforeShift]).join('\n\n')}
+
+### Afterwards
+
+${(Array.isArray(afterwards) ? afterwards : [afterwards]).join('\n\n')}
+
+### Still Emerging
+
+${(Array.isArray(stillEmerging) ? stillEmerging : [stillEmerging]).join('\n\n')}
+
+This is not a conclusion. It is what MindWorks is beginning to notice across the accumulated observations.
+`.trim()
+        } else {
+            const isStage3 = currentStage === 3
+            const title = isStage3 ? 'What These Moments May Have In Common' : 'What Keeps Reappearing'
+            
+            markdownSummary = `
+### ${title}
+${jsonResult.whatKeepsReappearing || ""}
+
+### Repeated Sequence
+${(jsonResult.repeatedSequence || []).join(' → ')}
+
+### Primary State
+${jsonResult.primaryState || ""}
+
+### Possible Function
+${jsonResult.possibleFunction || "It is not yet clear which shifts reliably follow the familiar response, or whether the same consequence appears across different situations."}
+
+### What Remains Unclear
+${jsonResult.unclearAspects || ""}
+`.trim()
         }
 
         return response.status(200).json({
