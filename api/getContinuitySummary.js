@@ -142,7 +142,7 @@ Return a JSON object ONLY. No markdown, no prose, no conversational text.
   "whatIsBecomingVisible": "1-2 short sentences documenting what is becoming visible.",
   "recurringMovement": {
     "summary": "Across multiple observations, this structure is beginning to stand out:",
-    "sequence": ["Intention", "Pressure or tension", "Movement away", "Consequence still unclear"],
+    "sequence": ["Intention", "Pressure or tension", "Movement away", "After-effect still unclear"],
     "variants": ["checking", "scrolling", "smoking weed", "delaying", "withdrawing"]
   },
   "beforeShift": [
@@ -150,12 +150,11 @@ Return a JSON object ONLY. No markdown, no prose, no conversational text.
     "It may be linked to anticipation, exposure, demand, or contact with another person."
   ],
   "afterwards": [
-    "What follows is still less clear.",
+    "What follows the movement away is still less clear.",
     "Some observations include distraction, irritation, defensiveness, anger, or unresolved feeling."
   ],
   "stillEmerging": [
-    "The earliest moment between pressure and movement away is still being observed.",
-    "This is where future observations may become useful."
+    "The earliest moment between pressure and movement away is still being observed."
   ]
 }
 
@@ -164,6 +163,7 @@ Rules:
 2. Use "stomach" instead of "tummy".
 3. Replace "work or engage in a task" with "engage".
 4. Ensure sentences are short and neutral.
+5. In "afterwards", focus on distraction, irritation, or unresolved feelings.
 `.trim()
         } else {
             const isStage3 = currentStage === 3
@@ -271,14 +271,22 @@ Rules:
                 stillEmerging = []
             } = jsonResult
 
+            // Hard Requirement: Enforce the MindWorks sequence
+            const enforcedSequence = [
+                "Intention",
+                "Pressure or tension",
+                "Movement away",
+                "After-effect still unclear"
+            ];
+
             markdownSummary = `
 ${whatIsBecomingVisible}
 
 ### Recurring Movement
 
-${recurringMovement.summary || "Across multiple observations, this structure is beginning to stand out:"}
+Across recent observations, this structure is beginning to stand out:
 
-${(recurringMovement.sequence || ["Intention", "Pressure or tension", "Movement away", "Consequence still unclear"]).join('\n↓\n')}
+${enforcedSequence.join('\n↓\n')}
 
 Movement away may appear as ${(recurringMovement.variants || []).join(', ')}.
 
@@ -287,6 +295,8 @@ Movement away may appear as ${(recurringMovement.variants || []).join(', ')}.
 ${(Array.isArray(beforeShift) ? beforeShift : [beforeShift]).join('\n\n')}
 
 ### Afterwards
+
+What follows the movement away is still less clear.
 
 ${(Array.isArray(afterwards) ? afterwards : [afterwards]).join('\n\n')}
 
