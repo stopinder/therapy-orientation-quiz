@@ -68,7 +68,8 @@ export default async function handler(request, response) {
         }
 
         const recentReflections = reflectionsData
-            .map((r) => `---
+            .map((r, index) => `---
+Index: ${index} (0 is most recent)
 Week: ${r.week_number}
 Date: ${r.created_at}
 Observation: ${r.original_reflection}
@@ -133,18 +134,41 @@ Evidence Thresholds (Apply based on count ${count}):
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."
 
 CORE ANALYSIS:
-Identify recurring structural patterns and higher-order relationships (intention appears, shift happens, action changes). NO section headings. NO bullets. ONE continuous paragraph. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g., "checking social media") over generic terms (e.g., "distraction") if available in the reflections.
+1. Extract ALL candidate patterns (intention → behavior sequences) from the reflections.
+2. Maintain a set of possible patterns. Do not blend them.
+3. For each pattern, identify which reflections (by Index) match it.
+4. Score each pattern based on:
+   - Frequency: number of matching reflections.
+   - Recency: reflections with lower indices (more recent) carry significantly more weight.
+5. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns. If a new pattern has overtaken a previous one due to recency/frequency, switch to it completely.
+6. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
+7. Generate ONLY ONE pattern statement for the dominant pattern: "You tend to [intention], then [specific behavior]."
+8. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). 
+9. PRIORITIZE concrete user phrasing (e.g., "checking social media" instead of "distraction") over generic terms. 
+
+Language and Perspective:
+- Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
+- Use consistent PRESENT TENSE (e.g., "you shift" instead of "you shifted").
+- Use natural language. Replace "felt frustration" with "frustration follows". Replace "denial mode" with "the other person denies it".
+- Ensure the summary reads naturally as a description of the user's recurring experience.
 
 OUTPUT FORMAT:
-Return a JSON object ONLY. No markdown, no prose, no conversational text.
+Return a JSON object ONLY.
 
 {
-  "patternLine": {
-    "intention": "concrete intention (e.g., engage, start)",
-    "shift": "specific behavior (e.g., checking social media, not replying)",
-    "consequence": "specific result (e.g., tension, delay, cancellation)"
+  "dominantPattern": {
+    "intention": "concrete intention (e.g., engage, start, reply to a message)",
+    "shift": "specific behavior/action they did instead (e.g., checking social media, not replying, leaving the task)",
+    "consequence": "specific result (e.g., frustration follows, the other person denies it, delay occurs)",
+    "score": "float - calculated score based on frequency and recency",
+    "matchingIndices": [0, 1, 3]
   },
-  "matchingCount": "integer - how many of the provided reflections match this specific pattern",
+  "allCandidates": [
+    {
+       "summary": "You tend to [intention], then [shift]",
+       "score": 0.8
+    }
+  ],
   "stateLine": "concrete states explicitly present in reflections (e.g. anger, pressure)",
   "consequenceConsistency": "becoming visible / not yet consistent"
 }
@@ -154,10 +178,12 @@ Rules:
 2. Use "stomach" instead of "tummy".
 3. Replace "work or engage in a task" with "engage".
 4. Ensure sentences are short and neutral.
-5. "patternLine" must combine the recurring intention, shift, and consequence using the user's own specific phrasing where possible.
+5. "dominantPattern" must be the SINGLE highest-scoring pattern. NO blending. NO "or". Use the user's specific phrasing where possible.
 6. "stateLine" must only include states explicitly present in reflections. If none, return null.
-7. No hedging in "patternLine" (no "may", "might", "appears").
-8. NO section names (e.g., "Before the Shift") should be returned in any field value.
+7. No hedging in "dominantPattern" (no "may", "might", "appears").
+8. NO section names should be returned in any field value.
+9. Strictly follow the Language and Perspective rules.
+10. REUSE specific user phrasing for actions.
 `.trim()
         } else {
             const isStage4 = currentStage === 4
@@ -183,7 +209,13 @@ ${isStage5 ? '1+ observations: Describe only what is directly observable: respon
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."`}
 
 CORE ANALYSIS:
-Look across multiple reflections to identify recurring structural patterns. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify higher-order patterns (intention appears, shift happens, action changes).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses).
+Extract concrete actions, not concepts. Look across multiple reflections to identify recurring behaviors. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify patterns from action sequences (you plan to [intention], then [actual behavior]).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g. "checking Instagram" instead of "distraction") and reuse it converted to second-person and present tense. If no specific behaviour is clear, use "do something else instead" or "don't follow through".
+
+Language and Perspective:
+- Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
+- Use consistent PRESENT TENSE.
+- Use natural language. Replace "felt frustration" with "frustration follows". Replace "denial mode" with "the other person denies it".
+- REUSE specific user phrasing for actions. Convert "I checked Instagram" to "you check Instagram".
 
 OUTPUT FORMAT:
 Return a JSON object ONLY.
@@ -191,24 +223,24 @@ Return a JSON object ONLY.
 ${isStage4 ? `
 {
   "status": "established",
-  "stateBecomingVisible": "Describe the state that was already present before the response appeared. Use direct, observational language. Max 2 sentences.",
-  "whatWasAlreadyPresent": ["bullet point 1", "bullet point 2"],
+  "stateBecomingVisible": "Describe the state that was already present before the response appeared. Use second-person, present tense. Max 2 sentences.",
+  "whatWasAlreadyPresent": ["bullet point 1 in second-person, present tense", "bullet point 2"],
   "unclearAspects": "It is not yet clear whether this state appears in other situations. (Max 1 sentence)",
   "recognition": "The pattern did not begin at the moment of action. It was already there before anything happened."
 }
 ` : isStage5 ? `
 {
   "status": "established",
-  "whatFollowedResponse": "Describe what followed the response across observations. Strictly observable: response → consequence. Max 2 sentences.",
-  "whatAppearsAgain": ["response: [action]", "consequence: [result]"],
-  "whatThisLeadsTo": "One short line describing the consequence pattern."
+  "whatFollowedResponse": "Describe what followed the response across observations. Strictly observable: response → consequence. Use second-person, present tense. Max 2 sentences.",
+  "whatAppearsAgain": ["response: [action in second-person, present tense]", "consequence: [result in second-person, present tense]"],
+  "whatThisLeadsTo": "One short line describing the consequence pattern in second-person, present tense."
 }
 ` : `
 {
   "status": "established",
-  "whatKeepsReappearing": "...",
+  "whatKeepsReappearing": "Use second-person, present tense...",
   "repeatedSequence": ["Step 1", "Step 2", "Step 3", "Step 4"],
-  "primaryState": "...",
+  "primaryState": "Use second-person, present tense...",
   "possibleFunction": "It is not yet clear which shifts reliably follow the familiar response, or whether the same consequence appears across different situations.",
   "variants": ["variant 1", "variant 2"],
   "unclearAspects": "..."
@@ -220,6 +252,7 @@ Rules:
 2. ${isStage4 ? 'No interpretation or over-explanation. Only include what the user clearly described.' : isStage5 ? 'Focus strictly on response → consequence. No interpretation, no explanation, no ambiguity. Keep sentences short and concrete. No pattern confirmation language (e.g. "this repeats across reflections"). Keep bullet points only in whatAppearsAgain.' : 'Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.'}
 3. Use "stomach" instead of "tummy".
 4. Replace "work or engage in a task" with "engage".
+5. Strictly follow the Language and Perspective rules.
 `.trim()
         }
 
@@ -273,7 +306,10 @@ Rules:
         }
 
         // Define confidence levels based on pattern strength
-        const matchingCount = jsonResult.matchingCount || 0
+        const dominantPattern = jsonResult.dominantPattern || {}
+        const matchingIndices = dominantPattern.matchingIndices || []
+        const matchingCount = matchingIndices.length
+        
         const isStrong = matchingCount > 5
         const isEmerging = matchingCount >= 3 && matchingCount <= 5
         const isEarly = matchingCount < 3
@@ -287,14 +323,14 @@ Rules:
 
         if (isCourseOverview || true) {
             const {
-                patternLine = {},
+                dominantPattern = {},
                 stateLine = null,
                 consequenceConsistency = "not yet consistent"
             } = jsonResult
 
-            const intention = patternLine.intention || "[start with intention]"
-            const shift = patternLine.shift || "[shift into distraction/withdrawal]"
-            const consequence = patternLine.consequence || "[tension / negative response / delay]"
+            const intention = dominantPattern.intention || "[start with intention]"
+            const shift = dominantPattern.shift || "[shift into distraction/withdrawal]"
+            const consequence = dominantPattern.consequence || "[tension / negative response / delay]"
 
             // Pattern + Consequence sentence
             markdownSummary = `You ${verbs.tend} ${intention}, then ${shift}. This is ${verbs.often} followed by ${consequence}.`
