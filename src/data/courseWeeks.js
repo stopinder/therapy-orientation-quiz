@@ -270,27 +270,38 @@ export const courseWeeks = [
     {
         number: 5,
 
-        title: "What happened next",
+        title: "Consequence",
 
         subtitle:
-            "Observing what changed after the familiar pattern appeared.",
+            "Observing what this response leads to.",
 
         reflectionPrompt:
-            "Describe a moment when a familiar response appeared. What changed afterwards?",
+            "Describe a moment when a familiar response appeared. What followed this response?",
 
         intro:
-            "This stage is about noticing what happens immediately after a familiar pattern unfolds. Rather than explaining why the movement happened, we are learning to observe its results.",
+            "This stage is about noticing consequences. What follows the response? What does the response lead to? We are learning to observe the result of the pattern, rather than explaining why it happened.",
+
+        orientation: {
+            title: "Why this matters",
+            content: [
+                "Stage 5 must reveal: “What this response leads to”.",
+                "By this stage, the focus is on what follows the response.",
+                "It is on the consequence of the movement.",
+                "The question is simple:",
+                "What followed this response?"
+            ]
+        },
 
         openingReflection: [
-            "When a sequence appears repeatedly, it often results in an immediate shift in the internal or external environment. This can be difficult to see when the focus is only on the drift away from intention. The interruption may be seen as an error, rather than as a movement with its own consequences.",
+            "When a sequence appears repeatedly, it often leads to a specific consequence in the internal or external environment. This can be difficult to see when the focus is only on the drift away from intention.",
 
-            "This stage, attention shifts toward what changed afterwards. When a familiar delay or a routine of checking appears, what happens next? Often, the movement coincides with a shift in pressure, a change in attention, or a postponement of a task.",
+            "This stage, attention shifts toward what this leads to. When a familiar delay or a routine of checking appears, what followed this response? Often, the movement is followed by a shift in pressure, a change in attention, or a postponement of a task.",
 
-            "By observing what happens after the response, the movement becomes a more precise recognition. MindWorks is simply documenting the results of the movement. If checking email happens as a task begins to feel heavy, one can observe what happens to that heaviness once the checking begins.",
+            "By observing what happens after the response, the movement becomes a more precise recognition. MindWorks is simply documenting the results of the movement. If checking email happens as a task begins to feel heavy, one can observe what followed that response.",
 
-            "This is not about justifying the behaviour. It is about seeing the choreography of the event clearly enough to understand what changes once the movement has occurred. When it becomes visible what changes, the sequence begins to lose its status as an 'accident'. It becomes a recognisable movement with observable results.",
+            "This is not about justifying the behaviour. It is about seeing the results clearly enough to understand what followed the response once the movement has occurred. When it becomes visible what this leads to, the sequence begins to lose its status as an 'accident'. It becomes a recognisable movement with observable results.",
 
-            "The goal is not to stop the movement yet, but to become interested in what follows it. What happened next? Recognition of these shifts is the next layer of visibility."
+            "The goal is not to stop the movement yet, but to become interested in what it leads to. Recognition of these consequences is the next layer of visibility."
         ],
 
         bodyFocus: [
@@ -300,16 +311,16 @@ export const courseWeeks = [
 
         exercises: [
             {
-                title: "Notice what changes",
-                description: "At the moment a familiar response appears, notice what changes in your internal environment. What sensation or pressure is different?"
+                title: "Notice what it leads to",
+                description: "At the moment a familiar response appears, notice what this leads to in your internal environment. What sensation or pressure followed the response?"
             },
             {
                 title: "Notice the shift",
-                description: "Observe if the recurring pattern coincides with a momentary shift in the task or in a specific feeling of activation."
+                description: "Observe if the recurring pattern leads to a momentary shift in the task or in a specific feeling of activation."
             },
             {
                 title: "Stay with the result",
-                description: "Ask yourself: 'What changed after this appeared?' Do not look for an explanation; simply observe what followed the movement."
+                description: "Ask yourself: 'What followed this response?' Do not look for an explanation; simply observe what this leads to."
             }
         ]
 

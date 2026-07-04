@@ -78,31 +78,39 @@
         </div>
       </section>
 
-      <!-- Why This Matters (openingReflection or orientation) - Only Stage 2, 3, 4 -->
+      <!-- Why This Matters (openingReflection or orientation) - Only Stage 2, 3, 5 -->
       <section
-          v-if="(week.openingReflection && week.openingReflection.length > 0 && [2, 3].includes(weekNumber)) || (weekNumber === 4 && week.orientation)"
+          v-if="(week.openingReflection && week.openingReflection.length > 0 && [2, 3, 5].includes(weekNumber))"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
-          {{ weekNumber === 4 ? week.orientation.title : 'Why This Matters' }}
+          Why This Matters
         </h2>
         <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
-          <template v-if="weekNumber === 4">
-            <p
-                v-for="paragraph in week.orientation.content"
-                :key="paragraph"
-            >
-              {{ paragraph }}
-            </p>
-          </template>
-          <template v-else>
-            <p
-                v-for="paragraph in week.openingReflection"
-                :key="paragraph"
-            >
-              {{ paragraph }}
-            </p>
-          </template>
+          <p
+              v-for="paragraph in week.openingReflection"
+              :key="paragraph"
+          >
+            {{ paragraph }}
+          </p>
+        </div>
+      </section>
+
+      <!-- Why this matters (Orientation content) - Stage 4, 5 -->
+      <section
+          v-if="[4, 5].includes(weekNumber) && week.orientation"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
+      >
+        <h2 class="text-2xl font-semibold text-slate-950">
+          Why this matters
+        </h2>
+        <div class="mt-5 space-y-5 text-base leading-8 text-slate-700">
+          <p
+              v-for="paragraph in week.orientation.content"
+              :key="paragraph"
+          >
+            {{ paragraph }}
+          </p>
         </div>
       </section>
 
@@ -159,9 +167,9 @@
         </div>
       </section>
 
-      <!-- Including the Body (Week 2, 3) -->
+      <!-- Including the Body (Week 2, 3, 5) -->
       <section
-          v-if="[2, 3].includes(weekNumber) && week.bodyFocus"
+          v-if="[2, 3, 5].includes(weekNumber) && week.bodyFocus"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
@@ -177,8 +185,8 @@
         </div>
       </section>
 
-      <!-- Observation exercises (Week 2, 3) -->
-      <section v-if="[2, 3].includes(weekNumber)" class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
+      <!-- Observation exercises (Week 2, 3, 5) -->
+      <section v-if="[2, 3, 5].includes(weekNumber)" class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
         <h2 class="text-2xl font-semibold text-slate-950">
           Observation exercises
         </h2>

@@ -167,6 +167,7 @@ Rules:
 `.trim()
         } else {
             const isStage4 = currentStage === 4
+            const isStage5 = currentStage === 5
             systemPrompt = `
 You are a Field Researcher documenting an ongoing investigation.
 
@@ -188,7 +189,7 @@ Evidence Thresholds (Apply based on count ${count}):
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."
 
 CORE ANALYSIS:
-Look across multiple reflections to identify recurring structural patterns. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : 'Identify higher-order patterns (intention appears, shift happens, action changes).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses).
+Look across multiple reflections to identify recurring structural patterns. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus on what follows the response and what it leads to.' : 'Identify higher-order patterns (intention appears, shift happens, action changes).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses).
 
 OUTPUT FORMAT:
 Return a JSON object ONLY.
@@ -200,6 +201,13 @@ ${isStage4 ? `
   "whatWasAlreadyPresent": ["bullet point 1", "bullet point 2"],
   "unclearAspects": "It is not yet clear whether this state appears in other situations. (Max 1 sentence)",
   "recognition": "The pattern did not begin at the moment of action. It was already there before anything happened."
+}
+` : isStage5 ? `
+{
+  "status": "established",
+  "whatFollowedResponse": "Describe what followed the response across observations. Max 2 sentences.",
+  "whatAppearsAgain": ["response: [action]", "consequence: [result]"],
+  "whatThisLeadsTo": "One short line describing the consequence pattern."
 }
 ` : `
 {
@@ -215,7 +223,7 @@ ${isStage4 ? `
 
 Rules:
 1. Return JSON ONLY.
-2. ${isStage4 ? 'No interpretation or over-explanation. Only include what the user clearly described.' : 'Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.'}
+2. ${isStage4 ? 'No interpretation or over-explanation. Only include what the user clearly described.' : isStage5 ? 'Focus strictly on response → consequence. No interpretation or speculation.' : 'Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.'}
 3. Use "stomach" instead of "tummy".
 4. Replace "work or engage in a task" with "engage".
 `.trim()
