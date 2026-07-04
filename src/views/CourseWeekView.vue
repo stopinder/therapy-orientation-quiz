@@ -341,7 +341,7 @@
 
       <!-- What These Moments May Have In Common (Stage 3+) -->
       <section
-          v-if="showPatternBlock && currentStageReflections.length >= 1 && (![1, 2, 3].includes(weekNumber) || hasGeneratedReflectionThisSession)"
+          v-if="showPatternBlock && currentStageReflections.length >= 1 && (![1, 2, 3].includes(weekNumber) || hasGeneratedReflectionThisSession) && weekNumber !== 3"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
       >
         <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
@@ -378,36 +378,6 @@
             </p>
           </div>
         </template>
-      </section>
-
-      <!-- Moments Being Compared (Stage 3 only) -->
-      <section
-          v-if="weekNumber === 3 && currentStageReflections.length > 0 && hasGeneratedReflectionThisSession"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
-      >
-        <p class="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-slate-500">
-          Moments Being Compared
-        </p>
-        <div class="mt-6 grid gap-6 md:grid-cols-3">
-          <div
-              v-for="(item, index) in currentStageReflections.slice(0, 3)"
-              :key="item.id || index"
-              class="flex flex-col rounded-2xl border border-slate-100 bg-slate-50/50 p-6"
-          >
-            <div class="mb-4">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Situation</p>
-              <p class="mt-1 text-sm font-medium text-slate-900">{{ inferSituation(item) }}</p>
-            </div>
-            <div class="mb-4">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">What appeared</p>
-              <p class="mt-1 text-sm text-slate-700">{{ inferAppeared(item) }}</p>
-            </div>
-            <div class="mt-auto">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Response / movement</p>
-              <p class="mt-1 text-sm text-slate-700">{{ inferResponse(item) }}</p>
-            </div>
-          </div>
-        </div>
       </section>
 
       <!-- Phase 1 Sequence Surface Prototype -->
