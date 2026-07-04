@@ -133,19 +133,20 @@ Evidence Thresholds (Apply based on count ${count}):
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."
 
 CORE ANALYSIS:
-Identify recurring structural patterns and higher-order relationships (intention appears, shift happens, action changes). Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses).
+Identify recurring structural patterns and higher-order relationships (intention appears, shift happens, action changes). Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g., "checking social media") over generic terms (e.g., "distraction") if available in the reflections.
 
 OUTPUT FORMAT:
 Return a JSON object ONLY. No markdown, no prose, no conversational text.
 
 {
-  "openingLine": {
-    "intention": "[engage/start]",
-    "shift": "[distraction/withdrawal]",
-    "consequence": "[tension / negative response / delay]"
+  "patternLine": {
+    "intention": "concrete intention (e.g., engage, start)",
+    "shift": "specific behavior (e.g., checking social media, not replying)",
+    "consequence": "specific result (e.g., tension, delay, cancellation)"
   },
-  "stateLine": "[anger, pressure, defensiveness, tension]",
-  "consequenceVisible": true
+  "matchingCount": "integer - how many of the provided reflections match this specific pattern",
+  "stateLine": "concrete states explicitly present in reflections (e.g. anger, pressure)",
+  "consequenceConsistency": "becoming visible / not yet consistent"
 }
 
 Rules:
@@ -153,8 +154,9 @@ Rules:
 2. Use "stomach" instead of "tummy".
 3. Replace "work or engage in a task" with "engage".
 4. Ensure sentences are short and neutral.
-5. In "openingLine", identify the concrete intention, the shift (distraction, withdrawal, etc), and the consequence (tension, delay, etc) from the observations.
-6. In "stateLine", only include states explicitly present in reflections. If none, return null.
+5. "patternLine" must combine the recurring intention, shift, and consequence using the user's own specific phrasing where possible.
+6. "stateLine" must only include states explicitly present in reflections. If none, return null.
+7. No hedging in "patternLine" (no "may", "might", "appears").
 `.trim()
         } else {
             const isStage4 = currentStage === 4
@@ -269,29 +271,40 @@ Rules:
             })
         }
 
+        // Define confidence levels based on pattern strength
+        const matchingCount = jsonResult.matchingCount || 0
+        const isStrong = matchingCount > 5
+        const isEmerging = matchingCount >= 3 && matchingCount <= 5
+        const isEarly = matchingCount < 3
+        
+        const verbs = {
+            tend: isEarly ? "may" : (isStrong ? "consistently" : "tend to"),
+            often: isEarly ? "sometimes" : (isStrong ? "reliably" : "often")
+        }
+
         let markdownSummary = ""
 
         if (isCourseOverview) {
             const {
-                openingLine = {},
+                patternLine = {},
                 stateLine = null,
-                consequenceVisible = false
+                consequenceConsistency = "not yet consistent"
             } = jsonResult
 
-            const intention = openingLine.intention || "[engage/start]"
-            const shift = openingLine.shift || "[distraction/withdrawal]"
-            const consequence = openingLine.consequence || "[tension / negative response / delay]"
+            const intention = patternLine.intention || "[start with intention]"
+            const shift = patternLine.shift || "[shift into distraction/withdrawal]"
+            const consequence = patternLine.consequence || "[tension / negative response / delay]"
 
-            markdownSummary = `
-You tend to begin with an intention to ${intention}, then shift into ${shift}. This is often followed by ${consequence}.
-`.trim()
+            markdownSummary = `You ${verbs.tend} ${intention}, then ${shift}. This is ${verbs.often} followed by ${consequence}.`
 
             if (stateLine) {
-                markdownSummary += `\n\nBefore this shift, there is often a state already present — such as ${stateLine}.`
+                markdownSummary += `\n\nBefore this shift, there is ${verbs.often} a state already present — such as ${stateLine}.`
             }
 
-            if (consequenceVisible) {
-                markdownSummary += `\n\nWhat follows the response is becoming visible, though it is not yet consistent across situations.`
+            if (consequenceConsistency.includes("visible")) {
+                markdownSummary += `\n\nWhat follows the response is becoming visible, but is not yet consistent.`
+            } else {
+                markdownSummary += `\n\nWhat follows the response is not yet consistent across situations.`
             }
 
             markdownSummary += `\n\nThis is an early pattern. It may become clearer with more observations.`
