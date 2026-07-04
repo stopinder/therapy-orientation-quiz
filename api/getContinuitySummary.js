@@ -166,7 +166,7 @@ Rules:
 5. In "afterwards", focus on distraction, irritation, or unresolved feelings.
 `.trim()
         } else {
-            const isStage3 = currentStage === 3
+            const isStage4 = currentStage === 4
             systemPrompt = `
 You are a Field Researcher documenting an ongoing investigation.
 
@@ -188,11 +188,20 @@ Evidence Thresholds (Apply based on count ${count}):
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."
 
 CORE ANALYSIS:
-Look across multiple reflections to identify recurring structural patterns. Identify higher-order patterns (intention appears, shift happens, action changes). Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses).
+Look across multiple reflections to identify recurring structural patterns. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : 'Identify higher-order patterns (intention appears, shift happens, action changes).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses).
 
 OUTPUT FORMAT:
 Return a JSON object ONLY.
 
+${isStage4 ? `
+{
+  "status": "established",
+  "stateBecomingVisible": "Describe the state that was already present before the response appeared. Use direct, observational language. Max 2 sentences.",
+  "whatWasAlreadyPresent": ["bullet point 1", "bullet point 2"],
+  "unclearAspects": "It is not yet clear whether this state appears in other situations. (Max 1 sentence)",
+  "recognition": "The pattern did not begin at the moment of action. It was already there before anything happened."
+}
+` : `
 {
   "status": "established",
   "whatKeepsReappearing": "...",
@@ -202,10 +211,11 @@ Return a JSON object ONLY.
   "variants": ["variant 1", "variant 2"],
   "unclearAspects": "..."
 }
+`}
 
 Rules:
 1. Return JSON ONLY.
-2. Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.
+2. ${isStage4 ? 'No interpretation or over-explanation. Only include what the user clearly described.' : 'Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.'}
 3. Use "stomach" instead of "tummy".
 4. Replace "work or engage in a task" with "engage".
 `.trim()
@@ -308,9 +318,25 @@ This is an early pattern. It may become clearer with more observations.
 `.trim()
         } else {
             const isStage3 = currentStage === 3
-            const title = isStage3 ? 'What These Moments May Have In Common' : 'What Keeps Reappearing'
+            const isStage4 = currentStage === 4
+            const title = isStage3 ? 'What These Moments May Have In Common' : (isStage4 ? 'The State Becoming Visible' : 'What Keeps Reappearing')
             
-            markdownSummary = `
+            if (isStage4) {
+                markdownSummary = `
+### The State Becoming Visible
+${jsonResult.stateBecomingVisible || ""}
+
+### What Was Already Present
+${(jsonResult.whatWasAlreadyPresent || []).map(item => `- ${item}`).join('\n')}
+
+### What Remains Unclear
+${jsonResult.unclearAspects || "It is not yet clear whether this state appears in other situations."}
+
+### A Recognition
+${jsonResult.recognition || "The pattern did not begin at the moment of action. It was already there before anything happened."}
+`.trim()
+            } else {
+                markdownSummary = `
 ### ${title}
 ${jsonResult.whatKeepsReappearing || ""}
 
@@ -326,6 +352,7 @@ ${jsonResult.possibleFunction || "It is not yet clear which shifts reliably foll
 ### What Remains Unclear
 ${jsonResult.unclearAspects || ""}
 `.trim()
+            }
         }
 
         return response.status(200).json({
