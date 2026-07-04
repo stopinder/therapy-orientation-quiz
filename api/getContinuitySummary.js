@@ -145,9 +145,7 @@ Structure your output into these EXACT sections:
 (Introductory sentence - direct observation about what is becoming visible. Keep it to 1-2 sentences.)
 
 ### Recurring Movement
-Prioritise a compact sequence map.
-Format:
-Across recent observations, a familiar structure is beginning to appear:
+Must use this exact visual sequence format (no numbered bullets):
 Intention
 ↓
 Pressure or tension
@@ -156,27 +154,28 @@ Movement away
 ↓
 Consequence still unclear
 
-(Follow with one short sentence about forms: "The movement away may take different forms: distraction, delay, withdrawal, cancellation, checking, scrolling, or unresolved emotional contact.")
-Do not explain the same sequence twice in paragraph form.
+After the sequence, add only one short sentence naming variants.
+Example: "Movement away may appear as smoking weed, doing nothing, checking, scrolling, delaying, or withdrawing."
+Do not explain the sequence twice in prose.
 
 ### Before the Shift
-Keep it concrete. 
-Preferred style: "Before the shift, the recurring state appears to be pressure, tension, anxiety, anticipation, or exposure."
-Include body language if present: chest, stomach, shoulders, restlessness, heaviness, numbness. 
-Use "stomach", never "tummy".
+Maximum 2 sentences. 
+Keep it concrete. Use "stomach", never "tummy". 
+If evidence of specific triggers exists, name them concretely; otherwise omit mention of triggers.
 
 ### Afterwards
-Clearer and less abstract. 
-Preferred style: "What follows the movement away is still less clear. In some observations there is distraction. In others there are unresolved feelings, irritation, delay, or cancellation. There is not yet enough evidence to say whether one consequence repeats more strongly than the others."
+Maximum 3 short sentences. 
+Avoid "lingering emotional responses". Use "unresolved feeling" or "irritation" only if present in the observations.
 
 ### Still Emerging
-Keep it short.
-Example: "The earliest moment of the shift is still not fully visible. More observations may clarify what happens between pressure and movement away."
+Maximum 2 sentences. 
+Use "still being observed". Avoid "further observations may help illuminate."
 
 Rules:
 1. Use ONLY these exact headings: "### What is becoming visible", "### Recurring Movement", "### Before the Shift", "### Afterwards", "### Still Emerging".
 2. NO long paragraphs. NO repetitive explanations.
-3. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across the accumulated observations."
+3. Replace "work or engage in a task" with "engage".
+4. Closing sentence: "This is not a conclusion. It is what MindWorks is beginning to notice across the accumulated observations."
 
 OUTPUT FORMAT:
 Your output MUST start with a JSON object, then a newline, then the markdown summary.
@@ -220,6 +219,7 @@ General Rules:
 3. Do not diagnose, explain, coach, or advise.
 4. Use "stomach" instead of "tummy".
 5. For "Possible Function", prefer: "It is not yet clear which shifts reliably follow the familiar response, or whether the same consequence appears across different situations."
+6. Replace "work or engage in a task" with "engage".
 
 OUTPUT FORMAT:
 Your output MUST start with a JSON object, then a newline, then the markdown summary.
