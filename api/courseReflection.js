@@ -275,21 +275,19 @@ Describe the internal condition that was already present. Use tentative and obse
 List ONLY genuine internal conditions/states that were already there before the response. Do not include external context or events here. Use the user’s own language as much as possible.
 
 ### What often followed
-Describe how the internal state continued, changed, or remained present as events unfolded. 
-Preferred observations:
-- The state remained present while...
-- The feeling continued as...
-- The internal condition stayed present during...
-Keep the emphasis on continuity of the state.
+What followed this state is not yet fully visible in this observation.
+What is clear is that the state was present before the event itself.
+Do not infer actions the user did not explicitly describe.
 
 ### What is different this time
 Compare the characteristics of the state itself rather than interpreting its meaning. Stay descriptive.
 
 ### What remains unclear
-State what cannot yet be concluded about the state or its relationship to the sequence.
+It is not yet clear whether this state appears in other situations, or what usually follows it.
 
 ### A recognition
-A simple recognition that familiar responses often emerge from recognisable conditions.
+The pattern did not begin at the moment of action.
+It was already in motion before anything happened.
 
 Rules:
 1. Max TWO questions in "Questions to stay with" (if included by overall logic).

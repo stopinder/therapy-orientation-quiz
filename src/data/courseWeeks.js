@@ -215,10 +215,22 @@ export const courseWeeks = [
             "Exploring the internal climate that precedes the pattern.",
 
         reflectionPrompt:
-            "Describe a moment when you noticed something was already present before your response changed.",
+            "Describe a moment when a familiar state was already present before you responded. What was there before anything changed?",
 
         intro:
             "Sometimes a feeling, sense of pressure, tension, calmness, or another state is already present before we respond. This stage is about noticing what was already there.",
+
+        orientation: {
+            title: "Why this matters",
+            content: [
+                "A pattern often begins before the behaviour appears.",
+                "By this stage, the focus is not only on what you did.",
+                "It is on what was already present before anything changed.",
+                "This might be pressure, tension, anticipation, dread, or unease.",
+                "The question is simple:",
+                "What state were you already in before the response appeared?"
+            ]
+        },
 
         openingReflection: [
             "A recurring sequence often feels sudden, but it usually has an arrival. Before the visible behavior—the checking, the delay, or the substitution—something in the internal environment is already shifting.",
