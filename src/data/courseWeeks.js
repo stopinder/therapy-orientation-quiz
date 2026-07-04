@@ -18,26 +18,26 @@ export const courseWeeks = [
             title: "Why You're Here",
             content: [
                 "Most of us move away from an intention without noticing the moment it happens.",
-                "We mean to do one thing and find ourselves doing something else.",
+                "An intention is formed, and then, without a clear moment of choice, the attention is elsewhere.",
                 "We delay.",
                 "We check.",
                 "We prepare.",
                 "We drift.",
-                "In this stage, MindWorks is not asking you to explain this or change it.",
-                "It is simply helping you see one moment clearly.",
-                "In this stage, you are learning to notice the point where your attention moves somewhere you did not expect."
+                "In this stage, MindWorks is not asking for an explanation or a change.",
+                "It is simply helping one moment become visible.",
+                "Here, the interest is in noticing the point where attention moves somewhere unexpected."
             ]
         },
 
         openingReflection: [
 
-            "Continuity often disappears before you notice it has gone. You may begin with a clear intention, a task, a message, a decision, or a simple movement toward something important. Then, without a clear moment of choosing, you are elsewhere.",
+            "Continuity often disappears before it is noticed. One may begin with a clear intention—a task, a message, a decision, or a simple movement toward something important. Then, without a clear moment of choosing, the focus is elsewhere.",
 
-            "The movement may look ordinary from the outside. You check something, prepare something, tidy something, think through one more detail, or drift into a different demand. Internally, something has broken contact.",
+            "The movement may look ordinary. Something is checked, prepared, or tidied; one more detail is thought through, or attention drifts into a different demand. Internally, contact has weakened.",
 
-            "This stage is not about correcting that movement. It is about seeing it clearly enough that it becomes recognisable. The important moment is not the collapse afterwards. It is the earlier shift: the instant where contact weakens and another behaviour begins to organise you.",
+            "This stage is not about correcting that movement. It is about allowing it to become recognisable. The interest is not in the collapse afterwards, but in the earlier shift: the instant where contact weakens and another behaviour begins to organise the moment.",
 
-            "Your task in this stage is simple: notice the disappearance. Not the explanation. Not the story. Not the self-criticism afterwards. Just the movement from intention into fragmentation."
+            "The task here is simple: notice the disappearance. Not the explanation. Not the story. Just the movement from intention into fragmentation."
         ],
 
         bodyFocus: [
@@ -109,7 +109,7 @@ export const courseWeeks = [
             "Describe a moment when something changed direction. What happened just before it?",
 
         intro:
-            "In this stage, you are learning to notice order. Instead of seeing the interruption as one event, you begin to notice what happened first, what followed, and where the movement changed.",
+            "In this stage, the interest is in noticing order. Instead of seeing the interruption as a single event, it becomes possible to notice what happened first, what followed, and where the movement changed.",
 
         orientation: {
             title: "Why You're Here",
@@ -118,16 +118,15 @@ export const courseWeeks = [
                 "Before checking, delaying, cancelling, or moving away, something often appears first.",
                 "It may be a thought.",
                 "It may be pressure.",
-                "It may be a message.",
                 "It may be a change in the body.",
-                "Stage 2 is about seeing what appeared before the response became visible."
+                "Stage 2 is about noticing what appeared before the response became visible."
             ]
         },
 
         openingReflection: [
-            "Sequence means seeing the order in which things happen.",
+            "Sequence means noticing the order in which things happen.",
             "The important moment is often not the final behaviour, but what appeared just before it.",
-            "This stage helps you notice the movement from intention, to internal shift, to response."
+            "This stage helps in noticing the movement from intention, to internal shift, to response."
         ],
 
         bodyFocus: [
@@ -226,9 +225,9 @@ export const courseWeeks = [
 
             "This stage is about noticing that preceding state. It may be a sense of pressure, a quiet uncertainty, a feeling of exposure, or a specific body context like a tightening in the stomach or a restlessness in the limbs. These are the conditions in which the pattern emerges.",
 
-            "By observing the state, we begin to see the pattern as a response to a set of conditions, rather than as an isolated error.",
+            "By observing the state, the pattern begins to be seen as a response to a set of conditions, rather than as an isolated error.",
 
-            "These earlier changes are not hidden, but they are often brief. By staying with the beginning, you may find that the transition is more gradual than it first appeared.",
+            "These earlier changes are not hidden, but they are often brief. By staying with the beginning, one may find that the transition is more gradual than it first appeared.",
 
             "The sequence has an arrival."
         ],
@@ -270,13 +269,13 @@ export const courseWeeks = [
             "This stage is about noticing what happens immediately after a familiar pattern unfolds. Rather than explaining why the movement happened, we are learning to observe its results.",
 
         openingReflection: [
-            "When a sequence appears again and again, it often results in an immediate shift in the internal or external environment. This can be difficult to see when we are focused only on the fact that we have drifted away from our intention. We see the interruption as an error, rather than as a movement with its own consequences.",
+            "When a sequence appears repeatedly, it often results in an immediate shift in the internal or external environment. This can be difficult to see when the focus is only on the drift away from intention. The interruption may be seen as an error, rather than as a movement with its own consequences.",
 
-            "This stage, we shift our attention toward what changed afterwards. When a familiar delay or a routine of checking appears, what happens next? Often, the movement coincides with a shift in pressure, a change in attention, or a postponement of a task.",
+            "This stage, attention shifts toward what changed afterwards. When a familiar delay or a routine of checking appears, what happens next? Often, the movement coincides with a shift in pressure, a change in attention, or a postponement of a task.",
 
-            "By observing what happens after the response, we move away from judgment and toward a more precise recognition. We are simply noticing the results of the movement. If checking email happens exactly when a task begins to feel heavy, we can observe what happens to that heaviness once the checking begins.",
+            "By observing what happens after the response, the movement becomes a more precise recognition. MindWorks is simply documenting the results of the movement. If checking email happens as a task begins to feel heavy, one can observe what happens to that heaviness once the checking begins.",
 
-            "This is not about justifying the behaviour. It is about seeing the choreography of the event clearly enough to understand what changes once the movement has occurred. When you see what changes, the sequence begins to lose its status as an 'accident'. It becomes a recognisable movement with observable results.",
+            "This is not about justifying the behaviour. It is about seeing the choreography of the event clearly enough to understand what changes once the movement has occurred. When it becomes visible what changes, the sequence begins to lose its status as an 'accident'. It becomes a recognisable movement with observable results.",
 
             "The goal is not to stop the movement yet, but to become interested in what follows it. What happened next? Recognition of these shifts is the next layer of visibility."
         ],
@@ -318,7 +317,7 @@ export const courseWeeks = [
             "Sometimes the same situation brings out different responses. You might prepare, avoid, overthink, withdraw, reassure yourself, become defensive, or respond in another way.\n\nThis stage is about noticing the different responses that appeared, without trying to explain them.",
 
         openingReflection: [
-            "By this point, you may have seen repeated sequences and states across your reflections. Some may seem separate at first: checking, preparing, delaying, reorganising, withdrawing, or overthinking.",
+            "By this point, repeated sequences and states may have appeared across reflections. Some may seem separate at first: checking, preparing, delaying, reorganising, withdrawing, or overthinking.",
 
             "Stage 6 looks across these observations. The question is not yet what the relationship is. The question is whether different responses keep appearing around similar moments of pressure, uncertainty, exposure, or demand.",
 

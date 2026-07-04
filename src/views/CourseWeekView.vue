@@ -55,9 +55,7 @@
             v-if="showContinuityBoundary"
             class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-800"
         >
-          Earlier continuity work still appears active. You can continue here,
-          but returning to the earlier progression may strengthen continuity
-          and recognition.
+          Earlier observations are still being processed. Returning to the previous stage may help strengthen recognition of the emerging pattern.
         </div>
 
       </div>
