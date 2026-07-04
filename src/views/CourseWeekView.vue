@@ -62,7 +62,7 @@
 
       <!-- Why You're Here (Orientation Section) -->
       <section
-          v-if="week.orientation && ![2, 4].includes(weekNumber)"
+          v-if="week.orientation && ![2, 4, 5].includes(weekNumber)"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm transition-all duration-300"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
@@ -78,9 +78,9 @@
         </div>
       </section>
 
-      <!-- Why This Matters (openingReflection or orientation) - Only Stage 2, 3, 5 -->
+      <!-- Why This Matters (openingReflection or orientation) - Only Stage 2, 3 -->
       <section
-          v-if="(week.openingReflection && week.openingReflection.length > 0 && [2, 3, 5].includes(weekNumber))"
+          v-if="(week.openingReflection && week.openingReflection.length > 0 && [2, 3].includes(weekNumber))"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
       >
         <h2 class="text-2xl font-semibold text-slate-950">

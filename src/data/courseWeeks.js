@@ -284,43 +284,29 @@ export const courseWeeks = [
         orientation: {
             title: "Why this matters",
             content: [
-                "Stage 5 must reveal: “What this response leads to”.",
-                "By this stage, the focus is on what follows the response.",
-                "It is on the consequence of the movement.",
+                "A pattern often leads to a consistent result.",
+                "This stage looks at what follows the response.",
                 "The question is simple:",
                 "What followed this response?"
             ]
         },
 
-        openingReflection: [
-            "When a sequence appears repeatedly, it often leads to a specific consequence in the internal or external environment. This can be difficult to see when the focus is only on the drift away from intention.",
-
-            "This stage, attention shifts toward what this leads to. When a familiar delay or a routine of checking appears, what followed this response? Often, the movement is followed by a shift in pressure, a change in attention, or a postponement of a task.",
-
-            "By observing what happens after the response, the movement becomes a more precise recognition. MindWorks is simply documenting the results of the movement. If checking email happens as a task begins to feel heavy, one can observe what followed that response.",
-
-            "This is not about justifying the behaviour. It is about seeing the results clearly enough to understand what followed the response once the movement has occurred. When it becomes visible what this leads to, the sequence begins to lose its status as an 'accident'. It becomes a recognisable movement with observable results.",
-
-            "The goal is not to stop the movement yet, but to become interested in what it leads to. Recognition of these consequences is the next layer of visibility."
-        ],
-
         bodyFocus: [
-            "Consequences are often felt as a physical transition. Notice the sensation in the body at the moment the response appears—is there a release of tension, a softening, or a sudden shift in energy?",
-            "Observe whether the recurring pattern coincides with a momentary change in physical pressure or ease."
+            "Notice any change in the body after the response. For example: tension, release, heaviness, or ease."
         ],
 
         exercises: [
             {
-                title: "Notice what it leads to",
-                description: "At the moment a familiar response appears, notice what this leads to in your internal environment. What sensation or pressure followed the response?"
+                title: "Notice what follows the response",
+                description: "At the moment a familiar response appears, notice what followed this response."
             },
             {
-                title: "Notice the shift",
-                description: "Observe if the recurring pattern leads to a momentary shift in the task or in a specific feeling of activation."
+                title: "Notice any shift",
+                description: "Observe if the recurring pattern leads to a momentary shift in the task, attention, or feeling."
             },
             {
-                title: "Stay with the result",
-                description: "Ask yourself: 'What followed this response?' Do not look for an explanation; simply observe what this leads to."
+                title: "Stay with what happens next",
+                description: "Ask yourself: 'What followed this response?' and stay with what happens next."
             }
         ]
 
