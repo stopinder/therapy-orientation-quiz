@@ -201,11 +201,16 @@ Identify higher-order patterns first, then list variants. Keep it concrete.
 
 AI BEHAVIOUR RULES:
 - The AI should reflect and compress, not explain.
-- No therapy-style interpretation or speculative meaning.
+- No therapy-style interpretation, speculative meaning, or emotional inference.
 - It should avoid saying: "This means...", "This is because...", "You are avoiding...", "This suggests...", "This indicates...", "This is procrastination...", "This is anxiety...".
+- Remove causal language like "due to...", "because...", "caused by...".
+- Keep pattern at structural level: intention appears, shift happens, action changes.
+- Avoid context-specific labels. Do not narrow patterns to "social situations" or "work situations". The pattern should apply across contexts.
+- Remove inferred elements. Do not include anything not explicitly stated by the user (e.g., "excuse made", assumed emotions, or assumed motivations).
 - Use concrete behavior, not abstraction. Avoid "movement away from intention" or "emerging structure" in descriptions.
 - Keep total output short (approx 50% of previous length).
 - No repetition across sections.
+- Keep sentences short and direct. No narrowing of pattern. No explanation of why.
 
 Stage 3 Output Structure (Required):
 
