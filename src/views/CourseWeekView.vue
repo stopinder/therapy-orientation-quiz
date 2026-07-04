@@ -65,7 +65,7 @@
       <!-- Why You're Here (Orientation Section) -->
       <section
           v-if="week.orientation && weekNumber !== 2"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm transition-all duration-300"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
           {{ week.orientation.title }}
@@ -83,7 +83,7 @@
       <!-- This Stage's Experiment (Week 1 only) -->
       <section
           v-if="week.number === 1"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm transition-all duration-300"
       >
         <h2 class="text-2xl font-semibold text-slate-950">
           This Stage's Experiment
@@ -94,13 +94,13 @@
             <p class="font-medium text-2xl text-slate-950">Sense both feet.</p>
             <details class="group">
               <summary class="inline-flex cursor-pointer list-none items-center text-sm font-medium text-slate-500 hover:text-slate-900">
-                <span>Why?</span>
+                <span>Why the feet?</span>
                 <svg class="ml-1 h-4 w-4 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </summary>
               <div class="mt-2 rounded-xl bg-slate-50 p-4 text-sm leading-6 text-slate-600">
-                <strong>Why the feet?</strong> This is not a relaxation exercise. It simply gives you a stable reference point before you observe what happens next.
+                This is not a relaxation exercise. It simply gives you a stable reference point before you observe what happens next.
               </div>
             </details>
           </div>
@@ -192,7 +192,7 @@
       <!-- Reflect with MindWorks -->
       <section
           id="reflect-with-mindworks"
-          class="mb-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300"
+          class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm transition-all duration-300"
       >
 
         <div class="mb-8 flex items-center justify-between">
@@ -212,13 +212,13 @@
 
         <div
             v-if="week.number === 1"
-            class="mb-10 rounded-2xl border border-blue-100 bg-blue-50/50 p-6"
+            class="mb-10 rounded-2xl border border-slate-200 bg-slate-50/50 p-8"
         >
-          <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-blue-900">
+          <h3 class="mb-3 text-sm font-semibold uppercase tracking-wider text-slate-500">
             Stage 1 Arrival
           </h3>
-          <p class="text-base leading-7 text-blue-800">
-            In this stage, we are becoming interested in the moment where continuity changes.
+          <p class="text-base leading-7 text-slate-700">
+            Here, we are becoming interested in the moment where continuity changes.
             Before you begin your reflection, take a moment to settle.
             Notice the transition from whatever you were doing before to this moment here.
           </p>
@@ -231,7 +231,6 @@
             >
               {{ week.reflectionPrompt }}
             </p>
-            <p v-if="week.number === 1" class="text-sm text-slate-500 font-medium">One example is enough.</p>
           </div>
           <VoiceRecorder @transcribed="text => reflection += (reflection ? ' ' : '') + text" />
         </div>
