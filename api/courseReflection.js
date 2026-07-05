@@ -409,8 +409,13 @@ DO NOT use phrases like:
 - "which causes a conflict"
 - "linked to the need to"
 - "meeting expectations"
+- "performance expectations"
+- "related to conflict"
 - "this shows that"
 - "this means"
+- "The reflections indicate a range of responses"
+- "the observation reveals"
+- "navigating workplace expectations"
 
 Stage 6 Output Structure (Required):
 
@@ -422,8 +427,8 @@ Do NOT include any other sentences, headers, or explanations.
 Do NOT list responses or use bullet points.
 Do NOT use phrases like "The responses", "Recurring responses appearing", "the observation reveals", or "navigating workplace expectations".
 Do NOT use sequence arrows (->).
-Do NOT define or explain what the pressure is; leave it as something visible but not yet fully understood.
-Use simple, direct, neutral phrasing. Avoid analytical, clinical, or therapeutic language.
+Do NOT define, label, or explain what the pressure is; leave it as something visible but not yet fully understood. Do NOT use labels like "conflict", "performance", "expectations", or any other descriptor for the pressure.
+Use simple, direct, neutral phrasing. Replace "The reflections indicate a range of responses..." with "You respond in different ways...". Avoid analytical, clinical, or therapeutic language.
 Include implied unity by suggesting they "seem to gather around the same pressure or condition".
 `.trim()
         }
