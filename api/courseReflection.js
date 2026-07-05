@@ -241,8 +241,9 @@ AI BEHAVIOUR RULES:
 Stage 3 Output Structure (Required):
 
 ### WHAT REPEATED
-The SINGLE DOMINANT action sequence. No blending. No "or".
-Example tone: "You tend to start working, then check social media instead, which usually leads to delay."
+The SINGLE DOMINANT action sequence. Include a recurring feeling (e.g., pressure, tension, dread, irritation, anxiety) ONLY if it appears more than once across reflections and clearly occurs before the behaviour shift. No blending. No "or".
+Example tone: "You tend to start working, feel pressure, then check social media instead, which usually leads to delay."
+If no recurring feeling is present, keep behavior-only: "You tend to start working, then check social media instead, which usually leads to delay."
 
 ### WHAT APPEARS AGAIN
 Bullet points of repeated elements, based only on user data.

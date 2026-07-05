@@ -145,11 +145,13 @@ CORE ANALYSIS:
 7. SENTENCE GENERATION:
    - Generate 3 candidate sentences for the dominant pattern.
    - All candidates must follow the structure: "You [frequency] [action], then [alternative] instead."
+   - If a specific feeling (e.g., pressure, tension, dread, irritation, anxiety) appears more than once across reflections and clearly occurs before the behavior shift, integrate it naturally: "You [frequency] [action], feel [feeling], then [alternative] instead."
    - Prefer variants with timing cues (e.g., "start", "begin", "as you begin").
    - Penalize "plan to", "engage in", "initiate", or overly generic words.
    - Select the MOST natural and recognizable one.
 8. DO NOT generate a full sentence for the final output. Provide ONLY raw fragments for the JSON fields:
    - intention: the raw action from the SELECTED best variant (e.g., "start working", "begin replying"). DO NOT include "plan to".
+   - feeling: the recurring feeling if selected (e.g., "pressure", "tension"). If no strong recurring feeling, return null.
    - shift: the raw action taken instead (e.g., "check social media", "switch to your phone"). DO NOT include "instead". Replace "check all of my social media" with "check social media".
    - consequence: the raw result (e.g., "delay", "frustration"). DO NOT include "this leads to".
 9. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). 
@@ -168,6 +170,7 @@ Return a JSON object ONLY.
 {
   "dominantPattern": {
     "intention": "raw fragment of intention",
+    "feeling": "recurring feeling or null",
     "shift": "raw fragment of behavior/action they did instead",
     "consequence": "raw fragment of specific result",
     "score": "float",
@@ -340,12 +343,14 @@ Rules:
             } = jsonResult
 
             const intention = (dominantPattern.intention || "[start with intention]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
+            const feeling = (dominantPattern.feeling || "").replace(/\bmy\b/gi, "your")
             const shift = (dominantPattern.shift || "[shift into distraction/withdrawal]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
             const consequence = (dominantPattern.consequence || "[tension / negative response / delay]").replace(/^this leads to /i, "").replace(/\bmy\b/gi, "your")
 
             const frequency = isEarly ? "sometimes" : (isStrong ? "reliably" : "tend to");
             
-            markdownSummary = `You ${frequency} ${intention}, then ${shift} instead, which usually leads to ${consequence}.`
+            const feelingPhrase = feeling ? `, feel ${feeling},` : "";
+            markdownSummary = `You ${frequency} ${intention}${feelingPhrase} then ${shift} instead, which usually leads to ${consequence}.`
 
             if (stateLine) {
                 markdownSummary += ` Before this shift, there is ${verbs.often} a state already present, such as ${stateLine.replace(/\bmy\b/gi, "your")}.`
