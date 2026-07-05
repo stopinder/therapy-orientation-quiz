@@ -106,7 +106,7 @@ MindWorks Observation: ${r.ai_response}`)
         const lens = isCourseOverview || true
             ? {
                 question: "What is becoming visible across everything observed so far?",
-                emphasis: "ONE continuous paragraph, no sections, no bullets, no headings. evidence count: " + count
+                emphasis: "ONE continuous paragraph, no sections, no bullets, no headings. Use natural, human language. No system terms like 'across situations' or 'early pattern'. evidence count: " + count
             }
             : (stageLenses[currentStage] || stageLenses[6])
 
@@ -117,7 +117,7 @@ MindWorks Observation: ${r.ai_response}`)
 You are a Field Researcher documenting a cumulative investigation. 
 
 Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why.
+A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", or "what follows the response". Instead use: "it’s not always the same what happens after that", "the pattern is starting to show".
 
 Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
@@ -202,7 +202,7 @@ Rules:
 You are a Field Researcher documenting an ongoing investigation.
 
 Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. ${isStage5 ? 'Stage 5 must NOT describe patterns across time. Only describe what is directly observable.' : ''}
+A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", or "what follows the response". Instead use: "it’s not always the same what happens after that", "the pattern is starting to show". ${isStage5 ? 'Stage 5 must NOT describe patterns across time. Only describe what is directly observable.' : ''}
 
 Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
@@ -342,27 +342,25 @@ Rules:
             const shift = (dominantPattern.shift || "[shift into distraction/withdrawal]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "")
             const consequence = (dominantPattern.consequence || "[tension / negative response / delay]").replace(/^this leads to /i, "")
 
-            // Pattern + Consequence sentence
             const frequency = isEarly ? "sometimes" : (isStrong ? "reliably" : "tend to");
+            
+            // Start building the paragraph
             markdownSummary = `You ${frequency} ${intention}, then ${shift} instead. This leads to ${consequence}.`
 
-            // State sentence
             if (stateLine) {
-                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present — such as ${stateLine}.`
+                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present, such as ${stateLine}.`
             }
 
-            // Light uncertainty sentence
             if (consequenceConsistency.includes("visible")) {
-                markdownSummary += ` What follows the response is becoming visible, but is not yet consistent.`
+                markdownSummary += ` It’s not always the same what happens after that, but a pattern is starting to show.`
             } else {
-                markdownSummary += ` What follows the response is not yet consistent across situations.`
+                markdownSummary += ` What follows that isn’t always the same across different situations.`
             }
 
-            // Final closing sentence
-            markdownSummary += ` This is an early pattern. It may become clearer with more observations.`
+            markdownSummary += ` It’s still early, and the pattern may become clearer as more moments are documented.`
 
-            // Real-time perception pointer
-            markdownSummary += ` There is often a brief moment before the shift.`
+            // Real-time perception pointer (New paragraph for separation)
+            markdownSummary += `\n\nThere is often a brief moment just before the shift.`
         } else {
             const isStage3 = currentStage === 3
             const isStage4 = currentStage === 4

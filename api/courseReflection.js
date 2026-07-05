@@ -252,9 +252,9 @@ Keep them concrete (actions, not concepts):
 No interpretation.
 
 ### WHAT THESE MOMENTS HAVE IN COMMON
-One short paragraph max. Plain language.
-Example: "In each situation, as you begin with an intention, you shift into something else instead. There is often a brief moment before the shift."
-No speculation. No psychological explanation. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
+One short paragraph max. Plain, natural language. Flowing sentences. 
+Example: "In each situation, as you begin with an intention, you shift into something else instead. It’s not always the same what happens after that, but the pattern is starting to show. There is often a brief moment just before the shift."
+No system language like "across situations" or "early pattern". No speculation. No psychological explanation. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
 
 INSUFFICIENT EVIDENCE:
 If there is not enough recurrence across previous reflections in the RECENT REFLECTION HISTORY, explicitly say so:
@@ -298,7 +298,9 @@ List as bullet points ONLY what was clearly described. No interpretation.
 - [state 2]
 
 ### A recognition
-The pattern did not begin at the moment of action. It was already there before anything happened. There is often a brief moment before the shift.
+The pattern did not begin at the moment of action. It was already there before anything happened. 
+
+There is often a brief moment just before the shift.
 
 Rules:
 1. No interpretation, speculation, or unnecessary elaboration.
@@ -332,8 +334,10 @@ Bullet points:
 - consequence (what followed it)
 
 ### WHAT THIS LEADS TO
-One short line describing the consequence pattern. Include a final line referring to the timing of the pattern (e.g. "This tends to happen just as you begin.").
-Example: "This response is followed by shame and reduced openness. There is often a brief moment before the shift."
+One short line describing the consequence pattern. Use natural, human language.
+
+There is often a brief moment just before the shift.
+Example: "This response is followed by shame and reduced openness. There is often a brief moment just before the shift."
 
 Rules:
 1. Do not use the word "function" in any heading or description.
@@ -404,8 +408,10 @@ List only the behavioral actions/responses.
 Do not list pressure, fear, tightness, shallow breathing, or body sensations here.
 
 ### What these responses may have in common
-If multiple responses exist: A short description of how these responses may be related. Use cautious language. 
-Example: "All three responses—checking, preparing, and delaying—appeared before the meeting. It is not yet clear whether they are related to the same pressure, or whether each changes the condition in a different way. There is often a brief moment before the shift."
+If multiple responses exist: A short description of how these responses may be related. Use cautious, natural language. 
+Example: "All three responses—checking, preparing, and delaying—appeared before the meeting. It is not yet clear whether they are related to the same pressure, or whether each changes the condition in a different way. 
+
+There is often a brief moment just before the shift."
 
 If only states exist: Use the mandatory acknowledgement: "This observation may describe several internal experiences rather than different responses. Further observations may make the relationship between conditions and responses clearer."
 
@@ -545,6 +551,8 @@ Prefer:
 - The observations are beginning to suggest...
 - There is not yet enough evidence to conclude...
 - This appears alongside earlier observations.
+- It’s not always the same what happens after that.
+- The pattern is starting to show.
 
 Avoid:
 - This means...
@@ -555,6 +563,9 @@ Avoid:
 - You have...
 - It is obvious that...
 - This demonstrates...
+- across situations
+- this is an early pattern
+- what follows the response
 
 Never diagnose. Never over-interpret. Never sound certain.
 
