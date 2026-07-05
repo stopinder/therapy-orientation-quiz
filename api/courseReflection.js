@@ -201,12 +201,14 @@ CORE ANALYSIS:
    - Recency: more recent reflections carry more weight. (Reflections are provided in reverse chronological order).
 4. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns. If a new pattern has overtaken a previous one due to recency/frequency, switch to it completely.
 5. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
-6. Generate ONLY ONE pattern sentence for the dominant pattern: "You [frequency] plan to [intention], then [specific behavior] instead." Use present simple ONLY. No gerunds after "then".
-7. Perspective: Convert ALL first-person to second-person (I -> you, my -> your).
-8. Force Contrast: The sentence MUST include "instead".
+6. DO NOT generate the full sentence yourself. Provide only the fragments. The sentence will be: "You [frequency] plan to [intention], then [behavior] instead. This leads to [consequence]."
+7. Fragments required:
+   - [intention]: e.g., "start working" (NO "plan to")
+   - [behavior]: e.g., "check social media" (NO "instead")
+   - [consequence]: e.g., "delay" (NO "this leads to")
+8. Perspective: Convert ALL first-person to second-person (I -> you, my -> your).
 9. Modal check: Avoid "may" or "might". Use "sometimes", "often", or "tend to".
-10. Fallback: If no strong pattern exists, use "You sometimes plan to do something, then don't follow through instead."
-11. Replace robotic phrases like "delay occurs" or "felt frustration" with "this leads to delay" or "frustration follows".
+10. Fallback: If no strong pattern exists, use intention: "do something", behavior: "don't follow through", consequence: "stagnation".
 Look across multiple reflections to identify recurring behaviors. 
 The user is at Stage 3. Stage 3 is about pattern: “What specifically repeated?”
 
