@@ -201,7 +201,7 @@ CORE ANALYSIS:
    - Recency: more recent reflections carry more weight. (Reflections are provided in reverse chronological order).
 4. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns. If a new pattern has overtaken a previous one due to recency/frequency, switch to it completely.
 5. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
-6. DO NOT generate the full sentence yourself. Provide only the fragments. The sentence will be: "You [frequency] plan to [intention], then [behavior] instead. This leads to [consequence]."
+6. DO NOT generate the full sentence yourself. Provide only the fragments. The sentence will be: "Just as you [intention], you [behavior] instead. This leads to [consequence]."
 7. Fragments required:
    - [intention]: e.g., "start working" (NO "plan to")
    - [behavior]: e.g., "check social media" (NO "instead")
@@ -235,20 +235,20 @@ Stage 3 Output Structure (Required):
 
 ### WHAT REPEATED
 The SINGLE DOMINANT action sequence. No blending. No "or".
-Example tone: "You often plan to return to work, but check social media instead. This leads to delay."
+Example tone: "Just as you return to work, you check social media instead. This leads to delay."
 
 ### WHAT APPEARS AGAIN
 Bullet points of repeated elements, based only on user data.
 Keep them concrete (actions, not concepts):
-- intention to [action]
+- [intention]
 - [specific action taken instead]
 - shift in focus
 No interpretation.
 
 ### WHAT THESE MOMENTS HAVE IN COMMON
 One short paragraph max. Plain language.
-Example: "In each situation, you begin with an intention, then shift into something else instead before continuing."
-No speculation. No psychological explanation. No gerunds after "then". Use present simple (e.g., "plan to start, then check" NOT "plan to start, then checking").
+Example: "In each situation, as you begin with an intention, you shift into something else instead."
+No speculation. No psychological explanation. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
 
 INSUFFICIENT EVIDENCE:
 If there is not enough recurrence across previous reflections in the RECENT REFLECTION HISTORY, explicitly say so:
@@ -586,7 +586,7 @@ Stay close to the actual observations.
 - REUSE specific user phrasing for actions. Convert "I checked Instagram" to "you check Instagram".
 - Extract concrete actions, not concepts. Identify what the user intended to do vs what they actually did instead. 
 - Replace generic labels (distraction, withdrawal, avoidance) with actual behaviours (checking social media, not replying, leaving the task).
-- Mandatory structure: "You [frequency] plan to [intention], then [behavior] instead." No gerunds after "then". Use present simple (e.g., "plan to start, then check" NOT "plan to start, then checking").
+- Mandatory structure: "Just as you [intention], you [behavior] instead." No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
 - Avoid modal weakness: use "sometimes", "often", or "tend to" instead of "may" or "might".
 
 Avoid phrases such as:

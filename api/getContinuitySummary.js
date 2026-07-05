@@ -143,7 +143,7 @@ CORE ANALYSIS:
 5. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns. If a new pattern has overtaken a previous one due to recency/frequency, switch to it completely.
 6. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
 7. DO NOT generate a full sentence. Provide ONLY raw fragments for the JSON fields:
-   - intention: the raw intention (e.g., "start working", "reply to the message"). DO NOT include "plan to".
+   - intention: the raw action you were about to do (e.g., "start working", "reply to the message"). DO NOT include "plan to".
    - shift: the raw action taken instead (e.g., "check social media", "leave the room"). DO NOT include "instead".
    - consequence: the raw result (e.g., "delay", "frustration"). DO NOT include "this leads to".
 8. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). 
@@ -169,7 +169,7 @@ Return a JSON object ONLY.
   },
   "allCandidates": [
     {
-       "summary": "You tend to [intention], then [shift]",
+       "summary": "Just as you [intention], you [shift] instead",
        "score": 0.8
     }
   ],
@@ -187,7 +187,7 @@ Rules:
 7. NO section names should be returned in any field value.
 8. Strictly follow the Language and Perspective rules.
 9. REUSE specific user phrasing for actions.
-10. No gerunds after "then". Use present simple (e.g., "plan to start, then check" NOT "plan to start, then checking").
+10. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
 `.trim()
         } else {
             const isStage4 = currentStage === 4
@@ -213,7 +213,7 @@ ${isStage5 ? '1+ observations: Describe only what is directly observable: respon
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."`}
 
 CORE ANALYSIS:
-Extract concrete actions, not concepts. Look across multiple reflections to identify recurring behaviors. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify patterns from action sequences (you plan to [intention], then [actual behavior]).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g. "checking Instagram" instead of "distraction") and reuse it converted to second-person and present tense. If no specific behaviour is clear, use "do something else instead" or "don't follow through". No gerunds after "then". Use present simple (e.g., "plan to start, then check" NOT "plan to start, then checking"). The sentence MUST include "instead".
+Extract concrete actions, not concepts. Look across multiple reflections to identify recurring behaviors. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify patterns from action sequences (just as you [intention], you [actual behavior]).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g. "checking Instagram" instead of "distraction") and reuse it converted to second-person and present tense. If no specific behaviour is clear, use "do something else instead" or "don't follow through". No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking"). The sentence MUST include "instead".
 
 Language and Perspective:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
@@ -337,7 +337,8 @@ Rules:
             const consequence = (dominantPattern.consequence || "[tension / negative response / delay]").replace(/^this leads to /i, "")
 
             // Pattern + Consequence sentence
-            markdownSummary = `You ${verbs.tend} plan to ${intention}, then ${shift} instead. This leads to ${consequence}.`
+            const frequencyPrefix = isEarly ? "Sometimes, just" : (isStrong ? "Reliably, just" : "Just");
+            markdownSummary = `${frequencyPrefix} as you ${intention}, you ${shift} instead. This leads to ${consequence}.`
 
             // State sentence
             if (stateLine) {
