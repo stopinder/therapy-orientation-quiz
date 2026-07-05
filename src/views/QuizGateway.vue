@@ -1,40 +1,39 @@
 <template>
-  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-24">
+  <main class="min-h-screen bg-stone-50 px-6 py-24">
 
-    <div class="max-w-2xl mx-auto space-y-16">
+    <div class="max-w-2xl mx-auto">
 
-      <!-- HERO -->
-      <header class="space-y-6 max-w-xl">
+      <div class="space-y-8">
+        <div class="text-[1.1rem] leading-[1.8] text-slate-800 whitespace-pre-line">
+You don’t need to think too much about this.
 
-        <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
-          MindWorks
-        </p>
+Just bring to mind a recent moment.
 
-        <h1 class="text-3xl md:text-[2.45rem] font-medium tracking-[-0.025em] text-slate-900 leading-[1.12]">
-          See what you actually do at the moment you start.
-        </h1>
+You started something—
+and then something else happened instead.
 
-        <div class="space-y-4 text-[1.02rem] leading-[1.9] text-slate-700">
+That’s enough.
 
-          <p>
-            This is not about what you think you do. It is about what actually happens, just as you begin.
-          </p>
-
+What happened?
         </div>
 
-      </header>
+        <div class="space-y-6">
+          <textarea
+            v-model="observation"
+            placeholder="Describe what happened..."
+            rows="6"
+            class="w-full rounded-2xl border border-stone-300 bg-white p-6 text-lg leading-relaxed text-slate-800 outline-none transition focus:border-slate-900 shadow-sm"
+          ></textarea>
 
-      <!-- ENTRY -->
-      <section class="max-w-xl space-y-6">
-
-        <button
+          <button
             @click="handleContinue"
-            class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
-        >
-          See what happens
-        </button>
-
-      </section>
+            :disabled="!observation.trim()"
+            class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            See what happens
+          </button>
+        </div>
+      </div>
 
     </div>
 
@@ -42,13 +41,20 @@
 </template>
 
 <script setup>
+import { ref } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
+const observation = ref("")
 
 const handleContinue = () => {
 
   sessionStorage.setItem("passedGateway", "true")
+  
+  // Store the initial observation if we want to carry it forward
+  if (observation.value.trim()) {
+    sessionStorage.setItem("initial_observation", observation.value.trim())
+  }
 
   router.push("/adhd-quiz")
 
@@ -56,13 +62,4 @@ const handleContinue = () => {
 </script>
 
 <style scoped>
-
-.section-label {
-  @apply text-[11px] uppercase tracking-[0.24em] text-slate-500;
-}
-
-.section-title {
-  @apply text-[1.7rem] md:text-[2rem] font-medium tracking-[-0.025em] leading-[1.18] text-slate-900;
-}
-
 </style>
