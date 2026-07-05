@@ -324,16 +324,24 @@ export const courseWeeks = [
             "Describe a situation where you noticed yourself responding in more than one way.",
 
         intro:
-            "Sometimes the same situation brings out different responses. You might prepare, avoid, overthink, withdraw, reassure yourself, become defensive, or respond in another way.\n\nThis stage is about noticing the different responses that appeared, without trying to explain them.",
+            "This stage is about revealing a shared underlying condition that connects different responses. You might prepare, avoid, overthink, or withdraw, but these different actions may all be gathering around the same kind of pressure.",
+
+        orientation: {
+            title: "Why this matters",
+            content: [
+                "Responses that look different on the surface may not be separate.",
+                "They may gather around the same underlying condition."
+            ]
+        },
 
         openingReflection: [
             "By this point, repeated sequences and states may have appeared across reflections. Some may seem separate at first: checking, preparing, delaying, reorganising, withdrawing, or overthinking.",
 
-            "Stage 6 looks across these observations. The question is not yet what the relationship is. The question is whether different responses keep appearing around similar moments of pressure, uncertainty, exposure, or demand.",
+            "Stage 6 looks across these observations. The question is not what the relationship is, but whether these different responses gather around the same pressure or condition.",
 
-            "A response may look different on the surface, while still appearing in a similar situation. Preparing may appear before one task. Checking may appear before another. Delaying may appear somewhere else. MindWorks is beginning to observe whether these responses gather around similar conditions.",
+            "A response may look different on the surface, while still appearing in a similar situation. MindWorks is beginning to observe whether these responses are connected.",
 
-            "No final explanation is needed here. The task is simply to notice the relationship: what appears, when it appears, and whether several different responses seem to arrive around the same kind of pressure.",
+            "The task is simply to notice the relationship: whether several different responses seem to arrive around the same kind of pressure.",
 
             "This is the beginning of seeing a relationship. Not as a theory, but as a visible connection between conditions and responses."
         ],
@@ -349,21 +357,7 @@ export const courseWeeks = [
                 title: "Notice the shared condition",
 
                 description:
-                    "Identify one situation where more than one response appears."
-            },
-
-            {
-                title: "Compare the responses",
-
-                description:
-                    "Notice whether checking, preparing, delaying, reorganising, or withdrawing appear in similar moments."
-            },
-
-            {
-                title: "Stay with the relationship",
-
-                description:
-                    "Do not try to explain the responses. Simply observe whether they seem to gather around the same pressure."
+                    "Observe whether different responses seem to gather around the same pressure."
             }
 
         ],
@@ -371,15 +365,7 @@ export const courseWeeks = [
         exercises: [
             {
                 title: "Notice the shared condition",
-                description: "Identify one situation where more than one response appears."
-            },
-            {
-                title: "Compare the responses",
-                description: "Notice whether checking, preparing, delaying, reorganising, or withdrawing appear in similar moments."
-            },
-            {
-                title: "Stay with the relationship",
-                description: "Do not try to explain the responses. Simply observe whether they seem to gather around the same pressure."
+                description: "Observe whether different responses seem to gather around the same pressure."
             }
         ]
 

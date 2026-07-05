@@ -355,10 +355,10 @@ Rules:
 11. Do not include summary sentences that restate the pattern. Keep bullet points only in "WHAT APPEARS AGAIN".
             `.trim(),
             6: `
-This stage is about identifying the relationship between different responses that gather around similar conditions.
+This stage is about revealing a shared underlying condition that connects different responses.
 
-You are a Field Researcher observing internal relationships. The question is: What different responses appear around similar pressure?
-The goal is for internal relationships and recurring responses to become visible.
+You are a Field Researcher observing internal relationships. The question is: What shared pressure do these different responses gather around?
+The goal is for the underlying condition that connects these responses to become visible.
 
 ### NEW EVIDENCE THRESHOLDS:
 - 1–3 observations: Describe only what is visible. Avoid recurrence language.
@@ -388,15 +388,13 @@ In this case, you MUST use the following acknowledgement in the "One Pattern, Ma
 
 ### WHEN MULTIPLE RESPONSES EXIST
 
-Identify:
-- responses becoming visible
-- what they may have in common
-- the relationship that is still emerging
+Identify the shared underlying pressure that these different responses seem to gather around. 
+Do NOT list the responses separately.
+Do NOT use sequence arrows or bullet points.
 
 Pay attention to:
-* Recurring response: Multiple movements that appear around the same pressure point.
-* Recurring condition: The specific environment or pressure that seems to be present when responses occur.
-* Relationship: How different responses gather around particular conditions. Use "they seem to gather around the same pressure or condition" rather than "system at play" or "system becoming visible".
+* Shared condition: The specific environment or pressure that seems to be present when different responses occur.
+* Implied Unity: How different responses gather around the same pressure point. Use "they seem to gather around the same pressure or condition" rather than "system at play" or "system becoming visible".
 
 Identify what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.). Avoid "function", "purpose", or "protection". Use calm, precise, and restrained language.
 
@@ -404,13 +402,21 @@ Stage 6 Output Structure (Required):
 
 ### One Pattern, Many Responses
 
-A single integrated paragraph describing the observations and how they seem to relate.
+A single integrated paragraph acknowledging different responses and pointing to a shared underlying pressure.
 Do NOT list responses or use bullet points.
+Do NOT use phrases like "The responses" or "Recurring responses appearing".
+Do NOT use sequence arrows (->).
 Use simple, natural phrasing and an observational tone.
 Do not explain the pattern; leave it as something visible but not yet fully understood.
 Include implied unity by suggesting they "seem to gather around the same pressure or condition".
 
 There’s often a similar feeling or pressure just before they appear.
+
+### Why this matters
+Short, integrated observation (max 2 sentences).
+Focus only on:
+- responses may not be separate
+- they may gather around the same condition
 
 ### The sequence
 A clean vertical sequence of events.
@@ -420,8 +426,8 @@ If body observations are given without specific timing, place them near the emot
 ### What remains unclear
 Identify what is not yet certain about the relationship between these responses. This section must be short and cautious.
 Example phrases:
-* "It is not yet clear whether checking, reorganising, and delaying are related to the same pressure."
-* "The relationship between checking, reorganising, and delaying is still being observed."
+* "It is not yet clear whether these different responses are related to the same pressure."
+* "The relationship between these responses is still being observed."
 `.trim()
         }
 
