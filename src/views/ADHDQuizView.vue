@@ -250,14 +250,14 @@
               </h2>
 
               <p class="mx-auto mb-8 max-w-xl text-lg leading-relaxed text-slate-600">
-                The orientation introduces pattern recognition. The six-stage visibility path helps you work with those patterns over time through guided reflection and continuity tracking.
+                The orientation introduces pattern recognition. The MindWorks programme helps you work with those patterns over time through guided reflection and continuity tracking.
               </p>
 
               <button
                   @click="enterProgrammeFromQuiz"
                   class="inline-block rounded-xl bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
               >
-                Start the six-stage visibility path
+                Start the MindWorks programme
               </button>
             </div>
           </div>

@@ -1,317 +1,74 @@
 <template>
-  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 pt-10 pb-24">
-    <div class="max-w-4xl mx-auto space-y-24">
+  <main class="min-h-screen bg-stone-50 px-6 pt-16 pb-24">
+    <div class="max-w-2xl mx-auto space-y-16">
 
       <!-- HERO -->
-
-      <section class="pt-8 max-w-3xl space-y-5">
-
-        <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
-          Six-Stage Visibility Path
-        </p>
-
-        <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-slate-900">
-          A structured visibility process for noticing how intention changes,
-          pressure builds, and familiar responses repeat.
+      <section class="space-y-8">
+        <h1 class="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1] text-slate-900">
+          Why You Do Things You Don’t Mean To Do
         </h1>
 
-        <div class="space-y-4 text-[1.03rem] leading-[1.85] text-slate-700 max-w-2xl">
-
+        <div class="space-y-6 text-xl leading-relaxed text-slate-700">
           <p>
-            Structured stage-based practices combining psychological reflection,
-            embodied attention, and grounded self-observation.
+            You start something.<br />
+            Then something else takes over.
           </p>
 
           <p>
-            This is not a productivity system or self-improvement programme.
-            It is an attempt to understand how continuity repeatedly breaks down,
-            particularly under emotional pressure, fragmentation, and overload.
+            You open your laptop—and check messages instead.<br />
+            You plan to speak honestly—and find yourself explaining or withdrawing.<br />
+            You mean to follow through—and something shifts.
           </p>
 
+          <p class="font-medium text-slate-900">
+            This shows you exactly when that happens.
+          </p>
+
+          <p>
+            You’ll see patterns across real moments—not guesses or imagination.
+          </p>
+
+          <p>
+            Most approaches ask you to imagine your parts.<br />
+            This shows you when they actually take over.
+          </p>
+
+          <div class="space-y-4 pt-4">
+            <p class="font-medium text-slate-900">You’ll begin to notice:</p>
+            <ul class="space-y-3 list-disc pl-5 text-slate-700">
+              <li>what happens as you start</li>
+              <li>the moment things shift</li>
+              <li>patterns across different situations</li>
+              <li>what’s already there before you react</li>
+              <li>what your responses lead to</li>
+              <li>how different reactions may not be random</li>
+            </ul>
+          </div>
+
+          <p class="pt-4">
+            Once you can see it clearly, it stops feeling random.
+          </p>
+
+          <p class="text-2xl font-medium text-slate-900 pt-2">
+            And that’s where change actually begins.
+          </p>
         </div>
 
-        <div class="flex flex-wrap gap-3 pt-2">
-
+        <div class="flex flex-col sm:flex-row gap-4 pt-12">
           <button
               @click="enterProgramme"
-              class="inline-flex items-center rounded-xl border border-slate-300 px-5 py-3 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
+              class="inline-flex items-center justify-center rounded-full bg-slate-900 px-8 py-4 text-base font-semibold text-white shadow-sm hover:bg-slate-800 transition-all"
           >
             Enter Full Programme
           </button>
 
           <router-link
               to="/adhd-quiz"
-              class="inline-flex items-center rounded-xl px-5 py-3 text-sm text-slate-600 transition hover:text-slate-900"
+              class="inline-flex items-center justify-center rounded-full border border-slate-300 px-8 py-4 text-base font-semibold text-slate-700 hover:bg-slate-100 transition-all"
           >
-            Begin Free Orientation Reflection
+            Begin Free Orientation
           </router-link>
-
         </div>
-
-      </section>
-
-      <!-- THE PATTERN -->
-
-      <section class="max-w-3xl space-y-8">
-
-        <div class="space-y-3">
-
-          <p class="section-label">
-            The pattern
-          </p>
-
-          <h2 class="section-title">
-            You may understand yourself afterwards,
-            but lose contact in the moment.
-          </h2>
-
-        </div>
-
-        <div class="grid gap-4 md:grid-cols-2">
-
-          <div class="problem-card">
-            <p>
-              Starting with clarity and losing continuity halfway through.
-            </p>
-          </div>
-
-          <div class="problem-card">
-            <p>
-              Disappearing into reactions before recognising what happened.
-            </p>
-          </div>
-
-          <div class="problem-card">
-            <p>
-              Feeling capable in theory, but inconsistent in practice.
-            </p>
-          </div>
-
-          <div class="problem-card">
-            <p>
-              Repeating cycles of momentum, collapse, frustration, and recovery.
-            </p>
-          </div>
-
-          <div class="problem-card">
-            <p>
-              Losing awareness of the body during pressure, conflict, or overwhelm.
-            </p>
-          </div>
-
-          <div class="problem-card">
-            <p>
-              Recognising patterns intellectually while still being emotionally organised by them.
-            </p>
-          </div>
-
-        </div>
-
-      </section>
-
-      <!-- STRUCTURE -->
-
-      <section class="space-y-8">
-
-        <div class="space-y-3 max-w-3xl">
-
-          <p class="section-label">
-            Stage-based structure
-          </p>
-
-          <h2 class="section-title">
-            A gradual movement from recognition
-            toward greater continuity.
-          </h2>
-
-        </div>
-
-        <div class="grid gap-3">
-
-          <div
-              v-for="week in weeks"
-              :key="week.title"
-              class="week-card"
-          >
-
-            <div class="week-number">
-              {{ week.week }}
-            </div>
-
-            <div class="space-y-2">
-
-              <h3 class="text-[1.08rem] font-medium text-slate-900">
-                {{ week.title }}
-              </h3>
-
-              <p class="text-[0.98rem] leading-[1.8] text-slate-600">
-                {{ week.description }}
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      <!-- METHOD -->
-
-      <section class="max-w-3xl space-y-6">
-
-        <div class="space-y-3">
-
-          <p class="section-label">
-            The method
-          </p>
-
-          <h2 class="section-title">
-            Practical self-observation rather than self-improvement performance.
-          </h2>
-
-        </div>
-
-        <div class="body-copy">
-
-          <p>
-            The programme combines psychological reflection with embodied attention practices:
-            learning to remain partially connected to bodily sensation while observing emotional,
-            relational, and behavioural patterns.
-          </p>
-
-          <p>
-            Each stage includes preparation exercises, body sensing practices,
-            reflective prompts, and ordinary-life integration exercises.
-          </p>
-
-          <p>
-            The emphasis is not on analysing yourself endlessly,
-            but on recognising when awareness narrows, disappears,
-            or becomes organised around automatic reactions.
-          </p>
-
-        </div>
-
-      </section>
-
-      <!-- WHO THIS IS FOR -->
-
-      <section class="max-w-3xl space-y-6">
-
-        <div class="space-y-3">
-
-          <p class="section-label">
-            Who this is for
-          </p>
-
-          <h2 class="section-title">
-            Reflective people who are tired of simplistic explanations.
-          </h2>
-
-        </div>
-
-        <div class="grid gap-4 md:grid-cols-2">
-
-          <div class="audience-card">
-            Emotionally intelligent people who still feel internally divided.
-          </div>
-
-          <div class="audience-card">
-            Professionals carrying chronic cognitive and emotional load.
-          </div>
-
-          <div class="audience-card">
-            People who overthink afterwards but disappear in the moment.
-          </div>
-
-          <div class="audience-card">
-            Inconsistent but capable people wanting greater continuity.
-          </div>
-
-          <div class="audience-card">
-            People seeking grounded reflection rather than diagnosis or hype.
-          </div>
-
-          <div class="audience-card">
-            Those wanting practical psychological work without performance culture.
-          </div>
-
-        </div>
-
-      </section>
-
-      <!-- WHAT CHANGES -->
-
-      <section class="max-w-3xl space-y-6">
-
-        <div class="space-y-3">
-
-          <p class="section-label">
-            What changes
-          </p>
-
-          <h2 class="section-title">
-            Not transformation.
-            Greater recognition.
-          </h2>
-
-        </div>
-
-        <div class="body-copy">
-
-          <p>
-            Over time, many people begin recognising interruption earlier:
-            the moment attention narrows,
-            the body disappears,
-            emotion takes over,
-            or continuity starts collapsing.
-          </p>
-
-          <p>
-            The aim is not permanent control.
-            It is increased contact with yourself while functioning in ordinary life.
-          </p>
-
-          <p>
-            For many people, that alone changes the quality of everyday experience substantially.
-          </p>
-
-        </div>
-
-      </section>
-
-      <!-- CTA -->
-
-      <section class="rounded-2xl border border-slate-200 bg-white/60 px-8 py-10">
-
-        <div class="max-w-2xl mx-auto text-center space-y-6">
-
-          <p class="text-[1.02rem] leading-[1.85] text-slate-700">
-            You do not need certainty before beginning.
-            Recognition is enough.
-          </p>
-
-          <div class="flex justify-center flex-wrap gap-3">
-
-            <button
-                @click="enterProgramme"
-                class="inline-flex items-center rounded-xl border border-slate-300 px-6 py-3 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
-            >
-              Enter Full Programme
-            </button>
-
-            <router-link
-                to="/adhd-quiz"
-                class="inline-flex items-center rounded-xl px-6 py-3 text-sm text-slate-600 transition hover:text-slate-900"
-            >
-              Begin Free Orientation Reflection
-            </router-link>
-
-          </div>
-
-        </div>
-
       </section>
 
     </div>
@@ -327,84 +84,14 @@ const router = useRouter()
 const auth = useAuthStore()
 
 const enterProgramme = async () => {
-
   const { data: { user } } = await supabase.auth.getUser()
-
   if (!user) {
     router.push("/auth")
     return
   }
-
   router.push("/course")
-
 }
-
-const weeks = [
-  {
-    week: "Stage 1",
-    title: "Observation",
-    description:
-        "Noticing moments where intention changes and attention moves somewhere unexpected."
-  },
-  {
-    week: "Stage 2",
-    title: "Sequence",
-    description:
-        "Seeing what happens before, during, and after a moment of interruption."
-  },
-  {
-    week: "Stage 3",
-    title: "Pattern",
-    description:
-        "Recognising repeated sequences that return across different reflections."
-  },
-  {
-    week: "Stage 4",
-    title: "State",
-    description:
-        "Noticing the emotional or physical state that tends to appear around a pattern."
-  },
-  {
-    week: "Stage 5",
-    title: "Function",
-    description:
-        "Beginning to ask what a repeated response may be doing, without rushing to explain it."
-  },
-  {
-    week: "Stage 6",
-    title: "Different Responses, Same Pressure",
-    description:
-        "Seeing whether checking, preparing, delaying, reorganising, or withdrawing appear around similar conditions."
-  }
-]
 </script>
 
 <style scoped>
-.section-label {
-  @apply text-[11px] uppercase tracking-[0.24em] text-slate-500;
-}
-
-.section-title {
-  @apply text-[1.9rem] md:text-[2.35rem] font-medium tracking-[-0.02em] leading-[1.18] text-slate-900;
-}
-
-.body-copy {
-  @apply space-y-4 text-[1.02rem] leading-[1.85] text-slate-700;
-}
-
-.problem-card {
-  @apply rounded-2xl border border-slate-200 bg-white/60 p-5 text-[0.98rem] leading-[1.8] text-slate-700;
-}
-
-.week-card {
-  @apply flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white/60 px-6 py-6 transition hover:border-slate-300 md:flex-row;
-}
-
-.week-number {
-  @apply min-w-[90px] pt-1 text-[10px] uppercase tracking-[0.24em] text-slate-500;
-}
-
-.audience-card {
-  @apply rounded-2xl border border-slate-200 bg-white/60 p-5 text-[0.98rem] leading-[1.8] text-slate-700;
-}
 </style>

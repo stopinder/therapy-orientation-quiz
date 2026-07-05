@@ -276,11 +276,11 @@
         <div class="body-copy pt-2">
 
           <p>
-            The six-stage visibility path moves gradually through observation, sequence, pattern, state, consequences and recurring responses.
+            The MindWorks programme moves gradually through observation, sequence, pattern, state, consequences and recurring responses.
           </p>
 
           <p>
-            Each stage asks a different question:
+            Each part of the programme asks a different question:
           </p>
 
           <ul class="space-y-1 list-none">

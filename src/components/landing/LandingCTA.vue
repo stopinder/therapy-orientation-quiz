@@ -30,7 +30,7 @@
             Begin Observation Journey
           </router-link>
           <p class="text-xs text-slate-500">
-            Continue through the full six-stage programme.
+            Observation through the full programme.
           </p>
         </div>
       </div>
