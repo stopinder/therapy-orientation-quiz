@@ -691,7 +691,7 @@ const reflectionPlaceholder = computed(() => {
   if (weekNumber.value === 1) return "I intended to start work, but I checked messages instead..."
   if (weekNumber.value === 2) return "I was about to make a call, but I looked at the phone and then opened email..."
   if (weekNumber.value === 3) return "What specifically repeated?"
-  if (weekNumber.value === 6) return "For example: During a difficult conversation, I wanted to leave, then tried to explain myself, and later became quiet."
+  if (weekNumber.value === 6) return "For example: I wanted to leave... but stayed and explained instead."
   return "Describe what happened..."
 })
 

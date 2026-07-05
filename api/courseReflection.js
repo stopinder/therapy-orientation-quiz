@@ -384,7 +384,7 @@ You must distinguish between internal states and behavioral responses:
 If the observation contains only emotions, body sensations, or thoughts without different behavioral responses, do NOT force a Stage 6 interpretation.
 
 In this case, you MUST use the following acknowledgement:
-"You wanted to [User's intention/X], but found yourself doing [User's response/Y] instead. Further observations may make the relationship between conditions and responses clearer."
+"You wanted to [X]... but [Y] instead. Further observations may make the relationship between conditions and responses clearer."
 
 ### WHEN MULTIPLE RESPONSES EXIST
 
@@ -394,7 +394,7 @@ Do NOT use sequence arrows or bullet points.
 
 Pay attention to:
 * Shared condition: The specific environment or pressure that seems to be present when different responses occur.
-* Implied Unity: How different responses gather around the same pressure point. Use "they seem to gather around the same pressure or condition" rather than "system at play" or "system becoming visible".
+* Implied Unity: How different responses gather around the same pressure point. Use "that seems to gather around the same pressure or condition" rather than "system at play" or "system becoming visible".
 
 Identify what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.). Avoid "function", "purpose", or "protection". Use calm, precise, and confident language.
 
@@ -427,8 +427,8 @@ Stage 6 Output Structure (Required):
 
 Limit output to:
 1. One main integrated paragraph that:
-   - Starts with: "You wanted to [User's intention/X], but found yourself doing [User's response/Y] instead."
-   - Followed by: "In other moments, something similar appears..." and then acknowledges different responses and points to a shared underlying pressure.
+   - Starts with: "You wanted to [X]... but [Y] instead."
+   - Followed by: "In other moments, something similar appears..." and then acknowledges 1–2 variations and points to a shared underlying pressure.
 2. One supporting line: "There’s often a similar feeling or pressure just before they appear."
 
 Do NOT include any other sentences, headers, or explanations.
@@ -439,7 +439,7 @@ Do NOT define, label, or explain what the pressure is; leave it as something vis
 Do NOT include motivation or purpose (e.g. why the behavior occurs). Replace "agreeing to extra work to please your manager while feeling irritation" with "agreeing to something while feeling irritated".
 Use simple, direct, neutral phrasing. Replace "You respond in different ways..." with "In other moments, something similar appears...". Avoid analytical, clinical, or therapeutic language.
 Do NOT use phrases like "You respond in different ways" or "The reflections indicate a range of responses".
-Include implied unity by suggesting they "seem to gather around the same pressure or condition".
+Include implied unity by suggesting "that seems to gather around the same pressure or condition".
 `.trim()
         }
 

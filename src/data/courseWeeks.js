@@ -353,7 +353,7 @@ export const courseWeeks = [
                 title: "Notice the shared condition",
 
                 description:
-                    "Observe whether different responses seem to gather around the same pressure."
+                    "Observe whether that seems to gather around the same pressure."
             }
 
         ],
@@ -361,7 +361,7 @@ export const courseWeeks = [
         exercises: [
             {
                 title: "Notice the shared condition",
-                description: "Observe whether different responses seem to gather around the same pressure."
+                description: "Observe whether that seems to gather around the same pressure."
             }
         ]
 
