@@ -1,21 +1,21 @@
 <template>
-  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 py-20">
-    <div class="max-w-3xl mx-auto space-y-16">
+  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 pt-10 pb-24 font-sans antialiased">
+    <div class="max-w-2xl mx-auto px-4 mt-10">
 
-      <header class="space-y-6 max-w-2xl">
-        <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
+      <header class="mb-10">
+        <p class="text-sm text-gray-600 mb-4">
           MindWorks Orientation
         </p>
 
-        <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-stone-900">
+        <h1 class="text-3xl md:text-4xl font-medium mb-4">
           Some things only become visible across time.
         </h1>
 
-        <div class="space-y-4 text-[1.02rem] leading-[1.9] text-slate-700">
-          <p>
+        <div class="text-base md:text-lg">
+          <p class="mb-3">
             The Free Orientation introduces the way MindWorks helps recurring patterns become visible through repeated observation.
           </p>
-          <p>
+          <p class="mb-3">
             There are no scores.
             There are no labels.
             Just a place to begin.
@@ -110,17 +110,17 @@
               class="mb-10 rounded-2xl border border-stone-200 bg-white/80 p-8"
           >
             <div class="space-y-6">
-              <div class="space-y-3">
-                <h3 class="text-[1.7rem] font-medium tracking-[-0.02em] leading-tight text-stone-900">
+              <div class="mb-4">
+                <h3 class="text-xl md:text-2xl font-medium mb-4">
                   Continue with the orientation
                 </h3>
 
-                <div class="max-w-xl space-y-3 text-[1rem] leading-[1.8] text-slate-600">
-                  <p>
+                <div class="text-base md:text-lg">
+                  <p class="mb-3">
                     Receive the complete orientation and downloadable summary.
                   </p>
 
-                  <p>
+                  <p class="mb-3">
                     The aim is not diagnosis or performance.
                     It is clearer recognition of how patterns begin to appear in everyday life.
                   </p>
@@ -176,11 +176,11 @@
             <transition name="fade" mode="out-in">
               <div :key="activeView">
                 <div class="mb-10">
-                  <h2 class="mb-3 text-[2rem] font-medium tracking-[-0.02em] leading-tight text-stone-900">
+                  <h2 class="text-xl md:text-2xl font-medium mb-4">
                     {{ activeViewLabel }}
                   </h2>
 
-                  <p class="max-w-2xl text-[1rem] leading-[1.8] text-slate-600">
+                  <p class="text-base md:text-lg mb-3">
                     {{ activeViewIntro }}
                   </p>
                 </div>
@@ -677,7 +677,7 @@ const formattedActiveText = computed(() => {
             )
 
         return `
-          <p class="mb-6 text-[1rem] leading-[1.9] text-stone-800">
+          <p class="mb-3 text-base md:text-lg text-stone-800">
             ${safeParagraph}
           </p>
         `

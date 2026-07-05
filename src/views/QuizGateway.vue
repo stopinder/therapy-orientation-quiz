@@ -1,31 +1,31 @@
 <template>
-  <main class="min-h-screen bg-stone-50 px-6 py-24">
+  <main class="min-h-screen bg-stone-50 pt-10 pb-24 font-sans antialiased">
 
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-2xl mx-auto px-4 mt-10">
 
-      <div class="space-y-12">
-        <header class="space-y-6">
-          <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
+      <div class="mt-10">
+        <header class="mb-4">
+          <p class="text-sm text-gray-600 mb-4">
             Orientation
           </p>
-          <h1 class="text-3xl md:text-[2.6rem] font-medium tracking-[-0.02em] leading-[1.12] text-stone-900">
+          <h1 class="text-3xl md:text-4xl font-medium mb-4">
             Welcome to MindWorks
           </h1>
         </header>
 
-        <div class="space-y-6 text-[1.1rem] leading-[1.8] text-slate-700">
-          <p>
+        <div class="text-base md:text-lg">
+          <p class="mb-3">
             Recognising patterns across time begins with observation.
           </p>
-          <p>
+          <p class="mb-3">
             The Free Orientation introduces the way MindWorks helps recurring behaviours become visible through repeated observation.
           </p>
-          <p>
+          <p class="mb-3">
             This is a guided process. There are no scores or labels.
           </p>
         </div>
 
-        <div class="pt-4">
+        <div class="mt-6">
           <button
             @click="handleContinue"
             class="inline-flex items-center rounded-xl bg-slate-900 px-10 py-4 text-base font-medium text-white transition hover:bg-slate-800 shadow-sm"

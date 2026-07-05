@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-white selection:bg-slate-100">
-    <main class="max-w-4xl mx-auto">
+    <main class="max-w-2xl mx-auto px-4 mt-10">
       <LandingHero />
       <LandingCTA />
       <LandingProblem />
