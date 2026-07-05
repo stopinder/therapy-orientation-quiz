@@ -1,19 +1,15 @@
 <template>
-  <section id="problem-section" class="bg-slate-50 px-6 py-20 sm:py-24 lg:px-8">
+  <section class="bg-white px-6 py-6 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-        Why reflection often fades
-      </h2>
-      <div class="mt-8 space-y-6 text-lg text-slate-600">
-        <p>
-          Most reflection captures a moment.
-        </p>
-        <p>
-          MindWorks connects moments.
-        </p>
-        <p>
-          Over time, repeated observations begin to show the situations, states, and responses that keep gathering around the same pressure.
-        </p>
+      <div class="space-y-4 text-lg text-slate-600 font-medium">
+        <p>You open your laptop—and check messages instead.</p>
+        <p>You plan to follow through—and something shifts.</p>
+        <p>You mean to speak honestly—and find yourself explaining or withdrawing.</p>
+      </div>
+      
+      <div class="mt-10 text-lg text-slate-900 font-semibold italic">
+        <p>Most approaches ask you to reflect.</p>
+        <p>This shows you what actually happens, across real moments.</p>
       </div>
     </div>
   </section>
