@@ -7,15 +7,20 @@
         <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
           MindWorks
         </p>
-        <h1 class="text-3xl md:text-[2.45rem] font-medium tracking-[-0.025em] text-slate-900 leading-[1.12]">
-          Recognising patterns across time.
-        </h1>
-        <div class="space-y-4 text-[1.02rem] leading-[1.8] text-slate-700">
+        <div class="space-y-6 text-[1.15rem] md:text-[1.35rem] font-medium tracking-[-0.02em] text-slate-900 leading-[1.4]">
           <p>
-            Many people understand themselves intellectually, yet still return to familiar reactions and situations. Insight matters, but it often fades when pressure returns.
+            You understand what’s happening.<br />
+            And yet, you still find yourself doing the same thing again.
           </p>
           <p>
-            MindWorks helps observations accumulate, so recurring patterns become easier to recognise as they happen.
+            You mean to follow through—then something shifts.<br />
+            You plan to respond differently—then react in a familiar way.
+          </p>
+          <p>
+            This is where MindWorks begins.
+          </p>
+          <p>
+            It shows you what actually happens, as it happens—so patterns become visible before they repeat.
           </p>
         </div>
       </section>
