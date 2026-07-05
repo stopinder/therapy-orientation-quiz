@@ -315,7 +315,7 @@ export const courseWeeks = [
     {
         number: 6,
 
-        title: "Different Responses, Same Pressure",
+        title: "One Pattern, Many Responses",
 
         subtitle:
             "Noticing when several responses appear around similar conditions.",

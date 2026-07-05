@@ -322,7 +322,7 @@
           </div>
 
           <div class="programme-row">
-            <span>Stage 6 — Different Responses, Same Pressure</span>
+            <span>Stage 6 — One Pattern, Many Responses</span>
             <p>Relationships between responses and pressure become visible.</p>
           </div>
 
