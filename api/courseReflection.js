@@ -398,18 +398,33 @@ Pay attention to:
 
 Identify what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.). Avoid "function", "purpose", or "protection". Use calm, precise, and confident language.
 
+### NO INTERPRETATION
+Strictly avoid any language that explains:
+- why something happens
+- what it means
+- what it is linked to
+- any professional or social setting justification
+
+DO NOT use phrases like:
+- "which causes a conflict"
+- "linked to the need to"
+- "meeting expectations"
+- "this shows that"
+- "this means"
+
 Stage 6 Output Structure (Required):
 
-Generate a single integrated paragraph acknowledging different responses and pointing to a shared underlying pressure.
-Do NOT include a "Why this matters" section or any other section headers.
+Limit output to:
+1. One main integrated paragraph acknowledging different responses and pointing to a shared underlying pressure.
+2. One supporting line: "There’s often a similar feeling or pressure just before they appear."
+
+Do NOT include any other sentences, headers, or explanations.
 Do NOT list responses or use bullet points.
 Do NOT use phrases like "The responses", "Recurring responses appearing", "the observation reveals", or "navigating workplace expectations".
 Do NOT use sequence arrows (->).
 Do NOT define or explain what the pressure is; leave it as something visible but not yet fully understood.
-Use direct, natural phrasing and a confident observational tone. Avoid abstract or academic language.
+Use simple, direct, neutral phrasing. Avoid analytical, clinical, or therapeutic language.
 Include implied unity by suggesting they "seem to gather around the same pressure or condition".
-
-There’s often a similar feeling or pressure just before they appear.
 `.trim()
         }
 
