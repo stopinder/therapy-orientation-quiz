@@ -383,7 +383,7 @@ You must distinguish between internal states and behavioral responses:
 
 If the observation contains only emotions, body sensations, or thoughts without different behavioral responses, do NOT force a Stage 6 interpretation.
 
-In this case, you MUST use the following acknowledgement in the "One Pattern, Many Responses" section:
+In this case, you MUST use the following acknowledgement:
 "This observation may describe several internal experiences rather than different responses. Further observations may make the relationship between conditions and responses clearer."
 
 ### WHEN MULTIPLE RESPONSES EXIST
@@ -400,20 +400,13 @@ Identify what occurs without imposing theory. Do not use IFS terminology (parts,
 
 Stage 6 Output Structure (Required):
 
-### Why this matters
-Short, integrated observation (max 2 sentences).
-Focus only on:
-- responses may not be separate
-- they may gather around the same condition
-
-### One Pattern, Many Responses
-
-A single integrated paragraph acknowledging different responses and pointing to a shared underlying pressure.
+Generate a single integrated paragraph acknowledging different responses and pointing to a shared underlying pressure.
+Do NOT include a "Why this matters" section or any other section headers.
 Do NOT list responses or use bullet points.
-Do NOT use phrases like "The responses" or "Recurring responses appearing".
+Do NOT use phrases like "The responses", "Recurring responses appearing", "the observation reveals", or "navigating workplace expectations".
 Do NOT use sequence arrows (->).
-Use direct, natural phrasing and a confident observational tone.
-Do not explain the pattern; leave it as something visible but not yet fully understood.
+Do NOT define or explain what the pressure is; leave it as something visible but not yet fully understood.
+Use direct, natural phrasing and a confident observational tone. Avoid abstract or academic language.
 Include implied unity by suggesting they "seem to gather around the same pressure or condition".
 
 There’s often a similar feeling or pressure just before they appear.
