@@ -276,7 +276,7 @@
               :placeholder="bodyObservationPlaceholder"
           />
           <p class="mt-2 text-sm text-slate-500">
-            Sometimes this shows up as a sensation in the body.
+            This may also show up in the body or as a feeling.
           </p>
         </div>
 
