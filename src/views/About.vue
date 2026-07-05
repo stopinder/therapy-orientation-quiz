@@ -29,14 +29,40 @@
       <section class="content-section">
         <div class="space-y-3">
           <p class="section-label">What MindWorks Does</p>
-          <h2 class="section-title">Observation before explanation.</h2>
         </div>
         <div class="body-copy">
           <p>
-            MindWorks is a guided environment for noticing interruptions, states, and recurring responses. After years of working as a psychotherapist, I saw that people often knew what was happening but lacked a way to track it in real moments.
+            Most approaches focus on insight.
           </p>
           <p>
-            The emphasis is recognition. We begin by asking simple questions: What happened? What came just before? What was already there? This builds enough visibility to approach the next step with clarity.
+            You understand what’s happening.<br />
+            You can explain it.<br />
+            And still, the same reaction appears again.
+          </p>
+          <p>
+            MindWorks does something different.
+          </p>
+          <p>
+            It shows you what actually happens across real moments.
+          </p>
+          <p>
+            Not what you remember.<br />
+            Not what you think.<br />
+            What actually happens.
+          </p>
+          <p>
+            Across situations, a pattern begins to appear.
+          </p>
+          <p>
+            You start something.<br />
+            Then something shifts.
+          </p>
+          <p>
+            Not once.<br />
+            Again and again.
+          </p>
+          <p>
+            That is where clarity begins.
           </p>
         </div>
       </section>
@@ -44,15 +70,23 @@
       <!-- WHO THIS IS FOR -->
       <section class="content-section">
         <div class="space-y-3">
-          <p class="section-label">Who this is for</p>
-          <h2 class="section-title">For people who keep meeting the same pattern.</h2>
+          <p class="section-label">Who This Is For</p>
+          <h2 class="section-title">For people who recognise this:</h2>
         </div>
-        <ul class="space-y-2 pl-5 text-[1rem] leading-[1.7] text-slate-700 list-disc">
-          <li>People who repeat the same patterns</li>
-          <li>People who understand but still react</li>
-          <li>People who lose clarity under pressure</li>
-          <li>People who want clarity without labels</li>
-        </ul>
+        <div class="body-copy">
+          <ul class="space-y-2 pl-5 text-[1rem] leading-[1.7] text-slate-700 list-disc">
+            <li>You understand what’s happening, but still do it</li>
+            <li>You notice the pattern after it’s already happened</li>
+            <li>You lose clarity in the moment, especially under pressure</li>
+            <li>You tell yourself it will be different next time—and it isn’t</li>
+          </ul>
+          <p class="pt-2">
+            This is not about fixing it immediately.
+          </p>
+          <p>
+            It’s for seeing it clearly enough that something different becomes possible.
+          </p>
+        </div>
       </section>
 
       <!-- PROGRAMME -->
