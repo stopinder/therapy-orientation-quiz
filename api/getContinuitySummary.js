@@ -360,6 +360,9 @@ Rules:
 
             // Final closing sentence
             markdownSummary += ` This is an early pattern. It may become clearer with more observations.`
+
+            // Real-time perception pointer
+            markdownSummary += ` There is often a brief moment before the shift.`
         } else {
             const isStage3 = currentStage === 3
             const isStage4 = currentStage === 4
@@ -377,7 +380,7 @@ ${(jsonResult.whatWasAlreadyPresent || []).map(item => `- ${item}`).join('\n')}
 ${jsonResult.unclearAspects || "It is not yet clear whether this state appears in other situations."}
 
 ### A Recognition
-${jsonResult.recognition || "The pattern did not begin at the moment of action. It was already there before anything happened."}
+${jsonResult.recognition || "The pattern did not begin at the moment of action. It was already there before anything happened."} There is often a brief moment before the shift.
 `.trim()
             } else {
                 markdownSummary = `
@@ -395,6 +398,8 @@ ${jsonResult.possibleFunction || "It is not yet clear which shifts reliably foll
 
 ### What Remains Unclear
 ${jsonResult.unclearAspects || ""}
+
+There is often a brief moment before the shift.
 `.trim()
             }
         }

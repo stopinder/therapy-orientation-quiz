@@ -253,7 +253,7 @@ No interpretation.
 
 ### WHAT THESE MOMENTS HAVE IN COMMON
 One short paragraph max. Plain language.
-Example: "In each situation, as you begin with an intention, you shift into something else instead."
+Example: "In each situation, as you begin with an intention, you shift into something else instead. There is often a brief moment before the shift."
 No speculation. No psychological explanation. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
 
 INSUFFICIENT EVIDENCE:
@@ -298,7 +298,7 @@ List as bullet points ONLY what was clearly described. No interpretation.
 - [state 2]
 
 ### A recognition
-The pattern did not begin at the moment of action. It was already there before anything happened.
+The pattern did not begin at the moment of action. It was already there before anything happened. There is often a brief moment before the shift.
 
 Rules:
 1. No interpretation, speculation, or unnecessary elaboration.
@@ -332,8 +332,8 @@ Bullet points:
 - consequence (what followed it)
 
 ### WHAT THIS LEADS TO
-One short line describing the consequence pattern.
-Example: "This response is followed by shame and reduced openness."
+One short line describing the consequence pattern. Include a final line referring to the timing of the pattern (e.g. "This tends to happen just as you begin.").
+Example: "This response is followed by shame and reduced openness. There is often a brief moment before the shift."
 
 Rules:
 1. Do not use the word "function" in any heading or description.
@@ -405,7 +405,7 @@ Do not list pressure, fear, tightness, shallow breathing, or body sensations her
 
 ### What these responses may have in common
 If multiple responses exist: A short description of how these responses may be related. Use cautious language. 
-Example: "All three responses—checking, preparing, and delaying—appeared before the meeting. It is not yet clear whether they are related to the same pressure, or whether each changes the condition in a different way."
+Example: "All three responses—checking, preparing, and delaying—appeared before the meeting. It is not yet clear whether they are related to the same pressure, or whether each changes the condition in a different way. There is often a brief moment before the shift."
 
 If only states exist: Use the mandatory acknowledgement: "This observation may describe several internal experiences rather than different responses. Further observations may make the relationship between conditions and responses clearer."
 
