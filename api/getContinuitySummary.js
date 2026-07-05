@@ -140,16 +140,22 @@ CORE ANALYSIS:
 4. Score each pattern based on:
    - Frequency: number of matching reflections.
    - Recency: reflections with lower indices (more recent) carry significantly more weight.
-5. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns. If a new pattern has overtaken a previous one due to recency/frequency, switch to it completely.
+5. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns.
 6. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
-7. DO NOT generate a full sentence. Provide ONLY raw fragments for the JSON fields:
-   - intention: the raw action you were about to do (e.g., "start working", "reply to the message"). DO NOT include "plan to".
-   - shift: the raw action taken instead (e.g., "check social media", "leave the room"). DO NOT include "instead".
+7. SENTENCE GENERATION:
+   - Generate 3 candidate sentences for the dominant pattern.
+   - All candidates must follow the structure: "You [frequency] [action], then [alternative] instead."
+   - Prefer variants with timing cues (e.g., "start", "begin", "as you begin").
+   - Penalize "plan to", "engage in", "initiate", or overly generic words.
+   - Select the MOST natural and recognizable one.
+8. DO NOT generate a full sentence for the final output. Provide ONLY raw fragments for the JSON fields:
+   - intention: the raw action from the SELECTED best variant (e.g., "start working", "begin replying"). DO NOT include "plan to".
+   - shift: the raw action taken instead (e.g., "check social media", "switch to your phone"). DO NOT include "instead".
    - consequence: the raw result (e.g., "delay", "frustration"). DO NOT include "this leads to".
-8. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). 
-9. PRIORITIZE concrete user phrasing (e.g., "checking social media") over generic terms. 
-10. Perspective: Convert ALL first-person to second-person (I -> you, my -> your).
-11. Modal check: Avoid "may" or "might". Use "sometimes", "often", or "tend to".
+9. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). 
+10. PRIORITIZE concrete user phrasing (e.g., "checking social media") over generic terms. 
+11. Perspective: Convert ALL first-person to second-person (I -> you, my -> your).
+12. Modal check: Avoid "may" or "might". Use "sometimes", "often", or "tend to".
 
 Language and Perspective:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
@@ -337,8 +343,8 @@ Rules:
             const consequence = (dominantPattern.consequence || "[tension / negative response / delay]").replace(/^this leads to /i, "")
 
             // Pattern + Consequence sentence
-            const frequencyPrefix = isEarly ? "Sometimes, just" : (isStrong ? "Reliably, just" : "Just");
-            markdownSummary = `${frequencyPrefix} as you ${intention}, you ${shift} instead. This leads to ${consequence}.`
+            const frequency = isEarly ? "sometimes" : (isStrong ? "reliably" : "tend to");
+            markdownSummary = `You ${frequency} ${intention}, then ${shift} instead. This leads to ${consequence}.`
 
             // State sentence
             if (stateLine) {

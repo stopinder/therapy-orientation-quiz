@@ -199,16 +199,22 @@ CORE ANALYSIS:
 3. Score each pattern based on:
    - Frequency: number of matching reflections.
    - Recency: more recent reflections carry more weight. (Reflections are provided in reverse chronological order).
-4. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns. If a new pattern has overtaken a previous one due to recency/frequency, switch to it completely.
+4. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns.
 5. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
-6. DO NOT generate the full sentence yourself. Provide only the fragments. The sentence will be: "Just as you [intention], you [behavior] instead. This leads to [consequence]."
-7. Fragments required:
+6. SENTENCE GENERATION:
+   - Generate 3 candidate sentences for the dominant pattern.
+   - All candidates must follow the structure: "You [frequency] [action], then [alternative] instead."
+   - Prefer variants with timing cues (e.g., "start", "begin", "as you begin").
+   - Penalize "plan to", "engage in", "initiate", or overly generic words.
+   - Select the MOST natural and recognizable one.
+7. DO NOT generate the full sentence yourself. Provide only the fragments from the SELECTED best variant. The sentence will be: "You [frequency] [action], then [behavior] instead. This leads to [consequence]."
+8. Fragments required:
    - [intention]: e.g., "start working" (NO "plan to")
    - [behavior]: e.g., "check social media" (NO "instead")
    - [consequence]: e.g., "delay" (NO "this leads to")
-8. Perspective: Convert ALL first-person to second-person (I -> you, my -> your).
-9. Modal check: Avoid "may" or "might". Use "sometimes", "often", or "tend to".
-10. Fallback: If no strong pattern exists, use intention: "do something", behavior: "don't follow through", consequence: "stagnation".
+9. Perspective: Convert ALL first-person to second-person (I -> you, my -> your).
+10. Modal check: Avoid "may" or "might". Use "sometimes", "often", or "tend to".
+11. Fallback: If no strong pattern exists, use intention: "do something", behavior: "don't follow through", consequence: "stagnation".
 Look across multiple reflections to identify recurring behaviors. 
 The user is at Stage 3. Stage 3 is about pattern: “What specifically repeated?”
 
@@ -235,7 +241,7 @@ Stage 3 Output Structure (Required):
 
 ### WHAT REPEATED
 The SINGLE DOMINANT action sequence. No blending. No "or".
-Example tone: "Just as you return to work, you check social media instead. This leads to delay."
+Example tone: "You tend to start working, then check social media instead. This leads to delay."
 
 ### WHAT APPEARS AGAIN
 Bullet points of repeated elements, based only on user data.
@@ -586,7 +592,7 @@ Stay close to the actual observations.
 - REUSE specific user phrasing for actions. Convert "I checked Instagram" to "you check Instagram".
 - Extract concrete actions, not concepts. Identify what the user intended to do vs what they actually did instead. 
 - Replace generic labels (distraction, withdrawal, avoidance) with actual behaviours (checking social media, not replying, leaving the task).
-- Mandatory structure: "Just as you [intention], you [behavior] instead." No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
+- Mandatory structure: "You [frequency] [action], then [behavior] instead." No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
 - Avoid modal weakness: use "sometimes", "often", or "tend to" instead of "may" or "might".
 
 Avoid phrases such as:
