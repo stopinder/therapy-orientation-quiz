@@ -356,8 +356,9 @@ Rules:
                 markdownSummary += ` Before this shift, there is ${verbs.often} a state already present, such as ${stateLine.replace(/\bmy\b/gi, "your")}.`
             }
 
+            const closing = "but the pattern is starting to show."
             if (consequenceConsistency.includes("visible")) {
-                markdownSummary += ` It’s not always the same what happens after that, but the pattern is starting to show.`
+                markdownSummary += ` It’s not always the same what happens after that, ${closing}`
             } else {
                 markdownSummary += ` What happens after that isn’t always the same.`
             }
@@ -365,9 +366,12 @@ Rules:
             // Real-time perception pointer (New paragraph for separation)
             markdownSummary = markdownSummary.replace(/\s+/g, ' ').trim()
 
-            const closingLine = "The pattern is starting to show."
-            if (!markdownSummary.includes(closingLine)) {
-                markdownSummary += ` ${closingLine}`
+            if (markdownSummary.includes("pattern is starting to show")) {
+                // Return but still add the perception pointer
+                return response.status(200).json({
+                    summary: markdownSummary + `\n\nThere is often a brief moment just before the shift.`,
+                    markdown_summary: markdownSummary + `\n\nThere is often a brief moment just before the shift.`
+                });
             }
 
             markdownSummary += `\n\nThere is often a brief moment just before the shift.`
