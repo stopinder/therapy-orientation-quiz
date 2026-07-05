@@ -226,7 +226,7 @@ Language and Perspective:
 - Use consistent PRESENT TENSE.
 - Use natural language. Replace "felt frustration" with "frustration follows". Replace "denial mode" with "the other person denies it".
 - REUSE specific user phrasing for actions. Convert "I checked Instagram" to "you check Instagram".
-- Avoid "across situations", "across different situations", "as more moments are documented". Use "it's not always the same", "as more of these moments show up".
+- Avoid "across situations", "across different situations", "as more moments are documented". Use "it's not always the same", "the pattern is starting to show".
 
 OUTPUT FORMAT:
 Return a JSON object ONLY.
@@ -311,8 +311,8 @@ Rules:
             console.error("JSON PARSE ERROR:", e)
             // Fallback for failed JSON
             return response.status(200).json({
-                summary: "MindWorks is collecting observations. The pattern is starting to show as more of these moments show up.",
-                markdown_summary: "MindWorks is collecting observations. The pattern is starting to show as more of these moments show up."
+                summary: "MindWorks is collecting observations. The pattern is starting to show.",
+                markdown_summary: "MindWorks is collecting observations. The pattern is starting to show."
             })
         }
 
@@ -357,7 +357,7 @@ Rules:
                 markdownSummary += ` What happens after that isn’t always the same.`
             }
 
-            markdownSummary += ` The pattern is starting to show as more of these moments show up.`
+            markdownSummary += ` The pattern is starting to show.`
 
             // Real-time perception pointer (New paragraph for separation)
             markdownSummary = markdownSummary.replace(/\s+/g, ' ').trim()

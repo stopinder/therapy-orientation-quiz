@@ -233,7 +233,7 @@ AI BEHAVIOUR RULES:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your". Replace all instances of "my" with "your". Replace "check all of my social media" with "check social media".
 - Use consistent PRESENT TENSE.
 - Use natural language. Replace "felt frustration" with "frustration follows". Replace "denial mode" with "the other person denies it".
-- Avoid unnatural phrases like "across situations", "across different situations", or "as more moments are documented". Use "it's not always the same", "the pattern is starting to show", "as more of these moments show up".
+- Avoid unnatural phrases like "across situations", "across different situations", or "as more moments are documented". Use "it's not always the same", "the pattern is starting to show".
 - Keep total output short (approx 50% of previous length).
 - No repetition across sections.
 - Keep sentences short and direct. No narrowing of pattern. No explanation of why.
@@ -618,7 +618,7 @@ Avoid phrases such as:
 * scattered attention
 
 Avoid abstract psychology language whenever possible. Use ordinary language.
-Avoid "across situations", "across different situations", "this is an early pattern", or "as more moments are documented". Use "it's not always the same", "as more of these moments show up".
+Avoid "across situations", "across different situations", "this is an early pattern", or "as more moments are documented". Use "it's not always the same", "the pattern is starting to show".
 Do not use IFS terminology.
 
 Remove causal wording such as:
