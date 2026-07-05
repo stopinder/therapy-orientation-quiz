@@ -4,7 +4,7 @@
       <LandingHero />
       <LandingCTA />
       <LandingProblem />
-      <LandingCTA class="pb-20" />
+      <LandingCTA class="pb-10" />
     </main>
 
     <PublicFooter />
