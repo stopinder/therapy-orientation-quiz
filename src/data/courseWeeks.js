@@ -321,7 +321,7 @@ export const courseWeeks = [
             "Noticing when several responses appear around similar conditions.",
 
         reflectionPrompt:
-            "Describe a situation where you noticed yourself responding in more than one way.",
+            "Think of a moment where you wanted one thing, but found yourself doing something else.",
 
         intro:
             "This stage is about revealing a shared underlying condition that connects different responses. You might prepare, avoid, overthink, or withdraw, but these different actions may all be gathering around the same kind of pressure.",

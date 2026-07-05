@@ -404,6 +404,7 @@ Strictly avoid any language that explains:
 - what it means
 - what it is linked to
 - any professional or social setting justification
+- implied motivation (e.g., "to please", "to avoid", "to show")
 
 DO NOT use phrases like:
 - "which causes a conflict"
@@ -416,6 +417,11 @@ DO NOT use phrases like:
 - "The reflections indicate a range of responses"
 - "the observation reveals"
 - "navigating workplace expectations"
+- "to please your manager"
+- "to please"
+- "manager"
+- "because"
+- "so that"
 
 Stage 6 Output Structure (Required):
 
@@ -428,6 +434,7 @@ Do NOT list responses or use bullet points.
 Do NOT use phrases like "The responses", "Recurring responses appearing", "the observation reveals", or "navigating workplace expectations".
 Do NOT use sequence arrows (->).
 Do NOT define, label, or explain what the pressure is; leave it as something visible but not yet fully understood. Do NOT use labels like "conflict", "performance", "expectations", or any other descriptor for the pressure.
+Do NOT include motivation or purpose (e.g. why the behavior occurs). Replace "agreeing to extra work to please your manager while feeling irritation" with "agreeing to something while feeling irritated".
 Use simple, direct, neutral phrasing. Replace "The reflections indicate a range of responses..." with "You respond in different ways...". Avoid analytical, clinical, or therapeutic language.
 Include implied unity by suggesting they "seem to gather around the same pressure or condition".
 `.trim()
