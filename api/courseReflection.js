@@ -207,7 +207,7 @@ CORE ANALYSIS:
    - Prefer variants with timing cues (e.g., "start", "begin", "as you begin").
    - Penalize "plan to", "engage in", "initiate", or overly generic words.
    - Select the MOST natural and recognizable one.
-7. DO NOT generate the full sentence yourself. Provide only the fragments from the SELECTED best variant. The sentence will be: "You [frequency] [action], then [behavior] instead. This leads to [consequence]."
+7. DO NOT generate the full sentence yourself. Provide only the fragments from the SELECTED best variant. The sentence will be: "You [frequency] [action], then [behavior] instead, which usually leads to [consequence]."
 8. Fragments required:
    - [intention]: e.g., "start working" (NO "plan to")
    - [behavior]: e.g., "check social media" (NO "instead")
@@ -242,7 +242,7 @@ Stage 3 Output Structure (Required):
 
 ### WHAT REPEATED
 The SINGLE DOMINANT action sequence. No blending. No "or".
-Example tone: "You tend to start working, then check social media instead. This leads to delay."
+Example tone: "You tend to start working, then check social media instead, which usually leads to delay."
 
 ### WHAT APPEARS AGAIN
 Bullet points of repeated elements, based only on user data.
@@ -254,7 +254,7 @@ No interpretation.
 
 ### WHAT THESE MOMENTS HAVE IN COMMON
 One short paragraph max. Plain, natural language. Flowing sentences. 
-Example: "In each situation, as you begin with an intention, you shift into something else instead. It’s not always the same what happens after that, but the pattern is starting to show. There is often a brief moment just before the shift."
+Example: "In each situation, as you begin with an intention, you shift into something else instead, which usually leads to delay. What happens after that isn’t always the same, but the pattern is starting to show. There is often a brief moment just before the shift."
 No system language like "across situations", "across different situations", or "early pattern". No speculation. No psychological explanation. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking"). Replace "check all of my social media" with "check social media".
 
 INSUFFICIENT EVIDENCE:
@@ -317,12 +317,12 @@ Rules:
 Important: For Stage 4, do not use the standard "Earlier in the sequence" or "Questions to stay with" sections unless specifically requested by the structure above.
             `.trim(),
             5: `
-This stage is about noticing consequences.
+This stage is about noticing consequences. What happens after that? What does the response lead to?
 
 You are a Field Researcher observing shifts. The question is: What this response leads to?
 The goal is for the consequence of the response to become visible.
 
-The focus is on what follows the response.
+The focus is on what happens after that.
 
 Stage 5 Output Structure (Required):
 
@@ -564,9 +564,9 @@ Avoid:
 - You have...
 - It is obvious that...
 - This demonstrates...
+- What happens after that
 - across situations
 - this is an early pattern
-- what follows the response
 
 Never diagnose. Never over-interpret. Never sound certain.
 

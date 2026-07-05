@@ -117,7 +117,7 @@ MindWorks Observation: ${r.ai_response}`)
 You are a Field Researcher documenting a cumulative investigation. 
 
 Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", "across different situations", "as more moments are documented", or "what follows the response". Instead use: "it’s not always the same", "the pattern is starting to show", "as more of these moments show up".
+A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", "across different situations", "as more moments are documented", or "What happens after that". Instead use: "it’s not always the same", "the pattern is starting to show", "as more of these moments show up".
 
 Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
@@ -202,7 +202,7 @@ Rules:
 You are a Field Researcher documenting an ongoing investigation.
 
 Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", "across different situations", "as more moments are documented", or "what follows the response". Instead use: "it’s not always the same", "the pattern is starting to show", "as more of these moments show up". ${isStage5 ? 'Stage 5 must NOT describe patterns across time. Only describe what is directly observable.' : ''}
+A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", "across different situations", "as more moments are documented", or "What happens after that". Instead use: "it’s not always the same", "the pattern is starting to show", "as more of these moments show up". ${isStage5 ? 'Stage 5 must NOT describe patterns across time. Only describe what is directly observable.' : ''}
 
 Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
@@ -311,8 +311,8 @@ Rules:
             console.error("JSON PARSE ERROR:", e)
             // Fallback for failed JSON
             return response.status(200).json({
-                summary: "MindWorks is collecting observations. The pattern may become clearer as more of these moments show up.",
-                markdown_summary: "MindWorks is collecting observations. The pattern may become clearer as more of these moments show up."
+                summary: "MindWorks is collecting observations. The pattern is starting to show as more of these moments show up.",
+                markdown_summary: "MindWorks is collecting observations. The pattern is starting to show as more of these moments show up."
             })
         }
 
@@ -345,7 +345,7 @@ Rules:
 
             const frequency = isEarly ? "sometimes" : (isStrong ? "reliably" : "tend to");
             
-            markdownSummary = `You ${frequency} ${intention}, then ${shift} instead. This leads to ${consequence}.`
+            markdownSummary = `You ${frequency} ${intention}, then ${shift} instead, which usually leads to ${consequence}.`
 
             if (stateLine) {
                 markdownSummary += ` Before this shift, there is ${verbs.often} a state already present, such as ${stateLine.replace(/\bmy\b/gi, "your")}.`
@@ -354,10 +354,10 @@ Rules:
             if (consequenceConsistency.includes("visible")) {
                 markdownSummary += ` It’s not always the same what happens after that, but the pattern is starting to show.`
             } else {
-                markdownSummary += ` What follows that isn’t always the same.`
+                markdownSummary += ` What happens after that isn’t always the same.`
             }
 
-            markdownSummary += ` The pattern may become clearer as more of these moments show up.`
+            markdownSummary += ` The pattern is starting to show as more of these moments show up.`
 
             // Real-time perception pointer (New paragraph for separation)
             markdownSummary = markdownSummary.replace(/\s+/g, ' ').trim()

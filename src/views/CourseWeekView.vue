@@ -420,7 +420,7 @@
             (for example: checking, scrolling, delaying, cancelling, withdrawing, or reorganising)
           </p>
           <p class="text-sm text-slate-500 italic">
-            This is an early pattern. It may become clearer with more observations.
+            This is an early pattern. It is starting to show as more observations are made.
           </p>
         </div>
       </section>

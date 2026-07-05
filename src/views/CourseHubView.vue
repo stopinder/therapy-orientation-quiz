@@ -24,14 +24,6 @@
         <h1 class="text-4xl font-semibold tracking-tight">
           Your Visibility Path
         </h1>
-
-        <router-link
-            v-if="hasProgrammeAccess"
-            to="/continuity"
-            class="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 shadow-sm"
-        >
-          View Continuity
-        </router-link>
       </div>
 
       <p class="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">
@@ -101,17 +93,8 @@
           Becoming visible
         </h2>
         
-        <div class="text-xl font-medium text-slate-900 leading-relaxed mb-4 whitespace-pre-line">
+        <div class="text-xl font-medium text-slate-900 leading-relaxed whitespace-pre-line">
           {{ continuitySummary }}
-        </div>
-
-        <div class="mt-8 flex justify-end">
-          <router-link
-              to="/continuity"
-              class="text-sm font-medium text-slate-500 hover:text-slate-900 transition underline underline-offset-4"
-          >
-            View Full Continuity
-          </router-link>
         </div>
       </div>
 
