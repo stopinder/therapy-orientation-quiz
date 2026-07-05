@@ -275,6 +275,9 @@
               class="mt-4 w-full rounded-2xl border border-slate-300 bg-white p-4 text-base leading-7 text-slate-800 outline-none transition focus:border-slate-900"
               :placeholder="bodyObservationPlaceholder"
           />
+          <p class="mt-2 text-sm text-slate-500">
+            Sometimes this shows up as a sensation in the body.
+          </p>
         </div>
 
         <div class="mt-5 flex items-center gap-4">
