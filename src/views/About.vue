@@ -1,17 +1,20 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 pt-10 pb-24">
-    <div class="max-w-3xl mx-auto px-4 md:px-6 pt-8 space-y-16">
+    <div class="max-w-3xl mx-auto px-4 md:px-6 pt-8 space-y-12">
 
-      <!-- INTRO -->
-      <section class="max-w-2xl space-y-6">
-        <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
-          MindWorks
-        </p>
-        <div class="space-y-6 text-[1.15rem] md:text-[1.35rem] font-medium tracking-[-0.02em] text-slate-900 leading-[1.4]">
-          <p>
+      <!-- HERO SECTION -->
+      <section class="max-w-2xl space-y-8">
+        <div class="space-y-4">
+          <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
+            MindWorks
+          </p>
+          <h1 class="text-[2.5rem] md:text-[3.5rem] font-medium tracking-[-0.04em] text-slate-900 leading-[1.1]">
             You understand what’s happening.<br />
             And yet, you still find yourself doing the same thing again.
-          </p>
+          </h1>
+        </div>
+        
+        <div class="space-y-6 text-[1.15rem] md:text-[1.35rem] font-medium tracking-[-0.02em] text-slate-900 leading-[1.4]">
           <p>
             You mean to follow through—then something shifts.<br />
             You plan to respond differently—then react in a familiar way.
@@ -19,15 +22,21 @@
           <p>
             This is where MindWorks begins.
           </p>
-          <p>
-            It shows you what actually happens, as it happens—so patterns become visible before they repeat.
-          </p>
+        </div>
+
+        <div class="pt-2">
+          <router-link
+              to="/gateway"
+              class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800 shadow-sm"
+          >
+            Start Free Orientation
+          </router-link>
         </div>
       </section>
 
       <!-- WHAT MINDWORKS DOES -->
       <section class="content-section">
-        <div class="space-y-3">
+        <div class="space-y-4">
           <p class="section-label">What MindWorks Does</p>
         </div>
         <div class="body-copy">
@@ -69,7 +78,7 @@
 
       <!-- WHO THIS IS FOR -->
       <section class="content-section">
-        <div class="space-y-3">
+        <div class="space-y-4">
           <p class="section-label">Who This Is For</p>
           <h2 class="section-title">For people who recognise this:</h2>
         </div>
@@ -87,11 +96,20 @@
             It’s for seeing it clearly enough that something different becomes possible.
           </p>
         </div>
+        
+        <div class="pt-4">
+          <router-link
+              to="/gateway"
+              class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800 shadow-sm"
+          >
+            Start Free Orientation
+          </router-link>
+        </div>
       </section>
 
       <!-- PROGRAMME -->
       <section class="rounded-2xl border border-slate-200/80 bg-white/60 px-7 py-8 max-w-2xl">
-        <div class="space-y-3">
+        <div class="space-y-4">
           <p class="section-label">The Programme</p>
           <h2 class="section-title !text-[1.7rem] md:!text-[2rem]">Structured continuation.</h2>
         </div>
@@ -110,7 +128,7 @@
 
       <!-- CREATOR -->
       <section class="max-w-2xl rounded-2xl border border-slate-200 bg-slate-100/70 px-7 py-8">
-        <div class="space-y-3">
+        <div class="space-y-4">
           <p class="section-label">Creator</p>
           <h2 class="section-title !text-[1.7rem] md:!text-[2rem]">Robert Ormiston</h2>
         </div>
@@ -133,12 +151,6 @@
             class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-6 py-3.5 text-sm font-medium text-white transition hover:bg-slate-800"
         >
           Begin
-        </router-link>
-        <router-link
-            to="/gateway"
-            class="inline-flex items-center rounded-xl border border-slate-300 px-6 py-3.5 text-sm text-slate-700 transition hover:border-slate-500 hover:text-slate-900"
-        >
-          Start Free Orientation
         </router-link>
       </section>
 
