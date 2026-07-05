@@ -230,9 +230,10 @@ AI BEHAVIOUR RULES:
 - Remove inferred elements. Do not include anything not explicitly stated by the user (e.g., "excuse made", assumed emotions, or assumed motivations).
 - Use concrete behavior, not abstraction. Avoid "movement away from intention" or "emerging structure" in descriptions. Replace generic labels (e.g., "distraction") with actual actions (e.g., "checking social media").
 - REUSE specific user phrasing for actions. Convert "I checked Instagram" to "you check Instagram". If no specific behaviour is clear, use "do something else instead" or "don't follow through".
-- Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
+- Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your". Replace all instances of "my" with "your". Replace "check all of my social media" with "check social media".
 - Use consistent PRESENT TENSE.
 - Use natural language. Replace "felt frustration" with "frustration follows". Replace "denial mode" with "the other person denies it".
+- Avoid unnatural phrases like "across situations", "across different situations", or "as more moments are documented". Use "it's not always the same", "the pattern is starting to show", "as more of these moments show up".
 - Keep total output short (approx 50% of previous length).
 - No repetition across sections.
 - Keep sentences short and direct. No narrowing of pattern. No explanation of why.
@@ -254,7 +255,7 @@ No interpretation.
 ### WHAT THESE MOMENTS HAVE IN COMMON
 One short paragraph max. Plain, natural language. Flowing sentences. 
 Example: "In each situation, as you begin with an intention, you shift into something else instead. It’s not always the same what happens after that, but the pattern is starting to show. There is often a brief moment just before the shift."
-No system language like "across situations" or "early pattern". No speculation. No psychological explanation. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
+No system language like "across situations", "across different situations", or "early pattern". No speculation. No psychological explanation. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking"). Replace "check all of my social media" with "check social media".
 
 INSUFFICIENT EVIDENCE:
 If there is not enough recurrence across previous reflections in the RECENT REFLECTION HISTORY, explicitly say so:
@@ -597,7 +598,7 @@ Language and Perspective:
 
 Prefer concrete language.
 Stay close to the actual observations.
-- Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
+- Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your". Replace all instances of "my" with "your". Replace "check all of my social media" with "check social media".
 - Use consistent PRESENT TENSE.
 - Use natural language. Replace "felt frustration" with "frustration follows". Replace "denial mode" with "the other person denies it".
 - REUSE specific user phrasing for actions. Convert "I checked Instagram" to "you check Instagram".
@@ -616,8 +617,8 @@ Avoid phrases such as:
 * loss of focus
 * scattered attention
 
-Avoid abstract psychology language whenever possible.
-Use ordinary language.
+Avoid abstract psychology language whenever possible. Use ordinary language.
+Avoid "across situations", "across different situations", "this is an early pattern", or "as more moments are documented". Use "it's not always the same", "as more of these moments show up".
 Do not use IFS terminology.
 
 Remove causal wording such as:

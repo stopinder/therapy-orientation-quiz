@@ -117,7 +117,7 @@ MindWorks Observation: ${r.ai_response}`)
 You are a Field Researcher documenting a cumulative investigation. 
 
 Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", or "what follows the response". Instead use: "it’s not always the same what happens after that", "the pattern is starting to show".
+A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", "across different situations", "as more moments are documented", or "what follows the response". Instead use: "it’s not always the same", "the pattern is starting to show", "as more of these moments show up".
 
 Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
@@ -150,11 +150,11 @@ CORE ANALYSIS:
    - Select the MOST natural and recognizable one.
 8. DO NOT generate a full sentence for the final output. Provide ONLY raw fragments for the JSON fields:
    - intention: the raw action from the SELECTED best variant (e.g., "start working", "begin replying"). DO NOT include "plan to".
-   - shift: the raw action taken instead (e.g., "check social media", "switch to your phone"). DO NOT include "instead".
+   - shift: the raw action taken instead (e.g., "check social media", "switch to your phone"). DO NOT include "instead". Replace "check all of my social media" with "check social media".
    - consequence: the raw result (e.g., "delay", "frustration"). DO NOT include "this leads to".
 9. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). 
 10. PRIORITIZE concrete user phrasing (e.g., "checking social media") over generic terms. 
-11. Perspective: Convert ALL first-person to second-person (I -> you, my -> your).
+11. Perspective: Convert ALL first-person to second-person (I -> you, my -> your). Replace all instances of "my" with "your".
 12. Modal check: Avoid "may" or "might". Use "sometimes", "often", or "tend to".
 
 Language and Perspective:
@@ -202,7 +202,7 @@ Rules:
 You are a Field Researcher documenting an ongoing investigation.
 
 Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", or "what follows the response". Instead use: "it’s not always the same what happens after that", "the pattern is starting to show". ${isStage5 ? 'Stage 5 must NOT describe patterns across time. Only describe what is directly observable.' : ''}
+A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", "across different situations", "as more moments are documented", or "what follows the response". Instead use: "it’s not always the same", "the pattern is starting to show", "as more of these moments show up". ${isStage5 ? 'Stage 5 must NOT describe patterns across time. Only describe what is directly observable.' : ''}
 
 Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
@@ -219,13 +219,14 @@ ${isStage5 ? '1+ observations: Describe only what is directly observable: respon
 15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."`}
 
 CORE ANALYSIS:
-Extract concrete actions, not concepts. Look across multiple reflections to identify recurring behaviors. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify patterns from action sequences (just as you [intention], you [actual behavior]).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g. "checking Instagram" instead of "distraction") and reuse it converted to second-person and present tense. If no specific behaviour is clear, use "do something else instead" or "don't follow through". No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking"). The sentence MUST include "instead".
+Extract concrete actions, not concepts. Look across multiple reflections to identify recurring behaviors. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify patterns from action sequences (just as you [intention], you [actual behavior]).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g. "checking Instagram" instead of "distraction") and reuse it converted to second-person and present tense. If no specific behaviour is clear, use "do something else instead" or "don't follow through". No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking"). The sentence MUST include "instead". Replace all instances of "my" with "your". Replace "check all of my social media" with "check social media".
 
 Language and Perspective:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
 - Use consistent PRESENT TENSE.
 - Use natural language. Replace "felt frustration" with "frustration follows". Replace "denial mode" with "the other person denies it".
 - REUSE specific user phrasing for actions. Convert "I checked Instagram" to "you check Instagram".
+- Avoid "across situations", "across different situations", "as more moments are documented". Use "it's not always the same", "as more of these moments show up".
 
 OUTPUT FORMAT:
 Return a JSON object ONLY.
@@ -310,8 +311,8 @@ Rules:
             console.error("JSON PARSE ERROR:", e)
             // Fallback for failed JSON
             return response.status(200).json({
-                summary: "MindWorks is collecting observations. Recurrence may become easier to recognise as more moments are documented.",
-                markdown_summary: "MindWorks is collecting observations. Recurrence may become easier to recognise as more moments are documented."
+                summary: "MindWorks is collecting observations. The pattern may become clearer as more of these moments show up.",
+                markdown_summary: "MindWorks is collecting observations. The pattern may become clearer as more of these moments show up."
             })
         }
 
@@ -338,28 +339,28 @@ Rules:
                 consequenceConsistency = "not yet consistent"
             } = jsonResult
 
-            const intention = (dominantPattern.intention || "[start with intention]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "")
-            const shift = (dominantPattern.shift || "[shift into distraction/withdrawal]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "")
-            const consequence = (dominantPattern.consequence || "[tension / negative response / delay]").replace(/^this leads to /i, "")
+            const intention = (dominantPattern.intention || "[start with intention]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
+            const shift = (dominantPattern.shift || "[shift into distraction/withdrawal]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
+            const consequence = (dominantPattern.consequence || "[tension / negative response / delay]").replace(/^this leads to /i, "").replace(/\bmy\b/gi, "your")
 
             const frequency = isEarly ? "sometimes" : (isStrong ? "reliably" : "tend to");
             
-            // Start building the paragraph
             markdownSummary = `You ${frequency} ${intention}, then ${shift} instead. This leads to ${consequence}.`
 
             if (stateLine) {
-                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present, such as ${stateLine}.`
+                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present, such as ${stateLine.replace(/\bmy\b/gi, "your")}.`
             }
 
             if (consequenceConsistency.includes("visible")) {
-                markdownSummary += ` It’s not always the same what happens after that, but a pattern is starting to show.`
+                markdownSummary += ` It’s not always the same what happens after that, but the pattern is starting to show.`
             } else {
-                markdownSummary += ` What follows that isn’t always the same across different situations.`
+                markdownSummary += ` What follows that isn’t always the same.`
             }
 
-            markdownSummary += ` It’s still early, and the pattern may become clearer as more moments are documented.`
+            markdownSummary += ` The pattern may become clearer as more of these moments show up.`
 
             // Real-time perception pointer (New paragraph for separation)
+            markdownSummary = markdownSummary.replace(/\s+/g, ' ').trim()
             markdownSummary += `\n\nThere is often a brief moment just before the shift.`
         } else {
             const isStage3 = currentStage === 3
