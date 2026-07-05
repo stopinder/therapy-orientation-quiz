@@ -1,33 +1,30 @@
 <template>
-  <main class="min-h-screen bg-gradient-to-b from-stone-100 to-stone-50 px-6 pt-10 pb-24">
-    <div class="max-w-3xl mx-auto px-4 md:px-6 pt-8 space-y-12">
+  <main class="min-h-screen bg-stone-50 px-6 pt-10 pb-24 font-sans antialiased">
+    <div class="max-w-[650px] mx-auto space-y-12 md:space-y-14">
 
       <!-- HERO SECTION -->
-      <section class="max-w-2xl space-y-8">
+      <section class="space-y-5">
         <div class="space-y-4">
-          <p class="text-[11px] uppercase tracking-[0.24em] text-slate-500">
-            MindWorks
-          </p>
-          <h1 class="text-[2.5rem] md:text-[3.5rem] font-medium tracking-[-0.04em] text-slate-900 leading-[1.1]">
+          <h1 class="hero-headline">
             You understand what’s happening.<br />
             And yet, you still find yourself doing the same thing again.
           </h1>
-        </div>
-        
-        <div class="space-y-6 text-[1.15rem] md:text-[1.35rem] font-medium tracking-[-0.02em] text-slate-900 leading-[1.4]">
-          <p>
-            You mean to follow through—then something shifts.<br />
-            You plan to respond differently—then react in a familiar way.
-          </p>
-          <p>
-            This is where MindWorks begins.
-          </p>
+          
+          <div class="hero-subtext">
+            <p>
+              You mean to follow through—then something shifts.<br />
+              You plan to respond differently—then react in a familiar way.
+            </p>
+            <p class="font-medium text-slate-900">
+              This is where MindWorks begins.
+            </p>
+          </div>
         </div>
 
         <div class="pt-2">
           <router-link
               to="/gateway"
-              class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800 shadow-sm"
+              class="cta-button"
           >
             Start Free Orientation
           </router-link>
@@ -35,10 +32,8 @@
       </section>
 
       <!-- WHAT MINDWORKS DOES -->
-      <section class="content-section">
-        <div class="space-y-4">
-          <p class="section-label">What MindWorks Does</p>
-        </div>
+      <section class="section-container">
+        <h2 class="section-heading">What MindWorks Does</h2>
         <div class="body-copy">
           <p>
             Most approaches focus on insight.
@@ -77,13 +72,13 @@
       </section>
 
       <!-- WHO THIS IS FOR -->
-      <section class="content-section">
+      <section class="section-container">
         <div class="space-y-4">
-          <p class="section-label">Who This Is For</p>
-          <h2 class="section-title">For people who recognise this:</h2>
+          <h2 class="section-heading">Who This Is For</h2>
+          <p class="body-copy !mb-0">For people who recognise this:</p>
         </div>
         <div class="body-copy">
-          <ul class="space-y-2 pl-5 text-[1rem] leading-[1.7] text-slate-700 list-disc">
+          <ul class="list-disc pl-5 space-y-2 text-slate-600">
             <li>You understand what’s happening, but still do it</li>
             <li>You notice the pattern after it’s already happened</li>
             <li>You lose clarity in the moment, especially under pressure</li>
@@ -97,10 +92,10 @@
           </p>
         </div>
         
-        <div class="pt-4">
+        <div class="pt-2">
           <router-link
               to="/gateway"
-              class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800 shadow-sm"
+              class="cta-button"
           >
             Start Free Orientation
           </router-link>
@@ -108,47 +103,42 @@
       </section>
 
       <!-- PROGRAMME -->
-      <section class="rounded-2xl border border-slate-200/80 bg-white/60 px-7 py-8 max-w-2xl">
-        <div class="space-y-4">
-          <p class="section-label">The Programme</p>
-          <h2 class="section-title !text-[1.7rem] md:!text-[2rem]">Structured continuation.</h2>
-        </div>
-        <div class="body-copy pt-2">
+      <section class="section-container rounded-2xl border border-slate-200 bg-white/50 p-7 shadow-sm">
+        <h2 class="section-heading">The Programme</h2>
+        <div class="body-copy">
           <p>A guided path through six stages of observation:</p>
-          <ul class="mt-4 space-y-2 text-sm text-slate-700">
-            <li class="flex gap-3"><span class="font-semibold min-w-[70px]">Stage 1</span> Observation — a single moment becomes visible.</li>
-            <li class="flex gap-3"><span class="font-semibold min-w-[70px]">Stage 2</span> Sequence — the order of events.</li>
-            <li class="flex gap-3"><span class="font-semibold min-w-[70px]">Stage 3</span> Pattern — what keeps appearing.</li>
-            <li class="flex gap-3"><span class="font-semibold min-w-[70px]">Stage 4</span> State — the conditions already present.</li>
-            <li class="flex gap-3"><span class="font-semibold min-w-[70px]">Stage 5</span> Results — the consequences of the response.</li>
-            <li class="flex gap-3"><span class="font-semibold min-w-[70px]">Stage 6</span> Relation — how responses gather around pressure.</li>
+          <ul class="mt-4 space-y-2 text-[15px] text-slate-600">
+            <li class="flex gap-3"><span class="font-semibold text-slate-800 min-w-[65px]">Stage 1</span> Observation — a single moment becomes visible.</li>
+            <li class="flex gap-3"><span class="font-semibold text-slate-800 min-w-[65px]">Stage 2</span> Sequence — the order of events.</li>
+            <li class="flex gap-3"><span class="font-semibold text-slate-800 min-w-[65px]">Stage 3</span> Pattern — what keeps appearing.</li>
+            <li class="flex gap-3"><span class="font-semibold text-slate-800 min-w-[65px]">Stage 4</span> State — the conditions already present.</li>
+            <li class="flex gap-3"><span class="font-semibold text-slate-800 min-w-[65px]">Stage 5</span> Results — the consequences of the response.</li>
+            <li class="flex gap-3"><span class="font-semibold text-slate-800 min-w-[65px]">Stage 6</span> Relation — how responses gather around pressure.</li>
           </ul>
         </div>
       </section>
 
       <!-- CREATOR -->
-      <section class="max-w-2xl rounded-2xl border border-slate-200 bg-slate-100/70 px-7 py-8">
-        <div class="space-y-4">
-          <p class="section-label">Creator</p>
-          <h2 class="section-title !text-[1.7rem] md:!text-[2rem]">Robert Ormiston</h2>
-        </div>
-        <div class="body-copy pt-2">
+      <section class="section-container rounded-2xl border border-slate-200 bg-slate-100/50 p-7">
+        <h2 class="section-heading">Creator</h2>
+        <div class="body-copy">
+          <p class="text-[1.1rem] font-medium text-slate-900 !mb-1">Robert Ormiston</p>
           <p>
             Robert is a psychotherapist (BACP) with 25 years of experience in mental health. His work focuses on how recurring patterns become clearer through long-term observation.
           </p>
           <div class="pt-2">
-            <a href="https://therapyworks.works" target="_blank" rel="noopener" class="inline-flex items-center text-sm font-medium text-slate-900 hover:text-slate-700 transition underline underline-offset-4">
+            <a href="https://therapyworks.works" target="_blank" rel="noopener" class="text-[15px] font-medium text-slate-900 hover:text-slate-700 transition underline underline-offset-4">
               TherapyWorks
             </a>
           </div>
         </div>
       </section>
 
-      <!-- CTA -->
-      <section class="flex flex-wrap gap-3 pt-4">
+      <!-- FINAL CTA -->
+      <section class="pt-4">
         <router-link
             to="/course"
-            class="inline-flex items-center rounded-xl border border-slate-900 bg-slate-900 px-6 py-3.5 text-sm font-medium text-white transition hover:bg-slate-800"
+            class="cta-button"
         >
           Begin
         </router-link>
@@ -162,53 +152,40 @@
 
 <script setup>
 import PublicFooter from '../components/PublicFooter.vue'
-// About page — static content only
 </script>
 
 <style scoped>
 
-.content-section {
-  @apply max-w-2xl space-y-5;
+.hero-headline {
+  @apply text-[28px] md:text-[32px] font-medium tracking-tight text-slate-900 leading-[1.3];
 }
 
-.section-label {
-  @apply text-[11px] uppercase tracking-[0.24em] text-slate-500;
+.hero-subtext {
+  @apply space-y-4 text-[17px] md:text-[18px] text-slate-600 leading-[1.6];
 }
 
-.section-title {
-  @apply text-[1.9rem] md:text-[2.3rem] font-medium tracking-[-0.025em] leading-[1.16] text-slate-900;
+.section-container {
+  @apply space-y-4;
+}
+
+.section-heading {
+  @apply text-[21px] md:text-[23px] font-semibold tracking-tight text-slate-900;
 }
 
 .body-copy {
-  @apply space-y-4 text-[1.02rem] leading-[1.9] text-slate-700;
+  @apply space-y-3 text-[16px] md:text-[17px] font-normal leading-[1.6] text-slate-600;
 }
 
-.programme-row {
-  @apply rounded-xl border border-slate-200/80 bg-stone-50/70 px-4 py-3;
+.body-copy p {
+  @apply mb-3;
 }
 
-.programme-row span {
-  @apply block text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500;
+.body-copy p:last-child {
+  @apply mb-0;
 }
 
-.programme-row p {
-  @apply mt-1 leading-relaxed text-slate-700;
-}
-
-.faq-item {
-  @apply border-b border-slate-200 py-4;
-}
-
-.faq-item summary {
-  @apply cursor-pointer text-[1rem] font-medium text-slate-700;
-}
-
-.faq-item p {
-  @apply mt-3 text-[0.98rem] leading-[1.85] text-slate-600;
-}
-
-.footer-link {
-  @apply underline underline-offset-2 transition hover:text-slate-800;
+.cta-button {
+  @apply inline-flex items-center rounded-xl bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800 shadow-sm;
 }
 
 </style>
