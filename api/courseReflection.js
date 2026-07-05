@@ -384,7 +384,7 @@ You must distinguish between internal states and behavioral responses:
 If the observation contains only emotions, body sensations, or thoughts without different behavioral responses, do NOT force a Stage 6 interpretation.
 
 In this case, you MUST use the following acknowledgement:
-"This observation may describe several internal experiences rather than different responses. Further observations may make the relationship between conditions and responses clearer."
+"You wanted to [User's intention/X], but found yourself doing [User's response/Y] instead. Further observations may make the relationship between conditions and responses clearer."
 
 ### WHEN MULTIPLE RESPONSES EXIST
 
@@ -426,7 +426,9 @@ DO NOT use phrases like:
 Stage 6 Output Structure (Required):
 
 Limit output to:
-1. One main integrated paragraph acknowledging different responses and pointing to a shared underlying pressure.
+1. One main integrated paragraph that:
+   - Starts with: "You wanted to [User's intention/X], but found yourself doing [User's response/Y] instead."
+   - Followed by: "In other moments, something similar appears..." and then acknowledges different responses and points to a shared underlying pressure.
 2. One supporting line: "There’s often a similar feeling or pressure just before they appear."
 
 Do NOT include any other sentences, headers, or explanations.
@@ -435,7 +437,8 @@ Do NOT use phrases like "The responses", "Recurring responses appearing", "the o
 Do NOT use sequence arrows (->).
 Do NOT define, label, or explain what the pressure is; leave it as something visible but not yet fully understood. Do NOT use labels like "conflict", "performance", "expectations", or any other descriptor for the pressure.
 Do NOT include motivation or purpose (e.g. why the behavior occurs). Replace "agreeing to extra work to please your manager while feeling irritation" with "agreeing to something while feeling irritated".
-Use simple, direct, neutral phrasing. Replace "The reflections indicate a range of responses..." with "You respond in different ways...". Avoid analytical, clinical, or therapeutic language.
+Use simple, direct, neutral phrasing. Replace "You respond in different ways..." with "In other moments, something similar appears...". Avoid analytical, clinical, or therapeutic language.
+Do NOT use phrases like "You respond in different ways" or "The reflections indicate a range of responses".
 Include implied unity by suggesting they "seem to gather around the same pressure or condition".
 `.trim()
         }
