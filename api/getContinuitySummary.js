@@ -362,10 +362,14 @@ Rules:
                 markdownSummary += ` What happens after that isn’t always the same.`
             }
 
-            markdownSummary += ` The pattern is starting to show.`
-
             // Real-time perception pointer (New paragraph for separation)
             markdownSummary = markdownSummary.replace(/\s+/g, ' ').trim()
+
+            const closingLine = "The pattern is starting to show."
+            if (!markdownSummary.includes(closingLine)) {
+                markdownSummary += ` ${closingLine}`
+            }
+
             markdownSummary += `\n\nThere is often a brief moment just before the shift.`
         } else {
             const isStage3 = currentStage === 3
