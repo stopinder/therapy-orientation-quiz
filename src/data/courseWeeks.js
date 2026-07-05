@@ -6,42 +6,31 @@ export const courseWeeks = [
         title: "Observation",
 
         subtitle:
-            "Observing continuity breakdown and attentional drift.",
+            "Observing shift as it happens.",
 
         reflectionPrompt:
             "Think of a recent moment where you started something, then ended up doing something else.",
 
         intro:
-            "This stage is about noticing moments when you end up doing something different from what you intended.\n\nMaybe you meant to start work and checked email instead.\n\nMaybe you picked up your phone without thinking about it.\n\nMaybe you began one task and drifted into another.\n\nYou do not need to change anything yet.\n\nJust notice when it happens.",
+            "Most of the time, something changes without being noticed.\n\nYou begin one thing, and moments later, you’re doing something else.\n\nThis stage is about seeing the moment that shift happens.",
 
         orientation: {
             title: "Why You're Here",
             content: [
-                "Most of us move away from an intention without noticing the moment it happens.",
-                "An intention is formed, and then, without a clear moment of choice, the attention is elsewhere.",
-                "We delay.",
-                "We check.",
-                "We prepare.",
-                "We drift.",
-                "In this stage, MindWorks is not asking for an explanation or a change.",
-                "It is simply helping one moment become visible.",
-                "Here, the interest is in noticing the point where attention moves somewhere unexpected."
+                "Most of the time, something changes without being noticed.",
+                "You begin one thing, and moments later, you’re doing something else.",
+                "This stage is about seeing the moment that shift happens."
             ]
         },
 
         openingReflection: [
-
-            "Continuity often disappears before it is noticed. One may begin with a clear intention—a task, a message, a decision, or a simple movement toward something important. Then, without a clear moment of choosing, the focus is elsewhere.",
-
-            "The movement may look ordinary. Something is checked, prepared, or tidied; one more detail is thought through, or attention drifts into a different demand. Internally, contact has weakened.",
-
-            "This stage is not about correcting that movement. It is about allowing it to become recognisable. The interest is not in the collapse afterwards, but in the earlier shift: the instant where contact weakens and another behaviour begins to organise the moment.",
-
-            "The task here is simple: notice the disappearance. Not the explanation. Not the story. Just the movement from intention into fragmentation."
+            "Most of the time, something changes without being noticed.",
+            "You begin one thing, and moments later, you’re doing something else.",
+            "This stage is about seeing the moment that shift happens."
         ],
 
         bodyFocus: [
-            "Observation is not only mental. When continuity changes, there is often a physical shift—a tightening, a holding of breath, or a move toward comfort.",
+            "Observation is not only mental. When things change, there is often a physical shift—a tightening, a holding of breath, or a move toward comfort.",
             "This stage, start to notice what happens in the body at the moment of departure."
         ],
 
@@ -58,7 +47,7 @@ export const courseWeeks = [
                 title: "Notice the Departure",
 
                 description:
-                    "Once per day, notice a moment where you intended to do one thing and found yourself doing something else."
+                    "Once per day, notice a moment where you started to do one thing and found yourself doing something else."
             },
 
             {
@@ -76,14 +65,14 @@ export const courseWeeks = [
                 title: "Notice one departure",
 
                 description:
-                    "Once this stage, notice a moment when you intended to do one thing and found yourself doing something else."
+                    "Once this stage, notice a moment when you started to do one thing and found yourself doing something else."
             },
 
             {
                 title: "Notice the substitute",
 
                 description:
-                    "When a departure occurs, observe what replaced the original intention."
+                    "When a departure occurs, observe what replaced the original start."
             },
 
             {
