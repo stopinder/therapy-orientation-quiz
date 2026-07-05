@@ -98,7 +98,7 @@
 
       <!-- Why this matters (Orientation content) - Stage 4, 5, 6 -->
       <section
-          v-if="[4, 5, 6].includes(weekNumber) && week.orientation"
+          v-if="[4, 5].includes(weekNumber) && week.orientation"
           class="mb-10 rounded-3xl border border-slate-200 bg-white p-10 shadow-sm"
       >
         <h2 class="text-2xl font-semibold text-slate-950">

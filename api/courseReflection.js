@@ -396,21 +396,9 @@ Pay attention to:
 * Shared condition: The specific environment or pressure that seems to be present when different responses occur.
 * Implied Unity: How different responses gather around the same pressure point. Use "they seem to gather around the same pressure or condition" rather than "system at play" or "system becoming visible".
 
-Identify what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.). Avoid "function", "purpose", or "protection". Use calm, precise, and restrained language.
+Identify what occurs without imposing theory. Do not use IFS terminology (parts, managers, exiles, etc.). Avoid "function", "purpose", or "protection". Use calm, precise, and confident language.
 
 Stage 6 Output Structure (Required):
-
-### One Pattern, Many Responses
-
-A single integrated paragraph acknowledging different responses and pointing to a shared underlying pressure.
-Do NOT list responses or use bullet points.
-Do NOT use phrases like "The responses" or "Recurring responses appearing".
-Do NOT use sequence arrows (->).
-Use simple, natural phrasing and an observational tone.
-Do not explain the pattern; leave it as something visible but not yet fully understood.
-Include implied unity by suggesting they "seem to gather around the same pressure or condition".
-
-There’s often a similar feeling or pressure just before they appear.
 
 ### Why this matters
 Short, integrated observation (max 2 sentences).
@@ -418,16 +406,17 @@ Focus only on:
 - responses may not be separate
 - they may gather around the same condition
 
-### The sequence
-A clean vertical sequence of events.
-Do not append body observations to the end of the sequence by default. 
-If body observations are given without specific timing, place them near the emotional/state condition they seem to accompany, not at the end.
+### One Pattern, Many Responses
 
-### What remains unclear
-Identify what is not yet certain about the relationship between these responses. This section must be short and cautious.
-Example phrases:
-* "It is not yet clear whether these different responses are related to the same pressure."
-* "The relationship between these responses is still being observed."
+A single integrated paragraph acknowledging different responses and pointing to a shared underlying pressure.
+Do NOT list responses or use bullet points.
+Do NOT use phrases like "The responses" or "Recurring responses appearing".
+Do NOT use sequence arrows (->).
+Use direct, natural phrasing and a confident observational tone.
+Do not explain the pattern; leave it as something visible but not yet fully understood.
+Include implied unity by suggesting they "seem to gather around the same pressure or condition".
+
+There’s often a similar feeling or pressure just before they appear.
 `.trim()
         }
 

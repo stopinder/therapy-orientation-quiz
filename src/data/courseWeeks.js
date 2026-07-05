@@ -335,13 +335,9 @@ export const courseWeeks = [
         },
 
         openingReflection: [
-            "By this point, repeated sequences and states may have appeared across reflections. Some may seem separate at first: checking, preparing, delaying, reorganising, withdrawing, or overthinking.",
-
-            "Stage 6 looks across these observations. The question is not what the relationship is, but whether these different responses gather around the same pressure or condition.",
+            "This stage looks across these observations. The question is whether different responses gather around the same pressure or condition.",
 
             "A response may look different on the surface, while still appearing in a similar situation. MindWorks is beginning to observe whether these responses are connected.",
-
-            "The task is simply to notice the relationship: whether several different responses seem to arrive around the same kind of pressure.",
 
             "This is the beginning of seeing a relationship. Not as a theory, but as a visible connection between conditions and responses."
         ],
