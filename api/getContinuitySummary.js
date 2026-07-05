@@ -47,7 +47,10 @@ export default async function handler(request, response) {
 
         const count = reflectionsData?.length || 0
 
-        if (count < 3) {
+        console.log(`REFLECTIONS LOADED: ${count}`)
+
+        if (count < 2) {
+            console.log("CONTINUITY ACCEPTED: false")
             return response.status(200).json({
                 summary: ""
             })
@@ -55,53 +58,20 @@ export default async function handler(request, response) {
 
         const recentReflections = reflectionsData
             .map((r, index) => `---
-Index: ${index} (0 is most recent)
+Index: ${index}
 Week: ${r.week_number}
 Date: ${r.created_at}
 Observation: ${r.original_reflection}
 MindWorks Observation: ${r.ai_response}`)
             .join("\n\n")
 
-        const stageLenses = {
-            1: {
-                question: "What single observation is becoming visible?",
-                emphasis: "first observations, isolated examples, no recurrence yet. evidence count: " + count
-            },
-            2: {
-                question: "What sequence is becoming visible?",
-                emphasis: "order, transitions, before / after. evidence count: " + count
-            },
-            3: {
-                question: "What feels familiar across different moments?",
-                emphasis: "pattern, higher-order patterns, shift in direction, delay, withdrawal, substitute activity, avoidance of exposure, loss of contact with original intention. Identify higher-order patterns first, then list variants. Avoid diagnosis and explanation. Do not over-explain or force conclusions. Use observational language only. Do not use 'Possible Pattern' as a heading. evidence count: " + count
-            },
-            4: {
-                question: "What conditions tend to be present beforehand?",
-                emphasis: "recurring states, body conditions, emotional climate, anticipation, pressure, uncertainty. Do not focus primarily on behaviour. evidence count: " + count
-            },
-            5: {
-                question: "What tends to change afterwards?",
-                emphasis: "consequences, lingering emotions, unresolved states, partial settling, continued tension, postponed activity, observable shifts. Avoid: 'function', purpose, motive, protection. evidence count: " + count
-            },
-            6: {
-                question: "How do these observations now fit together?",
-                emphasis: "integration, overall organisation, relationships between observations, what has become visible across the whole journey. Do not diagnose. Do not conclude. evidence count: " + count
-            }
-        }
-
-        const lens = {
-            question: "What repetition is becoming visible across these moments?",
-            emphasis: "ONE continuous paragraph, no sections, no bullets, no headings. Use natural, human language. Use recurrence phrases: 'again', 'each time', 'across different situations', 'more than once'. evidence count: " + count
-        }
-
-        let systemPrompt = ""
-
-        if (isCourseOverview || true) {
-            systemPrompt = `
-You are a Field Researcher documenting a cumulative investigation. 
+        const systemPrompt = `
+You are a Field Researcher documenting recurring behavioural moments across a cumulative investigation. 
 
 Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. MUST use recurrence phrases: "again", "each time", "across different situations", "more than once".
+A quiet observer collecting evidence over time. Your task is to compare every reflection against every other reflection to find behavioural moments that recur. Ignore one-off events. Never describe a behaviour unless it appears in multiple reflections.
+
+Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. MUST use recurrence phrases: "again", "each time", "across different situations", "more than once".
 
 Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
@@ -111,47 +81,45 @@ Tone Guidelines:
 - Avoid: this means, this indicates, this proves, this shows that, the user is...
 - Never diagnose. Never over-interpret. Never sound certain.
 
-Evidence Thresholds (Apply based on count ${count}):
-3-5 observations: "Something may be beginning to repeat across different situations."
-6-10 observations: "This happens again and again, each time you begin something."
-
 CORE ANALYSIS:
-1. Detect patterns that appear in MORE THAN ONE reflection. IGNORE single-moment observations.
-2. Focus on RECURRENCE. If it doesn't happen more than once, it is not a pattern.
-3. Score each pattern based on:
-   - Frequency: number of matching reflections (must be > 1).
-   - Recency: reflections with lower indices (more recent) carry more weight.
-4. SELECT THE SINGLE HIGHEST SCORING RECURRING PATTERN.
-5. GENERATION STRUCTURE (MANDATORY):
-   - Sentence 1: Refer to the pattern across time (e.g., "This keeps happening when you start something...")
-   - Sentence 2: Concrete behaviour (e.g., "You begin [task], then shift to [behaviour] instead.")
-   - Sentence 3: Detection/Pointer (e.g., "There’s often a brief moment just before the shift.")
-6. NO single-scenario summaries. If output could be from one moment, it is invalid.
-7. Provide raw fragments for JSON fields:
-   - pattern_across_time: A sentence describing the recurrence (e.g., "This keeps happening when you start something...")
-   - intention: raw action (e.g., "start working"). NO "plan to".
-   - shift: raw action taken instead (e.g., "check social media"). NO "instead".
-   - consequence: raw result (e.g., "delay"). NO "this leads to".
-   - pointer: a brief pointer sentence (e.g., "There is often a brief moment just before the shift.")
+1. Compare every reflection against every other reflection.
+2. Identify behavioural moments that recur across the reflection history.
+3. Ignore one-off events.
+4. A continuity statement is only valid if it is supported by at least TWO different reflections.
+5. Provide a summary ONLY for recurring behaviours.
+
+GENERATION STRUCTURE (MANDATORY):
+- Sentence 1: Refer to the recurrence across time (e.g., "This keeps happening when you start something...")
+- Sentence 2: Concrete behaviour (e.g., "You begin [task], then shift to [behaviour] instead.")
+- Sentence 3: Detection/Pointer (e.g., "There’s often a brief moment just before the shift.")
+
+Provide raw fragments for JSON fields:
+- pattern_across_time: A sentence describing the recurrence (e.g., "This keeps happening when you start something...")
+- intention: raw action (e.g., "start working"). NO "plan to".
+- shift: raw action taken instead (e.g., "check social media"). NO "instead".
+- consequence: raw result (e.g., "delay"). NO "this leads to".
+- pointer: a brief pointer sentence (e.g., "There is often a brief moment just before the shift.")
+- matchingIndices: Array of indices of the reflections that support this specific recurring behavioural moment.
 
 Language and Perspective:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
-- Use consistent PRESENT TENSE (e.g., "you shift" instead of "you shifted").
+- Use consistent PRESENT TENSE.
 - Ensure the summary reads naturally as a description of the user's recurring experience.
 
 OUTPUT FORMAT:
 Return a JSON object ONLY.
 
 {
-  "dominantPattern": {
-    "pattern_across_time": "repetition description",
-    "intention": "raw intention fragment",
-    "shift": "raw shift fragment",
-    "consequence": "raw consequence fragment",
-    "pointer": "pointer sentence",
-    "score": "float",
-    "matchingIndices": [0, 1, 3]
-  }
+  "recurringGroups": [
+    {
+      "pattern_across_time": "repetition description",
+      "intention": "raw intention fragment",
+      "shift": "raw shift fragment",
+      "consequence": "raw consequence fragment",
+      "pointer": "pointer sentence",
+      "matchingIndices": [0, 1, 3]
+    }
+  ]
 }
 
 Rules:
@@ -159,7 +127,7 @@ Rules:
 2. Use "stomach" instead of "tummy".
 3. Replace "work or engage in a task" with "engage".
 4. Ensure sentences are short and neutral.
-5. "dominantPattern" must be the SINGLE highest-scoring recurring pattern. NO blending. NO "or". Use the user's specific phrasing where possible.
+5. "recurringGroups" should contain all identified recurring patterns supported by at least two reflections.
 6. Strictly follow the Language and Perspective rules.
 7. REUSE specific user phrasing for actions.
 8. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
@@ -206,93 +174,49 @@ Rules:
             jsonResult = JSON.parse(rawContent)
         } catch (e) {
             console.error("JSON PARSE ERROR:", e)
-            // Fallback for failed JSON
             return response.status(200).json({
-                summary: "MindWorks is collecting observations. The pattern is starting to show.",
-                markdown_summary: "MindWorks is collecting observations. The pattern is starting to show."
+                summary: ""
             })
         }
 
-        // Define confidence levels based on pattern strength
-        const dominantPattern = jsonResult.dominantPattern || {}
-        const matchingIndices = dominantPattern.matchingIndices || []
-        const matchingCount = matchingIndices.length
-        
-        const isStrong = matchingCount > 5
-        const isEmerging = matchingCount >= 3 && matchingCount <= 5
-        const isEarly = matchingCount < 3
-        
-        const verbs = {
-            tend: isEarly ? "sometimes" : (isStrong ? "consistently" : "tend to"),
-            often: isEarly ? "sometimes" : (isStrong ? "reliably" : "often")
-        }
+        const recurringGroups = jsonResult.recurringGroups || []
+        console.log(`RECURRING GROUPS FOUND: ${recurringGroups.length}`)
 
-        let markdownSummary = ""
+        // Server-side validation
+        const validGroups = recurringGroups.filter((group, index) => {
+            const indices = group.matchingIndices || []
+            const uniqueIndices = [...new Set(indices)]
+            const isValid = uniqueIndices.length >= 2
+            console.log(`GROUP ${index + 1} SUPPORT: reflections [${uniqueIndices.join(',')}]`)
+            console.log(`Group ${index + 1} unique count: ${uniqueIndices.length}`)
+            return isValid
+        })
 
-        if (isCourseOverview || true) {
-            const {
-                dominantPattern = {}
-            } = jsonResult
-
-            const pattern_across_time = (dominantPattern.pattern_across_time || "This keeps happening when you start something.").replace(/\bmy\b/gi, "your")
-            const intention = (dominantPattern.intention || "[start with intention]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
-            const shift = (dominantPattern.shift || "[shift into distraction/withdrawal]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
-            const consequence = (dominantPattern.consequence || "[delay]").replace(/^this leads to /i, "").replace(/\bmy\b/gi, "your")
-            const pointer = (dominantPattern.pointer || "There is often a brief moment just before the shift.").replace(/\bmy\b/gi, "your")
-
-            markdownSummary = `${pattern_across_time} You begin ${intention}, then shift to ${shift} instead, which usually leads to ${consequence}. ${pointer}`
-
-            markdownSummary = markdownSummary.replace(/\s+/g, ' ').trim()
-
+        if (validGroups.length === 0) {
+            console.log("CONTINUITY ACCEPTED: false")
             return response.status(200).json({
-                summary: markdownSummary,
-                markdown_summary: markdownSummary
-            });
-        } else {
-            const isStage3 = currentStage === 3
-            const isStage4 = currentStage === 4
-            const title = isStage3 ? 'What These Moments May Have In Common' : (isStage4 ? 'The State Becoming Visible' : 'What Keeps Reappearing')
-            
-            if (isStage4) {
-                markdownSummary = `
-### The State Becoming Visible
-${jsonResult.stateBecomingVisible || ""}
-
-### What Was Already Present
-${(jsonResult.whatWasAlreadyPresent || []).map(item => `- ${item}`).join('\n')}
-
-### What Remains Unclear
-${jsonResult.unclearAspects || "It is not yet clear whether this state appears in other situations."}
-
-### A Recognition
-${jsonResult.recognition || "The pattern did not begin at the moment of action. It was already there before anything happened."} There is often a brief moment before the shift.
-`.trim()
-            } else {
-                markdownSummary = `
-### ${title}
-${jsonResult.whatKeepsReappearing || ""}
-
-### Repeated Sequence
-${(jsonResult.repeatedSequence || []).join(' → ')}
-
-### Primary State
-${jsonResult.primaryState || ""}
-
-### Possible Function
-${jsonResult.possibleFunction || "It is not yet clear which shifts reliably follow the familiar response, or whether the same consequence appears across different situations."}
-
-### What Remains Unclear
-${jsonResult.unclearAspects || ""}
-
-There is often a brief moment before the shift.
-`.trim()
-            }
+                summary: ""
+            })
         }
+
+        console.log("CONTINUITY ACCEPTED: true")
+
+        // Use the first valid group for the summary (since we previously only had one "dominantPattern")
+        const group = validGroups[0]
+
+        const pattern_across_time = (group.pattern_across_time || "This keeps happening when you start something.").replace(/\bmy\b/gi, "your")
+        const intention = (group.intention || "[start with intention]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
+        const shift = (group.shift || "[shift into distraction/withdrawal]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
+        const consequence = (group.consequence || "[delay]").replace(/^this leads to /i, "").replace(/\bmy\b/gi, "your")
+        const pointer = (group.pointer || "There is often a brief moment just before the shift.").replace(/\bmy\b/gi, "your")
+
+        let markdownSummary = `${pattern_across_time} You begin ${intention}, then shift to ${shift} instead, which usually leads to ${consequence}. ${pointer}`
+        markdownSummary = markdownSummary.replace(/\s+/g, ' ').trim()
 
         return response.status(200).json({
-            ...jsonResult,
             summary: markdownSummary,
-            markdown_summary: markdownSummary
+            markdown_summary: markdownSummary,
+            validGroups
         })
 
     } catch (error) {
