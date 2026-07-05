@@ -47,23 +47,9 @@ export default async function handler(request, response) {
 
         const count = reflectionsData?.length || 0
 
-        if (count === 0) {
+        if (count < 3) {
             return response.status(200).json({
                 summary: ""
-            })
-        }
-
-        if (count === 1) {
-            return response.status(200).json({
-                summary: ""
-            })
-        }
-
-        if (count === 2) {
-            return response.status(200).json({
-                summary: currentStage === 3 
-                    ? "MindWorks is beginning to notice patterns as different moments are compared. For now, the focus remains on simple observation."
-                    : "MindWorks is collecting observations. Recurrence may become easier to recognise as more moments are documented."
             })
         }
 
@@ -103,12 +89,10 @@ MindWorks Observation: ${r.ai_response}`)
             }
         }
 
-        const lens = isCourseOverview || true
-            ? {
-                question: "What is becoming visible across everything observed so far?",
-                emphasis: "ONE continuous paragraph, no sections, no bullets, no headings. Use natural, human language. No system terms like 'across situations' or 'early pattern'. evidence count: " + count
-            }
-            : (stageLenses[currentStage] || stageLenses[6])
+        const lens = {
+            question: "What repetition is becoming visible across these moments?",
+            emphasis: "ONE continuous paragraph, no sections, no bullets, no headings. Use natural, human language. Use recurrence phrases: 'again', 'each time', 'across different situations', 'more than once'. evidence count: " + count
+        }
 
         let systemPrompt = ""
 
@@ -117,7 +101,7 @@ MindWorks Observation: ${r.ai_response}`)
 You are a Field Researcher documenting a cumulative investigation. 
 
 Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", "across different situations", "as more moments are documented", or "What happens after that". Instead use: "it’s not always the same", "the pattern is starting to show", "as more of these moments show up".
+A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. MUST use recurrence phrases: "again", "each time", "across different situations", "more than once".
 
 Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
@@ -128,36 +112,27 @@ Tone Guidelines:
 - Never diagnose. Never over-interpret. Never sound certain.
 
 Evidence Thresholds (Apply based on count ${count}):
-1–3 observations: Describe only what is visible. No recurrence language.
-4–6 observations: "Something may be beginning to repeat."
-7–15 observations: "This relationship appears often enough to be worth watching."
-15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."
+3-5 observations: "Something may be beginning to repeat across different situations."
+6-10 observations: "This happens again and again, each time you begin something."
 
 CORE ANALYSIS:
-1. Extract ALL candidate patterns (intention → behavior sequences) from the reflections.
-2. Maintain a set of possible patterns. Do not blend them.
-3. For each pattern, identify which reflections (by Index) match it.
-4. Score each pattern based on:
-   - Frequency: number of matching reflections.
-   - Recency: reflections with lower indices (more recent) carry significantly more weight.
-5. SELECT THE SINGLE HIGHEST SCORING PATTERN. IGNORE all other patterns.
-6. NO multiple behaviors in one sentence. NO "or". NO lists. NO blending.
-7. SENTENCE GENERATION:
-   - Generate 3 candidate sentences for the dominant pattern.
-   - All candidates must follow the structure: "You [frequency] [action], then [alternative] instead."
-   - If a specific feeling (e.g., pressure, tension, dread, irritation, anxiety) appears more than once across reflections and clearly occurs before the behavior shift, integrate it naturally: "You [frequency] [action], feel [feeling], then [alternative] instead."
-   - Prefer variants with timing cues (e.g., "start", "begin", "as you begin").
-   - Penalize "plan to", "engage in", "initiate", or overly generic words.
-   - Select the MOST natural and recognizable one.
-8. DO NOT generate a full sentence for the final output. Provide ONLY raw fragments for the JSON fields:
-   - intention: the raw action from the SELECTED best variant (e.g., "start working", "begin replying"). DO NOT include "plan to".
-   - feeling: the recurring feeling if selected (e.g., "pressure", "tension"). If no strong recurring feeling, return null.
-   - shift: the raw action taken instead (e.g., "check social media", "switch to your phone"). DO NOT include "instead". Replace "check all of my social media" with "check social media".
-   - consequence: the raw result (e.g., "delay", "frustration"). DO NOT include "this leads to".
-9. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). 
-10. PRIORITIZE concrete user phrasing (e.g., "checking social media") over generic terms. 
-11. Perspective: Convert ALL first-person to second-person (I -> you, my -> your). Replace all instances of "my" with "your".
-12. Modal check: Avoid "may" or "might". Use "sometimes", "often", or "tend to".
+1. Detect patterns that appear in MORE THAN ONE reflection. IGNORE single-moment observations.
+2. Focus on RECURRENCE. If it doesn't happen more than once, it is not a pattern.
+3. Score each pattern based on:
+   - Frequency: number of matching reflections (must be > 1).
+   - Recency: reflections with lower indices (more recent) carry more weight.
+4. SELECT THE SINGLE HIGHEST SCORING RECURRING PATTERN.
+5. GENERATION STRUCTURE (MANDATORY):
+   - Sentence 1: Refer to the pattern across time (e.g., "This keeps happening when you start something...")
+   - Sentence 2: Concrete behaviour (e.g., "You begin [task], then shift to [behaviour] instead.")
+   - Sentence 3: Detection/Pointer (e.g., "There’s often a brief moment just before the shift.")
+6. NO single-scenario summaries. If output could be from one moment, it is invalid.
+7. Provide raw fragments for JSON fields:
+   - pattern_across_time: A sentence describing the recurrence (e.g., "This keeps happening when you start something...")
+   - intention: raw action (e.g., "start working"). NO "plan to".
+   - shift: raw action taken instead (e.g., "check social media"). NO "instead".
+   - consequence: raw result (e.g., "delay"). NO "this leads to".
+   - pointer: a brief pointer sentence (e.g., "There is often a brief moment just before the shift.")
 
 Language and Perspective:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
@@ -169,21 +144,14 @@ Return a JSON object ONLY.
 
 {
   "dominantPattern": {
-    "intention": "raw fragment of intention",
-    "feeling": "recurring feeling or null",
-    "shift": "raw fragment of behavior/action they did instead",
-    "consequence": "raw fragment of specific result",
+    "pattern_across_time": "repetition description",
+    "intention": "raw intention fragment",
+    "shift": "raw shift fragment",
+    "consequence": "raw consequence fragment",
+    "pointer": "pointer sentence",
     "score": "float",
     "matchingIndices": [0, 1, 3]
-  },
-  "allCandidates": [
-    {
-       "summary": "Just as you [intention], you [shift] instead",
-       "score": 0.8
-    }
-  ],
-  "stateLine": "concrete states explicitly present in reflections (e.g. anger, pressure)",
-  "consequenceConsistency": "becoming visible / not yet consistent"
+  }
 }
 
 Rules:
@@ -191,85 +159,11 @@ Rules:
 2. Use "stomach" instead of "tummy".
 3. Replace "work or engage in a task" with "engage".
 4. Ensure sentences are short and neutral.
-5. "dominantPattern" must be the SINGLE highest-scoring pattern. NO blending. NO "or". Use the user's specific phrasing where possible.
-6. "stateLine" must only include states explicitly present in reflections. If none, return null.
-7. NO section names should be returned in any field value.
-8. Strictly follow the Language and Perspective rules.
-9. REUSE specific user phrasing for actions.
-10. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
+5. "dominantPattern" must be the SINGLE highest-scoring recurring pattern. NO blending. NO "or". Use the user's specific phrasing where possible.
+6. Strictly follow the Language and Perspective rules.
+7. REUSE specific user phrasing for actions.
+8. No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking").
 `.trim()
-        } else {
-            const isStage4 = currentStage === 4
-            const isStage5 = currentStage === 5
-            systemPrompt = `
-You are a Field Researcher documenting an ongoing investigation.
-
-Identity:
-A quiet observer collecting evidence over time. Interested in what repeatedly appears, not in reaching conclusions early. Tone: calm, precise, curious, restrained, evidence-led field notes. No causal language (due to, because, caused by). No emotional inference. No context-specific labels (social, work). Keep patterns at structural level. No inferred elements. Short, direct sentences. No narrowing of pattern. No explanation of why. Use human, conversational phrasing. Avoid "across situations", "this is an early pattern", "across different situations", "as more moments are documented", or "What happens after that". Instead use: "it’s not always the same", "the pattern is starting to show", "as more of these moments show up". ${isStage5 ? 'Stage 5 must NOT describe patterns across time. Only describe what is directly observable.' : ''}
-
-Product Philosophy:
-Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
-
-Tone Guidelines:
-- Use: beginning to appear, may be, not yet clear, still being observed, not enough evidence yet.
-- Avoid: this means, this indicates, this proves, this shows that, the user is...
-- Never diagnose. Never over-interpret. Never sound certain.
-
-Evidence Thresholds (Apply based on count ${count}):
-${isStage5 ? '1+ observations: Describe only what is directly observable: response → consequence. No recurrence language.' : `1–3 observations: Describe only what is visible. No recurrence language.
-4–6 observations: "Something may be beginning to repeat."
-7–15 observations: "This relationship appears often enough to be worth watching."
-15+ observations: "Across multiple observations, a recurring structure is becoming increasingly visible."`}
-
-CORE ANALYSIS:
-Extract concrete actions, not concepts. Look across multiple reflections to identify recurring behaviors. ${isStage4 ? 'Focus on internal states and conditions that were already present before the response appeared.' : isStage5 ? 'Focus strictly on what followed the response (response → consequence). Do not explain the pattern or describe patterns across time. Avoid ambiguous phrasing like "a sense of denial". Replace with observable descriptions like "frustration appeared" or "conflict followed".' : 'Identify patterns from action sequences (just as you [intention], you [actual behavior]).'} Avoid narrative paragraphs. Use short, sharp, evidence-led observations. Remove anything not explicitly stated by the user (assumed emotions, motivations, excuses). PRIORITIZE concrete user phrasing (e.g. "checking Instagram" instead of "distraction") and reuse it converted to second-person and present tense. If no specific behaviour is clear, use "do something else instead" or "don't follow through". No gerunds after "then". Use present simple (e.g., "start, then check" NOT "start, then checking"). The sentence MUST include "instead". Replace all instances of "my" with "your". Replace "check all of my social media" with "check social media".
-
-Language and Perspective:
-- Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
-- Use consistent PRESENT TENSE.
-- Use natural language. Replace "felt frustration" with "frustration follows". Replace "denial mode" with "the other person denies it".
-- REUSE specific user phrasing for actions. Convert "I checked Instagram" to "you check Instagram".
-- Avoid "across situations", "across different situations", "as more moments are documented". Use "it's not always the same", "the pattern is starting to show".
-
-OUTPUT FORMAT:
-Return a JSON object ONLY.
-
-${isStage4 ? `
-{
-  "status": "established",
-  "stateBecomingVisible": "Describe the state that was already present before the response appeared. Use second-person, present tense. Max 2 sentences.",
-  "whatWasAlreadyPresent": ["bullet point 1 in second-person, present tense", "bullet point 2"],
-  "unclearAspects": "It is not yet clear whether this state appears in other situations. (Max 1 sentence)",
-  "recognition": "The pattern did not begin at the moment of action. It was already there before anything happened."
-}
-` : isStage5 ? `
-{
-  "status": "established",
-  "whatFollowedResponse": "Describe what followed the response across observations. Strictly observable: response → consequence. Use second-person, present tense. Max 2 sentences.",
-  "whatAppearsAgain": ["response: [action in second-person, present tense]", "consequence: [result in second-person, present tense]"],
-  "whatThisLeadsTo": "One short line describing the consequence pattern in second-person, present tense."
-}
-` : `
-{
-  "status": "established",
-  "whatKeepsReappearing": "Use second-person, present tense...",
-  "repeatedSequence": ["Step 1", "Step 2", "Step 3", "Step 4"],
-  "primaryState": "Use second-person, present tense...",
-  "possibleFunction": "It is not yet clear which shifts reliably follow the familiar response, or whether the same consequence appears across different situations.",
-  "variants": ["variant 1", "variant 2"],
-  "unclearAspects": "..."
-}
-`}
-
-Rules:
-1. Return JSON ONLY.
-2. ${isStage4 ? 'No interpretation or over-explanation. Only include what the user clearly described.' : isStage5 ? 'Focus strictly on response → consequence. No interpretation, no explanation, no ambiguity. Keep sentences short and concrete. No pattern confirmation language (e.g. "this repeats across reflections"). Keep bullet points only in whatAppearsAgain.' : 'Identify higher-order patterns first. Name specific behaviours (checking, scrolling, delay) as variants.'}
-3. Use "stomach" instead of "tummy".
-4. Replace "work or engage in a task" with "engage".
-5. Strictly follow the Language and Perspective rules.
-`.trim()
-        }
-
         const openAIResponse = await fetch(
             "https://api.openai.com/v1/chat/completions",
             {
@@ -337,44 +231,23 @@ Rules:
 
         if (isCourseOverview || true) {
             const {
-                dominantPattern = {},
-                stateLine = null,
-                consequenceConsistency = "not yet consistent"
+                dominantPattern = {}
             } = jsonResult
 
+            const pattern_across_time = (dominantPattern.pattern_across_time || "This keeps happening when you start something.").replace(/\bmy\b/gi, "your")
             const intention = (dominantPattern.intention || "[start with intention]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
-            const feeling = (dominantPattern.feeling || "").replace(/\bmy\b/gi, "your")
             const shift = (dominantPattern.shift || "[shift into distraction/withdrawal]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
-            const consequence = (dominantPattern.consequence || "[tension / negative response / delay]").replace(/^this leads to /i, "").replace(/\bmy\b/gi, "your")
+            const consequence = (dominantPattern.consequence || "[delay]").replace(/^this leads to /i, "").replace(/\bmy\b/gi, "your")
+            const pointer = (dominantPattern.pointer || "There is often a brief moment just before the shift.").replace(/\bmy\b/gi, "your")
 
-            const frequency = isEarly ? "sometimes" : (isStrong ? "reliably" : "tend to");
-            
-            const feelingPhrase = feeling ? `, feel ${feeling},` : "";
-            markdownSummary = `You ${frequency} ${intention}${feelingPhrase} then ${shift} instead, which usually leads to ${consequence}.`
+            markdownSummary = `${pattern_across_time} You begin ${intention}, then shift to ${shift} instead, which usually leads to ${consequence}. ${pointer}`
 
-            if (stateLine) {
-                markdownSummary += ` Before this shift, there is ${verbs.often} a state already present, such as ${stateLine.replace(/\bmy\b/gi, "your")}.`
-            }
-
-            const closing = "but the pattern is starting to show."
-            if (consequenceConsistency.includes("visible")) {
-                markdownSummary += ` It’s not always the same what happens after that, ${closing}`
-            } else {
-                markdownSummary += ` What happens after that isn’t always the same.`
-            }
-
-            // Real-time perception pointer (New paragraph for separation)
             markdownSummary = markdownSummary.replace(/\s+/g, ' ').trim()
 
-            if (markdownSummary.includes("pattern is starting to show")) {
-                // Return but still add the perception pointer
-                return response.status(200).json({
-                    summary: markdownSummary + `\n\nThere is often a brief moment just before the shift.`,
-                    markdown_summary: markdownSummary + `\n\nThere is often a brief moment just before the shift.`
-                });
-            }
-
-            markdownSummary += `\n\nThere is often a brief moment just before the shift.`
+            return response.status(200).json({
+                summary: markdownSummary,
+                markdown_summary: markdownSummary
+            });
         } else {
             const isStage3 = currentStage === 3
             const isStage4 = currentStage === 4
