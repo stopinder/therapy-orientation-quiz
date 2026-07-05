@@ -137,10 +137,10 @@
       <!-- FINAL CTA -->
       <section class="pt-4">
         <router-link
-            to="/course"
+            to="/gateway"
             class="cta-button"
         >
-          Begin
+          Start Free Orientation
         </router-link>
       </section>
 

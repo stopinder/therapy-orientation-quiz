@@ -90,6 +90,11 @@ const routes = [
     },
 
     {
+        path: "/orientation",
+        redirect: "/gateway"
+    },
+
+    {
         path: "/adhd-quiz",
         name: "ADHDQuiz",
         component: ADHDQuizView,
