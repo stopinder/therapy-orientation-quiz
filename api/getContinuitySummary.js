@@ -52,7 +52,13 @@ export default async function handler(request, response) {
         if (count < 2) {
             console.log("CONTINUITY ACCEPTED: false")
             return response.status(200).json({
-                summary: "More observations are needed before a pattern becomes clear."
+                summary: `Becoming visible
+
+A clear pattern hasn’t formed yet.
+
+There are moments where the shift happens as you begin.
+
+See if you can notice that moment next time.`
             })
         }
 
@@ -192,7 +198,13 @@ Rules:
         } catch (e) {
             console.error("JSON PARSE ERROR:", e)
             return response.status(200).json({
-                summary: "More observations are needed before a pattern becomes clear."
+                summary: `Becoming visible
+
+A clear pattern hasn’t formed yet.
+
+There are moments where the shift happens as you begin.
+
+See if you can notice that moment next time.`
             })
         }
 
@@ -212,7 +224,13 @@ Rules:
         if (validGroups.length === 0) {
             console.log("CONTINUITY ACCEPTED: false")
             return response.status(200).json({
-                summary: "More observations are needed before a pattern becomes clear."
+                summary: `Becoming visible
+
+A clear pattern hasn’t formed yet.
+
+There are moments where the shift happens as you begin.
+
+See if you can notice that moment next time.`
             })
         }
 
