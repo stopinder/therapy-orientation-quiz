@@ -83,23 +83,23 @@ Tone Guidelines:
 
 CORE ANALYSIS:
 1. PRE-PROCESS: For each reflection, extract the task/start context (e.g. "start working", "begin task") and the shift behaviour (e.g. "check phone", "watch football").
-2. Compare these pairs across the entire history.
-3. Identify behavioural moments that recur across the reflection history.
-4. A continuity statement is only valid if it is supported by at least TWO different reflections.
+2. Group identical or similar pairs and count their frequency.
+3. Only select a pattern if it appears more than once.
+4. If multiple patterns exist, choose the pair with the highest count.
 5. If output could be generated from a single reflection, it is invalid.
-6. Provide a summary ONLY for recurring behaviours.
+6. DO NOT guess or infer. DO NOT use vague phrases like "start something" if a specific task is present.
 
 GENERATION STRUCTURE (MANDATORY):
-- Sentence 1: Refer to the recurrence across time (e.g., "This keeps happening when you start something.")
-- Sentence 2: Concrete behaviour (e.g., "You begin [task], then switch to [behaviour].")
-- Sentence 3: Detection/Pointer (e.g., "The shift appears just before you fully begin.")
-- Sentence 4: Forward Attention Guidance (MANDATORY: "See if you can notice that moment next time.")
+- Sentence 1: "This keeps happening when you start [start]." (where [start] is the specific task)
+- Sentence 2: "You begin [start], then switch to [shift]."
+- Sentence 3: "The shift appears just before you fully begin."
+- Sentence 4: "See if you can notice that moment next time."
 
 Provide raw fragments for JSON fields:
-- pattern_across_time: A sentence describing the recurrence (e.g., "This keeps happening when you start something.")
+- pattern_across_time: Sentence 1 as specified.
 - intention: raw action (e.g., "cleaning the garden"). NO "plan to".
 - shift: raw action taken instead (e.g., "watching football"). NO "instead".
-- pointer: detection sentence (e.g., "The shift appears just before you fully begin.")
+- pointer: Sentence 3 as specified.
 - matchingIndices: Array of indices of the reflections that support this specific recurring behavioural moment.
 
 Grammar Rules:
@@ -141,7 +141,7 @@ Return a JSON object ONLY.
 Rules:
 1. Return JSON only.
 2. Use "stomach" instead of "tummy".
-3. Replace "work or engage in a task" with "start something".
+3. Replace "work or engage in a task" with "start something" ONLY if no specific task is found.
 4. Ensure sentences are short and neutral.
 5. "recurringGroups" should contain all identified recurring patterns supported by at least two reflections.
 6. Strictly follow the Language and Perspective rules.
@@ -216,9 +216,16 @@ Rules:
             })
         }
 
+        // Choose the pair with highest count
+        validGroups.sort((a, b) => {
+            const countA = (new Set(a.matchingIndices || [])).size
+            const countB = (new Set(b.matchingIndices || [])).size
+            return countB - countA
+        })
+
         console.log("CONTINUITY ACCEPTED: true")
 
-        // Use the first valid group for the summary (since we previously only had one "dominantPattern")
+        // Use the highest count group
         const group = validGroups[0]
 
         const pattern_across_time = (group.pattern_across_time || "This keeps happening when you start something.").replace(/\bmy\b/gi, "your")
@@ -226,7 +233,9 @@ Rules:
         const shift = (group.shift || "[behaviour]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
         const pointer = (group.pointer || "The shift appears just before you fully begin.").replace(/\bmy\b/gi, "your")
 
-        const markdownSummary = `${pattern_across_time}
+        const markdownSummary = `Becoming visible
+
+${pattern_across_time}
 
 You begin ${intention}, then switch to ${shift}.
 
