@@ -48,6 +48,11 @@ export default async function handler(request, response) {
         const count = reflectionsData?.length || 0
 
         console.log(`REFLECTIONS LOADED: ${count}`)
+        if (reflectionsData) {
+            reflectionsData.forEach((r, i) => {
+                console.log(`REFLECTION ${i}: ${r.original_reflection}`)
+            })
+        }
 
         if (count < 2) {
             console.log("CONTINUITY ACCEPTED: false")
@@ -89,8 +94,11 @@ Tone Guidelines:
 
 CORE ANALYSIS:
 1. PRE-PROCESS: For each reflection, extract the task/start context (e.g. "start working", "begin task") and the shift behaviour (e.g. "check phone", "watch football").
-2. Group identical or similar pairs and count their frequency.
-3. Only select a pattern if it appears more than once.
+2. RELAXED GROUPING: Group similar values instead of requiring exact matches. 
+   - Normalise inputs (lower case, remove filler words).
+   - Map similar start tasks: "start work", "start admin", "start task", "at my desk" -> "start work".
+   - Map similar shift behaviours: "check phone", "check messages", "look at phone", "scroll through phone" -> "check phone".
+3. Only select a pattern if it appears more than once (count >= 2).
 4. If multiple patterns exist, choose the pair with the highest count.
 5. If output could be generated from a single reflection, it is invalid.
 6. DO NOT guess or infer. DO NOT use vague phrases like "start something" if a specific task is present.
@@ -209,7 +217,10 @@ See if you can notice that moment next time.`
         }
 
         const recurringGroups = jsonResult.recurringGroups || []
-        console.log(`RECURRING GROUPS FOUND: ${recurringGroups.length}`)
+        console.log(`RECURRING GROUPS FOUND BY AI: ${recurringGroups.length}`)
+        recurringGroups.forEach((g, i) => {
+            console.log(`AI GROUP ${i + 1}: start="${g.intention}", shift="${g.shift}", indices=[${g.matchingIndices?.join(',')}]`)
+        })
 
         // Server-side validation
         const validGroups = recurringGroups.filter((group, index) => {
