@@ -1178,6 +1178,7 @@ onMounted(async () => {
 })
 
 const submitReflection = async () => {
+  console.log("Submitting reflection:", reflection.value)
 
   error.value = ""
 
@@ -1235,6 +1236,7 @@ const submitReflection = async () => {
           })
         }
     )
+    console.log("Save response:", result.status, result.statusText)
 
     const text =
         await result.text()

@@ -17,6 +17,7 @@ export default async function handler(request, response) {
     }
 
     try {
+        console.log("Incoming reflection body:", request.body)
         const {
             week,
             reflection,
@@ -926,9 +927,10 @@ ${bodyObservation}
             console.error("SUPABASE SAVE ERROR:", saveError)
 
             return response.status(500).json({
-                error: "Failed to save reflection"
+                error: `Failed to save reflection: ${saveError.message || "Unknown error"}`
             })
         }
+        console.log("INSERT RESULT: Success")
 
         return response.status(200).json({
             reflection: aiResponse
