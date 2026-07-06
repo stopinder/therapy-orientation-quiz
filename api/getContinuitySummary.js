@@ -89,17 +89,24 @@ CORE ANALYSIS:
 5. Provide a summary ONLY for recurring behaviours.
 
 GENERATION STRUCTURE (MANDATORY):
-- Sentence 1: Refer to the recurrence across time (e.g., "This keeps happening when you start something...")
+- Sentence 1: Refer to the recurrence across time (e.g., "This keeps happening when you start something.")
 - Sentence 2: Concrete behaviour (e.g., "You begin [task], then shift to [behaviour] instead.")
-- Sentence 3: Detection/Pointer (e.g., "There’s often a brief moment just before the shift.")
+- Sentence 3: Detection/Pointer (e.g., "The shift appears just before you fully begin.")
+- Sentence 4: Forward Attention Guidance (MANDATORY: "See if you can notice that moment next time.")
 
 Provide raw fragments for JSON fields:
-- pattern_across_time: A sentence describing the recurrence (e.g., "This keeps happening when you start something...")
+- pattern_across_time: A sentence describing the recurrence (e.g., "This keeps happening when you start something.")
 - intention: raw action (e.g., "start working"). NO "plan to".
 - shift: raw action taken instead (e.g., "check social media"). NO "instead".
-- consequence: raw result (e.g., "delay"). NO "this leads to".
-- pointer: a brief pointer sentence (e.g., "There is often a brief moment just before the shift.")
+- pointer: detection sentence (e.g., "The shift appears just before you fully begin.")
 - matchingIndices: Array of indices of the reflections that support this specific recurring behavioural moment.
+
+Rules for forward attention guidance:
+- NO advice or behavioural instruction
+- NO "you should", "try", "change"
+- NO interpretation
+- NO therapy language
+- MUST direct attention forward and stay observational
 
 Language and Perspective:
 - Use second-person perspective ONLY ("you", "your"). Replace "I", "my", "me" with "you", "your".
@@ -115,7 +122,6 @@ Return a JSON object ONLY.
       "pattern_across_time": "repetition description",
       "intention": "raw intention fragment",
       "shift": "raw shift fragment",
-      "consequence": "raw consequence fragment",
       "pointer": "pointer sentence",
       "matchingIndices": [0, 1, 3]
     }
@@ -205,13 +211,19 @@ Rules:
         const group = validGroups[0]
 
         const pattern_across_time = (group.pattern_across_time || "This keeps happening when you start something.").replace(/\bmy\b/gi, "your")
-        const intention = (group.intention || "[start with intention]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
-        const shift = (group.shift || "[shift into distraction/withdrawal]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
-        const consequence = (group.consequence || "[delay]").replace(/^this leads to /i, "").replace(/\bmy\b/gi, "your")
-        const pointer = (group.pointer || "There is often a brief moment just before the shift.").replace(/\bmy\b/gi, "your")
+        const intention = (group.intention || "[task]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
+        const shift = (group.shift || "[behaviour]").replace(/^plan to /i, "").replace(/ instead\.?$/i, "").replace(/\bmy\b/gi, "your")
+        const pointer = (group.pointer || "The shift appears just before you fully begin.").replace(/\bmy\b/gi, "your")
 
-        let markdownSummary = `${pattern_across_time} You begin ${intention}, then shift to ${shift} instead, which usually leads to ${consequence}. ${pointer}`
-        markdownSummary = markdownSummary.replace(/\s+/g, ' ').trim()
+        const markdownSummary = `Becoming visible
+
+${pattern_across_time}
+
+You begin ${intention}, then shift to ${shift} instead.
+
+${pointer}
+
+See if you can notice that moment next time.`
 
         return response.status(200).json({
             summary: markdownSummary,
