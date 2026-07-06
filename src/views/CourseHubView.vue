@@ -252,7 +252,7 @@ const continuitySummary = ref("")
 const summaryLoading = ref(false)
 
 const summaryLoadingMessages = [
-  "Reviewing your recent observations...",
+  "Building your visibility from recent reflections...",
   "Looking for what is relevant to this stage...",
   "Placing observations beside one another...",
   "Preparing what is becoming visible..."

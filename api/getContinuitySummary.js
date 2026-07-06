@@ -52,7 +52,7 @@ export default async function handler(request, response) {
         if (count < 2) {
             console.log("CONTINUITY ACCEPTED: false")
             return response.status(200).json({
-                summary: ""
+                summary: "More observations are needed before a pattern becomes clear."
             })
         }
 
@@ -77,16 +77,17 @@ Product Philosophy:
 Observation before interpretation. Accumulation before explanation. Progressively discover patterns rather than declare them.
 
 Tone Guidelines:
-- Use: beginning to appear, may be, not yet clear, still being observed, not enough evidence yet, start something.
-- Avoid: this means, this indicates, this proves, this shows that, the user is..., engage, initiate, begin activity.
+- Use: beginning to appear, may be, not yet clear, still being observed, not enough evidence yet, start something, gardening, start in the garden.
+- Avoid: this means, this indicates, this proves, this shows that, the user is..., engage, initiate, begin activity, doing the garden, starting doing.
 - Never diagnose. Never over-interpret. Never sound certain.
 
 CORE ANALYSIS:
-1. Compare every reflection against every other reflection.
-2. Identify behavioural moments that recur across the reflection history.
-3. Ignore one-off events.
+1. PRE-PROCESS: For each reflection, extract the task/start context (e.g. "start working", "begin task") and the shift behaviour (e.g. "check phone", "watch football").
+2. Compare these pairs across the entire history.
+3. Identify behavioural moments that recur across the reflection history.
 4. A continuity statement is only valid if it is supported by at least TWO different reflections.
-5. Provide a summary ONLY for recurring behaviours.
+5. If output could be generated from a single reflection, it is invalid.
+6. Provide a summary ONLY for recurring behaviours.
 
 GENERATION STRUCTURE (MANDATORY):
 - Sentence 1: Refer to the recurrence across time (e.g., "This keeps happening when you start something.")
@@ -105,9 +106,10 @@ Grammar Rules:
 - Sentence 2 must follow: "You begin [task], then switch to [behaviour]."
 - Use correct article usage (e.g., "the garden", not just "garden").
 - Use natural verb phrasing (e.g., "watching", not "watch").
+- Avoid awkward gerund forms (e.g., use "gardening" or "start in the garden" instead of "doing the garden" or "starting doing").
 - Ensure 'intention' and 'shift' fragments are natural. 
-- Example: intention="cleaning the garden", shift="watching football". 
-- Resulting Sentence 2: "You begin cleaning the garden, then switch to watching football."
+- Example: intention="gardening", shift="watching football". 
+- Resulting Sentence 2: "You begin gardening, then switch to watching football."
 
 Rules for forward attention guidance:
 - NO advice or behavioural instruction
@@ -190,7 +192,7 @@ Rules:
         } catch (e) {
             console.error("JSON PARSE ERROR:", e)
             return response.status(200).json({
-                summary: ""
+                summary: "More observations are needed before a pattern becomes clear."
             })
         }
 
@@ -210,7 +212,7 @@ Rules:
         if (validGroups.length === 0) {
             console.log("CONTINUITY ACCEPTED: false")
             return response.status(200).json({
-                summary: ""
+                summary: "More observations are needed before a pattern becomes clear."
             })
         }
 
