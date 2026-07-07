@@ -1,10 +1,12 @@
 <template>
   <div class="min-h-screen bg-white selection:bg-slate-100">
-    <main class="max-w-2xl mx-auto px-4 mt-10">
+    <main class="mx-auto">
       <LandingHero />
-      <LandingCTA />
+      <LandingCTA show-support />
       <LandingProblem />
-      <LandingCTA class="pb-10" />
+      <LandingHowItWorks />
+      <LandingDiscovery />
+      <LandingCTA class="pb-24" />
     </main>
 
     <PublicFooter />
@@ -15,5 +17,7 @@
 import LandingHero from '../components/landing/LandingHero.vue'
 import LandingCTA from '../components/landing/LandingCTA.vue'
 import LandingProblem from '../components/landing/LandingProblem.vue'
+import LandingHowItWorks from '../components/landing/LandingHowItWorks.vue'
+import LandingDiscovery from '../components/landing/LandingDiscovery.vue'
 import PublicFooter from '../components/PublicFooter.vue'
 </script>

@@ -484,8 +484,6 @@ const generateInitialReport = async () => {
         block: "start"
       })
     }, 250)
-
-    saveReflectionLocally()
   } catch (err) {
     console.error("Generate error:", err)
 
@@ -493,19 +491,6 @@ const generateInitialReport = async () => {
 
     alert("Something went wrong. Check console.")
   }
-}
-
-const saveReflectionLocally = () => {
-  const reflectionData = {
-    createdAt: new Date().toISOString(),
-    profile: behaviourProfile.value,
-    reports: reportTexts.value
-  }
-
-  localStorage.setItem(
-      "mindworks_latest_reflection",
-      JSON.stringify(reflectionData)
-  )
 }
 
 const unlockReport = async () => {
