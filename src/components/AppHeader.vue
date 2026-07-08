@@ -49,10 +49,10 @@
 
           <router-link
               v-if="auth.user"
-              to="/course"
+              to="/investigation-home"
               class="transition hover:text-slate-900"
           >
-            My Course
+            My Investigation
           </router-link>
 
           <button

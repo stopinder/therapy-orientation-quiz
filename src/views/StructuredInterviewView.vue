@@ -332,7 +332,7 @@ const confirmExit = () => {
 }
 
 const viewFirstSnapshot = () => {
-  router.push("/continuity")
+  router.push("/first-snapshot")
 }
 
 const addAnotherExample = () => {

@@ -31,7 +31,7 @@
           <div class="flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 mb-4 shadow-md">
             <span class="text-lg font-medium text-white">4</span>
           </div>
-          <p class="text-lg text-slate-900 font-medium">You receive your first Discovery Snapshot.</p>
+          <p class="text-lg text-slate-900 font-medium">You receive your first Snapshot.</p>
         </div>
       </div>
     </div>

@@ -3,10 +3,10 @@
     <div class="mx-auto max-w-5xl">
       <div class="text-center">
         <h2 class="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-          What becomes visible
+          Observations and patterns
         </h2>
         <p class="mt-4 text-lg text-slate-600">
-          Small observations begin to show larger patterns.
+          Small observations begin to show how situations may be connected.
         </p>
       </div>
 

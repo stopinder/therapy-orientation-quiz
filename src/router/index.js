@@ -15,6 +15,8 @@ import AccessDeniedView from "../views/AccessDeniedView.vue"
 import DeepDiveView from "../views/DeepDiveView.vue"
 import ProgrammeView from "../views/ProgrammeView.vue"
 import StructuredInterviewView from "../views/StructuredInterviewView.vue"
+import FirstSnapshotView from "../views/FirstSnapshotView.vue"
+import InvestigationHomeView from "../views/InvestigationHomeView.vue"
 import ReflectionHistoryView from "../views/ReflectionHistoryView.vue"
 import LandingPageView from "../views/LandingPageView.vue"
 
@@ -136,13 +138,26 @@ const routes = [
     },
 
     {
-        path: "/course",
-        name: "CourseHub",
-        component: CourseHubView,
-
+        path: "/investigation-home",
+        name: "InvestigationHome",
+        component: InvestigationHomeView,
         meta: {
             requiresAuth: true
         }
+    },
+
+    {
+        path: "/first-snapshot",
+        name: "FirstSnapshot",
+        component: FirstSnapshotView,
+        meta: {
+            requiresAuth: true
+        }
+    },
+
+    {
+        path: "/course",
+        redirect: "/investigation-home"
     },
 
     {
