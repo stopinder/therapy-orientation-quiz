@@ -94,11 +94,11 @@ Structure (Strictly follow this):
 A possible starting point
 
 2. Body copy:
-Several of your answers point towards situations where [plain-language pattern] is followed by a change in what happens next.
+Several of your answers point towards situations where an interruption is followed by a change in what happens next.
 
-That doesn’t necessarily mean [plain-language pattern] is the cause.
+That doesn’t necessarily mean the interruption explains what happened next.
 
-It simply makes it a useful place to start looking.
+It simply makes this a useful place to begin the investigation.
 
 3. Section heading (Exactly):
 You mentioned experiences like:
