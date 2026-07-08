@@ -94,7 +94,7 @@ Structure (Strictly follow this):
 A possible starting point
 
 2. Body copy:
-Several of your answers describe situations where [plain-language pattern] seems to change what happens next.
+Several of your answers point towards situations where [plain-language pattern] is followed by a change in what happens next.
 
 That doesn’t necessarily mean [plain-language pattern] is the cause.
 
@@ -127,8 +127,6 @@ Your first investigation
 7. Body copy:
 Think about the most recent time this happened.
 
-What was the last task that changed direction after an interruption?
-
 Not the biggest example.
 
 Just the most recent one.
@@ -138,7 +136,7 @@ Then answer:
 8. Prompt list (Exactly):
 * What were you doing?
 * What interrupted it?
-* What changed afterwards?
+* What happened immediately afterwards?
 * Did you return to the task? If so, when?
 
 9. Closing line (Exactly):
