@@ -14,6 +14,7 @@ import AccessDeniedView from "../views/AccessDeniedView.vue"
 
 import DeepDiveView from "../views/DeepDiveView.vue"
 import ProgrammeView from "../views/ProgrammeView.vue"
+import StructuredInterviewView from "../views/StructuredInterviewView.vue"
 import ReflectionHistoryView from "../views/ReflectionHistoryView.vue"
 import LandingPageView from "../views/LandingPageView.vue"
 
@@ -101,6 +102,15 @@ const routes = [
 
         meta: {
             requiresGateway: true
+        }
+    },
+
+    {
+        path: "/structured-interview",
+        name: "StructuredInterview",
+        component: StructuredInterviewView,
+        meta: {
+            requiresAuth: true
         }
     },
 

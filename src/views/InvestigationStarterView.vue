@@ -1046,7 +1046,7 @@ const programmeIntro = computed(() => {
 })
 
 const goToProgramme = () => {
-  router.push("/programme")
+  router.push("/structured-interview")
 }
 
 const enterProgrammeFromQuiz = async () => {
