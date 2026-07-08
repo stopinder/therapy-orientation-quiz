@@ -85,6 +85,9 @@
                 placeholder="Your answer..."
                 autofocus
               ></textarea>
+              <div v-if="questions[currentStep - 1].voice" class="mt-4">
+                <VoiceRecorder @transcribed="handleTranscription" />
+              </div>
             </template>
           </div>
 
@@ -158,6 +161,7 @@
 import { ref, onMounted, nextTick, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import VoiceRecorder from '../components/VoiceRecorder.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -169,10 +173,10 @@ const isConfirmation = ref(false)
 const textarea = ref(null)
 
 const questions = [
-  { text: "What were you doing when the interruption happened?", subtext: "" },
-  { text: "What interrupted you?", subtext: "" },
-  { text: "What happened immediately afterwards?", subtext: "" },
-  { text: "What did you do next?", subtext: "" },
+  { text: "What were you doing when the interruption happened?", subtext: "", voice: true },
+  { text: "What interrupted you?", subtext: "", voice: true },
+  { text: "What happened immediately afterwards?", subtext: "", voice: true },
+  { text: "What did you do next?", subtext: "", voice: true },
   { 
     text: "Did you return to the original task?", 
     subtext: "",
@@ -199,10 +203,23 @@ const questions = [
       { label: "I’m not sure.", value: "unsure" }
     ]
   },
-  { text: "What was left different afterwards?", subtext: "" }
+  { text: "What was left different afterwards?", subtext: "", voice: true }
 ]
 
 const answers = ref(Array(totalSteps).fill(""))
+
+const handleTranscription = (text) => {
+  const currentAnswer = answers.value[currentStep.value - 1]
+  if (currentAnswer) {
+    answers.value[currentStep.value - 1] = currentAnswer + ' ' + text
+  } else {
+    answers.value[currentStep.value - 1] = text
+  }
+  
+  nextTick(() => {
+    adjustTextareaHeight()
+  })
+}
 
 const adjustTextareaHeight = () => {
   if (textarea.value && Array.isArray(textarea.value)) {
