@@ -565,7 +565,7 @@ export function buildBehaviourProfile(
     const firstQuestions = {
         pressure_before_action: "an important task was unexpectedly difficult to begin",
         preparation_before_beginning: "you found yourself preparing for a task for much longer than the task itself eventually took",
-        interrupted_momentum: "an interruption made it feel difficult to return to what you were doing",
+        interrupted_momentum: "what was the last task that changed direction after an interruption?",
         completion_resistance: "a project was nearly finished but then seemed to stall",
         replay_loop: "a conversation stayed in your head afterwards",
         control_seeking: "you reworked a plan repeatedly instead of taking the first step",

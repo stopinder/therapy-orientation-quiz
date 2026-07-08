@@ -104,14 +104,13 @@ It simply makes it a useful place to start looking.
 You mentioned experiences like:
 
 4. Bullet list:
-Show exactly 3 short bullet observations based on selected quiz answers.
+Show exactly 4 short bullet observations based on selected quiz answers.
 
 Example observations:
 * Something interrupted what you were doing.
+* Your attention shifted before the task was finished.
 * Getting back into the task felt harder than expected.
 * The task remained unfinished longer than you expected.
-* Progress may pause before the task feels complete.
-* Beginning may become harder once something matters.
 
 Keep each observation to a single short concrete sentence.
 
@@ -126,7 +125,9 @@ The only way to know is to compare them with real examples.
 Your first investigation
 
 7. Body copy:
-Think about the most recent time this happened: [provided firstQuestion].
+Think about the most recent time this happened.
+
+What was the last task that changed direction after an interruption?
 
 Not the biggest example.
 
@@ -141,7 +142,7 @@ Then answer:
 * Did you return to the task? If so, when?
 
 9. Closing line (Exactly):
-One example is enough to begin.
+One recent example is enough to begin the investigation.
 
 10. Optional Enhancement - One possible sequence:
 If the selected answers support it, generate a simple investigation sequence instead of only showing observations.
