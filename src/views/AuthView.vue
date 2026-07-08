@@ -139,13 +139,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
-import { useRouter } from "vue-router"
+import { ref, onMounted } from "vue"
+import { useRouter, useRoute } from "vue-router"
 
 import { supabase } from "../lib/supabase"
 import { useAuthStore } from "../stores/auth"
 
 const router = useRouter()
+const route = useRoute()
 
 const auth = useAuthStore()
 
@@ -153,6 +154,11 @@ const email = ref("")
 const password = ref("")
 const showPassword = ref(false)
 const message = ref("")
+
+const handleRedirect = async () => {
+  const destination = route.query.redirect || "/investigation-starter"
+  await router.push(destination)
+}
 
 const signUp = async () => {
 
@@ -180,6 +186,10 @@ const signUp = async () => {
       "Account created. Check your email if confirmation is enabled."
 
   await auth.fetchUser()
+  
+  if (auth.user) {
+    await handleRedirect()
+  }
 
 }
 
@@ -201,7 +211,7 @@ const signIn = async () => {
 
   message.value = "Signed in successfully."
 
-  await router.push("/course")
+  await handleRedirect()
 
 }
 

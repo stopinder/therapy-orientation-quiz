@@ -86,10 +86,13 @@ const auth = useAuthStore()
 const enterProgramme = async () => {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
-    router.push("/auth")
+    router.push({
+      path: "/auth",
+      query: { redirect: "/structured-interview" }
+    })
     return
   }
-  router.push("/course")
+  router.push("/structured-interview")
 }
 </script>
 

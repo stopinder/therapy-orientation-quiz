@@ -214,22 +214,13 @@
               </p>
             </div>
 
-            <div class="mt-8 pt-8 border-t border-stone-200">
-              <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
-                <button
-                    @click="goToProgramme"
-                    class="w-full sm:w-auto rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
-                >
-                  Add a Recent Example
-                </button>
-
-                <button
-                    @click="downloadReflection"
-                    class="text-sm text-slate-500 hover:text-slate-800 underline underline-offset-4 transition"
-                >
-                  Download Snapshot
-                </button>
-              </div>
+            <div class="mt-8 pt-8 border-t border-stone-200 text-center">
+              <button
+                  @click="goToProgramme"
+                  class="w-full sm:w-auto rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
+              >
+                Add a Recent Example
+              </button>
             </div>
           </div>
         </div>

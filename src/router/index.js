@@ -224,7 +224,10 @@ router.beforeEach((to, from, next) => {
         !auth.user
     ) {
 
-        next("/auth")
+        next({
+            path: "/auth",
+            query: { redirect: to.fullPath }
+        })
         return
 
     }

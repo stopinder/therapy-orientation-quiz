@@ -14,8 +14,30 @@
 
     <main class="max-w-2xl mx-auto px-6 py-12 md:py-20">
       <transition name="fade" mode="out-in">
+        <!-- Interview Intro -->
+        <div v-if="!isStarted && !isConfirmation" key="intro" class="text-center md:text-left">
+          <header class="mb-10">
+            <h1 class="text-3xl md:text-4xl font-medium mb-6">
+              First Investigation Example
+            </h1>
+            <div class="text-lg text-[#333333] space-y-4 mb-10">
+              <p>We’ll start with one recent situation.</p>
+              <p>You don’t need to explain it yet.</p>
+              <p>Just describe what happened, step by step.</p>
+              <p>MindWorks will use this example to begin looking for patterns across repeated situations.</p>
+            </div>
+            <button
+              @click="isStarted = true"
+              class="bg-[#111111] text-white px-8 py-4 rounded-full hover:bg-[#333333] transition-all font-medium inline-flex items-center gap-2 shadow-sm"
+            >
+              Begin Interview
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </header>
+        </div>
+
         <!-- Interview Steps -->
-        <div v-if="!isConfirmation" :key="currentStep">
+        <div v-else-if="!isConfirmation" :key="currentStep">
           <div class="mb-12">
             <div class="flex gap-1 mb-6">
               <div 
@@ -34,15 +56,36 @@
           </div>
 
           <div class="mb-12">
-            <textarea
-              v-model="answers[currentStep - 1]"
-              class="w-full bg-transparent border-b border-[#D1CDC2] py-4 text-xl focus:outline-none focus:border-[#111111] transition-colors placeholder:text-[#D1CDC2] resize-none overflow-hidden"
-              rows="1"
-              ref="textarea"
-              @input="adjustTextareaHeight"
-              placeholder="Your answer..."
-              autofocus
-            ></textarea>
+            <template v-if="questions[currentStep - 1].type === 'radio'">
+              <div class="space-y-3">
+                <label
+                  v-for="option in questions[currentStep - 1].options"
+                  :key="option.value"
+                  class="flex cursor-pointer items-center gap-4 rounded-xl border border-[#D1CDC2] px-6 py-4 transition hover:bg-[#F3F1EA]"
+                  :class="answers[currentStep - 1] === option.value ? 'bg-[#111111] text-white border-[#111111]' : 'bg-transparent text-[#333333]'"
+                >
+                  <input
+                    type="radio"
+                    :name="'step-' + currentStep"
+                    :value="option.value"
+                    v-model="answers[currentStep - 1]"
+                    class="h-5 w-5 accent-[#111111]"
+                  />
+                  <span class="text-lg">{{ option.label }}</span>
+                </label>
+              </div>
+            </template>
+            <template v-else>
+              <textarea
+                v-model="answers[currentStep - 1]"
+                class="w-full bg-transparent border-b border-[#D1CDC2] py-4 text-xl focus:outline-none focus:border-[#111111] transition-colors placeholder:text-[#D1CDC2] resize-none overflow-hidden"
+                rows="1"
+                ref="textarea"
+                @input="adjustTextareaHeight"
+                placeholder="Your answer..."
+                autofocus
+              ></textarea>
+            </template>
           </div>
 
           <div class="flex justify-between items-center">
@@ -121,29 +164,74 @@ const authStore = useAuthStore()
 
 const currentStep = ref(1)
 const totalSteps = 7
+const isStarted = ref(false)
 const isConfirmation = ref(false)
 const textarea = ref(null)
 
 const questions = [
-  { text: "What were you doing when the interruption happened?", subtext: "Describe the task or moment clearly." },
-  { text: "What interrupted you?", subtext: "Could be a person, a notification, a thought, or something else." },
-  { text: "What happened immediately afterwards?", subtext: "Notice the very next thing that occurred." },
-  { text: "What did you do next?", subtext: "Where did your attention or action go?" },
-  { text: "Did you return to the original task?", subtext: "Yes, no, or much later." },
-  { text: "What made it harder to return?", subtext: "If relevant: was it a thought, a feeling, or the task itself?" },
-  { text: "What was left different afterwards?", subtext: "How did the situation or task feel different?" }
+  { text: "What were you doing when the interruption happened?", subtext: "" },
+  { text: "What interrupted you?", subtext: "" },
+  { text: "What happened immediately afterwards?", subtext: "" },
+  { text: "What did you do next?", subtext: "" },
+  { 
+    text: "Did you return to the original task?", 
+    subtext: "",
+    type: "radio",
+    options: [
+      { label: "Yes, quite soon.", value: "soon" },
+      { label: "Yes, but later than intended.", value: "later" },
+      { label: "No, I moved on to something else.", value: "no_moved_on" },
+      { label: "No, it stayed unfinished.", value: "no_unfinished" },
+      { label: "I’m not sure.", value: "unsure" }
+    ]
+  },
+  { 
+    text: "What made it harder to return?", 
+    subtext: "If relevant:",
+    type: "radio",
+    options: [
+      { label: "I lost my place.", value: "lost_place" },
+      { label: "The task felt heavier.", value: "heavier" },
+      { label: "Something else became more urgent.", value: "urgent" },
+      { label: "I forgot about it.", value: "forgot" },
+      { label: "I avoided going back to it.", value: "avoided" },
+      { label: "I was still thinking about the interruption.", value: "thinking_about_interruption" },
+      { label: "I’m not sure.", value: "unsure" }
+    ]
+  },
+  { text: "What was left different afterwards?", subtext: "" }
 ]
 
 const answers = ref(Array(totalSteps).fill(""))
 
 const adjustTextareaHeight = () => {
-  if (textarea.value) {
+  if (textarea.value && Array.isArray(textarea.value)) {
+    const el = textarea.value[0]
+    if (el) {
+      el.style.height = 'auto'
+      el.style.height = el.scrollHeight + 'px'
+    }
+  } else if (textarea.value) {
     textarea.value.style.height = 'auto'
     textarea.value.style.height = textarea.value.scrollHeight + 'px'
   }
 }
 
 const nextStep = () => {
+  if (currentStep.value === 5) {
+    const q5Answer = answers.value[4]
+    if (q5Answer === 'soon') {
+      // Skip Q6
+      answers.value[5] = "" // Clear Q6 if skipped
+      currentStep.value = 7
+      nextTick(() => {
+        adjustTextareaHeight()
+        textarea.value?.focus()
+      })
+      return
+    }
+  }
+
   if (currentStep.value < totalSteps) {
     currentStep.value++
     nextTick(() => {
@@ -156,6 +244,18 @@ const nextStep = () => {
 }
 
 const prevStep = () => {
+  if (currentStep.value === 7) {
+    const q5Answer = answers.value[4]
+    if (q5Answer === 'soon') {
+      currentStep.value = 5
+      nextTick(() => {
+        adjustTextareaHeight()
+        textarea.value?.focus()
+      })
+      return
+    }
+  }
+
   if (currentStep.value > 1) {
     currentStep.value--
     nextTick(() => {
@@ -210,7 +310,7 @@ const completeInterview = async () => {
 
 const confirmExit = () => {
   if (confirm("Are you sure you want to exit the interview? Your progress will be lost.")) {
-    router.push("/programme")
+    router.push("/investigation-starter")
   }
 }
 
@@ -220,6 +320,7 @@ const viewFirstSnapshot = () => {
 
 const addAnotherExample = () => {
   currentStep.value = 1
+  isStarted.value = false
   isConfirmation.value = false
   answers.value = Array(totalSteps).fill("")
 }
