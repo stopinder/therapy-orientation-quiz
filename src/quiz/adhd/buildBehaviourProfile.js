@@ -563,14 +563,14 @@ export function buildBehaviourProfile(
         .sort((a, b) => b.strength - a.strength)
 
     const firstQuestions = {
-        pressure_before_action: "Can you think of one recent example where something mattered to you but became unexpectedly difficult to begin?",
-        preparation_before_beginning: "When was the last time you found yourself preparing for a task for much longer than the task itself eventually took?",
-        interrupted_momentum: "Tell us about a recent time an interruption made it feel impossible to return to what you were doing.",
-        completion_resistance: "Can you recall a project recently that was 90% complete but then seemed to stall entirely?",
-        replay_loop: "Is there a conversation from the last few days that is still replaying in your mind?",
-        control_seeking: "When was the last time you found yourself reworking a plan repeatedly instead of taking the first step?",
-        external_momentum: "Can you think of a time recently when you lost focus on your main priority because something else felt more immediate?",
-        uncertainty_pause: "Tell us about a recent decision that you've paused on because you're waiting for more information that hasn't arrived yet."
+        pressure_before_action: "Tell us about a recent time an important task was unexpectedly difficult to begin.",
+        preparation_before_beginning: "Tell us about a recent time you found yourself preparing for a task for much longer than the task itself eventually took.",
+        interrupted_momentum: "Tell us about a recent time an interruption made it feel difficult to return to what you were doing.",
+        completion_resistance: "Tell us about a recent project that was nearly finished but then seemed to stall.",
+        replay_loop: "Tell us about a recent conversation that stayed in your head afterwards.",
+        control_seeking: "Tell us about a recent time you reworked a plan repeatedly instead of taking the first step.",
+        external_momentum: "Tell us about a recent time you lost focus on your main priority because something else felt more immediate.",
+        uncertainty_pause: "Tell us about a recent decision that you've paused on because you were waiting for more information."
     }
 
     const primaryArea = investigationAreas[0]?.id || "pressure_before_action"

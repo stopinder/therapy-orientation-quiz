@@ -30,6 +30,10 @@ Do NOT:
 - use trauma language
 - use executive dysfunction language
 - use attachment language
+- use analytical prose
+- infer hidden mental processes
+- explain psychology
+- classify the user
 
 Do NOT write:
 - cinematic descriptions
@@ -39,6 +43,22 @@ Do NOT write:
 - metaphors
 - symbolic imagery
 
+Do NOT use:
+- attention can shift away
+- progression through a task
+- partial engagement
+- competing impulses
+- effort feels fragmented
+- lacks consistency or depth
+- interrupted continuity
+- difficult to advance beyond initial stages
+- increasing the time required
+- superficial
+- objective
+- execution
+- cognitive
+- behavioural pattern
+
 Prefer:
 - plain behavioural observation
 - concrete wording
@@ -46,7 +66,8 @@ Prefer:
 - direct recognition
 - practical consequences
 - measured specificity
-- investigation-oriented language (e.g., "appears", "seems", "worth exploring", "could indicate")
+- investigation-oriented language (e.g., "appears", "seems", "worth exploring", "could indicate", "may", "could be worth looking at")
+- plain language like: "something changed", "the task lost direction", "returning felt harder", "restarting took longer", "progress paused", "the task stayed unfinished", "this may be worth looking at"
 
 Avoid:
 - generic ADHD language
@@ -63,14 +84,49 @@ Write like direct behavioural recognition and an investigation starter.
 `
 
 const INVESTIGATION_RULES = `
-Goal: Describe recurring patterns and transitions to help the user recognise them.
+Goal: Describe one possible place to begin an investigation based on recurring patterns and transitions.
 
 The writing should create the response: "I knew those things happened... I never realised they might be connected."
 
-1. Describe recurring patterns based on the provided investigation areas and signals.
-2. Never diagnose or explain psychology.
-3. Generate one or two investigation hypotheses only.
-4. End with one real-world evidence request (provided as firstQuestion).
+Structure (Strictly follow this):
+
+1. Heading (Exactly):
+One place your investigation could begin
+
+2. Short summary:
+Several of your answers point towards moments where [plain-language pattern] appears.
+
+That does not explain why it happens.
+
+It simply gives us a place to begin.
+
+3. What stood out:
+Show exactly 3 short bullet observations based on selected quiz answers.
+
+Example observations:
+* Interruptions may make it harder to return.
+* Progress may pause before the task feels complete.
+* Restarting may take longer than expected.
+* The task may change direction before it is finished.
+* Beginning may become harder once something matters.
+* Preparing may take over before starting.
+* Conversations may continue in your head afterwards.
+
+Each observation must be short, concrete, and tentative.
+
+4. Why we’re starting here:
+These moments may be connected.
+
+Or they may not be.
+
+One recent example will help MindWorks see whether this is actually recurring.
+
+5. First Investigation Prompt:
+Ask for one recent real example (use the provided firstQuestion).
+
+Use gentle wording. Avoid words like “impossible”.
+
+Always end by asking for one real example.
 `
 
 const LOW_SIGNAL_RULES = `
@@ -147,13 +203,10 @@ ${CORE_RULES}
 
 ${LOW_SIGNAL_RULES}
 
+${INVESTIGATION_RULES}
+
 Goal:
 Write compressed low-signal behavioural recognition.
-
-Formatting:
-- exactly 4 bullet points
-- short bullets only
-- one sentence each
 
 Focus on:
 - no dominant interruption pattern
@@ -169,12 +222,12 @@ ${CORE_RULES}
 
 ${LOW_SIGNAL_RULES}
 
+${INVESTIGATION_RULES}
+
 Goal:
 Describe the absence of a strong continuity-disruption pattern.
 
-Write 4 short paragraphs.
-
-Each paragraph should describe:
+Focus on:
 - low behavioural signal
 - stable or adequate continuity
 - limited interruption
@@ -194,10 +247,10 @@ ${CORE_RULES}
 
 ${LOW_SIGNAL_RULES}
 
+${INVESTIGATION_RULES}
+
 Goal:
 Describe daily functioning where no strong disruption pattern emerged.
-
-Write 4 short paragraphs.
 
 Focus on:
 - responsibilities not showing strong disruption
@@ -214,10 +267,10 @@ ${CORE_RULES}
 
 ${LOW_SIGNAL_RULES}
 
+${INVESTIGATION_RULES}
+
 Goal:
 Describe the lack of a strong contradiction pattern.
-
-Write 3 short paragraphs.
 
 Focus on:
 - no clear pressure-dependence loop
@@ -240,97 +293,37 @@ Do not create a problem where the profile does not support one.
         tldr: `
 ${CORE_RULES}
 
+${INVESTIGATION_RULES}
+
 Goal:
-Write compressed behavioural recognition.
-
-Formatting:
-- exactly 4 bullet points
-- short bullets only
-- one sentence each
-- final bullet should land sharply
-
-Focus on:
-- interruption
-- unfinished progression
-- restart loops
-- drift patterns
-- unstable continuity
-
-Avoid:
-- abstraction
-- filler wording
-- interpretation
-- emotional reassurance
+Write the complete investigation starter report following the structure in INVESTIGATION_RULES.
 `,
 
         overview: `
 ${CORE_RULES}
 
+${INVESTIGATION_RULES}
+
 Goal:
-Describe how continuity repeatedly breaks during ordinary effort.
-
-Write 4 paragraphs.
-
-Each paragraph should describe:
-- a different interruption pattern
-- a different behavioural instability
-- a different continuity failure
-
-Focus on:
-- drifting away from intended action
-- stalled progression
-- partial engagement
-- repeated resetting
-- unfinished movement
-- fragmented focus
-
-Avoid:
-- repeated paragraph openings
-- repeated cadence
-- broad personality language
+Write the complete investigation starter report following the structure in INVESTIGATION_RULES.
 `,
 
         functioning: `
 ${CORE_RULES}
 
+${INVESTIGATION_RULES}
+
 Goal:
-Describe cumulative practical consequences.
-
-Write 4 paragraphs.
-
-Focus on:
-- backlog accumulation
-- lingering unfinished obligations
-- inconsistent routines
-- mental carryover
-- exhaustion accumulation
-- remaining active without meaningful completion
-- catch-up cycles
-- fragmented energy allocation
-
-Avoid:
-- repeating overview phrasing
-- motivational tone
-- emotional reassurance
+Write the complete investigation starter report following the structure in INVESTIGATION_RULES.
 `,
 
         patterns: `
 ${CORE_RULES}
 
+${INVESTIGATION_RULES}
+
 Goal:
-Describe behavioural contradictions.
-
-Write 3 shorter paragraphs.
-
-Focus on contradictions like:
-- urgency creates movement without continuity
-- restarting creates the feeling of effort
-- activity disguises lack of completion
-- pressure temporarily stabilises behaviour
-- unfinished tasks remain mentally active
-- relief creates future overload
-
-Do not resolve the contradictions.
+Write the complete investigation starter report following the structure in INVESTIGATION_RULES.
 `
 
     }

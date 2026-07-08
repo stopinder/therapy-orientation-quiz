@@ -43,8 +43,7 @@ export default async function handler(req, res) {
         const quizProfileSummary = `
 INVESTIGATION SNAPSHOT
 
-Top Investigation Areas:
-${investigationAreas.map(a => `- ${a.id} (strength: ${a.strength.toFixed(2)})`).join("\n")}
+${profile?.investigationAreas?.[0] ? `Possible Investigation Area: ${profile.investigationAreas[0].id}` : ""}
 
 Transition Signals:
 ${signals.join(", ")}

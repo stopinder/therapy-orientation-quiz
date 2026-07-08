@@ -112,11 +112,11 @@
           >
             <div class="space-y-6">
               <div class="mb-4">
-                <h3 class="text-xl md:text-2xl font-medium mb-4">
+                <h3 class="text-xl md:text-2xl font-medium mb-4 text-slate-900">
                   One place your investigation could begin
                 </h3>
 
-                <div class="text-base md:text-lg">
+                <div class="text-base md:text-lg text-slate-700">
                   <p class="mb-3">
                     To save your investigation starter and continue to the next step, please enter your email.
                   </p>
@@ -151,26 +151,13 @@
             </div>
           </div>
 
-          <div v-if="emailSubmitted" class="space-y-12">
-            <header class="mb-12">
-              <h2 class="text-3xl font-medium text-slate-900 mb-6">
-                One place your investigation could begin
-              </h2>
-              <div
-                  class="prose prose-slate max-w-none text-lg leading-relaxed text-slate-700"
-                  v-html="formattedActiveText"
-              ></div>
-            </header>
+          <div v-if="emailSubmitted" class="space-y-8">
+            <div
+                class="prose prose-slate max-w-none text-lg leading-relaxed text-slate-700"
+                v-html="formattedActiveText"
+            ></div>
 
-            <div class="mt-16 rounded-2xl border border-slate-200 bg-slate-50 p-8">
-              <h3 class="mb-4 text-xl font-medium text-slate-900">
-                First Investigation Prompt
-              </h3>
-
-              <p class="text-lg text-slate-700 mb-8 italic">
-                {{ behaviourProfile.firstQuestion }}
-              </p>
-
+            <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-8">
               <div class="flex flex-col sm:flex-row gap-4">
                 <button
                     @click="goToProgramme"
@@ -584,20 +571,26 @@ const formattedActiveText = computed(() => {
   if (!activeText.value) return ""
 
   return activeText.value
-      .split("\n\n")
+      .split("\n")
       .map(p => {
-        const safeParagraph =
-            allowBasicFormatting(
-                escapeHtml(p)
-            )
+        const line = p.trim()
+        if (!line) return ""
 
-        return `
-          <p class="mb-3 text-base md:text-lg text-stone-800">
-            ${safeParagraph}
-          </p>
-        `
+        if (line.startsWith("*")) {
+          const item = allowBasicFormatting(escapeHtml(line.substring(1).trim()))
+          return `<li class="ml-4 mb-2 text-base md:text-lg text-stone-800">${item}</li>`
+        }
+
+        if (line.startsWith("#")) {
+          const heading = allowBasicFormatting(escapeHtml(line.replace(/^#+\s*/, "")))
+          return `<h3 class="text-xl md:text-2xl font-medium mb-4 mt-6 text-slate-900">${heading}</h3>`
+        }
+
+        const safeParagraph = allowBasicFormatting(escapeHtml(line))
+        return `<p class="mb-3 text-base md:text-lg text-stone-800">${safeParagraph}</p>`
       })
       .join("")
+      .replace(/(<li>.*<\/li>)+/g, '<ul class="list-disc mb-4">$1</ul>')
 })
 
 const formatParagraphsForDownload = (text) => {
