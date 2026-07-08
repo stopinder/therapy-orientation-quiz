@@ -26,6 +26,10 @@ Do NOT:
 - sound literary
 - explain motives
 - invent causes
+- use ADHD language
+- use trauma language
+- use executive dysfunction language
+- use attachment language
 
 Do NOT write:
 - cinematic descriptions
@@ -42,6 +46,7 @@ Prefer:
 - direct recognition
 - practical consequences
 - measured specificity
+- investigation-oriented language (e.g., "appears", "seems", "worth exploring", "could indicate")
 
 Avoid:
 - generic ADHD language
@@ -50,10 +55,22 @@ Avoid:
 - abstraction
 - personality typing
 - diagnostic framing
+- making confident claims or labels (e.g., never say "You are...", "You have...", "This means...")
 
 Keep sentences compressed.
 
-Write like direct behavioural recognition.
+Write like direct behavioural recognition and an investigation starter.
+`
+
+const INVESTIGATION_RULES = `
+Goal: Describe recurring patterns and transitions to help the user recognise them.
+
+The writing should create the response: "I knew those things happened... I never realised they might be connected."
+
+1. Describe recurring patterns based on the provided investigation areas and signals.
+2. Never diagnose or explain psychology.
+3. Generate one or two investigation hypotheses only.
+4. End with one real-world evidence request (provided as firstQuestion).
 `
 
 const LOW_SIGNAL_RULES = `

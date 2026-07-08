@@ -36,11 +36,24 @@ export default async function handler(req, res) {
 
         console.log("PROFILE RECEIVED:", profile)
 
-        const quizProfileSummary = `
-Primary pattern: ${profile?.dominantPattern || "unknown"}.
+        const investigationAreas = profile?.investigationAreas || []
+        const signals = profile?.transitionSignals || []
+        const situations = profile?.recurringSituations || []
 
-Top traits:
-${profile?.topTraits?.slice(0, 3).map(t => t.name).join(", ") || "none"}.
+        const quizProfileSummary = `
+INVESTIGATION SNAPSHOT
+
+Top Investigation Areas:
+${investigationAreas.map(a => `- ${a.id} (strength: ${a.strength.toFixed(2)})`).join("\n")}
+
+Transition Signals:
+${signals.join(", ")}
+
+Recurring Situations:
+${situations.join(", ")}
+
+Primary Question:
+${profile?.firstQuestion}
 `.trim()
 
         const { error } = await supabase

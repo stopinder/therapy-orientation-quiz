@@ -507,168 +507,84 @@ export function buildBehaviourProfile(
     answers = {}
 ) {
 
-    const traits =
-        createEmptyTraits()
-
-    Object.entries(answers)
-        .forEach(([questionId, rawValue]) => {
-
-            const weightedValue =
-                RESPONSE_WEIGHTS[
-                    Number(rawValue)
-                    ] || 0
-
-            const mapping =
-                TRAIT_WEIGHTS[
-                    questionId
-                    ]
-
-            if (!mapping) return
-
-            Object.entries(mapping)
-                .forEach(([trait, multiplier]) => {
-
-                    traits[trait] +=
-                        weightedValue *
-                        multiplier
-
-                })
-
-        })
-
-    const averageResponse =
-        calculateAverageResponse(
-            answers
-        )
-
-    const dimensionTotals =
-        calculateDimensionTotals(
-            answers
-        )
-
-    const responseDistribution =
-        calculateResponseDistribution(
-            answers
-        )
-
-    const responseStyle =
-        detectResponseStyle(
-            responseDistribution,
-            averageResponse
-        )
-
-    const totalSignalStrength =
-        getTotalSignalStrength(
-            traits
-        )
-
-    const lowSignal =
-        detectLowSignal(
-            traits,
-            averageResponse
-        )
-
-    const veryLowSignal =
-        detectVeryLowSignal(
-            traits,
-            averageResponse
-        )
-
-    const dominantPattern =
-        detectDominantPattern(
-            traits,
-            lowSignal
-        )
-
-    const profiles =
-        detectProfiles(
-            traits,
-            dimensionTotals,
-            lowSignal
-        )
-
-    const contradictions =
-        detectContradictions(
-            traits,
-            lowSignal
-        )
-
-    const topTraits =
-        getTopTraits(
-            traits
-        )
-
-    const answeredQuestions =
-        getAnsweredQuestionsCount(
-            answers
-        )
-
-    const strongestQuestionSignals =
-        getQuestionSignals(
-            answers,
-            lowSignal
-        )
-
-    return {
-
-        answeredQuestions,
-
-        averageResponse,
-
-        responseStyle,
-
-        responseDistribution,
-
-        totalSignalStrength,
-
-        lowSignal,
-
-        veryLowSignal,
-
-        dominantPattern,
-
-        profiles,
-
-        contradictions,
-
-        topTraits,
-
-        strongestQuestionSignals,
-
-        dimensionTotals,
-
-        behaviouralTraits:
-        traits,
-
-        behaviouralSummary: {
-
-            continuityInstability:
-                traits.continuityBreakdown +
-                traits.restartCycling +
-                traits.completionInstability,
-
-            activationDifficulty:
-                traits.activationFriction +
-                traits.stalledMomentum,
-
-            pressureDependence:
-                traits.urgencyDependence +
-                traits.pressureActivation,
-
-            fragmentation:
-                traits.fragmentation +
-                traits.partialEngagement,
-
-            exhaustion:
-                traits.exhaustionAccumulation +
-                traits.lowRecovery,
-
-            emotionalInterference:
-                traits.emotionalInterference +
-                traits.emotionalCarryover
-
-        }
-
+    const investigationScores = {
+        pressure_before_action: 0,
+        preparation_before_beginning: 0,
+        interrupted_momentum: 0,
+        completion_resistance: 0,
+        replay_loop: 0,
+        control_seeking: 0,
+        external_momentum: 0,
+        uncertainty_pause: 0
     }
 
+    const transitionSignals = []
+    const recurringSituations = []
+    const contexts = []
+
+    Object.entries(answers).forEach(([qId, responseValue]) => {
+        const question = adhdQuestions.find(q => q.id === qId)
+        if (!question) return
+
+        const selectedOption = question.options.find(o => o.value === responseValue)
+        if (!selectedOption) return
+
+        // Map to investigation IDs
+        const investigationId = question.investigationIds?.[responseValue]
+        if (investigationId && investigationScores[investigationId] !== undefined) {
+            investigationScores[investigationId] += 1
+        }
+
+        // Collect signals and situations for the prompt
+        if (responseValue !== "it_depends" && responseValue !== "continue" && responseValue !== "start_straight_away" && responseValue !== "none" && responseValue !== "move_on" && responseValue !== "let_it_go" && responseValue !== "nothing" && responseValue !== "finish" && responseValue !== "not_sure") {
+            recurringSituations.push(selectedOption.label.toLowerCase())
+        }
+    })
+
+    // Custom signals based on specific answers
+    if (answers.Q1 === "delay") transitionSignals.push("importance → delay")
+    if (answers.Q2 === "difficult_restart") transitionSignals.push("interruption → restart difficulty")
+    if (answers.Q8 === "difficult_finishing") transitionSignals.push("near completion → resistance")
+
+    // Contexts based on common themes
+    if (["Q1", "Q2", "Q4"].some(q => answers[q] && answers[q] !== "it_depends" && answers[q] !== "continue")) {
+        contexts.push("important work")
+    }
+    if (answers.Q1 === "delay" || answers.Q4 === "tasks_longer") {
+        contexts.push("deadlines")
+    }
+
+    const investigationAreas = Object.entries(investigationScores)
+        .map(([id, score]) => ({
+            id,
+            strength: score / 3 // normalise against max possible (most areas appear in ~3 questions)
+        }))
+        .filter(area => area.strength > 0)
+        .sort((a, b) => b.strength - a.strength)
+
+    const firstQuestions = {
+        pressure_before_action: "Can you think of one recent example where something mattered to you but became unexpectedly difficult to begin?",
+        preparation_before_beginning: "When was the last time you found yourself preparing for a task for much longer than the task itself eventually took?",
+        interrupted_momentum: "Tell us about a recent time an interruption made it feel impossible to return to what you were doing.",
+        completion_resistance: "Can you recall a project recently that was 90% complete but then seemed to stall entirely?",
+        replay_loop: "Is there a conversation from the last few days that is still replaying in your mind?",
+        control_seeking: "When was the last time you found yourself reworking a plan repeatedly instead of taking the first step?",
+        external_momentum: "Can you think of a time recently when you lost focus on your main priority because something else felt more immediate?",
+        uncertainty_pause: "Tell us about a recent decision that you've paused on because you're waiting for more information that hasn't arrived yet."
+    }
+
+    const primaryArea = investigationAreas[0]?.id || "pressure_before_action"
+
+    return {
+        investigationAreas,
+        transitionSignals,
+        recurringSituations,
+        contexts: [...new Set(contexts)],
+        firstQuestion: firstQuestions[primaryArea] || firstQuestions.pressure_before_action,
+        confidence: investigationAreas.length > 0 ? (investigationAreas[0].strength > 0.6 ? "high" : "moderate") : "low",
+        requiresEvidence: true,
+        // Keep some old fields for compatibility with existing UI if needed
+        answeredQuestions: Object.keys(answers).length,
+        lowSignal: investigationAreas.length === 0
+    }
 }

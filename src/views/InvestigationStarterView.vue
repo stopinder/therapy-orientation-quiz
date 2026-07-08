@@ -8,16 +8,17 @@
         </p>
 
         <h1 class="text-3xl md:text-4xl font-medium mb-4">
-          Some things only become visible across time.
+          One place your investigation could begin.
         </h1>
 
         <div class="text-base md:text-lg">
           <p class="mb-3">
-            The Free Orientation introduces the way MindWorks helps recurring patterns become visible through repeated observation.
+            MindWorks helps recurring patterns become visible through repeated observation.
           </p>
           <p class="mb-3">
-            There are no scores.
-            There are no labels.
+            This quiz is a recognition engine designed to identify where a structured investigation might start.
+          </p>
+          <p class="mb-3">
             Just a place to begin.
           </p>
         </div>
@@ -41,7 +42,7 @@
           </div>
 
           <p class="text-xs text-slate-500">
-            Recognition becomes clearer as the pattern accumulates.
+            Patterns become clearer as observations accumulate.
           </p>
         </div>
       </div>
@@ -63,7 +64,7 @@
 
           <div class="space-y-3">
             <label
-                v-for="option in scale"
+                v-for="option in question.options"
                 :key="option.value"
                 class="flex cursor-pointer justify-between rounded-xl border px-6 py-4 transition"
                 :class="answers[question.id] === option.value
@@ -112,12 +113,12 @@
             <div class="space-y-6">
               <div class="mb-4">
                 <h3 class="text-xl md:text-2xl font-medium mb-4">
-                  Continue with the orientation
+                  One place your investigation could begin
                 </h3>
 
                 <div class="text-base md:text-lg">
                   <p class="mb-3">
-                    Receive the complete orientation and downloadable summary.
+                    To save your investigation starter and continue to the next step, please enter your email.
                   </p>
 
                   <p class="mb-3">
@@ -145,120 +146,46 @@
                   @click="unlockReport"
                   class="w-full rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
               >
-                Receive orientation summary
+                Save & Continue
               </button>
             </div>
           </div>
 
-          <div v-if="emailSubmitted">
-            <div class="sticky top-16 z-30 mb-8 border-y border-stone-200 bg-stone-50/95 py-6 backdrop-blur">
-              <div class="mx-auto max-w-2xl text-center mb-6">
-                <h3 class="text-sm font-medium text-slate-900 mb-1">Explore your report</h3>
-                <p class="text-xs text-slate-500">Your report is organised into three sections. Select a section to explore different perspectives.</p>
-              </div>
-              <div class="flex justify-center">
-                <div class="inline-flex p-1 bg-stone-100 rounded-full border border-stone-200">
-                  <button
-                      v-for="view in views"
-                      :key="view.key"
-                      @click="selectView(view.key)"
-                      class="rounded-full px-6 py-2 text-sm font-medium transition-all duration-200"
-                      :class="activeView === view.key
-                      ? 'bg-white text-slate-900 shadow-sm ring-1 ring-black/5'
-                      : 'text-slate-500 hover:text-slate-700'"
-                  >
-                    {{ view.label }}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <transition name="fade" mode="out-in">
-              <div :key="activeView">
-                <div class="mb-10">
-                  <h2 class="text-xl md:text-2xl font-medium mb-4">
-                    {{ activeViewLabel }}
-                  </h2>
-
-                  <p class="text-base md:text-lg mb-3">
-                    {{ activeViewIntro }}
-                  </p>
-                </div>
-
-                <div v-html="formattedActiveText"></div>
-              </div>
-            </transition>
-
-            <div
-                v-if="reportTexts.tldr"
-                class="mt-16 rounded-2xl border border-slate-200 bg-slate-100 p-8"
-            >
-              <h2 class="mb-4 text-[1.35rem] font-medium text-slate-900">
-                TL;DR
+          <div v-if="emailSubmitted" class="space-y-12">
+            <header class="mb-12">
+              <h2 class="text-3xl font-medium text-slate-900 mb-6">
+                One place your investigation could begin
               </h2>
-
               <div
-                  class="text-[1rem] leading-[1.85] text-slate-700"
-                  v-html="formattedTldrText"
+                  class="prose prose-slate max-w-none text-lg leading-relaxed text-slate-700"
+                  v-html="formattedActiveText"
               ></div>
-            </div>
+            </header>
 
-            <div class="mt-12 flex justify-center">
-              <button
-                  @click="downloadReflection"
-                  class="rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
-              >
-                Download orientation
-              </button>
-            </div>
+            <div class="mt-16 rounded-2xl border border-slate-200 bg-slate-50 p-8">
+              <h3 class="mb-4 text-xl font-medium text-slate-900">
+                First Investigation Prompt
+              </h3>
 
-            <div
-                v-if="downloadComplete"
-                class="mt-4 text-center text-sm text-slate-500"
-            >
-              Orientation downloaded.
-            </div>
-
-            <div
-                v-if="showNextStep"
-                class="mx-auto mt-20 max-w-2xl space-y-6 text-center"
-            >
-              <div class="space-y-5 text-[1rem] leading-[1.9] text-slate-700">
-                <p>{{ adaptiveMessage.line1 }}</p>
-                <p>{{ adaptiveMessage.line2 }}</p>
-                <p>{{ adaptiveMessage.line3 }}</p>
-              </div>
-
-              <div class="space-y-4 pt-2">
-                <p class="mx-auto max-w-xl text-[1rem] leading-[1.8] text-slate-600">
-                  {{ programmeIntro }}
-                </p>
-
-                <button
-                    @click="goToProgramme"
-                    class="rounded-xl border border-slate-900 bg-slate-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-slate-800"
-                >
-                  Continue to the programme
-                </button>
-              </div>
-            </div>
-
-            <!-- New CTA Section -->
-            <div class="mt-24 rounded-3xl border border-slate-200 bg-slate-50 p-10 text-center">
-              <h2 class="mb-4 text-2xl font-semibold tracking-tight text-slate-950">
-                Ready to Go Deeper?
-              </h2>
-
-              <p class="mx-auto mb-8 max-w-xl text-lg leading-relaxed text-slate-600">
-                The orientation introduces pattern recognition. The MindWorks programme helps you work with those patterns over time through guided reflection and continuity tracking.
+              <p class="text-lg text-slate-700 mb-8 italic">
+                {{ behaviourProfile.firstQuestion }}
               </p>
 
-              <button
-                  @click="enterProgrammeFromQuiz"
-                  class="inline-block rounded-xl bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
-              >
-                Start the MindWorks programme
-              </button>
+              <div class="flex flex-col sm:flex-row gap-4">
+                <button
+                    @click="goToProgramme"
+                    class="rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
+                >
+                  Add a Recent Example
+                </button>
+
+                <button
+                    @click="downloadReflection"
+                    class="rounded-xl border border-slate-200 bg-white px-8 py-4 text-base font-medium text-slate-700 transition hover:bg-stone-50"
+                >
+                  Download Snapshot
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -464,8 +391,8 @@ const generateInitialReport = async () => {
     const data = await fetchReport()
 
     reportTexts.value = {
+      overview: data.overview || data.tldr || "",
       tldr: data.tldr || "",
-      overview: data.overview || "",
       functioning: data.functioning || "",
       patterns: data.patterns || "",
       closing: data.closing || ""
@@ -567,9 +494,12 @@ const selectView = async (viewKey) => {
   })
 }
 
-const activeText = computed(() =>
-    reportTexts.value[activeView.value] || ""
-)
+const activeText = computed(() => {
+  if (activeView.value === "overview") {
+    return reportTexts.value.overview || reportTexts.value.tldr || ""
+  }
+  return reportTexts.value[activeView.value] || ""
+})
 
 const activeViewLabel = computed(() =>
     views.find(v =>

@@ -5,7 +5,7 @@ import ResetPasswordView from "../views/ResetPasswordView.vue"
 
 import About from "../views/About.vue"
 import QuizGateway from "../views/QuizGateway.vue"
-import ADHDQuizView from "../views/ADHDQuizView.vue"
+import InvestigationStarterView from "../views/InvestigationStarterView.vue"
 
 import CourseHubView from "../views/CourseHubView.vue"
 import CourseWeekView from "../views/CourseWeekView.vue"
@@ -95,13 +95,18 @@ const routes = [
     },
 
     {
-        path: "/adhd-quiz",
-        name: "ADHDQuiz",
-        component: ADHDQuizView,
+        path: "/investigation-starter",
+        name: "InvestigationStarter",
+        component: InvestigationStarterView,
 
         meta: {
             requiresGateway: true
         }
+    },
+
+    {
+        path: "/adhd-quiz",
+        redirect: "/investigation-starter"
     },
 
     {
