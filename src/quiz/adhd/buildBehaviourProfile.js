@@ -563,14 +563,14 @@ export function buildBehaviourProfile(
         .sort((a, b) => b.strength - a.strength)
 
     const firstQuestions = {
-        pressure_before_action: "Tell us about a recent time an important task was unexpectedly difficult to begin.",
-        preparation_before_beginning: "Tell us about a recent time you found yourself preparing for a task for much longer than the task itself eventually took.",
-        interrupted_momentum: "Tell us about a recent time an interruption made it feel difficult to return to what you were doing.",
-        completion_resistance: "Tell us about a recent project that was nearly finished but then seemed to stall.",
-        replay_loop: "Tell us about a recent conversation that stayed in your head afterwards.",
-        control_seeking: "Tell us about a recent time you reworked a plan repeatedly instead of taking the first step.",
-        external_momentum: "Tell us about a recent time you lost focus on your main priority because something else felt more immediate.",
-        uncertainty_pause: "Tell us about a recent decision that you've paused on because you were waiting for more information."
+        pressure_before_action: "an important task was unexpectedly difficult to begin",
+        preparation_before_beginning: "you found yourself preparing for a task for much longer than the task itself eventually took",
+        interrupted_momentum: "an interruption made it feel difficult to return to what you were doing",
+        completion_resistance: "a project was nearly finished but then seemed to stall",
+        replay_loop: "a conversation stayed in your head afterwards",
+        control_seeking: "you reworked a plan repeatedly instead of taking the first step",
+        external_momentum: "you lost focus on your main priority because something else felt more immediate",
+        uncertainty_pause: "a decision you paused on because you were waiting for more information"
     }
 
     const primaryArea = investigationAreas[0]?.id || "pressure_before_action"

@@ -96,37 +96,52 @@ One place your investigation could begin
 2. Short summary:
 Several of your answers point towards moments where [plain-language pattern] appears.
 
-That does not explain why it happens.
-
-It simply gives us a place to begin.
-
-3. What stood out:
+3. Possible recurring situations:
 Show exactly 3 short bullet observations based on selected quiz answers.
 
 Example observations:
-* Interruptions may make it harder to return.
-* Progress may pause before the task feels complete.
-* Restarting may take longer than expected.
-* The task may change direction before it is finished.
-* Beginning may become harder once something matters.
-* Preparing may take over before starting.
+* Something begins but doesn't quite get finished.
+* An interruption changes what happens next.
+* Returning later feels harder than expected.
+* Beginning takes longer once something feels important.
 * Conversations may continue in your head afterwards.
 
-Each observation must be short, concrete, and tentative.
+Keep each observation to a single short concrete sentence.
 
 4. Why we’re starting here:
 These moments may be connected.
 
 Or they may not be.
 
-One recent example will help MindWorks see whether this is actually recurring.
+It simply gives us a place to begin.
+
+The quickest way to find out whether this really is recurring is to look at one recent example.
 
 5. First Investigation Prompt:
-Ask for one recent real example (use the provided firstQuestion).
+Think about the last time this happened: [provided firstQuestion].
 
-Use gentle wording. Avoid words like “impossible”.
+Follow with these prompts:
+* What were you doing?
+* What changed?
+* What happened next?
 
-Always end by asking for one real example.
+6. Optional Enhancement - One possible sequence:
+If the selected answers support it, generate a simple investigation sequence instead of only showing observations.
+
+Example:
+One possible sequence
+Something became important
+↓
+Progress slowed
+↓
+An interruption happened
+↓
+Returning became harder
+↓
+The task stayed unfinished
+
+This sequence should only use recognised situations from the user's answers.
+Do not generate psychological explanations.
 `
 
 const LOW_SIGNAL_RULES = `

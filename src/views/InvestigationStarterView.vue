@@ -158,17 +158,17 @@
             ></div>
 
             <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-8">
-              <div class="flex flex-col sm:flex-row gap-4">
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
                 <button
                     @click="goToProgramme"
-                    class="rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
+                    class="w-full sm:w-auto rounded-xl border border-slate-900 bg-slate-900 px-8 py-4 text-base font-medium text-white transition hover:bg-slate-800"
                 >
                   Add a Recent Example
                 </button>
 
                 <button
                     @click="downloadReflection"
-                    class="rounded-xl border border-slate-200 bg-white px-8 py-4 text-base font-medium text-slate-700 transition hover:bg-stone-50"
+                    class="text-sm text-slate-500 hover:text-slate-800 underline underline-offset-4 transition"
                 >
                   Download Snapshot
                 </button>
@@ -584,6 +584,10 @@ const formattedActiveText = computed(() => {
         if (line.startsWith("#")) {
           const heading = allowBasicFormatting(escapeHtml(line.replace(/^#+\s*/, "")))
           return `<h3 class="text-xl md:text-2xl font-medium mb-4 mt-6 text-slate-900">${heading}</h3>`
+        }
+
+        if (line.startsWith("↓")) {
+          return `<div class="flex items-center justify-center my-2 text-stone-400 text-xl font-bold">↓</div>`
         }
 
         const safeParagraph = allowBasicFormatting(escapeHtml(line))
