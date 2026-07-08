@@ -152,10 +152,67 @@
           </div>
 
           <div v-if="emailSubmitted" class="space-y-8">
-            <div
-                class="prose prose-slate max-w-none text-lg leading-relaxed text-slate-700"
-                v-html="formattedActiveText"
-            ></div>
+            <div class="prose prose-slate max-w-none text-lg leading-relaxed text-slate-700">
+              <h3 class="text-xl md:text-2xl font-medium mb-4 mt-6 text-slate-900">
+                {{ investigationConfig.title }}
+              </h3>
+
+              <p class="mb-3 text-base md:text-lg text-stone-800">
+                {{ investigationConfig.observation }}
+              </p>
+
+              <p class="mb-3 text-base md:text-lg text-stone-800">
+                {{ investigationConfig.explanation }}
+              </p>
+
+              <h3 class="text-xl md:text-2xl font-medium mb-4 mt-6 text-slate-900">
+                You mentioned experiences like:
+              </h3>
+
+              <ul class="list-disc mb-4">
+                <li
+                    v-for="bullet in investigationConfig.recognitionBullets"
+                    :key="bullet"
+                    class="ml-4 mb-2 text-base md:text-lg text-stone-800"
+                >
+                  {{ bullet }}
+                </li>
+              </ul>
+
+              <div
+                  class="mb-3 text-base md:text-lg text-stone-800 whitespace-pre-line"
+              >
+                {{ investigationConfig.uncertaintyStatement }}
+              </div>
+
+              <h3 class="text-xl md:text-2xl font-medium mb-4 mt-6 text-slate-900">
+                Your first investigation
+              </h3>
+
+              <div
+                  class="mb-3 text-base md:text-lg text-stone-800 whitespace-pre-line"
+              >
+                {{ investigationConfig.investigationIntro }}
+              </div>
+
+              <p class="mb-3 text-base md:text-lg text-stone-800">
+                {{ investigationConfig.investigationPrompt }}
+              </p>
+
+              <ul class="list-disc mb-4">
+                <li
+                    v-for="question in investigationConfig.followUpQuestions"
+                    :key="question"
+                    class="ml-4 mb-2 text-base md:text-lg text-stone-800"
+                >
+                  {{ question }}
+                </li>
+              </ul>
+
+              <p class="mb-3 text-base md:text-lg text-stone-800">
+                {{ investigationConfig.closingLine }}
+              </p>
+            </div>
 
             <div class="mt-8 pt-8 border-t border-stone-200">
               <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -193,6 +250,7 @@ import BackToTopButton from "../components/BackToTopButton.vue"
 
 import { adhdQuestions } from "../quiz/adhd/questions.js"
 import { buildBehaviourProfile } from "../quiz/adhd/buildBehaviourProfile.js"
+import { getInvestigationById } from "../config/investigations.js"
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -273,6 +331,10 @@ const progressPercent = computed(() =>
 
 const behaviourProfile = computed(() => {
   return buildBehaviourProfile(answers.value)
+})
+
+const investigationConfig = computed(() => {
+  return getInvestigationById(behaviourProfile.value?.investigationId)
 })
 
 const handleAnswer = async (

@@ -576,6 +576,7 @@ export function buildBehaviourProfile(
     const primaryArea = investigationAreas[0]?.id || "pressure_before_action"
 
     return {
+        investigationId: primaryArea,
         investigationAreas,
         transitionSignals,
         recurringSituations,
