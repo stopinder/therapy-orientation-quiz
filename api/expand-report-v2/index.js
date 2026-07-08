@@ -90,42 +90,60 @@ The writing should create the response: "I knew those things happened... I never
 
 Structure (Strictly follow this):
 
-1. Heading (Exactly):
-One place your investigation could begin
+1. Section heading (Exactly):
+A possible starting point
 
-2. Short summary:
-Several of your answers point towards moments where [plain-language pattern] appears.
+2. Body copy:
+Several of your answers describe situations where [plain-language pattern] seems to change what happens next.
 
-3. Possible recurring situations:
+That doesn’t necessarily mean [plain-language pattern] is the cause.
+
+It simply makes it a useful place to start looking.
+
+3. Section heading (Exactly):
+You mentioned experiences like:
+
+4. Bullet list:
 Show exactly 3 short bullet observations based on selected quiz answers.
 
 Example observations:
-* Something begins but doesn't quite get finished.
-* An interruption changes what happens next.
-* Returning later feels harder than expected.
-* Beginning takes longer once something feels important.
-* Conversations may continue in your head afterwards.
+* Something interrupted what you were doing.
+* Getting back into the task felt harder than expected.
+* The task remained unfinished longer than you expected.
+* Progress may pause before the task feels complete.
+* Beginning may become harder once something matters.
 
 Keep each observation to a single short concrete sentence.
 
-4. Why we’re starting here:
-These moments may be connected.
+5. Body copy:
+These experiences may be related.
 
-Or they may not be.
+Or they may be completely separate.
 
-It simply gives us a place to begin.
+The only way to know is to compare them with real examples.
 
-The quickest way to find out whether this really is recurring is to look at one recent example.
+6. Section heading (Exactly):
+Your first investigation
 
-5. First Investigation Prompt:
-Think about the last time this happened: [provided firstQuestion].
+7. Body copy:
+Think about the most recent time this happened: [provided firstQuestion].
 
-Follow with these prompts:
+Not the biggest example.
+
+Just the most recent one.
+
+Then answer:
+
+8. Prompt list (Exactly):
 * What were you doing?
-* What changed?
-* What happened next?
+* What interrupted it?
+* What changed afterwards?
+* Did you return to the task? If so, when?
 
-6. Optional Enhancement - One possible sequence:
+9. Closing line (Exactly):
+One example is enough to begin.
+
+10. Optional Enhancement - One possible sequence:
 If the selected answers support it, generate a simple investigation sequence instead of only showing observations.
 
 Example:

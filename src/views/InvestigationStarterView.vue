@@ -11,15 +11,15 @@
           One place your investigation could begin.
         </h1>
 
-        <div class="text-base md:text-lg">
+        <div class="text-base md:text-lg text-slate-700">
           <p class="mb-3">
-            MindWorks helps recurring patterns become visible through repeated observation.
+            MindWorks helps recurring experiences become easier to recognise by looking for patterns across real situations.
           </p>
           <p class="mb-3">
-            This quiz is a recognition engine designed to identify where a structured investigation might start.
+            Your answers don’t explain why something happens.
           </p>
           <p class="mb-3">
-            Just a place to begin.
+            They simply suggest one place that may be worth investigating first.
           </p>
         </div>
       </header>
@@ -157,7 +157,7 @@
                 v-html="formattedActiveText"
             ></div>
 
-            <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-8">
+            <div class="mt-8 pt-8 border-t border-stone-200">
               <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
                 <button
                     @click="goToProgramme"
