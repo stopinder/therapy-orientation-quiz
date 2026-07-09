@@ -18,42 +18,28 @@ export type EvidenceField =
   | 'confirmation';
 
 export interface EvidenceItem {
-  id?: string;
-  type: EvidenceField;
-  content: string;
-  isUsable: boolean;
-  isVague: boolean;
-  timestamp: number;
+  id: string;
+  situation: string;
+  startingPoint: string;
+  shift: string;
+  action: string;
+  outcome: string;
+  recurrenceSignal: string;
+  recognition: boolean;
+  contradiction: boolean;
+  createdAt: number;
 }
 
-export interface DecisionPackage {
-  currentInvestigationState: InvestigationState;
-  evidenceCompleteness: number; // 0 to 1
-  missingEvidence: EvidenceField[];
-  nextRequiredEvidenceType: EvidenceField | null;
-  questionPurpose: string;
-  questionCategory: string;
-  discoveryBlocked: boolean;
-  blockedBecause: string | null;
-  wouldUnblock: string | null;
-  ruleId: string;
-}
+export type EvidenceCompleteness = 'incomplete' | 'partial' | 'usable' | 'strong';
 
 export interface InvestigationFacts {
   evidenceCount: number;
   usableEvidenceCount: number;
-  hasRealExample: boolean;
-  hasSituation: boolean;
-  hasStartingPoint: boolean;
-  hasShift: boolean;
-  hasAction: boolean;
-  hasOutcome: boolean;
-  hasRecurrence: boolean;
-  hasRecognition: boolean;
-  hasContrast: boolean;
-  hasConfirmation: boolean;
-  hasRepeatedRelationshipCandidate: boolean;
-  hasUnresolvedContradiction: boolean;
-  canLinkDiscoveryToEvidence: boolean;
-  allEvidence: EvidenceItem[];
+  strongEvidenceCount: number;
+  latestEvidenceCompleteness: EvidenceCompleteness;
+  missingEvidence: string[];
+  repeatedElements: string[];
+  relationshipCandidateExists: boolean;
+  recognitionConfirmed: boolean;
+  contradictionPresent: boolean;
 }

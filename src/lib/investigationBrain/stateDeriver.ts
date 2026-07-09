@@ -1,11 +1,11 @@
 import type { InvestigationFacts, InvestigationState } from './types';
 
 export function deriveState(facts: InvestigationFacts): InvestigationState {
-  if (facts.usableEvidenceCount >= 2 && facts.hasRecognition && facts.hasRepeatedRelationshipCandidate && !facts.hasUnresolvedContradiction && facts.canLinkDiscoveryToEvidence) {
+  if (facts.usableEvidenceCount >= 2 && facts.recognitionConfirmed && facts.relationshipCandidateExists && !facts.contradictionPresent) {
     return 'discovery_ready';
   }
 
-  if (facts.usableEvidenceCount >= 2 && facts.hasRepeatedRelationshipCandidate) {
+  if (facts.usableEvidenceCount >= 2 && facts.relationshipCandidateExists) {
     return 'relationship_emerging';
   }
 

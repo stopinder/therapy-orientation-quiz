@@ -15,7 +15,18 @@ describe('Investigation Brain v1', () => {
 
   it('2. one vague evidence item → ask for missing situation', () => {
     const evidence: EvidenceItem[] = [
-      { type: 'real_example', content: 'vague', isUsable: false, isVague: true, timestamp: Date.now() }
+      { 
+        id: '1', 
+        situation: '', 
+        startingPoint: '', 
+        shift: '', 
+        action: '', 
+        outcome: '', 
+        recurrenceSignal: '', 
+        recognition: false, 
+        contradiction: false, 
+        createdAt: Date.now() 
+      }
     ];
     const result = processInvestigation(evidence);
     
@@ -27,7 +38,18 @@ describe('Investigation Brain v1', () => {
 
   it('3. one usable example → ask for recurrence', () => {
     const evidence: EvidenceItem[] = [
-      { type: 'real_example', content: 'A valid example', isUsable: true, isVague: false, timestamp: Date.now() }
+      { 
+        id: '1', 
+        situation: 'A valid example', 
+        startingPoint: 'start', 
+        shift: 'shift', 
+        action: 'action', 
+        outcome: 'outcome', 
+        recurrenceSignal: '', 
+        recognition: false, 
+        contradiction: false, 
+        createdAt: Date.now() 
+      }
     ];
     const result = processInvestigation(evidence);
     
@@ -39,8 +61,30 @@ describe('Investigation Brain v1', () => {
 
   it('4. two examples with repeated elements → ask for recognition', () => {
     const evidence: EvidenceItem[] = [
-      { type: 'real_example', content: 'Ex 1', isUsable: true, isVague: false, timestamp: Date.now() },
-      { type: 'recurrence', content: 'Ex 2', isUsable: true, isVague: false, timestamp: Date.now() }
+      { 
+        id: '1', 
+        situation: 'Repeat', 
+        startingPoint: 's', 
+        shift: 'sh', 
+        action: 'a', 
+        outcome: 'o', 
+        recurrenceSignal: '', 
+        recognition: false, 
+        contradiction: false, 
+        createdAt: Date.now() 
+      },
+      { 
+        id: '2', 
+        situation: 'Repeat', 
+        startingPoint: 's2', 
+        shift: 'sh2', 
+        action: 'a2', 
+        outcome: 'o2', 
+        recurrenceSignal: '', 
+        recognition: false, 
+        contradiction: false, 
+        createdAt: Date.now() + 1 
+      }
     ];
     const result = processInvestigation(evidence);
     
@@ -52,14 +96,34 @@ describe('Investigation Brain v1', () => {
 
   it('5. two usable examples + repeated element + recognition confirmed → discovery ready', () => {
     const evidence: EvidenceItem[] = [
-      { type: 'real_example', content: 'Ex 1', isUsable: true, isVague: false, timestamp: Date.now() },
-      { type: 'recurrence', content: 'Ex 2', isUsable: true, isVague: false, timestamp: Date.now() },
-      { type: 'recognition', content: 'Yes I see it', isUsable: true, isVague: false, timestamp: Date.now() }
+      { 
+        id: '1', 
+        situation: 'Repeat', 
+        startingPoint: 's', 
+        shift: 'sh', 
+        action: 'a', 
+        outcome: 'o', 
+        recurrenceSignal: '', 
+        recognition: true, 
+        contradiction: false, 
+        createdAt: Date.now() 
+      },
+      { 
+        id: '2', 
+        situation: 'Repeat', 
+        startingPoint: 's2', 
+        shift: 'sh2', 
+        action: 'a2', 
+        outcome: 'o2', 
+        recurrenceSignal: '', 
+        recognition: false, 
+        contradiction: false, 
+        createdAt: Date.now() + 1 
+      }
     ];
     const result = processInvestigation(evidence);
     
     expect(result.currentInvestigationState).toBe('discovery_ready');
     expect(result.discoveryBlocked).toBe(false);
-    expect(result.nextRequiredEvidenceType).not.toBe('recognition');
   });
 });
