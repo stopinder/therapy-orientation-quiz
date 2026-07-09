@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "test:investigation-flow": "vitest run src/lib/investigationBrain/__tests__/investigationFlow.test.ts",
     "lint": "echo 'No lint script configured'"
   },
   "dependencies": {

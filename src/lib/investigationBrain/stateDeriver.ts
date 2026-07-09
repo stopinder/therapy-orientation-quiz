@@ -9,7 +9,7 @@ export function deriveState(facts: InvestigationFacts): InvestigationState {
     return 'relationship_emerging';
   }
 
-  if (facts.usableEvidenceCount >= 1 && facts.usableEvidenceCount < 2 && !facts.relationshipCandidateExists) {
+  if (facts.usableEvidenceCount >= 1 && !facts.relationshipCandidateExists) {
     return 'evidence_growing';
   }
 

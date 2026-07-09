@@ -50,7 +50,8 @@ export function buildFacts(evidence: EvidenceItem[]): InvestigationFacts {
 
   if (latestItem) {
     latestEvidenceCompleteness = getCompleteness(latestItem);
-    missingEvidence = getMissingFields(latestItem);
+    const missing = getMissingFields(latestItem);
+    missingEvidence = missing.length > 0 ? missing : [];
   }
 
   // Repeated element detection
