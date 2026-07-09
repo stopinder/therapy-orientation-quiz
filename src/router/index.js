@@ -25,6 +25,7 @@ import PrivacyView from "../views/PrivacyView.vue"
 import ContactView from "../views/ContactView.vue"
 
 import AuthDebugView from "../views/AuthDebugView.vue"
+import InvestigationBrainDebugView from "../views/InvestigationBrainDebugView.vue"
 
 import { useAuthStore } from "../stores/auth"
 import { useEntitlementStore } from "../stores/entitlements"
@@ -191,6 +192,12 @@ const routes = [
         path: "/auth-debug",
         name: "AuthDebug",
         component: AuthDebugView
+    },
+
+    {
+        path: "/debug/investigation-brain",
+        name: "InvestigationBrainDebug",
+        component: InvestigationBrainDebugView
     }
 
 ]
