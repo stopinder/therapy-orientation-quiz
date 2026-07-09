@@ -1,10 +1,12 @@
 import type { InvestigationFacts, InvestigationState, EvidenceField, DecisionPackage, EvidenceCompleteness } from './types';
+import { deriveState } from './stateDeriver';
+import { routeQuestion } from './questionRouter';
 
 export interface Rule {
   id: string;
   priority: number;
   condition: (facts: InvestigationFacts) => boolean;
-  decision: (facts: InvestigationFacts) => Omit<DecisionPackage, 'ruleId'>;
+  decision: (facts: InvestigationFacts) => Omit<DecisionPackage, 'ruleId' | 'state' | 'questionCategory'>;
 }
 
 const rules: Rule[] = [
@@ -13,10 +15,8 @@ const rules: Rule[] = [
     priority: 10,
     condition: (facts) => facts.evidenceCount === 0,
     decision: (facts) => ({
-      state: 'possible_investigation',
       evidenceCompleteness: 'incomplete',
       nextEvidenceType: 'real_example',
-      questionCategory: 'starter',
       questionPurpose: 'collect_initial_evidence',
       discoveryBlocked: true,
       blockedBecause: 'No evidence provided',
@@ -28,10 +28,8 @@ const rules: Rule[] = [
     priority: 20,
     condition: (facts) => facts.missingEvidence.includes('situation'),
     decision: (facts) => ({
-      state: 'active_investigation',
       evidenceCompleteness: facts.latestEvidenceCompleteness,
       nextEvidenceType: 'situation',
-      questionCategory: 'elaboration',
       questionPurpose: 'clarify_situation',
       discoveryBlocked: true,
       blockedBecause: 'Latest evidence is missing a situation',
@@ -43,10 +41,8 @@ const rules: Rule[] = [
     priority: 30,
     condition: (facts) => facts.missingEvidence.includes('starting_point'),
     decision: (facts) => ({
-      state: 'active_investigation',
       evidenceCompleteness: facts.latestEvidenceCompleteness,
       nextEvidenceType: 'starting_point',
-      questionCategory: 'elaboration',
       questionPurpose: 'clarify_starting_point',
       discoveryBlocked: true,
       blockedBecause: 'Latest evidence is missing a starting point',
@@ -58,10 +54,8 @@ const rules: Rule[] = [
     priority: 40,
     condition: (facts) => facts.missingEvidence.includes('shift'),
     decision: (facts) => ({
-      state: 'active_investigation',
       evidenceCompleteness: facts.latestEvidenceCompleteness,
       nextEvidenceType: 'shift',
-      questionCategory: 'elaboration',
       questionPurpose: 'clarify_shift',
       discoveryBlocked: true,
       blockedBecause: 'Latest evidence is missing a shift',
@@ -73,10 +67,8 @@ const rules: Rule[] = [
     priority: 50,
     condition: (facts) => facts.missingEvidence.includes('action'),
     decision: (facts) => ({
-      state: 'active_investigation',
       evidenceCompleteness: facts.latestEvidenceCompleteness,
       nextEvidenceType: 'action',
-      questionCategory: 'elaboration',
       questionPurpose: 'clarify_action',
       discoveryBlocked: true,
       blockedBecause: 'Latest evidence is missing an action',
@@ -88,10 +80,8 @@ const rules: Rule[] = [
     priority: 60,
     condition: (facts) => facts.missingEvidence.includes('outcome'),
     decision: (facts) => ({
-      state: 'active_investigation',
       evidenceCompleteness: facts.latestEvidenceCompleteness,
       nextEvidenceType: 'outcome',
-      questionCategory: 'elaboration',
       questionPurpose: 'clarify_outcome',
       discoveryBlocked: true,
       blockedBecause: 'Latest evidence is missing an outcome',
@@ -103,10 +93,8 @@ const rules: Rule[] = [
     priority: 70,
     condition: (facts) => facts.usableEvidenceCount < 2,
     decision: (facts) => ({
-      state: 'evidence_growing',
       evidenceCompleteness: 'partial',
       nextEvidenceType: 'recurrence',
-      questionCategory: 'recurrence',
       questionPurpose: 'find_second_example',
       discoveryBlocked: true,
       blockedBecause: 'Need at least two usable examples',
@@ -118,10 +106,8 @@ const rules: Rule[] = [
     priority: 80,
     condition: (facts) => facts.relationshipCandidateExists && !facts.recognitionConfirmed,
     decision: (facts) => ({
-      state: 'relationship_emerging',
       evidenceCompleteness: 'usable',
       nextEvidenceType: 'recognition',
-      questionCategory: 'pattern',
       questionPurpose: 'confirm_recognition',
       discoveryBlocked: true,
       blockedBecause: 'Pattern recognition not confirmed',
@@ -133,10 +119,8 @@ const rules: Rule[] = [
     priority: 90,
     condition: (facts) => facts.relationshipCandidateExists && facts.recognitionConfirmed && facts.contradictionPresent,
     decision: (facts) => ({
-      state: 'relationship_emerging',
       evidenceCompleteness: 'strong',
       nextEvidenceType: 'contrast',
-      questionCategory: 'validation',
       questionPurpose: 'resolve_contradiction',
       discoveryBlocked: true,
       blockedBecause: 'Contradiction present',
@@ -148,10 +132,8 @@ const rules: Rule[] = [
     priority: 100,
     condition: (facts) => facts.usableEvidenceCount >= 2 && facts.relationshipCandidateExists && facts.recognitionConfirmed && !facts.contradictionPresent,
     decision: (facts) => ({
-      state: 'discovery_ready',
       evidenceCompleteness: 'strong',
       nextEvidenceType: null,
-      questionCategory: null,
       questionPurpose: null,
       discoveryBlocked: false,
       blockedBecause: null,
@@ -162,12 +144,15 @@ const rules: Rule[] = [
 
 export function applyRules(facts: InvestigationFacts): DecisionPackage {
   const sortedRules = [...rules].sort((a, b) => a.priority - b.priority);
+  const state = deriveState(facts);
   
   for (const rule of sortedRules) {
     if (rule.condition(facts)) {
       const decision = rule.decision(facts);
       return {
         ...decision,
+        state,
+        questionCategory: routeQuestion(decision.nextEvidenceType),
         ruleId: rule.id
       };
     }
@@ -175,7 +160,7 @@ export function applyRules(facts: InvestigationFacts): DecisionPackage {
 
   // Default fallback if no rule matches (should not happen with complete ruleset)
   return {
-    state: 'possible_investigation',
+    state,
     evidenceCompleteness: 'incomplete',
     nextEvidenceType: null,
     questionCategory: null,
