@@ -32,6 +32,18 @@ export interface EvidenceItem {
 
 export type EvidenceCompleteness = 'incomplete' | 'partial' | 'usable' | 'strong';
 
+export interface DecisionPackage {
+  state: InvestigationState;
+  evidenceCompleteness: EvidenceCompleteness;
+  nextEvidenceType: EvidenceField | null;
+  questionCategory: string | null;
+  questionPurpose: string | null;
+  discoveryBlocked: boolean;
+  blockedBecause: string | null;
+  wouldUnblock: string | null;
+  ruleId: string;
+}
+
 export interface InvestigationFacts {
   evidenceCount: number;
   usableEvidenceCount: number;

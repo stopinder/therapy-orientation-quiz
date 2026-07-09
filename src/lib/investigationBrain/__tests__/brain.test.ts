@@ -7,9 +7,9 @@ describe('Investigation Brain v1', () => {
     const evidence: EvidenceItem[] = [];
     const result = processInvestigation(evidence);
     
-    expect(result.currentInvestigationState).toBe('possible_investigation');
-    expect(result.nextRequiredEvidenceType).toBe('real_example');
-    expect(result.ruleId).toBe('RULE_NO_EVIDENCE');
+    expect(result.state).toBe('possible_investigation');
+    expect(result.nextEvidenceType).toBe('real_example');
+    expect(result.ruleId).toBe('RULE_001');
     expect(result.discoveryBlocked).toBe(true);
   });
 
@@ -30,9 +30,9 @@ describe('Investigation Brain v1', () => {
     ];
     const result = processInvestigation(evidence);
     
-    expect(result.currentInvestigationState).toBe('active_investigation');
-    expect(result.nextRequiredEvidenceType).toBe('situation');
-    expect(result.ruleId).toBe('RULE_VAGUE_FIRST_EVIDENCE');
+    expect(result.state).toBe('active_investigation');
+    expect(result.nextEvidenceType).toBe('situation');
+    expect(result.ruleId).toBe('RULE_002');
     expect(result.discoveryBlocked).toBe(true);
   });
 
@@ -53,9 +53,9 @@ describe('Investigation Brain v1', () => {
     ];
     const result = processInvestigation(evidence);
     
-    expect(result.currentInvestigationState).toBe('evidence_growing');
-    expect(result.nextRequiredEvidenceType).toBe('recurrence');
-    expect(result.ruleId).toBe('RULE_ONE_USABLE_EXAMPLE');
+    expect(result.state).toBe('evidence_growing');
+    expect(result.nextEvidenceType).toBe('recurrence');
+    expect(result.ruleId).toBe('RULE_007');
     expect(result.discoveryBlocked).toBe(true);
   });
 
@@ -88,9 +88,9 @@ describe('Investigation Brain v1', () => {
     ];
     const result = processInvestigation(evidence);
     
-    expect(result.currentInvestigationState).toBe('relationship_emerging');
-    expect(result.nextRequiredEvidenceType).toBe('recognition');
-    expect(result.ruleId).toBe('RULE_TWO_EXAMPLES_NEED_RECOGNITION');
+    expect(result.state).toBe('relationship_emerging');
+    expect(result.nextEvidenceType).toBe('recognition');
+    expect(result.ruleId).toBe('RULE_008');
     expect(result.discoveryBlocked).toBe(true);
   });
 
@@ -123,7 +123,8 @@ describe('Investigation Brain v1', () => {
     ];
     const result = processInvestigation(evidence);
     
-    expect(result.currentInvestigationState).toBe('discovery_ready');
+    expect(result.state).toBe('discovery_ready');
     expect(result.discoveryBlocked).toBe(false);
+    expect(result.ruleId).toBe('RULE_010');
   });
 });
