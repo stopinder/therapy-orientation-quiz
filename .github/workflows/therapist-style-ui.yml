@@ -6,6 +6,15 @@ on:
     paths:
       - .github/workflows/therapist-style-ui.yml
       - docs/therapist-style/UI-SLICE-01.md
+      - src/quiz/therapist/**
+      - src/views/TherapistStyleQuizView.vue
+      - src/router/**
+      - src/App.vue
+      - scripts/verify-therapist-style-ui.mjs
+      - package.json
+      - package-lock.json
+      - vite.config.js
+      - vercel.json
   workflow_dispatch:
 
 permissions:
@@ -58,9 +67,9 @@ jobs:
         if: steps.install.outcome == 'success'
         continue-on-error: true
         run: npm run build
-      - name: Browser checks (when UI slice is present)
+      - name: Browser checks
         id: browser
-        if: matrix.target == 'current' && steps.install.outcome == 'success' && hashFiles('scripts/verify-therapist-style-ui.mjs') != ''
+        if: matrix.target == 'current' && steps.install.outcome == 'success'
         continue-on-error: true
         env:
           VITE_SUPABASE_URL: https://ui-test.invalid
@@ -80,13 +89,14 @@ jobs:
       - name: Summarise and enforce checks
         if: always()
         env:
+          TARGET: ${{ matrix.target }}
           INSTALL: ${{ steps.install.outcome }}
           FOUNDATION: ${{ steps.foundation.outcome }}
           SUITE: ${{ steps.suite.outcome }}
           BUILD: ${{ steps.build.outcome }}
           BROWSER: ${{ steps.browser.outcome }}
         run: |
-          printf '## %s\n\n| Check | Outcome |\n|---|---|\n' '${{ matrix.target }}' >> "$GITHUB_STEP_SUMMARY"
+          printf '## %s\n\n| Check | Outcome |\n|---|---|\n' "$TARGET" >> "$GITHUB_STEP_SUMMARY"
           printf '| npm ci | %s |\n| Foundation | %s |\n| Suite | %s |\n| Build | %s |\n| Browser | %s |\n' "$INSTALL" "$FOUNDATION" "$SUITE" "$BUILD" "$BROWSER" >> "$GITHUB_STEP_SUMMARY"
           test "$INSTALL" = success && test "$FOUNDATION" = success && test "$SUITE" = success && test "$BUILD" = success
-          test "$BROWSER" != failure
+          if [ "$TARGET" = current ]; then test "$BROWSER" = success; fi
