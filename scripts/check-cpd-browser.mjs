@@ -8,11 +8,20 @@ const { chromium } = await import(pathToFileURL(process.env.PLAYWRIGHT_PACKAGE_P
 const origin = process.env.CPD_BROWSER_ORIGIN || 'http://127.0.0.1:4173'
 await mkdir('artifacts/cpd', { recursive: true })
 const browser = await chromium.launch()
+let currentPage
 async function setup(mobile = false, ai = false) {
   const context = await browser.newContext({ viewport: mobile ? { width: 390, height: 844 } : { width: 1280, height: 900 }, acceptDownloads: true, reducedMotion: mobile ? 'reduce' : 'no-preference' })
   const page = await context.newPage(), errors = [], posts = [], external = []
+  currentPage = page
   page.setDefaultTimeout(12000)
-  page.on('pageerror', e => errors.push(e.message))
+  page.on('pageerror', e => { errors.push(e.message); console.error('PAGE ERROR:', e.message) })
+  await page.addInitScript(() => {
+    window.__cpdInteractions = []
+    for (const type of ['pointerdown', 'click', 'change']) document.addEventListener(type, event => {
+      if (event.target.closest?.('.question-block')) window.__cpdInteractions.push({ type, tag: event.target.tagName, detail: event.detail, name: event.target.name, value: event.target.value })
+      if (window.__cpdInteractions.length > 20) window.__cpdInteractions.shift()
+    }, true)
+  })
   await page.route('**/*', route => {
     if (new URL(route.request().url()).origin === origin) return route.continue()
     external.push(route.request().url()); return route.abort()
@@ -29,13 +38,22 @@ async function setup(mobile = false, ai = false) {
   return { page, context, errors, posts, external }
 }
 async function expectAligned(page, index) {
-  await page.waitForFunction(id => {
-    const target = document.querySelector(`[data-question="${id}"]`)
-    const header = document.querySelector('[data-testid="progress-header"]')
-    if (!target || !header) return false
-    const y = target.getBoundingClientRect().top, edge = header.getBoundingClientRect().bottom
-    return y >= edge - 1 && y <= edge + 35 && Math.abs(header.getBoundingClientRect().top) <= 1
-  }, therapistQuestions[index].id)
+  try {
+    await page.waitForFunction(id => {
+      const target = document.querySelector(`[data-question="${id}"]`)
+      const header = document.querySelector('[data-testid="progress-header"]')
+      if (!target || !header) return false
+      const y = target.getBoundingClientRect().top, edge = header.getBoundingClientRect().bottom
+      return y >= edge - 1 && y <= edge + 35 && Math.abs(header.getBoundingClientRect().top) <= 1
+    }, therapistQuestions[index].id)
+  } catch (error) {
+    console.error('SCROLL DIAGNOSTIC:', JSON.stringify(await page.evaluate(id => {
+      const target = document.querySelector(`[data-question="${id}"]`)
+      const header = document.querySelector('[data-testid="progress-header"]')
+      return { id, target: target?.getBoundingClientRect().toJSON(), header: header?.getBoundingClientRect().toJSON(), margin: target && getComputedStyle(target).scrollMarginTop, position: header && getComputedStyle(header).position, scrollY, active: document.activeElement?.outerHTML?.slice(0, 300), events: window.__cpdInteractions }
+    }, therapistQuestions[index].id)))
+    throw error
+  }
 }
 async function finish(page, choice = 'a', keyboard = false) {
   if (keyboard) await page.getByLabel('Scroll to the next question after selection').uncheck()
@@ -44,6 +62,8 @@ async function finish(page, choice = 'a', keyboard = false) {
     const radio = page.locator(`input[name="${q.id}"][value="${choice}"]`)
     if (keyboard) {
       await radio.focus()
+      // Wait for the prior explicit smooth scroll before testing keyboard selection.
+      await page.waitForTimeout(800)
       const before = await page.evaluate(() => window.scrollY)
       await page.keyboard.press('Space')
       await page.waitForTimeout(350)
@@ -52,7 +72,6 @@ async function finish(page, choice = 'a', keyboard = false) {
       await page.getByTestId(`continue-${q.id}`).click()
       if (i < 14) await expectAligned(page, i + 1)
     } else {
-      // Exercise label taps as well as the small radio target.
       await radio.locator('..').click()
       await page.waitForFunction(n => document.querySelector('[data-testid="answered-count"]')?.textContent === `${n} answered`, i + 1)
       if (i < 14) await expectAligned(page, i + 1)
@@ -109,4 +128,7 @@ try {
   assert.equal(keyboard.posts.length, 1); assert.deepEqual(keyboard.errors, []); assert.deepEqual(keyboard.external, [])
   await keyboard.context.close()
   console.log('keyboard: explicit Continue and local recovery after simulated AI failure passed')
+} catch (error) {
+  if (currentPage && !currentPage.isClosed()) await currentPage.screenshot({ path: 'artifacts/cpd/failure.png', fullPage: false })
+  throw error
 } finally { await browser.close() }
