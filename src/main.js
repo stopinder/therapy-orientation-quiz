@@ -1,26 +1,8 @@
-import { createApp } from "vue"
-import { createPinia } from "pinia"
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+import router from './router'
+import './style.css'
 
-import App from "./App.vue"
-import router from "./router"
-
-import { hydrateApp } from "./bootstrap/hydrateApp"
-
-import { useAuthStore } from "./stores/auth"
-
-import "./style.css"
-
-const app = createApp(App)
-
-const pinia = createPinia()
-
-app.use(pinia)
-app.use(router)
-
-const auth = useAuthStore(pinia)
-
-auth.listenForAuthChanges()
-
-hydrateApp().finally(() => {
-    app.mount("#app")
-})
+// Keep the existing Vue/Vite/Pinia foundation. This quiz needs no account hydration.
+createApp(App).use(createPinia()).use(router).mount('#app')
