@@ -26,8 +26,10 @@ export function validateAnswers(answers, { requireComplete = true } = {}) {
 
 /**
  * Internal arithmetic only. Not a confidence estimate, norm or clinical score.
- * Per-item capacity comes from the actual answer bank, not a fixed divisor.
- * Zero-weight selections and context-dependent selections provide no directional evidence.
+ * Normalise each pole against its actual attainable total across answered,
+ * non-context-dependent items. This avoids assuming equal opportunities on both
+ * sides of a dimension. It does not establish psychometric validity.
+ * Zero weights and context-dependent answers provide no directional evidence.
  */
 export function scoreAnswers(answers, options = {}) {
   const selections = validateAnswers(answers, options);
@@ -35,15 +37,17 @@ export function scoreAnswers(answers, options = {}) {
   for (const [key, definition] of Object.entries(DIMENSIONS)) {
     const possible = therapistQuestions.filter(question => question.options.some(option => (option.weights[key] || 0) !== 0));
     let sum = 0;
-    let capacity = 0;
+    let leftCapacity = 0;
+    let rightCapacity = 0;
     let directionalResponses = 0;
     let leftCount = 0;
     let rightCount = 0;
     const evidenceIds = [];
     for (const { question, option } of selections) {
-      const maxWeight = Math.max(...question.options.map(item => Math.abs(item.weights[key] || 0)));
-      if (option.unscored || maxWeight === 0) continue;
-      capacity += maxWeight;
+      if (option.unscored) continue;
+      const availableWeights = question.options.map(item => item.weights[key] || 0);
+      leftCapacity += Math.max(0, -Math.min(...availableWeights));
+      rightCapacity += Math.max(0, Math.max(...availableWeights));
       const weight = option.weights[key] || 0;
       sum += weight;
       if (weight === 0) continue;
@@ -52,6 +56,7 @@ export function scoreAnswers(answers, options = {}) {
       else rightCount += 1;
       evidenceIds.push(`${question.id}:${option.value}`);
     }
+    const capacity = sum < 0 ? leftCapacity : sum > 0 ? rightCapacity : Math.max(leftCapacity, rightCapacity);
     const normalised = capacity > 0 ? sum / capacity : null;
     const coverage = possible.length ? directionalResponses / possible.length : 0;
     const sufficient = directionalResponses >= SCORING_RULES.minimumDirectionalResponses && coverage >= SCORING_RULES.minimumCoverage;
@@ -65,7 +70,7 @@ export function scoreAnswers(answers, options = {}) {
       if (band !== 'no_clear_lean') tendency = normalised < 0 ? definition.left : definition.right;
     }
     dimensions[key] = {
-      sum, capacity, normalised, coverage,
+      sum, capacity, leftCapacity, rightCapacity, normalised, coverage,
       availableQuestions: possible.length,
       directionalResponses, leftCount, rightCount,
       mixedSignals: leftCount >= 2 && rightCount >= 2,
