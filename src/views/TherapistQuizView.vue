@@ -1,5 +1,5 @@
 <template>
-  <div ref="root" class="cpd-reflection" :style="{ '--cpd-progress-height': `${headerHeight}px` }">
+  <div ref="root" class="cpd-reflection" :style="{ '--cpd-progress-height': `${headerHeight}px` }" @keydown.capture="cancelScroll" @wheel.passive="cancelScroll">
     <a class="skip-link" href="#quiz-main">Skip to content</a>
     <component :is="saveToLibrary ? 'section' : 'main'" id="quiz-main" class="page" :aria-busy="busy || saving">
       <div class="exercise-context no-print">
@@ -31,12 +31,12 @@
           <fieldset :aria-describedby="`help-${question.id} feedback-${question.id}`">
             <legend tabindex="-1">{{ question.text }}</legend>
             <p :id="`help-${question.id}`" class="muted helper">Choose your usual first move, or use the final option when you cannot choose.</p>
-            <label v-for="option in optionsFor(question, index)" :key="option.id" class="option" :class="{ selected: answers[question.id] === option.id }">
-              <input type="radio" :name="question.id" :value="option.id" :checked="answers[question.id] === option.id" @change="recordAnswer(question.id, option.id)" @click="answerClicked(index, $event)" />
+            <label v-for="option in optionsFor(question, index)" :key="option.id" class="option" :class="{ selected: answers[question.id] === option.id }" @click="answerClicked(index, $event)">
+              <input type="radio" :name="question.id" :value="option.id" :checked="answers[question.id] === option.id" @change="recordAnswer(question.id, option.id)" />
               <span>{{ option.text }}</span>
             </label>
-            <label class="option context-option" :class="{ selected: answers[question.id] === CONTEXT_ANSWER }">
-              <input type="radio" :name="question.id" :value="CONTEXT_ANSWER" :checked="answers[question.id] === CONTEXT_ANSWER" @change="recordAnswer(question.id, CONTEXT_ANSWER)" @click="answerClicked(index, $event)" />
+            <label class="option context-option" :class="{ selected: answers[question.id] === CONTEXT_ANSWER }" @click="answerClicked(index, $event)">
+              <input type="radio" :name="question.id" :value="CONTEXT_ANSWER" :checked="answers[question.id] === CONTEXT_ANSWER" @change="recordAnswer(question.id, CONTEXT_ANSWER)" />
               <span>{{ CONTEXT_LABEL }}<small>You can continue. This does not contribute to a tendency.</small></span>
             </label>
           </fieldset>
@@ -161,17 +161,19 @@ function showIntro() { cancelScroll(); stage.value = 'intro'; focusHeading() }
 function recordAnswer(id, value) {
   const q = therapistQuestions.find(q => q.id === id)
   if (!q || !isAnswered(q, value)) return
-  answers[id] = value
   questionErrorId.value = ''
+  if (answers[id] === value) return
+  answers[id] = value
   snapshot.value = null; report.value = null; result.value = null; savedId.value = ''; saveError.value = ''
 }
 function answerClicked(index, event) {
-  cancelScroll()
-  // Keyboard radio navigation must not jump away while comparing options.
+  // A label tap has detail=1; its forwarded INPUT click has detail=0.
+  // Listen on the label and ignore forwarded/keyboard clicks BEFORE cancelling.
   if (!autoScroll.value || event.detail === 0 || editing.value) return
+  cancelScroll()
   scrollTimer = setTimeout(() => {
-    if (stage.value !== 'quiz' || !active) return
-    if (index < 14) scrollToQuestion(index + 1)
+    if (stage.value !== 'quiz' || !active || !isAnswered(therapistQuestions[index], answers[therapistQuestions[index].id])) return
+    if (index < therapistQuestions.length - 1) scrollToQuestion(index + 1)
     else scrollToTarget(reviewTarget.value)
   }, 260)
 }
@@ -179,7 +181,7 @@ function continueFrom(index) {
   cancelScroll()
   const q = therapistQuestions[index]
   if (!isAnswered(q, answers[q.id])) { questionErrorId.value = q.id; return }
-  if (editing.value || index === 14) goToReview()
+  if (editing.value || index === therapistQuestions.length - 1) goToReview()
   else scrollToQuestion(index + 1)
 }
 function goToReview() {
@@ -195,9 +197,13 @@ function goToReview() {
 function editQuestion(index) { if (!busy.value && !saving.value) { stage.value = 'quiz'; editing.value = true; scrollToQuestion(index) } }
 function selectedText(q) { return answers[q.id] === CONTEXT_ANSWER ? CONTEXT_LABEL : q.options.find(o => o.id === answers[q.id])?.text || 'No answer yet.' }
 function captureReport(nextReport, nextResult, nextMode) {
-  const nextSnapshot = createReflectionSnapshot({ id: crypto.randomUUID(), completedAt: new Date().toISOString(), answers: { ...answers }, report: nextReport, mode: nextMode })
-  report.value = nextReport; result.value = nextResult; mode.value = nextMode; snapshot.value = nextSnapshot
-  savedId.value = ''; saveError.value = ''; stage.value = 'report'; focusHeading()
+  const unchanged = snapshot.value && snapshot.value.narrative.mode === nextMode && canonicalJSON(snapshot.value.responses) === canonicalJSON(answers) && canonicalJSON(snapshot.value.narrative.report) === canonicalJSON(nextReport)
+  if (!unchanged) {
+    snapshot.value = createReflectionSnapshot({ id: crypto.randomUUID(), completedAt: new Date().toISOString(), answers: { ...answers }, report: nextReport, mode: nextMode })
+    savedId.value = ''
+  }
+  report.value = nextReport; result.value = nextResult; mode.value = nextMode
+  saveError.value = ''; stage.value = 'report'; focusHeading()
 }
 function showQuestionBasedReport() {
   if (busy.value || !progress.value.complete) return
