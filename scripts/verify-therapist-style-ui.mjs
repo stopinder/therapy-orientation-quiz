@@ -77,6 +77,7 @@ async function contrast(selector) {
 }
 
 try {
+  process.env.NODE_ENV = 'development';
   devServer = await createServer({ server: { host: '127.0.0.1', port: 4175, strictPort: true }, logLevel: 'warn' });
   await devServer.listen();
   const origin = 'http://127.0.0.1:4175';
@@ -212,6 +213,9 @@ try {
   });
 
   await check('production bundle excludes fixture and production UI cannot enable it', async () => {
+    // createServer sets NODE_ENV=development. A later programmatic build must
+    // reset it explicitly or it is NOT equivalent to a fresh npm run build.
+    process.env.NODE_ENV = 'production';
     buildDirectory = await mkdtemp(join(tmpdir(), 'therapist-style-ui-build-'));
     await build({ logLevel: 'warn', build: { outDir: buildDirectory, emptyOutDir: true } });
     const bundle = (await fileTexts(buildDirectory)).join('\n');
