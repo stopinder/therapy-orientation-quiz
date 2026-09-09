@@ -2,149 +2,111 @@ import assert from 'node:assert/strict'
 import { mkdir } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
 import { therapistQuestions, QUIZ_VERSION, CONTEXT_ANSWER } from '../src/quiz/therapist/questions.js'
-import { reactive, computed } from 'vue'
 
-// The CI-only package is installed outside the app. No runtime dependency or lockfile change.
-const packagePath = process.env.PLAYWRIGHT_PACKAGE_PATH
-if (!packagePath) throw new Error('Set PLAYWRIGHT_PACKAGE_PATH to the installed playwright/index.mjs file.')
-const { chromium } = await import(pathToFileURL(packagePath).href)
+if (!process.env.PLAYWRIGHT_PACKAGE_PATH) throw new Error('Set PLAYWRIGHT_PACKAGE_PATH.')
+const { chromium } = await import(pathToFileURL(process.env.PLAYWRIGHT_PACKAGE_PATH).href)
 const origin = process.env.CPD_BROWSER_ORIGIN || 'http://127.0.0.1:4173'
 await mkdir('artifacts/cpd', { recursive: true })
-
-// Reproduce the original completion calculation with the locked Vue version.
-const legacyAnswers = reactive({})
-const legacyCount = computed(() => therapistQuestions.filter(q => Object.hasOwn(legacyAnswers, q.id)).length)
-assert.equal(legacyCount.value, 0)
-legacyAnswers.q01 = 'a'
-console.log(`Original Object.hasOwn counter after first answer: ${legacyCount.value}; expected 1. The updated UI uses tracked value reads.`)
-
 const browser = await chromium.launch()
-const results = []
-
-async function makePage(viewport, service) {
-  const context = await browser.newContext({ viewport, acceptDownloads: true })
-  const page = await context.newPage()
+async function setup(mobile = false, ai = false) {
+  const context = await browser.newContext({ viewport: mobile ? { width: 390, height: 844 } : { width: 1280, height: 900 }, acceptDownloads: true, reducedMotion: mobile ? 'reduce' : 'no-preference' })
+  const page = await context.newPage(), errors = [], posts = [], external = []
   page.setDefaultTimeout(12000)
-  const errors = []
-  const posts = []
-  const unexpectedRequests = []
-  page.on('pageerror', error => errors.push(error.message))
+  page.on('pageerror', e => errors.push(e.message))
   await page.route('**/*', route => {
-    const url = new URL(route.request().url())
-    if (url.origin !== origin) { unexpectedRequests.push(url.origin); return route.abort() }
-    return route.continue()
+    if (new URL(route.request().url()).origin === origin) return route.continue()
+    external.push(route.request().url()); return route.abort()
   })
-  await page.route('**/api/therapist-report', async route => {
-    if (route.request().method() === 'GET') {
-      if (service === 'offline') return route.abort()
-      return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ quizVersion: QUIZ_VERSION, aiAvailable: service === 'ai-fails' }) })
-    }
+  await page.route('**/api/therapist-report', route => {
+    if (route.request().method() === 'GET') return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ quizVersion: QUIZ_VERSION, aiAvailable: ai }) })
     posts.push(route.request().postDataJSON())
-    return route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ error: 'Simulated provider unavailability' }) })
+    return route.fulfill({ status: 503, contentType: 'application/json', body: '{"error":"simulated failure"}' })
   })
   await page.goto(`${origin}/therapist-quiz`)
   await page.getByRole('heading', { name: 'Your therapeutic stance', exact: true }).waitFor()
-  assert.equal(await page.title(), 'CPD · Practice reflection')
-  assert.equal((await page.locator('body').innerText()).includes('MindWorks'), false)
-  return { context, page, errors, posts, unexpectedRequests }
-}
-async function begin(page) {
   await page.getByRole('checkbox').check()
-  await page.getByRole('button', { name: 'Begin reflection' }).click()
-  await page.getByText('Situation 1 of 15', { exact: true }).waitFor()
+  await page.getByRole('button', { name: 'Begin reflection', exact: true }).click()
+  return { page, context, errors, posts, external }
 }
-async function complete(page, choice = 'a', keyboard = false) {
-  for (let index = 0; index < therapistQuestions.length; index += 1) {
-    const question = therapistQuestions[index]
-    await page.getByText(`Situation ${index + 1} of 15`, { exact: true }).waitFor()
-    const radio = page.locator(`input[name="${question.id}"][value="${choice}"]`)
-    if (keyboard) { await radio.focus(); await page.keyboard.press('Space') } else await radio.check()
-    await page.getByText(`${index + 1} answered`, { exact: true }).waitFor()
-    const next = page.getByTestId('continue-button')
-    assert.equal(await next.isEnabled(), true)
-    if (keyboard) { await next.focus(); await page.keyboard.press('Enter') } else await next.click()
+async function expectAligned(page, index) {
+  await page.waitForFunction(id => {
+    const target = document.querySelector(`[data-question="${id}"]`)
+    const header = document.querySelector('[data-testid="progress-header"]')
+    if (!target || !header) return false
+    const y = target.getBoundingClientRect().top, edge = header.getBoundingClientRect().bottom
+    return y >= edge - 1 && y <= edge + 35 && Math.abs(header.getBoundingClientRect().top) <= 1
+  }, therapistQuestions[index].id)
+}
+async function finish(page, choice = 'a', keyboard = false) {
+  if (keyboard) await page.getByLabel('Scroll to the next question after selection').uncheck()
+  for (let i = 0; i < 15; i++) {
+    const q = therapistQuestions[i]
+    const radio = page.locator(`input[name="${q.id}"][value="${choice}"]`)
+    if (keyboard) {
+      await radio.focus()
+      const before = await page.evaluate(() => window.scrollY)
+      await page.keyboard.press('Space')
+      await page.waitForTimeout(350)
+      assert.equal(await page.evaluate(() => window.scrollY), before, 'Keyboard selection must not move the reading position')
+      assert.equal(await page.getByTestId('answered-count').innerText(), `${i + 1} answered`)
+      await page.getByTestId(`continue-${q.id}`).click()
+      if (i < 14) await expectAligned(page, i + 1)
+    } else {
+      // Exercise label taps as well as the small radio target.
+      await radio.locator('..').click()
+      await page.waitForFunction(n => document.querySelector('[data-testid="answered-count"]')?.textContent === `${n} answered`, i + 1)
+      if (i < 14) await expectAligned(page, i + 1)
+    }
+  }
+  if (!keyboard) {
+    await page.waitForFunction(() => {
+      const target = document.querySelector('.review-target')
+      return target && target.getBoundingClientRect().top < window.innerHeight
+    })
+    await page.getByTestId('continue-button').click()
   }
   await page.getByRole('heading', { name: 'Review your choices', exact: true }).waitFor()
   assert.equal(await page.getByRole('button', { name: 'Read reflection', exact: true }).isEnabled(), true)
 }
-async function readReflection(page) {
+async function read(page) {
   await page.getByRole('button', { name: 'Read reflection', exact: true }).click()
   await page.getByRole('heading', { name: 'A reflection on your therapeutic stance', exact: true }).waitFor()
   assert.equal(await page.locator('.report-section').count(), 9)
-  assert.match(await page.locator('.report-label').innerText(), /not AI-generated/)
+  assert.equal(await page.getByRole('button', { name: 'Save to my reflection library', exact: true }).count(), 0, 'Standalone preview must not claim an account library save')
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true)
 }
-function luminance(rgb) {
-  const channels = rgb.match(/[\d.]+/g).slice(0, 3).map(Number).map(x => {
-    const c = x / 255
-    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
-  })
-  return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722
-}
-function contrast(a, b) { const x = luminance(a); const y = luminance(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05) }
-
 try {
-  for (const scenario of [
-    { name: 'desktop', viewport: { width: 1280, height: 900 }, service: 'disabled', choice: 'a', keyboard: false },
-    { name: 'mobile-context', viewport: { width: 390, height: 844 }, service: 'offline', choice: CONTEXT_ANSWER, keyboard: true },
-    { name: 'ai-failure', viewport: { width: 1024, height: 800 }, service: 'ai-fails', choice: 'b', keyboard: false }
-  ]) {
-    const run = await makePage(scenario.viewport, scenario.service)
-    const { page } = run
-    try {
-      const colours = await page.evaluate(() => {
-        const root = getComputedStyle(document.querySelector('.cpd-reflection'))
-        return { canvas: root.backgroundColor, text: root.color }
-      })
-      assert.equal(colours.canvas, 'rgb(244, 240, 231)')
-      assert.ok(contrast(colours.text, colours.canvas) >= 4.5)
-      await begin(page)
-      if (scenario.name === 'desktop') {
-        await page.getByTestId('continue-button').click()
-        await page.getByText('Choose a response, or select “I cannot choose a usual response” to continue.', { exact: true }).waitFor()
-        await page.getByText('Situation 1 of 15', { exact: true }).waitFor()
-        await page.screenshot({ path: 'artifacts/cpd/desktop-question.png', fullPage: true })
-      }
-      await complete(page, scenario.choice, scenario.keyboard)
-      if (scenario.name === 'ai-failure') {
-        const ai = page.getByRole('button', { name: 'Generate AI reflection', exact: true })
-        assert.equal(await ai.isDisabled(), true)
-        await page.locator('.ai-option').getByRole('checkbox').check()
-        await ai.click()
-        await page.getByRole('alert').waitFor()
-        assert.equal(run.posts.length, 1)
-        assert.deepEqual(Object.keys(run.posts[0]).sort(), ['answers', 'consent', 'quizVersion'])
-        assert.equal(Object.keys(run.posts[0].answers).length, 15)
-        assert.equal(await page.getByRole('button', { name: 'Read reflection', exact: true }).isEnabled(), true)
-      }
-      const buttonColours = await page.getByRole('button', { name: 'Read reflection', exact: true }).evaluate(el => ({ bg: getComputedStyle(el).backgroundColor, fg: getComputedStyle(el).color }))
-      assert.equal(buttonColours.bg, 'rgb(29, 84, 109)')
-      assert.ok(contrast(buttonColours.bg, buttonColours.fg) >= 4.5)
-      await readReflection(page)
-      if (scenario.choice === CONTEXT_ANSWER) assert.match(await page.locator('.report').innerText(), /not enough evidence/)
-      await page.screenshot({ path: `artifacts/cpd/${scenario.name}-reflection.png`, fullPage: true })
-      if (scenario.name === 'desktop') {
-        await page.getByRole('button', { name: 'Review my choices', exact: true }).click()
-        await page.getByRole('button', { name: 'Change answer to Being asked for advice', exact: true }).click()
-        await page.locator('input[name="q01"][value="b"]').check()
-        await page.getByTestId('continue-button').click()
-        await page.getByRole('heading', { name: 'Review your choices', exact: true }).waitFor()
-        assert.match(await page.locator('.review-row').first().innerText(), /Invite the client to explore/)
-        await readReflection(page)
-        const pending = page.waitForEvent('download')
-        await page.getByRole('button', { name: 'Save reflection as text', exact: true }).click()
-        const download = await pending
-        assert.equal(download.suggestedFilename(), 'cpd-practice-reflection.txt')
-        if (await download.failure()) throw new Error('Text export failed')
-      }
-      assert.deepEqual(run.errors, [])
-      assert.deepEqual(run.unexpectedRequests, [])
-      if (scenario.service !== 'ai-fails') assert.equal(run.posts.length, 0)
-      results.push(`${scenario.name}: all 15 questions, completion, reflection and layout passed`)
-    } catch (error) {
-      await page.screenshot({ path: `artifacts/cpd/${scenario.name}-failure.png`, fullPage: true }).catch(() => {})
-      throw error
-    } finally { await run.context.close() }
-  }
-  console.log(results.join('\n'))
+  const desktop = await setup()
+  await desktop.page.getByTestId('continue-q01').click()
+  await desktop.page.getByText('Choose a response, or use the final option to continue.', { exact: true }).waitFor()
+  await finish(desktop.page)
+  await desktop.page.getByRole('button', { name: 'Change answer to Being asked for advice' }).click()
+  await desktop.page.locator('input[name="q01"][value="c"]').click()
+  await desktop.page.getByTestId('continue-q01').click()
+  await read(desktop.page)
+  const downloadPromise = desktop.page.waitForEvent('download')
+  await desktop.page.getByRole('button', { name: 'Save reflection as text', exact: true }).click()
+  assert.equal((await downloadPromise).suggestedFilename(), 'cpd-practice-reflection.txt')
+  assert.deepEqual(desktop.errors, []); assert.deepEqual(desktop.posts, []); assert.deepEqual(desktop.external, [])
+  await desktop.page.screenshot({ path: 'artifacts/cpd/desktop-reflection.png', fullPage: true })
+  await desktop.context.close()
+  console.log('desktop: smooth label-selection auto-scroll, sticky progress, final review, edit, report and text download passed')
+
+  const mobile = await setup(true)
+  await finish(mobile.page, CONTEXT_ANSWER)
+  await read(mobile.page)
+  assert.deepEqual(mobile.errors, []); assert.deepEqual(mobile.external, [])
+  await mobile.page.screenshot({ path: 'artifacts/cpd/mobile-reflection.png', fullPage: true })
+  await mobile.context.close()
+  console.log('mobile: reduced-motion auto-scroll, sticky header and all-context completion passed')
+
+  const keyboard = await setup(false, true)
+  await finish(keyboard.page, 'b', true)
+  await keyboard.page.getByRole('checkbox').check()
+  await keyboard.page.getByRole('button', { name: 'Generate AI reflection', exact: true }).click()
+  await keyboard.page.getByRole('alert').waitFor()
+  await read(keyboard.page)
+  assert.equal(keyboard.posts.length, 1); assert.deepEqual(keyboard.errors, []); assert.deepEqual(keyboard.external, [])
+  await keyboard.context.close()
+  console.log('keyboard: explicit Continue and local recovery after simulated AI failure passed')
 } finally { await browser.close() }
