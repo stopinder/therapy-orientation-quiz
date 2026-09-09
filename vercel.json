@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/therapist-report.js": {
+      "maxDuration": 60
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",

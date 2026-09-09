@@ -1,0 +1,33 @@
+name: Therapist quiz checks
+
+on:
+  push:
+    branches:
+      - therapist-style-replacement
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Test the replacement quiz and mocked report endpoint
+        run: npm test -- src/quiz/therapist/__tests__
+      - name: Build the replacement app
+        run: npm run build
+      - name: Check server JavaScript syntax
+        run: |
+          node --check api/therapist-report.js
+          node --check server/therapistReport.js
