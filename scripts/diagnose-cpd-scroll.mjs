@@ -15,8 +15,9 @@ try {
   })
   await page.locator('input[name="q01"][value="a"]').locator('..').click()
   await page.waitForTimeout(1500)
-  console.log('SCROLL DIAGNOSTIC', JSON.stringify(await page.evaluate(() => {
+  const diagnostic = await page.evaluate(() => {
     const header = document.querySelector('[data-testid="progress-header"]'), target = document.querySelector('[data-question="q02"]')
     return { events: window.scrollEvents, scrollY, header: header?.getBoundingClientRect().toJSON(), target: target?.getBoundingClientRect().toJSON(), headerPosition: getComputedStyle(header).position, headerTop: getComputedStyle(header).top, margin: getComputedStyle(target).scrollMarginTop, rootHeight: document.querySelector('.cpd-reflection').clientHeight, active: document.activeElement.tagName, answerCount: document.querySelector('[data-testid="answered-count"]').textContent }
-  }))))
+  })
+  console.log('SCROLL DIAGNOSTIC', JSON.stringify(diagnostic))
 } finally { await browser.close() }
