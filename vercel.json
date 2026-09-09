@@ -1,4 +1,9 @@
 {
+  "git": {
+    "deploymentEnabled": {
+      "feature/therapist-style-reflection": false
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
