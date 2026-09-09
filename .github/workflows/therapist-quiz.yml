@@ -12,7 +12,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,7 +23,7 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
-      - name: Test the replacement quiz and mocked report endpoint
+      - name: Test scoring, reactive completion and mocked report endpoint
         run: npm test -- src/quiz/therapist/__tests__
       - name: Build the replacement app
         run: npm run build
@@ -31,3 +31,28 @@ jobs:
         run: |
           node --check api/therapist-report.js
           node --check server/therapistReport.js
+      - name: Install isolated browser-check tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/cpd-browser" --no-package-lock --ignore-scripts playwright@1.56.1
+          node "$RUNNER_TEMP/cpd-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Check all 15 questions through to the reflection in a real browser
+        env:
+          PLAYWRIGHT_PACKAGE_PATH: ${{ runner.temp }}/cpd-browser/node_modules/playwright/index.mjs
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > "$RUNNER_TEMP/cpd-preview.log" 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then break; fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:4173/ > /dev/null
+          node scripts/check-cpd-browser.mjs
+      - name: Keep synthetic browser-check screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cpd-browser-checks
+          path: artifacts/cpd/
+          if-no-files-found: ignore
+          retention-days: 5
