@@ -47,6 +47,7 @@ jobs:
             sleep 1
           done
           curl --fail --silent http://127.0.0.1:4173/ > /dev/null
+          node scripts/diagnose-cpd-scroll.mjs
           node scripts/check-cpd-browser.mjs
       - name: Keep synthetic browser-check screenshots
         if: always()
