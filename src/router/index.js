@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"
+import { therapistStyleRoute } from "./therapistStyleRoute.js"
 
 import AuthView from "../views/AuthView.vue"
 import ResetPasswordView from "../views/ResetPasswordView.vue"
@@ -97,6 +98,8 @@ const routes = [
         path: "/orientation",
         redirect: "/gateway"
     },
+
+    therapistStyleRoute,
 
     {
         path: "/investigation-starter",
@@ -213,6 +216,9 @@ const router = createRouter({
         if (savedPosition) {
             return savedPosition
         }
+
+        // The standalone quiz manages focus itself; do not animate its entry.
+        if (to.meta.standalone) return { top: 0, behavior: "auto" }
 
         return {
             top: 0,
