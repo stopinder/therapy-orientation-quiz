@@ -1,0 +1,92 @@
+name: Therapist style UI verification
+
+on:
+  push:
+    branches: [feature/therapist-style-reflection]
+    paths:
+      - .github/workflows/therapist-style-ui.yml
+      - docs/therapist-style/UI-SLICE-01.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: therapist-style-ui-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [foundation-baseline, current]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.target == 'foundation-baseline' && '5fd68b8ba842cbc295ee72bec9525851e4f60178' || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Record checkout and runtime
+        run: |
+          git rev-parse HEAD
+          git status --short
+          node --version
+          npm --version
+      - name: npm ci
+        id: install
+        continue-on-error: true
+        run: npm ci
+      - name: Foundation tests
+        id: foundation
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        run: npm test -- src/quiz/therapist/__tests__/therapistStyle.test.js
+      - name: Complete test suite
+        id: suite
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        run: npm test
+      - name: Production build
+        id: build
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        run: npm run build
+      - name: Browser checks (when UI slice is present)
+        id: browser
+        if: matrix.target == 'current' && steps.install.outcome == 'success' && hashFiles('scripts/verify-therapist-style-ui.mjs') != ''
+        continue-on-error: true
+        env:
+          VITE_SUPABASE_URL: https://ui-test.invalid
+          VITE_SUPABASE_ANON_KEY: ui-test-placeholder-not-a-secret
+        run: |
+          npm install --prefix "$RUNNER_TEMP/therapist-ui-browser" --no-package-lock --no-audit --no-fund playwright@1.56.1
+          node "$RUNNER_TEMP/therapist-ui-browser/node_modules/playwright/cli.js" install --with-deps chromium
+          PLAYWRIGHT_MODULE="$RUNNER_TEMP/therapist-ui-browser/node_modules/playwright/index.mjs" node scripts/verify-therapist-style-ui.mjs
+      - name: Upload browser evidence
+        if: always() && matrix.target == 'current'
+        uses: actions/upload-artifact@v4
+        with:
+          name: therapist-style-ui-${{ github.sha }}
+          path: artifacts/therapist-style/
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Summarise and enforce checks
+        if: always()
+        env:
+          INSTALL: ${{ steps.install.outcome }}
+          FOUNDATION: ${{ steps.foundation.outcome }}
+          SUITE: ${{ steps.suite.outcome }}
+          BUILD: ${{ steps.build.outcome }}
+          BROWSER: ${{ steps.browser.outcome }}
+        run: |
+          printf '## %s\n\n| Check | Outcome |\n|---|---|\n' '${{ matrix.target }}' >> "$GITHUB_STEP_SUMMARY"
+          printf '| npm ci | %s |\n| Foundation | %s |\n| Suite | %s |\n| Build | %s |\n| Browser | %s |\n' "$INSTALL" "$FOUNDATION" "$SUITE" "$BUILD" "$BROWSER" >> "$GITHUB_STEP_SUMMARY"
+          test "$INSTALL" = success && test "$FOUNDATION" = success && test "$SUITE" = success && test "$BUILD" = success
+          test "$BROWSER" != failure
